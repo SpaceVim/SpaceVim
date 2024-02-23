@@ -220,6 +220,10 @@ previewers.new_termopen_previewer = function(opts)
 
       local term_id = get_term_id(self)
       if term_id then
+        if not utils.job_is_running(term_id) then
+          return
+        end
+
         vim.fn.chansend(term_id, termcode)
       end
     end

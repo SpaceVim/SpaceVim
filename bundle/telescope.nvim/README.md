@@ -110,14 +110,14 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim)
 -- init.lua:
     {
     'nvim-telescope/telescope.nvim', tag = '0.1.1',
--- or                              , branch = '0.1.1',
+-- or                              , branch = '0.1.x',
       dependencies = { 'nvim-lua/plenary.nvim' }
     }
 
 -- plugins/telescope.lua:
 return {
     'nvim-telescope/telescope.nvim', tag = '0.1.1',
--- or                              , branch = '0.1.1',
+-- or                              , branch = '0.1.x',
       dependencies = { 'nvim-lua/plenary.nvim' }
     }
 ```
@@ -250,7 +250,7 @@ Many familiar mapping patterns are set up as defaults.
 | `<C-d>`        | Scroll down in preview window                        |
 | `<C-/>`        | Show mappings for picker actions (insert mode)       |
 | `?`            | Show mappings for picker actions (normal mode)       |
-| `<C-c>`        | Close telescope                                      |
+| `<C-c>`        | Close telescope (insert mode)                        |
 | `<Esc>`        | Close telescope (in normal mode)                     |
 | `<Tab>`        | Toggle selection and move to next selection          |
 | `<S-Tab>`      | Toggle selection and move to prev selection          |

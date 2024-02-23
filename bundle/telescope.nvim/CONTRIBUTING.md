@@ -2,7 +2,7 @@
 
 ## Submitting a new feature
 
-Thanks for taking the time to submit code to Telescope if you're reading this! We love having new contributors and love seeing the Neovim community come around this plugin and keep making it better If you are submitting a new PR with a feature addition, please make sure that you add the appropriate documentation. For examples of how to document a new picker for instance, check the `lua/telescope/builtin/init.lua` file to see how we write function headers for all of the pickers there. To learn how we go about writing documentation for this project, keep reading below!
+Thanks for taking the time to submit code to Telescope if you're reading this! We love having new contributors and love seeing the Neovim community come around this plugin and keep making it better. If you are submitting a new PR with a feature addition, please make sure that you add the appropriate documentation. For examples of how to document a new picker for instance, check the `lua/telescope/builtin/init.lua` file to see how we write function headers for all of the pickers there. To learn how we go about writing documentation for this project, keep reading below!
 
 ## Documentation with treesitter
 

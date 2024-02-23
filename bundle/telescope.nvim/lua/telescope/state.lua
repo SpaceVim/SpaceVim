@@ -24,8 +24,16 @@ function state.clear_status(prompt_bufnr)
   state.set_status(prompt_bufnr, nil)
 end
 
-function state.get_existing_prompts()
-  return vim.tbl_keys(TelescopeGlobalState)
+function state.get_existing_prompt_bufnrs()
+  local prompt_bufnrs = {}
+
+  for key, _ in pairs(TelescopeGlobalState) do
+    if type(key) == "number" then
+      table.insert(prompt_bufnrs, key)
+    end
+  end
+
+  return prompt_bufnrs
 end
 
 return state

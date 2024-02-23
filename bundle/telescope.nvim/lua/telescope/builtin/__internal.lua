@@ -161,6 +161,7 @@ internal.resume = function(opts)
     picker.hidden_previewer = nil
     opts.previewer = vim.F.if_nil(opts.previewer, false)
   end
+  opts.resumed_picker = true
   pickers.new(opts, picker):find()
 end
 
@@ -194,9 +195,21 @@ internal.pickers = function(opts)
       cache_picker = false,
       attach_mappings = function(_, map)
         actions.select_default:replace(function(prompt_bufnr)
-          local current_picker = action_state.get_current_picker(prompt_bufnr)
-          local selection_index = current_picker:get_index(current_picker:get_selection_row())
+          local curr_picker = action_state.get_current_picker(prompt_bufnr)
+          local curr_entry = action_state.get_selected_entry()
+          if not curr_entry then
+            return
+          end
+
           actions.close(prompt_bufnr)
+
+          local selection_index, _ = utils.list_find(function(v)
+            if curr_entry.value == v.value then
+              return true
+            end
+            return false
+          end, curr_picker.finder.results)
+
           opts.cache_picker = opts._cache_picker
           opts["cache_index"] = selection_index
           opts["initial_mode"] = cached_pickers[selection_index].initial_mode

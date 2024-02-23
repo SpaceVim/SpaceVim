@@ -190,7 +190,7 @@ this case we just put the text in the current buffer with `vim.api.nvim_put`.
 
 Entry maker is a function used to transform an item from the finder to an
 internal entry table, which has a few required keys. It allows us to display
-one string but match something completly different. It also allows us to set
+one string but match something completely different. It also allows us to set
 an absolute path when working with files (so the file will always be found)
 and a relative file path for display and sorting. This means the relative file
 path doesn't even need to be valid in the context of the current working directory.

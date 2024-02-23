@@ -420,7 +420,7 @@ builtin.lsp_definitions = require_on_exported_call("telescope.builtin.__lsp").de
 ---@field show_line boolean: show results text (default: true)
 ---@field trim_text boolean: trim results text (default: false)
 ---@field file_encoding string: file encoding for the previewer
-builtin.lsp_type_definitions = require("telescope.builtin.__lsp").type_definitions
+builtin.lsp_type_definitions = require_on_exported_call("telescope.builtin.__lsp").type_definitions
 
 --- Goto the implementation of the word under the cursor if there's only one, otherwise show all options in Telescope
 ---@param opts table: options to pass to the picker
@@ -462,7 +462,7 @@ builtin.lsp_workspace_symbols = require_on_exported_call("telescope.builtin.__ls
 
 --- Dynamically lists LSP for all workspace symbols
 --- - Default keymaps:
----   - `<C-l>`: show autocompletion menu to prefilter your query by type of symbol you want to see (i.e. `:variable:`)
+---   - `<C-l>`: show autocompletion menu to prefilter your query by type of symbol you want to see (i.e. `:variable:`), only works after refining to fuzzy search using <C-space>
 ---@param opts table: options to pass to the picker
 ---@field fname_width number: defines the width of the filename section (default: 30)
 ---@field show_line boolean: if true, shows the content of the line the symbol is found on (default: false)
@@ -526,6 +526,14 @@ local apply_config = function(mod)
         local opts_attach = opts.attach_mappings
         opts.attach_mappings = function(prompt_bufnr, map)
           pconf.attach_mappings(prompt_bufnr, map)
+          return opts_attach(prompt_bufnr, map)
+        end
+      end
+
+      if defaults.attach_mappings and opts.attach_mappings then
+        local opts_attach = opts.attach_mappings
+        opts.attach_mappings = function(prompt_bufnr, map)
+          defaults.attach_mappings(prompt_bufnr, map)
           return opts_attach(prompt_bufnr, map)
         end
       end

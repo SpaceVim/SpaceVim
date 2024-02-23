@@ -812,11 +812,12 @@ local send_all_to_qf = function(prompt_bufnr, mode, target)
   local prompt = picker:_get_prompt()
   actions.close(prompt_bufnr)
 
+  local qf_title = string.format([[%s (%s)]], picker.prompt_title, prompt)
   if target == "loclist" then
     vim.fn.setloclist(picker.original_win_id, qf_entries, mode)
+    vim.fn.setloclist(picker.original_win_id, {}, "a", { title = qf_title })
   else
     vim.fn.setqflist(qf_entries, mode)
-    local qf_title = string.format([[%s (%s)]], picker.prompt_title, prompt)
     vim.fn.setqflist({}, "a", { title = qf_title })
   end
 end
@@ -1060,12 +1061,25 @@ end
 --- This action is not mapped by default and only intended for |builtin.pickers|.
 ---@param prompt_bufnr number: The prompt bufnr
 actions.remove_selected_picker = function(prompt_bufnr)
-  local current_picker = action_state.get_current_picker(prompt_bufnr)
-  local selection_index = current_picker:get_index(current_picker:get_selection_row())
+  local curr_picker = action_state.get_current_picker(prompt_bufnr)
+  local curr_entry = action_state.get_selected_entry()
   local cached_pickers = state.get_global_key "cached_pickers"
-  current_picker:delete_selection(function()
+
+  if not curr_entry then
+    return
+  end
+
+  local selection_index, _ = utils.list_find(function(v)
+    if curr_entry.value == v.value then
+      return true
+    end
+    return false
+  end, curr_picker.finder.results)
+
+  curr_picker:delete_selection(function()
     table.remove(cached_pickers, selection_index)
   end)
+
   if #cached_pickers == 0 then
     actions.close(prompt_bufnr)
   end
@@ -1257,7 +1271,8 @@ actions.which_key = function(prompt_bufnr, opts)
   -- only set up autocommand after showing preview completed
   if opts.close_with_action then
     vim.schedule(function()
-      vim.api.nvim_create_autocmd("User TelescopeKeymap", {
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "TelescopeKeymap",
         once = true,
         callback = function()
           pcall(vim.api.nvim_win_close, km_win_id, true)
@@ -1274,20 +1289,30 @@ end
 ---@param prompt_bufnr number: The prompt bufnr
 actions.to_fuzzy_refine = function(prompt_bufnr)
   local line = action_state.get_current_line()
-  local prefix = (function()
+  local opts = (function()
+    local opts = {
+      sorter = conf.generic_sorter {},
+    }
+
     local title = action_state.get_current_picker(prompt_bufnr).prompt_title
     if title == "Live Grep" then
-      return "Find Word"
+      opts.prefix = "Find Word"
     elseif title == "LSP Dynamic Workspace Symbols" then
-      return "LSP Workspace Symbols"
+      opts.prefix = "LSP Workspace Symbols"
+      opts.sorter = conf.prefilter_sorter {
+        tag = "symbol_type",
+        sorter = opts.sorter,
+      }
     else
-      return "Fuzzy over"
+      opts.prefix = "Fuzzy over"
     end
+
+    return opts
   end)()
 
   require("telescope.actions.generate").refine(prompt_bufnr, {
-    prompt_title = string.format("%s (%s)", prefix, line),
-    sorter = conf.generic_sorter {},
+    prompt_title = string.format("%s (%s)", opts.prefix, line),
+    sorter = opts.sorter,
   })
 end
 

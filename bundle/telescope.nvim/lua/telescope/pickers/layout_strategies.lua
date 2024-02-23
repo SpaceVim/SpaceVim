@@ -565,6 +565,7 @@ layout_strategies.cursor = make_documented_layout(
     local preview = initial_options.preview
     local results = initial_options.results
     local prompt = initial_options.prompt
+    local winid = self.original_win_id
 
     local height_opt = layout_config.height
     local height = resolve.resolve_height(height_opt)(self, max_columns, max_lines)
@@ -599,16 +600,16 @@ layout_strategies.cursor = make_documented_layout(
       results.width = prompt.width
     end
 
-    local position = vim.api.nvim_win_get_position(0)
+    local position = vim.api.nvim_win_get_position(winid)
     local winbar = (function()
       if vim.fn.exists "&winbar" == 1 then
-        return vim.o.winbar == "" and 0 or 1
+        return vim.wo[winid].winbar == "" and 0 or 1
       end
       return 0
     end)()
     local top_left = {
-      line = vim.fn.winline() + position[1] + bs + winbar,
-      col = vim.fn.wincol() + position[2],
+      line = vim.api.nvim_win_call(winid, vim.fn.winline) + position[1] + bs + winbar,
+      col = vim.api.nvim_win_call(winid, vim.fn.wincol) + position[2],
     }
     local bot_right = {
       line = top_left.line + height - 1,

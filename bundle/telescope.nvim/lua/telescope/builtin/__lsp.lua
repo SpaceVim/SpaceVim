@@ -69,14 +69,12 @@ local function call_hierarchy(opts, method, title, direction, item)
     local locations = {}
     for _, ch_call in pairs(result) do
       local ch_item = ch_call[direction]
-      for _, range in pairs(ch_call.fromRanges) do
-        table.insert(locations, {
-          filename = vim.uri_to_fname(ch_item.uri),
-          text = ch_item.name,
-          lnum = range.start.line + 1,
-          col = range.start.character + 1,
-        })
-      end
+      table.insert(locations, {
+        filename = vim.uri_to_fname(ch_item.uri),
+        text = ch_item.name,
+        lnum = ch_item.range.start.line + 1,
+        col = ch_item.range.start.character + 1,
+      })
     end
 
     pickers

@@ -194,6 +194,12 @@ local function run_command(args)
     return
   end
 
+  local ok = pcall(require("telescope").load_extension, cmd)
+  if ok then
+    extensions[cmd][cmd](opts)
+    return
+  end
+
   utils.notify("run_command", {
     msg = "Unknown command",
     level = "ERROR",

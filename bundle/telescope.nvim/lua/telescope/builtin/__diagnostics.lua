@@ -43,6 +43,9 @@ local diagnostics_to_tbl = function(opts)
     if opts.severity_bound ~= nil then
       diagnosis_opts.severity["max"] = opts.severity_bound
     end
+    if vim.version().minor > 9 and vim.tbl_isempty(diagnosis_opts.severity) then
+      diagnosis_opts.severity = nil
+    end
   end
 
   opts.root_dir = opts.root_dir == true and vim.loop.cwd() or opts.root_dir

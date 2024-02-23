@@ -163,6 +163,13 @@ action_set.edit = function(prompt_bufnr, command)
     end
   end
 
+  -- HACK: fixes folding: https://github.com/nvim-telescope/telescope.nvim/issues/699
+  if vim.wo.foldmethod == "expr" then
+    vim.schedule(function()
+      vim.opt.foldmethod = "expr"
+    end)
+  end
+
   local pos = vim.api.nvim_win_get_cursor(0)
   if col == nil then
     if row == pos[1] then

@@ -1594,7 +1594,8 @@ builtin.lsp_dynamic_workspace_symbols({opts}) *telescope.builtin.lsp_dynamic_wor
     Dynamically lists LSP for all workspace symbols
     - Default keymaps:
       - `<C-l>`: show autocompletion menu to prefilter your query by type of
-        symbol you want to see (i.e. `:variable:`)
+        symbol you want to see (i.e. `:variable:`), only works after refining
+        to fuzzy search using <C-space>
 
 
     Parameters: ~
