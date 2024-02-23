@@ -866,6 +866,58 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " delf <SID>grey_level
   " delf <SID>grey_number
   " }}}
+  
+  " treesitter
+
+  hi link elixirModuleDefine Define
+  hi link TSAnnotation           PreProc
+  hi link TSAttribute            PreProc
+  hi link TSBoolean              Boolean
+  hi link TSCharacter            Character
+  hi link TSComment              Comment
+  hi link TSConditional          Conditional
+  hi link TSConstant             Constant
+  hi link TSConstBuiltin         Special
+  hi link TSConstMacro           Define
+  hi link TSConstructor          Special
+  hi link TSEmphasis             Italic
+  hi link TSError                Error
+  hi link TSException            Exception
+  hi link TSField                Normal
+  hi link TSFloat                Float
+  hi link TSFunction             Function
+  hi link TSFuncBuiltin          Special
+  hi link TSFuncMacro            Macro
+  hi link TSInclude              Include
+  hi link TSKeyword              Keyword
+  hi link TSKeywordFunction      Keyword
+  hi link TSKeywordOperator      Operator
+  hi link TSLabel                Label
+  hi link TSLiteral              String
+  hi link TSMethod               Function
+  hi link TSNamespace            Include
+  hi link TSNumber               Number
+  hi link TSOperator             Operator
+  hi link TSParameter            Identifier
+  hi link TSParameterReference   Identifier
+  hi link TSProperty             Identifier
+  hi link TSPunctBracket         Delimiter
+  hi link TSPunctDelimiter       Delimiter
+  hi link TSPunctSpecial         Delimiter
+  hi link TSRepeat               Repeat
+  hi link TSString               String
+  hi link TSStringEscape         SpecialChar
+  hi link TSStringRegex          String
+  hi link TSStrong               bold
+  hi link TSTag                  Label
+  hi link TSTagDelimiter         Label
+  hi link TSText                 Normal
+  hi link TSTitle                Title
+  hi link TSType                 Type
+  hi link TSTypeBuiltin          Type
+  hi link TSUnderline            Underlined
+  hi link TSURI                  Underlined
+  hi link TSVariableBuiltin      Special
 
 endif
 "}}}
@@ -879,5 +931,3 @@ endfunction
 if exists('s:dark') && s:dark
   set background=dark
 endif
-
-" vim: set fdl=0 fdm=marker:
