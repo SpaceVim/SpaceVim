@@ -1,0 +1,119 @@
+name: Bug report
+description: Report a problem with Telescope
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before reporting: search [existing issues](https://github.com/nvim-telescope/telescope.nvim/issues) and make sure that both Telescope and its dependencies are updated to the latest version.
+  - type: textarea
+    attributes:
+      label: "Description"
+      description: "A short description of the problem you are reporting."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Neovim version"
+      description: "Output of `nvim --version`"
+      render: markdown
+      placeholder: |
+        NVIM v0.6.0-dev+209-g0603eba6e
+        Build type: Release
+        LuaJIT 2.1.0-beta3
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: "Operating system and version"
+      placeholder: "macOS 11.5"
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: "Telescope version / branch / rev"
+      placeholder: "telescope 0.1.0"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "checkhealth telescope"
+      description: "Output of `:checkhealth telescope`"
+      render: markdown
+      placeholder: |
+        health#telescope#check
+        ========================================================================
+        ## Checking for required plugins
+          - OK: plenary installed.
+          - OK: nvim-treesitter installed.
+
+        ## Checking external dependencies
+          - OK: rg: found ripgrep 13.0.0
+          - OK: fd: found fd 8.2.1
+
+        ## ===== Installed extensions =====
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Steps to reproduce"
+      description: "Steps to reproduce using the minimal config provided below."
+      placeholder: |
+        1. `nvim -nu minimal.lua`
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: "Expected behavior"
+      description: "A description of the behavior you expected:"
+  - type: textarea
+    attributes:
+      label: "Actual behavior"
+      description: "Observed behavior (may optionally include logs, images, or videos)."
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+       label: "Minimal config"
+       description: "Minimal(!) configuration necessary to reproduce the issue. Save this as `minimal.lua`. If _absolutely_ necessary, add plugins and config options from your `init.lua` at the indicated lines."
+       render: Lua
+       value: |
+         vim.cmd [[set runtimepath=$VIMRUNTIME]]
+         vim.cmd [[set packpath=/tmp/nvim/site]]
+         local package_root = '/tmp/nvim/site/pack'
+         local install_path = package_root .. '/packer/start/packer.nvim'
+         local function load_plugins()
+           require('packer').startup {
+             {
+               'wbthomason/packer.nvim',
+               {
+                 'nvim-telescope/telescope.nvim',
+                 requires = {
+                   'nvim-lua/plenary.nvim',
+                   { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+                 },
+               },
+               -- ADD PLUGINS THAT ARE _NECESSARY_ FOR REPRODUCING THE ISSUE
+             },
+             config = {
+               package_root = package_root,
+               compile_path = install_path .. '/plugin/packer_compiled.lua',
+               display = { non_interactive = true },
+             },
+           }
+         end
+         _G.load_config = function()
+           require('telescope').setup()
+           require('telescope').load_extension('fzf')
+           -- ADD INIT.LUA SETTINGS THAT ARE _NECESSARY_ FOR REPRODUCING THE ISSUE
+         end
+         if vim.fn.isdirectory(install_path) == 0 then
+           print("Installing Telescope and dependencies.")
+           vim.fn.system { 'git', 'clone', '--depth=1', 'https://github.com/wbthomason/packer.nvim', install_path }
+         end
+         load_plugins()
+         require('packer').sync()
+         vim.cmd [[autocmd User PackerComplete ++once echo "Ready!" | lua load_config()]]
+    validations:
+      required: true

@@ -1,0 +1,258 @@
+================================================================================
+                                                         *telescope.changelog*
+
+# Changelog
+
+                                                     *telescope.changelog-922*
+
+Date: May 17, 2021
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/922
+
+This is one of our largest breaking changes thus far, so I (TJ) am adding some
+information here so that you can more easily update (without having to track
+down the commit, etc.).
+
+The goal of these breaking changes is to greatly simplify the way
+configuration for layouts happen. This should make it much easier to configure
+each picker, layout_strategy, and more. Please report any bugs or behavior
+that is broken / confusing upstream and we can try and make the configuration
+better.
+
+|telescope.setup()| has changed `layout_defaults` -> `layout_config`.
+    This makes it so that the setup and the pickers share the same key,
+    otherwise it is too confusing which key is for which.
+
+
+`picker:find()` now has different values available for configuring the UI.
+    All configuration for the layout must be passed in the key:
+        `layout_config`.
+
+    Previously, these keys were passed via `picker:find(opts)`, but should be
+    passed via `opts.layout_config` now.
+        - {height}
+        - {width}
+        - {prompt_position}
+        - {preview_cutoff}
+
+    These keys are removed:
+        - {results_height}: This key is no longer valid. Instead, use `height`
+          and the corresponding `preview_*` options for the layout strategy to
+          get the correct results height. This simplifies the configuration
+          for many of the existing strategies.
+
+        - {results_width}: This key actually never did anything. It was
+          leftover from some hacking that I had attempted before. Instead you
+          should be using something like the `preview_width` configuration
+          option for |layout_strategies.horizontal()|
+
+    You should get error messages when you try and use any of the above keys now.
+
+                                                     *telescope.changelog-839*
+
+Date: July 7, 2021
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/839
+
+Small breaking change regarding `shorten_path` and `hide_filename`.
+This allows to configure path displays on a global level and offers a way for
+extension developers to make use of the same configuration, offering a better
+overall experience.
+
+The new way to configure to configure path displays is with:
+    `path_display`: It is a table and accepts multiple values:
+        - "hidden"    hide file names
+        - "tail"      only display the file name, and not the path
+        - "absolute"  display absolute paths
+        - "shorten"   only display the first character of each directory in
+                      the path
+    see |telescope.defaults.path_display|
+
+Example would be for a global configuration:
+  require("telescope").setup{
+    defaults = {
+      path_display = {
+        "shorten",
+        "absolute",
+      },
+    }
+  }
+
+You can also still pass this to a single builtin call:
+    require("telescope.builtin").find_files {
+      path_display = { "shorten" }
+    }
+
+For extension developers there is a new util function that can be used to
+display a path:
+    local filename = utils.transform_path(opts, entry.filename)
+
+                                                     *telescope.changelog-473*
+
+Date: July 14, 2021
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/473
+
+Deprecation of telescope.path
+
+Extension developers need to move to plenary.path, because we will remove the
+telescope.path  module soon.
+
+Guide to switch over to plenary.path
+    - separator
+        before: require("telescope.path").separator
+        now:    require("plenary.path").path.sep
+    - home
+        before: require("telescope.path").home
+        now:    require("plenary.path").path.home
+    - make_relative
+        before: require("telescope.path").make_relative(filepath, cwd)
+        now:    require("plenary.path"):new(filepath):make_relative(cwd)
+    - shorten
+        before: require("telescope.path").shorten(filepath)
+        now:    require("plenary.path"):new(filepath):shorten()
+                with optional len, default is 1
+    - normalize
+        before: require("telescope.path").normalize(filepath, cwd)
+        now:    require("plenary.path"):new(filepath):normalize(cwd)
+    - read_file
+        before: require("telescope.path").read_file(filepath)
+        now:    require("plenary.path"):new(filepath):read()
+    - read_file_async
+        before: require("telescope.path").read_file_async(filepath, callback)
+        now:    require("plenary.path"):new(filepath):read(callback)
+
+                                                    *telescope.changelog-1406*
+
+Date: November 4, 2021
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/1406
+
+Telescope requires Neovim release 0.5.1 or a recent nightly
+
+Due to making use of newly implemented extmark features, Telescope now
+requires users to be on Neovim 0.5.1 (the most recent stable version) or on
+the LATEST version of Neovim nightly.
+
+
+                                                    *telescope.changelog-1549*
+
+Date: December 10, 2021
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/1549
+
+Telescope requires now Neovim release 0.6.0 or a more recent nightly.
+If you are running neovim nightly, you need to make sure that you are on the
+LATEST version. Every other commit is not supported. So make sure you build
+the newest nightly before reporting issues.
+
+
+                                                    *telescope.changelog-1553*
+
+Date: December 10, 2021
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/1553
+
+Move from `vim.lsp.diagnostic` to `vim.diagnostic`.
+
+Because the newly added `vim.diagnostic` has no longer anything to do with lsp
+we also decided to rename our diagnostic functions:
+    Telescope lsp_document_diagnostics -> Telescope diagnostics bufnr=0
+    Telescope lsp_workspace_diagnostics -> Telescope diagnostics
+Because of that the `lsp_*_diagnostics` inside Telescope will be deprecated
+and removed soon. The new `diagnostics` works almost identical to the previous
+functions. Note that there is no longer a workspace diagnostics. You can only
+get all diagnostics for all open buffers.
+
+
+                                                    *telescope.changelog-1851*
+
+Date: April 22, 2022
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/1851
+
+Telescope requires now Neovim release 0.7.0 or a more recent nightly.
+If you are running Neovim nightly, you need to make sure that you are on the
+LATEST version. Every other commit is not supported. So make sure you build
+the newest nightly before reporting issues.
+In the future, we will adopt a different release strategy. This release
+strategy follows the approach that the latest telescope.nvim master will only
+work with latest Neovim nightly and we will provide tags for specific Neovim
+versions. You can read more about this strategy here:
+https://github.com/nvim-telescope/telescope.nvim/issues/1772
+
+
+                                                    *telescope.changelog-1866*
+
+Date: April 25, 2022
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/1866
+
+We decided to remove both `lsp_code_actions` and `lsp_range_code_actions`.
+Currently, both functions are highly duplicated code from neovim, with fewer
+features, because it's out of date. So rather that we copy over the required
+changes to fix some bugs or implement client side code actions, we decided to
+remove both of them and suggest you use `vim.lsp.buf.code_action` and
+`vim.lsp.buf.range_code_action`. The transition to it is easy thanks to
+`vim.ui.select` which allows you to override the select UI. We provide a small
+extension for quite some time that make it easy to use telescope for
+`vim.ui.select`. You can found the code here
+https://github.com/nvim-telescope/telescope-ui-select.nvim. It offers the same
+displaying as the current version of `lsp_code_actions`. An alternative is
+https://github.com/stevearc/dressing.nvim which has support for multiple
+different backends including telescope.
+
+
+                                                    *telescope.changelog-1945*
+
+Date: July 01, 2022
+PR: https://github.com/nvim-telescope/telescope.nvim/pull/1945
+
+This is our dev branch which contains a lot of PRs, a lot of fixes,
+refactoring and general quality of life improvements. It also contains new
+features, the most noteworthy are the following (mostly developed by the
+community):
+- feat: none strategy & control attachment (#1867)
+- feat: force buffer delete for terminal and improvements for
+  Picker:delete_selection (#1943)
+- feat(tags): process tagfiles on the fly (#1989)
+- feat(builtin.lsp): implement builtin handlers for
+  lsp.(incoming|outgoing)_calls (#1484)
+- feat: clear previewer if no item is selected (#2004)
+- feat: add min max boundary to width, height resolver (#2002)
+- feat: Add entry_index for entry_makers (#1850)
+- feat: refine with new_table (#1115)
+
+The last one is one of the most exciting new features, because it allows you
+to go from live_grep into a fuzzy environment with the following mapping
+`<C-Space>`. It's a general interface we now implemented for `live_grep` and
+`lsp_dynamic_workspace_symbols` but it could also be easily implemented for
+other builtins, by us or the user. It's now available for extension developers.
+We will add documentation in the next couple of days and improve it by adding
+more options to configure it after the initial 0.1 release.
+
+But as with all longer development phases, there are also some breaking
+changes. This is the main reason we moved development to a separate branch, for
+the past two months. We can't promise that there won't be more breaking
+changes, but it is the plan that this is the last set of breaking changes prior
+to the 0.1 release on July, 12. We are deeply sorry for the inconvenience. The
+following breaking changes are included in this PR:
+- break(git_files): change `show_untracked` default to false. Can be changed
+  back with `:Telescope git_files show_untracked=true`
+- break: deprecate `utils.get_default` `utils.if_nil`, will be removed prior
+  to 0.1, so if you use it in your config, please move to `vim.F.if_nil`
+- break: drops `ignore_filename` option, use `path_display= { "hidden" }`
+  instead
+- break: prefix internal interfaces with __ so
+  `require("telescope.builtin.files").find_files` will show a notify error but
+  still works for now. The error will be removed prior to 0.1! You should use
+  `require("telescope.builtin").find_files` because we wrap all the functions
+  that are exposed in this module.
+- break: defaults.preview.treesitter rework that allows you to either enable a
+  list of languages, or enable all and disable some. Please read
+  `:help telescope.defaults.preview` for more information.
+  Something like this is now possible:
+    >
+    treesitter = {
+      enable = false,
+      -- or
+      enable = { "c" },
+      -- disable can be set if enable isn't set
+      disable = { "perl", "javascript" },
+    },
+<
+
+
+ vim:tw=78:ts=8:ft=help:norl:

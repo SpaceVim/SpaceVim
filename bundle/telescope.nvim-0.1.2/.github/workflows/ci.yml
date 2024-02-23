@@ -1,0 +1,64 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  unit_tests:
+    name: unit tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            rev: nightly/nvim-linux64.tar.gz
+            manager: sudo apt-get
+            packages: -y ripgrep
+          - os: ubuntu-22.04
+            rev: v0.7.2/nvim-linux64.tar.gz
+            manager: sudo apt-get
+            packages: -y ripgrep
+          - os: ubuntu-22.04
+            rev: v0.8.1/nvim-linux64.tar.gz
+            manager: sudo apt-get
+            packages: -y ripgrep
+          - os: macos-12
+            rev: nightly/nvim-macos.tar.gz
+            manager: brew
+            packages: ripgrep
+          - os: macos-12
+            rev: v0.7.2/nvim-macos.tar.gz
+            manager: brew
+            packages: ripgrep
+          - os: macos-12
+            rev: v0.8.1/nvim-macos.tar.gz
+            manager: brew
+            packages: ripgrep
+    steps:
+      - uses: actions/checkout@v3
+      - run: date +%F > todays-date
+      - name: Restore from todays cache
+        uses: actions/cache@v3
+        with:
+          path: _neovim
+          key: ${{ runner.os }}-${{ matrix.rev }}-${{ hashFiles('todays-date') }}
+
+      - name: Prepare
+        run: |
+          ${{ matrix.manager }} update
+          ${{ matrix.manager }} install ${{ matrix.packages }}
+          test -d _neovim || {
+            mkdir -p _neovim
+            curl -sL "https://github.com/neovim/neovim/releases/download/${{ matrix.rev }}" | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
+          }
+          mkdir -p ~/.local/share/nvim/site/pack/vendor/start
+          git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ~/.local/share/nvim/site/pack/vendor/start/plenary.nvim
+          git clone --depth 1 https://github.com/nvim-tree/nvim-web-devicons ~/.local/share/nvim/site/pack/vendor/start/nvim-web-devicons
+          ln -s $(pwd) ~/.local/share/nvim/site/pack/vendor/start
+
+      - name: Run tests
+        run: |
+          export PATH="${PWD}/_neovim/bin:${PATH}"
+          export VIM="${PWD}/_neovim/share/nvim/runtime"
+          nvim --version
+          make test
