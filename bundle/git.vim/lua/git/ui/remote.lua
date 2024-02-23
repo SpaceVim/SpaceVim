@@ -131,7 +131,7 @@ local function get_cursor_info()
   elseif vim.startswith(l, '        ') then
     local remote_line = vim.fn.search('^  ▼ ', 'bnW')
     if remote_line > 0 then
-      c.branch = string.gsub(string.sub(vim.fn.getline(remote_line), 7), updating_extra_text, '') .. string.sub(l, 12)
+      c.branch = string.gsub(string.sub(vim.fn.getline(remote_line), 7), updating_extra_text, '') .. '/' .. string.sub(l, 12)
     end
   end
 
