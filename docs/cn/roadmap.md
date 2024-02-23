@@ -37,7 +37,7 @@ lang: zh
   - [x] 使用 lua 重写 pastebin 插件
   - [x] 使得 `:A` 命令支持 toml 配置文件
   - [x] 增加 git 远程仓库管理插件
-    - [ ] 使用 `<cr>` 快捷键展示 git log
+    - [x] 使用 `<cr>` 快捷键展示 git log
     - [ ] 缓存远程仓库以及分支名称等信息
     - [ ] 基于项目路径存储信息
   - [x] 使用 lua 实现 `ctags#update` 函数

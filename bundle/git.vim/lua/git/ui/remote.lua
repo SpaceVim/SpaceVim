@@ -28,13 +28,12 @@ local fetch_remote_name = ''
 local help_info = {
   '" Git remote manager quickhelp',
   '" ============================',
-  '" <CR>:   checkout branch',
+  '" <CR>:    view git log',
   '" f:       fetch remote under cursor',
   '" o:       toggle display of branchs',
 }
 
 local bufnr = -1
-local winid = -1
 
 local bufname = ''
 
@@ -122,8 +121,6 @@ end
 
 local function enter_win() end
 
-local function checkout_branch() end
-
 local function get_cursor_info()
   local l = vim.fn.getline('.')
   local c = {}
@@ -131,6 +128,11 @@ local function get_cursor_info()
     c.remote = string.sub(l, 7)
   elseif vim.startswith(l, '  ▷ ') then
     c.remote = string.sub(l, 7)
+  elseif vim.startswith(l, '        ') then
+    local remote_line = vim.fn.search('^  ▼ ', 'bnW')
+    if remote_line > 0 then
+      c.branch = string.gsub(string.sub(vim.fn.getline('.'), 7), updating_extra_text, '') .. string.sub(l, 12)
+    end
   end
 
   if c.remote then
@@ -138,6 +140,14 @@ local function get_cursor_info()
   end
 
   return c
+end
+
+local function view_git_log()
+  local cursor_info = get_cursor_info()
+  if cursor_info.branch then
+    log.debug('run command:' .. 'Git log ' .. cursor_info.branch)
+    vim.api.nvim_command('Git log ' .. cursor_info.branch)
+  end
 end
 
 local function update_branch_stdout(id, data)
@@ -266,7 +276,6 @@ function M.open()
     })
   end
   vim.api.nvim_command('topleft vsplit __git_remote_manager__')
-  winid = vim.api.nvim_get_current_win()
   local lines = vim.o.columns * 20 / 100
   vim.api.nvim_command('vertical resize ' .. tostring(lines))
   vim.api.nvim_command(
@@ -284,7 +293,7 @@ function M.open()
     callback = enter_win,
   })
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Enter>', '', {
-    callback = checkout_branch,
+    callback = view_git_log,
   })
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'o', '', {
     callback = toggle_remote_branch,

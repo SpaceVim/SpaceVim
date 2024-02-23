@@ -36,7 +36,7 @@ The roadmap defines the project direction and priorities.
   - [x] implement pastebin plugin with lua
   - [x] make `:A` command support toml configuration file
   - [x] add git remote manager
-    - [ ] make `<cr>` show git log
+    - [x] make `<cr>` show git log
     - [ ] cache remote and branch info
     - [ ] cache info based on project root
   - [x] implement `ctags#update` in lua
