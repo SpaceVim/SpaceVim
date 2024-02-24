@@ -13,7 +13,7 @@ local log = require('git.log')
 
 -- script local valuables
 
-local show_help_infoo = false
+local show_help_info = false
 local update_branch_list_jobid = -1
 local update_branch_list_name = ''
 local update_branch_list_branches = {}
@@ -31,7 +31,13 @@ local help_info = {
   '" <CR>:    view git log',
   '" f:       fetch remote under cursor',
   '" o:       toggle display of branchs',
+  '" q:       close windows"'
 }
+
+
+-- project_manager support
+
+local project_manager_registered = false
 
 local bufnr = -1
 
@@ -74,7 +80,7 @@ local function update_buf_context()
     return
   end
   local context = {}
-  if show_help_infoo then
+  if show_help_info then
     for _, v in ipairs(help_info) do
       table.insert(context, v)
     end
@@ -231,10 +237,10 @@ local function toggle_remote_branch()
 end
 
 local function toggle_help()
-  if show_help_infoo then
-    show_help_infoo = false
+  if show_help_info then
+    show_help_info = false
   else
-    show_help_infoo = true
+    show_help_info = true
   end
   update_buf_context()
 end
@@ -269,6 +275,10 @@ local function fetch_remote()
 end
 
 function M.open()
+  if not project_manager_registered then
+    require('spacevim.plugin.projectmanager').reg_callback(M.on_cwd_changed)
+    project_manager_registered = true
+  end
   if bufnr ~= -1 and vim.api.nvim_buf_is_valid(bufnr) then
     vim.api.nvim_buf_delete(bufnr, {
       force = true,
@@ -304,6 +314,18 @@ function M.open()
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'f', '', {
     callback = fetch_remote,
   })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'q', '', {
+    callback = function ()
+      vim.cmd('quit')
+      show_help_info = false
+    end,
+  })
+end
+
+function M.on_cwd_changed()
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    update()
+  end
 end
 
 return M

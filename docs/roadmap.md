@@ -37,6 +37,7 @@ The roadmap defines the project direction and priorities.
   - [x] make `:A` command support toml configuration file
   - [x] add git remote manager
     - [x] make `<cr>` show git log
+    - [x] update remote context when switch project
     - [ ] cache remote and branch info
     - [ ] cache info based on project root
   - [x] implement `ctags#update` in lua

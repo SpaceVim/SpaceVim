@@ -158,8 +158,7 @@ local function compare(d1, d2)
   -- logger.debug('al is ' .. al)
   -- logger.debug('bl is ' .. bl)
   -- the project_rooter_outermost is 0/false or 1 true
-  if sp_opt.project_rooter_outermost == 0
-    or sp_opt.project_rooter_outermost == false then
+  if sp_opt.project_rooter_outermost == 0 or sp_opt.project_rooter_outermost == false then
     if bl >= al then
       return false
     else
@@ -344,8 +343,13 @@ function M.RootchandgeCallback()
   -- let b:_spacevim_project_name = g:_spacevim_project_name
   fn.setbufvar('%', '_spacevim_project_name', project.name)
   for _, Callback in pairs(project_callback) do
-    logger.debug('     run callback:' .. Callback)
-    fn.call(Callback, {})
+    if type(Callback) == 'string' then
+      logger.debug('     run callback:' .. Callback)
+      fn.call(Callback, {})
+    elseif type(Callback) == 'function' then
+      logger.debug('     run callback:' .. tostring(Callback))
+      pcall(Callback)
+    end
   end
 end
 
@@ -356,6 +360,9 @@ function M.reg_callback(func)
     else
       table.insert(project_callback, func)
     end
+  elseif type(func) == 'function' then
+    -- support lua function
+    table.insert(project_callback, func)
   else
     logger.warn('type of func is:' .. type(func))
     logger.warn('can not register the project callback: ' .. fn.string(func))
