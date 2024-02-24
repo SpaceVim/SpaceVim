@@ -85,7 +85,7 @@ local function update_buf_context()
       table.insert(context, v)
     end
   end
-  table.insert(context, 'Git Remotes:')
+  table.insert(context, '[in] ' .. vim.fn.getcwd())
   for _, v in ipairs(remotes) do
     local extra_text = ''
     if v.updating then

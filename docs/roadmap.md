@@ -41,6 +41,7 @@ The roadmap defines the project direction and priorities.
     - [x] use desc for project manager callback function
     - [ ] cache remote and branch info
     - [ ] cache info based on project root
+    - [x] display root path
   - [x] implement `ctags#update` in lua
   - [x] register project function with description
   - [x] update todo list when switch project
