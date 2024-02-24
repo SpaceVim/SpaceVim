@@ -11,6 +11,8 @@ local M = {}
 local sys = require('spacevim.api').import('system')
 local reg = require('spacevim.api').import('vim.regex')
 
+local project_manager_registered = false
+
 local bufnr = -1
 local todo_jobid = -1
 local todos = {}
@@ -280,8 +282,18 @@ end
 -- }}}
 
 function M.list() -- {{{
+  if not project_manager_registered then
+    require('spacevim.plugin.projectmanager').reg_callback(M.on_cwd_changed, 'update_todo_content')
+  end
   open_win()
 end
 -- }}}
+
+
+function M.on_cwd_changed()
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    update_todo_content()
+  end
+end
 
 return M

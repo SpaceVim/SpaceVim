@@ -38,9 +38,14 @@ The roadmap defines the project direction and priorities.
   - [x] add git remote manager
     - [x] make `<cr>` show git log
     - [x] update remote context when switch project
+    - [x] use desc for project manager callback function
     - [ ] cache remote and branch info
     - [ ] cache info based on project root
   - [x] implement `ctags#update` in lua
+  - [x] register project function with description
+  - [x] update todo list when switch project
+  - [x] make `one` coloscheme support treesitter
+
 
 ## Completed
 
