@@ -343,29 +343,38 @@ function M.RootchandgeCallback()
   -- let b:_spacevim_project_name = g:_spacevim_project_name
   fn.setbufvar('%', '_spacevim_project_name', project.name)
   for _, Callback in pairs(project_callback) do
-    if type(Callback) == 'string' then
-      logger.debug('     run callback:' .. Callback)
-      fn.call(Callback, {})
-    elseif type(Callback) == 'function' then
-      logger.debug('     run callback:' .. tostring(Callback))
-      pcall(Callback)
+    if type(Callback.func) == 'string' then
+      if Callback.desc then
+        logger.debug('     run callback:' .. Callback.desc)
+      else
+        logger.debug('     run callback:' .. Callback.func)
+      end
+      fn.call(Callback.func, {})
+    elseif type(Callback.func) == 'function' then
+      if Callback.desc then
+        logger.debug('     run callback:' .. Callback.desc)
+      else
+        logger.debug('     run callback:' .. tostring(Callback.func))
+      end
+      pcall(Callback.func)
     end
   end
 end
 
-function M.reg_callback(func)
-  if type(func) == 'string' then
-    if string.match(func, '^function%(') ~= nil then
-      table.insert(project_callback, string.sub(func, 11, -3))
-    else
-      table.insert(project_callback, func)
+function M.reg_callback(func, ...)
+  local callback = { func = func }
+  local argv = { ... }
+  if argv[1] then
+    callback.desc = argv[1]
+  end
+  if type(callback.func) == 'string' or type(callback.func) == 'function' then
+    if type(callback.func) == 'string' and string.match(callback.func, '^function%(') ~= nil then
+      callback.func = string.sub(callback.func, 11, -3)
     end
-  elseif type(func) == 'function' then
-    -- support lua function
-    table.insert(project_callback, func)
+    table.insert(project_callback, callback)
   else
-    logger.warn('type of func is:' .. type(func))
-    logger.warn('can not register the project callback: ' .. fn.string(func))
+    logger.warn('type of func is:' .. type(callback.func))
+    logger.warn('can not register the project callback: ' .. fn.string(callback.func))
   end
 end
 

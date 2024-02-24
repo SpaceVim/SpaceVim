@@ -34,10 +34,17 @@ if has('nvim-0.5.0')
   function! SpaceVim#plugins#projectmanager#RootchandgeCallback() abort
     lua require("spacevim.plugin.projectmanager").RootchandgeCallback()
   endfunction
-  function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
-    lua require("spacevim.plugin.projectmanager").reg_callback(
-          \ require("spacevim").eval("string(a:func)")
-          \ )
+  function! SpaceVim#plugins#projectmanager#reg_callback(func, ...) abort
+    if a:0 == 0
+      lua require("spacevim.plugin.projectmanager").reg_callback(
+            \ require("spacevim").eval("string(a:func)")
+            \ )
+    else
+      lua require("spacevim.plugin.projectmanager").reg_callback(
+            \ require("spacevim").eval("string(a:func)"),
+            \ require("spacevim").eval("a:1")
+            \ )
+    endif
   endfunction
   function! SpaceVim#plugins#projectmanager#current_root() abort
     return luaeval('require("spacevim.plugin.projectmanager").current_root()')
@@ -333,11 +340,12 @@ else
   endfunction
 
   let s:project_callback = []
-  function! SpaceVim#plugins#projectmanager#reg_callback(func) abort
+  function! SpaceVim#plugins#projectmanager#reg_callback(func, ...) abort
+    " support second argv
     if type(a:func) == 2
       call add(s:project_callback, a:func)
     else
-      call SpaceVim#logger#warn('can not register the project callback: ' . string(a:func))
+      call SpaceVim#logger#warn('can not register the project callback: ' . get(a:000, 0, string(a:func)))
     endif
   endfunction
 
@@ -384,13 +392,13 @@ else
     if name !=# ''
       call s:BUFFER.filter_do(
             \ {
-              \ 'expr' : [
-                \ 'buflisted(v:val)',
-                \ 'getbufvar(v:val, "_spacevim_project_name") == "' . name . '"',
-                \ ],
-                \ 'do' : 'bd %d'
-                \ }
-                \ )
+            \ 'expr' : [
+            \ 'buflisted(v:val)',
+            \ 'getbufvar(v:val, "_spacevim_project_name") == "' . name . '"',
+            \ ],
+            \ 'do' : 'bd %d'
+            \ }
+            \ )
     endif
 
   endfunction

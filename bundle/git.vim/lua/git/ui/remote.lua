@@ -276,7 +276,7 @@ end
 
 function M.open()
   if not project_manager_registered then
-    require('spacevim.plugin.projectmanager').reg_callback(M.on_cwd_changed)
+    require('spacevim.plugin.projectmanager').reg_callback(M.on_cwd_changed, 'git_remote_on_cwd_changed')
     project_manager_registered = true
   end
   if bufnr ~= -1 and vim.api.nvim_buf_is_valid(bufnr) then
