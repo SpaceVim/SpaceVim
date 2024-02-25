@@ -2056,6 +2056,86 @@ endfunction
 " The footer is optional and is used to reference issue tracker IDs.
 
 ""
+" @section merge requese, dev-merge-request
+" @parentsection dev
+" 
+" @subsection Steps
+"
+" The following steps describe how to create a new merge request using mail.
+" 
+" 1. create new empty repository on github，gitlab or any other platform.
+" 2. clone your repository 
+" >
+"   git clone ${YOUR_OWN_REPOSITORY_URL}
+" <
+" 3. add upstream remote
+" >
+"   git remote add upstream https://spacevim.org/git/repos/SpaceVim/
+" <
+" 4. create new branch based on `upstream/master`
+" >
+"   git fetch upstream
+"   git checkout -b new_branch upstream/master
+" <
+" 5. edit, commit and push to your own repository
+" >
+"   git push -u origin
+" <
+" 6. send merge request to mail list.
+"   
+"     email address: `spacevim@googlegroups.com`
+"     
+"     email title:
+" 
+"     The title of the email should contain one of the following prefixes::
+" 
+"     `Add:` Adding new features.
+"
+"     `Change:` Change default behaviors or the existing features.
+"
+"     `Fix:` Fix some bugs.
+"
+"     `Remove:` Remove some existing features.
+"
+"     `Doc:` Update the help files.
+"
+"     `Website:` Update the content of website.
+" 
+"     Here is an example:
+" 
+"     `Website: Update the lang#c layer page.`
+" 
+"     Email context:
+" 
+"     The context should contain the url of repository and the branch name.
+"
+"     It is better to add some description about the changes. For example:
+"     >
+"     repo url: https://gitlab.com/wsdjeg/hello.git
+"     branch: fix_scrollbar
+" 
+"     when switch windows, the highlight of scrollbar is wrong.
+"     here is the reproduce steps:
+" 
+"     。。。。
+"     <
+" 
+" @subsection Simple PRs
+" 
+" 1. Branch from `master`
+" 2. One topic per PR
+" 3. One commit per PR
+" 4. If you have several commits on different topics, close the PR and create one PR per topic
+" 5. If you still have several commits, squash them into only one commit
+" 
+" @subsection Complex PRs
+" 
+" Squash only the commits with uninteresting changes like typos, syntax fixes, etc.
+" And keep the important and isolated steps in different commits.
+" 
+" Those PRs are merged and explicitly not fast-forwarded.
+
+""
 " @section alternate file, usage-alternate-file
 " @parentsection usage
 " SpaceVim provides a built-in alternate file manager, the command is `:A`.
@@ -2143,9 +2223,17 @@ endfunction
 
 ""
 " @section Changelog, changelog
-" Following HEAD: changes in master branch since last release v2.0.0
+" Following HEAD: changes in master branch since last release v2.2.0
 "
-" https://github.com/SpaceVim/SpaceVim/wiki/Following-HEAD
+" https://spacevim.org/following-head/
+"
+" 2023-07-05: v2.2.0
+"
+" https://spacevim.org/SpaceVim-release-v2.2.0/
+"
+" 2023-03-30: v2.1.0
+"
+" https://spacevim.org/SpaceVim-release-v2.1.0/
 "
 " 2022-07-02: v2.0.0
 "
