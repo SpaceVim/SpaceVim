@@ -111,6 +111,9 @@ endfunction
 
 function! s:close_log_win() abort
   call s:closeShowCommitWindow()
+  " @todo check if it is last win in current tab
+  "
+  " if it is the last win in current tab, use `:quit` instead
   try
     bp
   catch /^Vim\%((\a\+)\)\=:E85/
