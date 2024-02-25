@@ -46,6 +46,7 @@ The roadmap defines the project direction and priorities.
   - [x] register project function with description
   - [x] update todo list when switch project
   - [x] make `one` coloscheme support treesitter
+  - [x] quit git log win when it is last win
 
 
 ## Completed

@@ -1,5 +1,6 @@
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
+let s:WIN = SpaceVim#api#import('vim#window')
 let s:NOTI = SpaceVim#api#import('notify')
 
 let g:git_log_pretty = 'tformat:%Cred%h%Creset - %s %Cgreen(%an %ad)%Creset'
@@ -109,11 +110,26 @@ function! s:openShowCommitBuffer() abort
   return bufnr('%')
 endfunction
 
+function! s:is_last_win() abort
+  let num = winnr('$')
+  for i in range(1,num)
+    if s:WIN.is_float(win_getid(i))
+      let num = num - 1
+    endif
+  endfor
+  if num == 1
+    return 1
+  endif
+  
+endfunction
+
 function! s:close_log_win() abort
   call s:closeShowCommitWindow()
-  " @todo check if it is last win in current tab
-  "
-  " if it is the last win in current tab, use `:quit` instead
+  if tabpagenr('$') > 1 && s:is_last_win()
+    quit
+    return
+  endif
+
   try
     bp
   catch /^Vim\%((\a\+)\)\=:E85/
