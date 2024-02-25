@@ -74,6 +74,7 @@ local function create_scrollbar_buffer(size, lines)
   if not vim.api.nvim_buf_is_valid(scrollbar_bufnr) then
     scrollbar_bufnr = vim.api.nvim_create_buf(false, true)
   end
+  vim.api.nvim_buf_set_option(scrollbar_bufnr, 'buftype', 'nofile')
   vim.api.nvim_buf_set_lines(scrollbar_bufnr, 0, -1, false, lines)
   add_highlight(scrollbar_bufnr, size)
   return scrollbar_bufnr
