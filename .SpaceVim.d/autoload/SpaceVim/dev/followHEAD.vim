@@ -7,12 +7,40 @@
 "=============================================================================
 
 let s:AUTODOC = SpaceVim#api#import('dev#autodoc')
-let s:AUTODOC.begin = '^<!-- SpaceVim follow HEAD en start -->$'
-let s:AUTODOC.end = '^<!-- SpaceVim follow HEAD en end -->$'
+let s:AUTODOC.begin = '^<!-- SpaceVim follow HEAD start -->$'
+let s:AUTODOC.end = '^<!-- SpaceVim follow HEAD end -->$'
+
 
 function! s:generate_content(lang) abort
-  let content = SpaceVim#dev#releases#parser_prs(a:lang)
-  return content
+  if a:lang == 'cn'
+    let features = ['## 新特性', '']
+    let bugfixs = ['', '## 问题修复', '']
+    let docs = ['', '## 文档更新', '']
+    let tests = ['', '## 测试', '']
+    let others = ['', '## 其他', '']
+  else
+    let features = ['## New features', '']
+    let bugfixs = ['', '## Bugfixs', '']
+    let docs = ['', '## Docs', '']
+    let tests = ['', '## Tests', '']
+    let others = ['', '## Others', '']
+  endif
+  let logs = systemlist('git log --oneline --pretty="- %s" 8a7ec458..HEAD')
+  for l in logs
+    if l =~ '^- feat(' || l =~ '^- perf('
+      call add(features, l)
+    elseif l =~ '^- fix('
+      call add(bugfixs, l)
+    elseif l =~ '^- docs('
+      call add(docs, l)
+    elseif l =~ '^- test('
+      call add(tests, l)
+    else
+      call add(others, l)
+    endif
+  endfor
+
+  return features + bugfixs + docs + tests + others
 endfunction
 
 let s:AUTODOC.content_func = function('s:generate_content')
