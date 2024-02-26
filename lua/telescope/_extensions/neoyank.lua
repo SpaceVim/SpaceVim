@@ -4,6 +4,7 @@ local conf = require("telescope.config").values
 local entry_display = require("telescope.pickers.entry_display")
 local finders = require("telescope.finders")
 local pickers = require("telescope.pickers")
+local notify = require('spacevim.api.notify')
 
 local function prepare_neoyank_output(register)
     local lines = {}
@@ -54,9 +55,7 @@ local function show_yank_history(opts)
                 vim.fn.setreg('"', entry.value[1])
                 local ok, rst = pcall(vim.cmd, 'normal! p')
                 if not ok then
-                  vim.g._spacevim_temp_err = rst
-                  -- @todo implement lua notify api
-                  local notify = vim.api.nvim_eval('SpaceVim#api#notify#get().notify(g:_spacevim_temp_err, "WarningMsg")')
+                  notify.notify(rst, 'WarningMsg')
                 end
                 vim.fn.setreg('"', reg)
             end)
