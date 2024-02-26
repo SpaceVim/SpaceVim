@@ -22,6 +22,7 @@ local cmds = {
   'rm',
   'shortlog',
   'status',
+  'tag',
 }
 local supported_commands = {}
 

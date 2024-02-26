@@ -27,6 +27,7 @@ The roadmap defines the project direction and priorities.
     - [x] `:Git blame`
     - [x] `:Git cherry-pick`
     - [x] `:Git shortlog`
+    - [x] `:Git tag`
     - [x] plugin log manager derived from SPC runtime logger
   - [x] rewrite code runner with lua
   - [x] rewrite task manager with lua
@@ -47,7 +48,6 @@ The roadmap defines the project direction and priorities.
   - [x] update todo list when switch project
   - [x] make `one` coloscheme support treesitter
   - [x] quit git log win when it is last win
-
 
 ## Completed
 

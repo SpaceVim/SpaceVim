@@ -28,6 +28,7 @@ lang: zh
     - [x] `:Git blame`
     - [x] `:Git cherry-pick`
     - [x] `:Git shortlog`
+    - [x] `:Git tag`
     - [x] 日志系统整合至 SpaceVim 运行时日志
   - [x] 使用 lua 重写 code runner
   - [x] 使用 lua 重写 task manager
@@ -39,9 +40,15 @@ lang: zh
   - [x] 增加 git 远程仓库管理插件
     - [x] 使用 `<cr>` 快捷键展示 git log
     - [x] 切换项目时，更新 remote 窗口信息
+    - [x] 注册项目管理函数时，使用描述信息
     - [ ] 缓存远程仓库以及分支名称等信息
     - [ ] 基于项目路径存储信息
+    - [x] 显示根目录地址
   - [x] 使用 lua 实现 `ctags#update` 函数
+  - [x] 项目管理插件注册函数增加描述支持
+  - [x] 切换项目时，更新 todo 管理插件窗口内容
+  - [x] 为主题 `one` 增加 treesitter 支持
+  - [x] 最后一个窗口时，关闭 git log 页面
 
 ## 已完成版本
 
