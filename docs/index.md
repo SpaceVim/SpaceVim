@@ -3,11 +3,11 @@ title: "Home"
 description: "SpaceVim is a modular Vim/Neovim configuration that seeks to provide layer feature."
 ---
 
-[![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![matrix](https://img.spacevim.org/spacevim-matrix.svg)](https://app.element.io/#/room/#spacevim:matrix.org)
 [![Telegram](https://img.spacevim.org/telegram-spacevim.svg)](https://t.me/SpaceVim/)
-[![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
+[![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#license)
+[![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
 
 ![welcome page](https://img.spacevim.org/release-v2.2.0.png)
 
@@ -22,7 +22,7 @@ what packages to install.
 - [Documentation](documentation/): the primary official documentation of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The project is currently under active development and the latest stable release is [`v2.2.0`](https://spacevim.org/SpaceVim-release-v2.2.0/) which was released at 2023-07-05,
+The project is currently under active development and the latest stable release is [v2.2.0](https://spacevim.org/SpaceVim-release-v2.2.0/) which was released at 2023-07-05,
 check out [following-HEAD](following-head/) page for what happened since last release. The [roadmap](roadmap/) page defines the project direction and priorities.
 
 ## New features
