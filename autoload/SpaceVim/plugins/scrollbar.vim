@@ -118,7 +118,7 @@ function! s:create_scrollbar_buffer(size, lines) abort
   endif
   call s:BUF.buf_set_lines(s:scrollbar_bufnr, 0, -1, 0, a:lines)
   call s:add_highlight(s:scrollbar_bufnr, a:size)
-  call setbufvar(s:create_scrollbar_buffer, '&buftype', 'nofile')
+  call setbufvar(s:scrollbar_bufnr, '&buftype', 'nofile')
   return s:scrollbar_bufnr
 endfunction
 
