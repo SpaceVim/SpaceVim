@@ -30,8 +30,6 @@
 " 3. enable_json5: Enable/Disable json5 support. Enabled by default.
 
 if exists('s:conceal')
-  " @bug s:conceal always return 0
-  "
   " because this script will be loaded twice. This is the feature of vim,
   " when call an autoload func, vim will try to load the script again
   finish

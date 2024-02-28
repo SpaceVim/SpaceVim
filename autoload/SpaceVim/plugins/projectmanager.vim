@@ -195,8 +195,16 @@ else
     augroup END
   endif
   function! s:find_root_directory() abort
-    " @question confused about expand and fnamemodify
+    " confused about expand and fnamemodify
     " ref: https://github.com/vim/vim/issues/6793
+    " response from Bram Moolenaar
+    " When there is no file name there also isn't a directory in which that
+    " file exists.  Perhaps expand('%:p') should result in an error.
+    " Returning an empty string is basically the same as returning an error.
+    "
+    " fnamemodify() doesn't use the current file name.  Now what should it do
+    " with an empty string?  Not sure.  Anyway, the current behavoir is what
+    " users rely on, so let's not change it.
 
 
     " get the current path of buffer or working dir

@@ -186,7 +186,7 @@ else
     call s:LOGGER.info('  >   type: ' . get(a:000, 0, 'alternate'))
     call s:LOGGER.info('  >  parse: ' . a:request_parse)
     call s:LOGGER.info('  > config: ' . a:conf_path)
-    " @question when should the cache be loaded?
+    " when should the cache be loaded?
     " if the local value s:project_config do not has the key a:conf_path
     " and the file a:conf_path has not been updated since last cache
     " and no request_parse specified
@@ -232,12 +232,11 @@ else
   function! s:parse(alt_config_json) abort
     call s:LOGGER.info('Start to parse alternate files for: ' . a:alt_config_json.root)
     let s:project_config[a:alt_config_json.root] = {}
-    " @question why need sory()
-    " if we have two key docs/*.md and docs/cn/*.md
+    " if we have two keys docs/*.md and docs/cn/*.md
     " with the first key, we can also find files in
     " docs/cn/ directory, for example docs/cn/index.md
     " and the alt file will be
-    " docs/cn/cn/index.md. this should be overrided by login in
+    " docs/cn/cn/index.md. this should be overrided by
     " docs/cn/*.md
     "
     " so we need to use sort, and make sure `docs/cn/*.md` is parsed after

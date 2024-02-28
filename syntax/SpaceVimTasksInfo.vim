@@ -7,7 +7,6 @@ syntax case ignore
 syn match TaskName /^\[.*\]/
 syn match TaskTitle /^Task\s\+Type\s\+Command/
 
-" @question Why \zs does not work in syntax file?
 " ref:
 " https://github.com/vim/vim/issues/598
 " https://stackoverflow.com/questions/49323753/vim-syntax-file-not-matching-with-zs
