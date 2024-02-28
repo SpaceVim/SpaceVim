@@ -574,13 +574,13 @@ function! SpaceVim#layers#core#statusline#get(...) abort
   elseif &filetype ==# 'SpaceVimWinDiskManager'
     return '%#SpaceVim_statusline_a# WinDisk %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimTodoManager'
-    return '%#SpaceVim_statusline_a# TODO manager %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+    return '%#SpaceVim_statusline_ia# TODO manager %#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimTasksInfo'
     return '%#SpaceVim_statusline_a# Tasks manager %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimGitBranchManager'
-    return '%#SpaceVim_statusline_a# Branch manager %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+    return '%#SpaceVim_statusline_ia# Branch manager %#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimGitRemoteManager'
-    return '%#SpaceVim_statusline_a# Remote manager %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+    return '%#SpaceVim_statusline_ia# Remote manager %#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
   elseif &filetype ==# 'SpaceVimPlugManager'
     return '%#SpaceVim_statusline_a#' . s:winnr(1) . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# PlugManager %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
@@ -612,19 +612,19 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_c# %{getcwd()} %#SpaceVim_statusline_c_SpaceVim_statusline_b#' . s:lsep
           \ . '%#SpaceVim_statusline_b# %{SpaceVim#plugins#flygrep#lineNr()} %#SpaceVim_statusline_b_SpaceVim_statusline_z#' . s:lsep . ' '
   elseif &filetype ==# 'TransientState'
-    return '%#SpaceVim_statusline_a# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+    return '%#SpaceVim_statusline_ia# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'SpaceVimLog'
-    return '%#SpaceVim_statusline_a# SpaceVim Runtime log %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+    return '%#SpaceVim_statusline_ia# SpaceVim Runtime log %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'SpaceVimTomlViewer'
-    return '%#SpaceVim_statusline_a# Toml Json Viewer %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+    return '%#SpaceVim_statusline_ia# Toml Json Viewer %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'vimcalc'
     return '%#SpaceVim_statusline_a#' . s:winnr() . ' VimCalc %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'HelpDescribe'
     return '%#SpaceVim_statusline_a# HelpDescribe %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'SpaceVimRunner'
-    return '%#SpaceVim_statusline_a# Runner %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#runner#status()}'
+    return '%#SpaceVim_statusline_ia# Runner %#SpaceVim_statusline_ia_SpaceVim_statusline_b# %{SpaceVim#plugins#runner#status()}'
   elseif &filetype ==# 'SpaceVimREPL'
-    return '%#SpaceVim_statusline_a#'
+    return '%#SpaceVim_statusline_ia#'
           \ . ' REPL '
           \ . '%#SpaceVim_statusline_a_SpaceVim_statusline_b#'
           \ . s:lsep
