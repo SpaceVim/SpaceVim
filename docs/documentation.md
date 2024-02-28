@@ -147,13 +147,11 @@ packages tuned by power users and bugs are fixed quickly.
 
 **workflow**
 
-![work-flow](https://img.spacevim.org/6af0b728-2a9d-11e7-9721-d2a694dde1a8.png)
+![work-flow](https://img.spacevim.org/workflow.png)
 
-Neovim on iTerm2 using the SpaceVim color scheme _base16-solarized-dark_
-
-Depicts a common frontend development scenario with JavaScript (jQuery), SASS, and PHP buffers.
-
-Non-code buffers show a Neovim terminal, a TagBar window, a Vimfiler window and a TernJS definition window.
+- colorscheme: one
+- windows: Git remotes, outline, Todos, Code runner, Terminal, file explore.
+- code completion engine: nvim-cmp
 
 ## Concepts
 
