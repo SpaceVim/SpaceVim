@@ -2007,6 +2007,17 @@ endfunction
 " We encourage you to participate in SpaceVim's development.
 " We have some guidelines that we need all contributors to follow.
 
+""
+" @section License, dev-license
+" @parentsection dev
+" The license is GPLv3 for all the parts of SpaceVim. This includes:
+" 1. The initialization and core files.
+" 2. All the layer files.
+" 3. The documentation
+"
+" For files not belonging to SpaceVim like bundle packages,
+" refer to the header file. Those files should not have an empty header,
+" we may not accept code without a proper header file.
 
 ""
 " @section commit-style-guide, dev-commit-style-guide
