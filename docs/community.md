@@ -41,3 +41,5 @@ To subscribe the maillist, send anything to：[spacevim+subscribe@googlegroups.c
 - Matrix room: [`#spacevim:matrix.org`](https://app.element.io/#/room/#spacevim:matrix.org)
 - Telegram group: [`t.me/SpaceVim`](https://t.me/SpaceVim)
 - Reddit: [`/r/SpaceVim/`](https://www.reddit.com/r/SpaceVim/)
+- Discord: [`#spacevim`](https://discord.gg/xcRQnF8)
+- Slack: [SpaceVim](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)

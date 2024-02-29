@@ -44,3 +44,5 @@ lang: zh
 - Matrix room: [`#spacevim-cn:matrix.org`](https://app.element.io/#/room/#spacevim-cn:matrix.org)
 - Telegram group: [`t.me/SpaceVim_CN`](https://t.me/SpaceVim_CN)
 - Reddit: [`/r/SpaceVim/`](https://www.reddit.com/r/SpaceVim/)
+- Discord: [`#spacevim-cn`](https://discord.gg/g3MGdNB)
+- Slack: [SpaceVim](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)
