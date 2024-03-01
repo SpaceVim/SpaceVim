@@ -25,10 +25,11 @@ local function update_buffer_context()
     end
     table.insert(context, '  ' .. b.name)
   end
-
-  vim.api.nvim_buf_set_option(branch_manager_bufnr, 'modifiable', true)
-  vim.api.nvim_buf_set_lines(branch_manager_bufnr, 0, -1, false, context)
-  vim.api.nvim_buf_set_option(branch_manager_bufnr, 'modifiable', false)
+  if branch_manager_bufnr ~= -1 and vim.api.nvim_buf_is_valid(branch_manager_bufnr) then
+    vim.api.nvim_buf_set_option(branch_manager_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(branch_manager_bufnr, 0, -1, false, context)
+    vim.api.nvim_buf_set_option(branch_manager_bufnr, 'modifiable', false)
+  end
 end
 
 local function on_stdout(id, data)
@@ -97,7 +98,7 @@ local function delete_branch()
     if vim.startswith(line, '  * ') then
     elseif vim.startswith(line, ' ') then
       local branch = vim.trim(line)
-      vim.cmd('Git checkout -d ' .. branch)
+      vim.cmd('Git branch -d ' .. branch)
     end
   end
 end
