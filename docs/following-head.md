@@ -26,6 +26,10 @@ The next release is `v0.2.3`
 <!-- SpaceVim follow HEAD start -->
 ## New features
 
+- perf(project): display path relative to the home directory
+- feat(git): add git branch sidebar
+- feat(git): rewrite `:Git branch` with lua
+- feat(dev): update fellowing head vim function
 - feat(git): add `:Git tag` command
 - perf(neoyank): use notify api
 - feat(git): quit git log win when it is last win
@@ -83,6 +87,9 @@ The next release is `v0.2.3`
 
 ## Bugfixs
 
+- fix(git): fix delete_branch function && check bufnr
+- fix(statusline): fix statusline highlight
+- fix(scrollbar): fix scrollbar for vim
 - fix(scrollbar): fix unsaved error
 - fix(git): ignore remote manager when close win
 - fix(telescope): fix telescope loadconf
@@ -114,6 +121,9 @@ The next release is `v0.2.3`
 
 ## Docs
 
+- docs(community): add discord and slack link
+- docs(screenshot): update workflow screenshot
+- docs(license): add `:h spacevim-dev-license`
 - docs(index): update index page
 - docs(help): add `:h SpaceVim-dev-merge-request`
 - docs(faq): change repo url
@@ -184,6 +194,7 @@ The next release is `v0.2.3`
 
 ## Others
 
+- chore(todo): remove todo tag
 - chore(conduct): remove CODE_OF_CONDUCT.md
 - chore(todo): add todo item for git log
 - chore(telescope): update telescope to 0.1.5
