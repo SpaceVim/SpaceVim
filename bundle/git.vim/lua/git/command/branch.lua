@@ -119,6 +119,13 @@ function M.run(argv)
 
   local cmd = { 'git', 'branch' }
 
+  if #argv == 0 then
+
+    require('git.ui.branch').open()
+
+    return
+  end
+
   if argv then
     for _, v in ipairs(argv) do
       table.insert(cmd, v)
