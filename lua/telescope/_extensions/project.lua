@@ -5,6 +5,7 @@ local entry_display = require('telescope.pickers.entry_display')
 local finders = require('telescope.finders')
 local pickers = require('telescope.pickers')
 local pm = require('spacevim.plugin.projectmanager')
+local file = require('spacevim.api.file')
 
 local function get_all_projects()
   local p = {}
@@ -30,7 +31,7 @@ local function show_changes(opts)
     -- print(vim.inspect(entry))
     return displayer({
       { '[' .. entry.value.name .. ']', 'TelescopeResultsVariable' },
-      { entry.value.path, 'TelescopeResultsFunction' },
+      { file.unify_path(entry.value.path, ':~'), 'TelescopeResultsFunction' },
       {
         '<' .. vim.fn.strftime('%Y-%m-%d %T', entry.value.opened_time) .. '>',
         'TelescopeResultsComment',
