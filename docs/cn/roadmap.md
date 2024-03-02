@@ -12,28 +12,47 @@ lang: zh
 
 - `v2.4.0`
   - [ ] 使用 lua 重写状态栏插件
-
+  - [ ] 使用 lua 重写 tabline
+  - [ ] 将网站内容合并至 `:h SpaceVim`
 - `v2.3.0`
   - [x] 基于luv的新的异步`job`公共函数
   - [x] 使用 lua 重写 flygrep
     - [x] 使用新的 `job` 函数替换 `vim.fn.jobstart`
   - [ ] 使用 lua 重写 git.vim
     - [x] `:Git add`
+    - [x] `:Git blame`
+    - [x] `:Git branch`
+      - [x] 使用 lua 重写分支管理侧栏
+    - [x] `:Git checkout`
+    - [x] `:Git cherry-pick`
     - [x] `:Git clean`
+    - [x] `:Git commit`
+    - [ ] `:Git config`
+    - [x] `:Git diff`
     - [x] `:Git fetch`
+    - [x] `:Git log`
+      - [x] 最后一个窗口时，关闭 git log 页面
+    - [x] `:Git merge`
+    - [x] `:Git mv`
+    - [x] `:Git pull`
+    - [x] `:Git push`
+    - [ ] `:Git rebase`
+    - [ ] `:Git reflog`
     - [x] `:Git remote`
     - [x] `:Git reset`
     - [x] `:Git rm`
-    - [x] `:Git mv`
-    - [x] `:Git blame`
-    - [x] `:Git cherry-pick`
-    - [x] `:Git shortlog`
-    - [x] `:Git tag`
+    - [x] `:Git shortlog` (lua)
+    - [ ] `:Git shortlog` (viml)
+    - [x] `:Git tag` (lua)
+    - [ ] `:Git tag` (viml)
+    - [ ] `:Git stash`
+    - [x] `:Git status`
     - [x] 日志系统整合至 SpaceVim 运行时日志
   - [x] 使用 lua 重写 code runner
   - [x] 使用 lua 重写 task manager
   - [x] 使用 lua 重写 repl 插件
   - [x] 使用 lua 重写 scrollbar 插件
+    - [x] 修复 scrollbar 为保存文件报错
   - [x] 使用 lua 重写 快捷键插件 leader guide
   - [x] 使用 lua 重写 pastebin 插件
   - [x] 使得 `:A` 命令支持 toml 配置文件
@@ -48,7 +67,10 @@ lang: zh
   - [x] 项目管理插件注册函数增加描述支持
   - [x] 切换项目时，更新 todo 管理插件窗口内容
   - [x] 为主题 `one` 增加 treesitter 支持
-  - [x] 最后一个窗口时，关闭 git log 页面
+  - [x] add `:h SpaceVim-dev-merge-request`
+  - [x] add `:h spacevim-dev-license`
+  - [x] 修复部分插件缓冲区状态栏高亮问题
+  - [ ] 修复 `spacevim.org` 网站 404 页面
 
 ## 已完成版本
 

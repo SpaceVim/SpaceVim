@@ -20,20 +20,34 @@ If you have any suggestions , please checkout feedback section on [community](..
     - [x] use new `job` api
   - [ ] rewrite git.vim with lua.
     - [x] `:Git add`
+    - [x] `:Git blame`
+    - [x] `:Git branch`
+      - [x] rewrite branch manager with lua
+    - [x] `:Git checkout`
+    - [x] `:Git cherry-pick`
     - [x] `:Git clean`
+    - [x] `:Git commit`
+    - [ ] `:Git config`
+    - [x] `:Git diff`
     - [x] `:Git fetch`
+    - [x] `:Git log`
+      - [x] quit git log win when it is last win
+    - [x] `:Git merge`
+    - [x] `:Git mv`
+    - [x] `:Git pull`
+    - [x] `:Git push`
+    - [ ] `:Git rebase`
+    - [ ] `:Git reflog`
     - [x] `:Git remote`
     - [x] `:Git reset`
     - [x] `:Git rm`
-    - [x] `:Git mv`
-    - [x] `:Git blame`
-    - [x] `:Git cherry-pick`
-    - [x] `:Git shortlog`
-    - [x] `:Git tag`
-    - [x] `:Git branch`
-      - [x] add git branch manager, a sidebar
+    - [x] `:Git shortlog` (lua)
+    - [ ] `:Git shortlog` (viml)
+    - [x] `:Git tag` (lua)
+    - [ ] `:Git tag` (viml)
+    - [ ] `:Git stash`
+    - [x] `:Git status`
     - [x] plugin log manager derived from SPC runtime logger
-    - [x] quit git log win when it is last win
   - [x] rewrite code runner with lua
   - [x] rewrite task manager with lua
   - [x] rewrite repl plugin with lua
