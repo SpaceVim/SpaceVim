@@ -3,6 +3,7 @@ local M = {}
 local job = require('spacevim.api.job')
 local nt = require('spacevim.api.notify')
 local log = require('git.log')
+local win = require('spacevim.api.vim.window')
 
 local diff_lines = {}
 local jobid = -1
@@ -30,10 +31,10 @@ local function on_stderr(id, data)
 end
 
 local function close_diff_win()
-  if vim.fn.winnr('$') > 1 then
-    vim.cmd('close')
-  else
+  if win.is_last_win() then
     vim.cmd('bd!')
+  else
+    vim.cmd('close')
   end
 end
 

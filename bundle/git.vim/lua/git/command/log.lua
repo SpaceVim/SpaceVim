@@ -18,19 +18,8 @@ local function close_commit_win()
   end
 end
 
-local function is_last_win()
-  local win_list = vim.api.nvim_tabpage_list_wins(0)
-  local num = #win_list
-  for _, v in ipairs(win_list) do
-    if win.is_float(v) then
-      num = num - 1
-    end
-  end
-  return num == 1
-end
-
 local function close_log_win()
-  if vim.fn.tabpagenr('$') > 1 and is_last_win() then
+  if vim.fn.tabpagenr('$') > 1 and win.is_last_win() then
     vim.cmd('quit')
     return
   end
