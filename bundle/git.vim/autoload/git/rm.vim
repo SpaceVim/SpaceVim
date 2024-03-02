@@ -9,7 +9,6 @@
 
 let s:JOB = SpaceVim#api#import('job')
 
-" @todo rewrite Git rm in lua
 function! git#rm#run(files) abort
 
     if len(a:files) == 1 && a:files[0] ==# '%'

@@ -358,7 +358,9 @@ else
   endfunction
 
   function! SpaceVim#plugins#projectmanager#current_root() abort
-    " @todo skip some plugin buffer
+    " skip specific buffer for plugins
+    " - denite.nvim
+    " - defx
     if bufname('%') =~# '\[denite\]'
           \ || bufname('%') ==# 'denite-filter'
           \ || bufname('%') ==# '\[defx\]'
