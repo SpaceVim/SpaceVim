@@ -603,27 +603,27 @@ To enable the scrollbar, you need to change `enable_scrollbar` option in [ui lay
 
 Some UI indicators can be toggled on and off (toggles start with t and T):
 
-| Key Bindings | Descriptions                                                               |
-| ------------ | -------------------------------------------------------------------------- |
-| `SPC t 8`    | highlight characters past the 80th column                                  |
-| `SPC t a`    | toggle autocomplete (only available with `autocomplete_method = deoplete`) |
-| `SPC t f`    | display the fill column (by default `max_column` is 120)                   |
-| `SPC t h h`  | toggle highlight of the current line                                       |
-| `SPC t h i`  | toggle highlight indentation levels                                        |
-| `SPC t h c`  | toggle highlight current column                                            |
-| `SPC t h s`  | toggle syntax highlighting                                                 |
-| `SPC t i`    | toggle indentation guide at point                                          |
-| `SPC t n`    | toggle line numbers                                                        |
-| `SPC t b`    | toggle background                                                          |
-| `SPC t c`    | toggle conceal                                                             |
-| `SPC t p`    | toggle paste mode                                                          |
-| `SPC t P`    | toggle auto parens mode                                                    |
-| `SPC t t`    | open tabs manager                                                          |
-| `SPC T ~`    | display ~ in the fringe on empty lines                                     |
-| `SPC T F`    | toggle frame fullscreen                                                    |
-| `SPC T f`    | toggle display of the fringe                                               |
-| `SPC T m`    | toggle menu bar                                                            |
-| `SPC T t`    | toggle tool bar                                                            |
+| Key Bindings      | Descriptions                                                               |
+| ----------------- | -------------------------------------------------------------------------- |
+| `SPC t 8`         | highlight characters past the 80th column                                  |
+| `SPC t a`         | toggle autocomplete (only available with `autocomplete_method = deoplete`) |
+| `SPC t f`         | display the fill column (by default `max_column` is 120)                   |
+| `SPC t h h`       | toggle highlight of the current line                                       |
+| `SPC t h i`       | toggle highlight indentation levels                                        |
+| `SPC t h c`       | toggle highlight current column                                            |
+| `SPC t h s`       | toggle syntax highlighting                                                 |
+| `SPC t i`         | toggle indentation guide at point                                          |
+| `SPC t n`         | toggle line numbers                                                        |
+| `SPC t b`         | toggle background                                                          |
+| `SPC t c`         | toggle conceal                                                             |
+| `SPC t p`         | toggle paste mode                                                          |
+| `SPC t P`         | toggle auto parens mode                                                    |
+| `SPC t t`         | open tabs manager                                                          |
+| `SPC T ~`         | display ~ in the fringe on empty lines                                     |
+| `SPC T F` / `F11` | toggle frame fullscreen                                                    |
+| `SPC T f`         | toggle display of the fringe                                               |
+| `SPC T m`         | toggle menu bar                                                            |
+| `SPC T t`         | toggle tool bar                                                            |
 
 ### Statusline
 
@@ -717,8 +717,8 @@ It is possible to easily customize the statusline separator by setting the `stat
 
 Here is an exhaustive set of screenshots for all the available separators:
 
-| Separator | Screenshot                                                                                                                |
-| --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Separator | Screenshot                                                                            |
+| --------- | ------------------------------------------------------------------------------------- |
 | `arrow`   | ![separator-arrow](https://img.spacevim.org/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
 | `curve`   | ![separator-curve](https://img.spacevim.org/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
 | `slant`   | ![separator-slant](https://img.spacevim.org/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
@@ -2409,7 +2409,6 @@ Example:
 
 ![todo manager](https://img.spacevim.org/61462920-0bd9d000-a9a6-11e9-8e1f-c70d6ec6ca1e.png)
 
-
 **Known bug:**
 
 If you are using windows, and `grep.exe` do not support searching in subdirectory. and the stderr will shown:
@@ -2496,7 +2495,7 @@ The default color for iedit is `red`/`green` which is based on the current color
 
 SpaceVim provides an asynchronous code runner plugin. In most language layers,
 the key binding `SPC l r` is defined for running the current buffer.
-To close the code runner windows, you can use `` Ctrl-`  `` key binding.
+To close the code runner windows, you can use ``Ctrl-` `` key binding.
 If you need to add new commands, you can use the bootstrap function. For example:
 Use `F5` to build the project asynchronously.
 
@@ -2597,7 +2596,7 @@ Custom sign symbol:
 
 | Symbol | Descriptions | Custom options   |
 | ------ | ------------ | ---------------- |
-| `✖`    | Error        | `error_symbol`   |
+| `✖`   | Error        | `error_symbol`   |
 | `➤`    | warning      | `warning_symbol` |
 | `ⓘ`    | Info         | `info_symbol`    |
 

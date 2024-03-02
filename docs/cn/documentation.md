@@ -551,7 +551,6 @@ endfunction
 
 更多信息可以阅读 `:h 'mouse'`。
 
-
 ### 滚动条
 
 窗口右侧的滚动条默认是关闭的，如果需要启动滚动条，需要修改[ui 模块](../layers/ui/)的 `enable_scrollbar` 选项：
@@ -566,26 +565,26 @@ endfunction
 
 所有的界面元素切换快捷键都以 `[SPC] t` 或 `[SPC] T` 开头，你可以在快捷键导航中查阅所有快捷键。
 
-| 快捷键      | 功能描述                                  |
-| ----------- | ----------------------------------------- |
-| `SPC t 8`   | 高亮所有超过 80 列的字符                  |
-| `SPC t f`   | 高亮临界列，默认 `max_column` 是第 120 列 |
-| `SPC t h h` | 高亮当前行                                |
-| `SPC t h i` | 高亮代码对齐线                            |
-| `SPC t h c` | 高亮光标所在列                            |
-| `SPC t h s` | 启用/禁用语法高亮                         |
-| `SPC t i`   | 切换显示当前对齐(TODO)                    |
-| `SPC t n`   | 显示/隐藏行号                             |
-| `SPC t b`   | 切换背景色                                |
-| `SPC t c`   | 切换 conceal 模式                         |
-| `SPC t p`   | 切换 paste 模式                           |
-| `SPC t P`   | 切换 auto parens 模式                     |
-| `SPC t t`   | 打开 Tab 管理器                           |
-| `SPC T ~`   | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
-| `SPC T F`   | 切换全屏(TODO)                            |
-| `SPC T f`   | 显示/隐藏 Vim 边框(GUI)                   |
-| `SPC T m`   | 显示/隐藏菜单栏                           |
-| `SPC T t`   | 显示/隐藏工具栏                           |
+| 快捷键            | 功能描述                                  |
+| ----------------- | ----------------------------------------- |
+| `SPC t 8`         | 高亮所有超过 80 列的字符                  |
+| `SPC t f`         | 高亮临界列，默认 `max_column` 是第 120 列 |
+| `SPC t h h`       | 高亮当前行                                |
+| `SPC t h i`       | 高亮代码对齐线                            |
+| `SPC t h c`       | 高亮光标所在列                            |
+| `SPC t h s`       | 启用/禁用语法高亮                         |
+| `SPC t i`         | 切换显示当前对齐(TODO)                    |
+| `SPC t n`         | 显示/隐藏行号                             |
+| `SPC t b`         | 切换背景色                                |
+| `SPC t c`         | 切换 conceal 模式                         |
+| `SPC t p`         | 切换 paste 模式                           |
+| `SPC t P`         | 切换 auto parens 模式                     |
+| `SPC t t`         | 打开 Tab 管理器                           |
+| `SPC T ~`         | 显示/隐藏 Buffer 结尾空行行首的 `~`       |
+| `SPC T F` / `F11` | 切换全屏                                  |
+| `SPC T f`         | 显示/隐藏 Vim 边框(GUI)                   |
+| `SPC T m`         | 显示/隐藏菜单栏                           |
+| `SPC T t`         | 显示/隐藏工具栏                           |
 
 ### 状态栏
 
@@ -675,8 +674,8 @@ _acpi_ 可展示电池电量剩余百分比。
 
 SpaceVim 所支持的分割符以及截图如下：
 
-| 分割符  | 截图                                                                                                                      |
-| ------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 分割符  | 截图                                                                                  |
+| ------- | ------------------------------------------------------------------------------------- |
 | `arrow` | ![separator-arrow](https://img.spacevim.org/b28bdc04-3c98-11e7-937e-641c9d85c493.png) |
 | `curve` | ![separator-curve](https://img.spacevim.org/42bbf6e8-3cd4-11e7-8792-665447040f49.png) |
 | `slant` | ![separator-slant](https://img.spacevim.org/53a65ea2-3cd5-11e7-8758-d079c5a9c2d6.png) |
@@ -2374,7 +2373,7 @@ SpaceVim 通过默认通过 [checkers](../layers/checkers/) 模块来进行文�
 
 | 提示符 | 描述    | 自定义选项       |
 | ------ | ------- | ---------------- |
-| `✖`    | Error   | `error_symbol`   |
+| `✖`   | Error   | `error_symbol`   |
 | `➤`    | warning | `warning_symbol` |
 | `ⓘ`    | Info    | `info_symbol`    |
 
