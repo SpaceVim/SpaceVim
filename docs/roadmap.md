@@ -60,4 +60,4 @@ If you have any suggestions , please checkout feedback section on [community](..
 
 ## Completed
 
-All completed releases can be viewed in [changelog](../development/#Changelog)
+All completed releases can be viewed in [changelog](../development/#changelog)

@@ -14,10 +14,9 @@ Currently, this project is maintained by [Eric Wong](https://wsdjeg.net),
 If you use SpaceVim in your daily work and feel that it has made your life easier,
 please consider supporting SpaceVim by:
 
-- [Become a backer on opencollective](https://opencollective.com/spacevim)
-
-Also, you can buy me a coffee via ko-fi.com or wechat:
-
-<a href='https://ko-fi.com/SpaceVim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+- [opencollective](https://opencollective.com/spacevim)
+- PayPal：[paypal.me/SpaceVim](https://paypal.me/SpaceVim)
+- WeChat or Alipay: 
 
 <img src="https://spacevim.org/img/weixin.png" height="300" width="300">
+<img src="https://spacevim.org/img/zhifubao.png" height="300" width="300">
