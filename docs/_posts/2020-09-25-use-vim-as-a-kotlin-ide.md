@@ -46,7 +46,7 @@ The completion menu will be opened as you type.
 
 ### Syntax linting
 
-The [checkers](../checkers/) layer is enabled by default.
+The [checkers](../layers/checkers/) layer is enabled by default.
 This layer provides asynchronous syntax linting for kotlin.
 The default plugin is [neomake](https://github.com/neomake/neomake),
 and the default lint command is [ktlint](https://github.com/pinterest/ktlint).
@@ -86,7 +86,7 @@ It is running asynchronously, and will not block your Vim.
 
 ### Code formatting
 
-The [format](../format/) layer is also enabled by default.
+The [format](../layers/format/) layer is also enabled by default.
 With this layer you can use key binding `SPC b f` to format current buffer.
 Before using this feature, please install [prettier](https://prettier.io/):
 
