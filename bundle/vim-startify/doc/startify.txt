@@ -248,7 +248,7 @@ installed (for `:Git`).
         \ { 'header': ['   Commits'],        'type': function('s:list_commits') },
         \ ]
 <
-NOTE: Headers are context-senstive: If the list for a type is empty, the
+NOTE: Headers are context-sensitive: If the list for a type is empty, the
 header won't be shown.
 
 NOTE: Headers use the StartifySection highlight group. See |startify-colors|.
@@ -260,7 +260,7 @@ NOTE: Headers use the StartifySection highlight group. See |startify-colors|.
 <
 A list of files or directories to bookmark. The list can contain two kinds of
 types. Either a path or a dictionary whereas the key is the custom index and
-the value the path.
+the value is the path.
 
 Example:
 >
@@ -439,7 +439,7 @@ box-drawing characters will be used instead.
 
 This is not the default, because users of East Asian languages often set
 'ambiwidth' to "double" or make their terminal emulator treat characters of
-ambiguous width as double width. Both would make the drawed box look funny.
+ambiguous width as double width. Both would make the drawn box look funny.
 
 For more information: http://unicode.org/reports/tr11
 
@@ -899,7 +899,7 @@ file. Prepend the logo to each Startify entry by putting this in your vimrc:
 ==============================================================================
 FAQ                                                               *startify-faq*
 
-    |startify-faq-01|  I don't want the start screen to use cursorline!
+    |startify-faq-01|  I want to use cursorline!
     |startify-faq-02|  Recent files aren't shown!
     |startify-faq-03|  I have broken colors when using sessions!
     |startify-faq-04|  How to disable common but unimportant files?
@@ -1108,7 +1108,7 @@ Anyway, this particular issue can be resolved in different ways. See:
                                                                *startify-faq-15*
 Startify is cluttered with help files!~
 
-Everytime you use |:h|, you open a file from the Vim runtime directory or of
+Every time you use |:h|, you open a file from the Vim runtime directory or of
 an installed plugin. By default, Startify detects these files and skips them.
 
 This works for most use cases, but not for all.
