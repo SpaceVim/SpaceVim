@@ -1,6 +1,7 @@
 local M = {}
 
 local log = require('git.log')
+local argv_parser = require('spacevim.api.vim.argv')
 
 local cmds = {
   'add',
@@ -35,7 +36,14 @@ end
 update_cmd()
 
 
-function M.run(command, ...)
+function M.run(cmdline)
+  -- log.debug('cmdlien:' .. cmdline)
+
+  local argv = argv_parser.parser(cmdline)
+
+  -- log.debug('argvs:' .. vim.inspect(argv))
+
+  local command = table.remove(argv, 1)
 
   if not supported_commands[command] then
       vim.api.nvim_echo(
@@ -45,7 +53,7 @@ function M.run(command, ...)
       )
     return
   end
-  local argv = { ... }
+  
   local ok, cmd = pcall(require, 'git.command.' .. command)
   if ok then
     if type(cmd.run) == 'function' then

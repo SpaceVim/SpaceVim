@@ -1,0 +1,8 @@
+Execute ( SpaceVim lua api: vim.keys.t(str) ):
+  if has('nvim-0.5.0')
+    lua spacevim_api_argv = require('spacevim.api').import('vim.argv')
+    AssertEqual luaeval("spacevim_api_argv.parser('a b \"c d\"')"), ['a', 'b', 'c d']
+    AssertEqual luaeval("spacevim_api_argv.parser('a b \"c \\\\\" d\"')"), ['a', 'b', 'c " d']
+  endif
+
+

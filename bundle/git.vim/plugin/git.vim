@@ -10,7 +10,7 @@ let g:loaded_git = 1
 
 
 if has('nvim-0.9.0')
-  command! -nargs=+ -complete=custom,git#complete Git lua require('git').run(<f-args>)
+  command! -nargs=+ -complete=custom,git#complete Git lua require('git').run(<q-args>)
 else
   ""
   " Run git command asynchronously
