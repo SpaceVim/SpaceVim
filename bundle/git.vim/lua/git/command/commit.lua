@@ -30,8 +30,12 @@ local function on_stderr(id, data)
 end
 
 local function on_exit(id, code, single)
+  -- log.debug(string.format('code %d, single %d', code, single))
   if id ~= commit_jobid then
     return
+  end
+  if code == 0 and single == 0 then
+    nt.notify('commit done!')
   end
   if commit_bufnr ~= -1 and vim.api.nvim_buf_is_valid(commit_bufnr) then
     vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, commit_context)
