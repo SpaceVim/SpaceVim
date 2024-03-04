@@ -102,8 +102,9 @@ endfunction
 
 function! s:args_with_two() abort
     return join([
-                \ '--stat',
+                \ '--stat', '--summary', '--log', '--commit', '--cleanup', '--abort', '--continue',
                 \ '--edit',
+                \ '--squash',
                 \ '--ff',
                 \ '--ff-only',
                 \ '--abort',
@@ -113,6 +114,7 @@ endfunction
 function! s:args_with_one() abort
     return join([
                 \ '-m',
+                \ '-F',
                 \ '-e',
                 \ ], "\n")
 
