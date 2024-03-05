@@ -1648,6 +1648,7 @@ endfunction
 " argv() return a list of files/directories
 function! s:parser_argv() abort
   if exists('v:argv')
+    call SpaceVim#logger#info('v:argv is:' . string(v:argv))
     " if use embed nvim
     " for exmaple: neovim-qt
     " or only run vim/neovim without argvs
@@ -1690,6 +1691,7 @@ function! s:parser_argv() abort
       return [2, get(v:, 'argv', ['failed to get v:argv'])]
     endif
   else
+    call SpaceVim#logger#info(printf('argc is %s, argv is %s, line2byte is %s', string(argc()), string(argv()), string(line2byte())))
     if !argc() && line2byte('$') == -1
       return [0]
     elseif argv()[0] =~# '/$'
@@ -1768,6 +1770,7 @@ function! SpaceVim#begin() abort
 
   " Before loading SpaceVim, We need to parser argvs.
   let s:status = s:parser_argv()
+  call SpaceVim#logger#info('startup status:' . string(s:status))
   " If do not start Vim with filename, Define autocmd for opening welcome page
   if s:status[0] == 0
     let g:_spacevim_enter_dir = fnamemodify(getcwd(), ':~')
