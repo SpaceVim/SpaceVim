@@ -1,0 +1,26 @@
+*ChineseLinter.txt*	The Linter for Chinese
+wsdjeg                                                         *ChineseLinter*
+
+==============================================================================
+CONTENTS                                              *ChineseLinter-contents*
+  1. Configuration......................................|ChineseLinter-config|
+  2. Commands.........................................|ChineseLinter-commands|
+
+==============================================================================
+CONFIGURATION                                           *ChineseLinter-config*
+
+                                                  *g:chinese_linter_open_list*
+This setting will open the |location-list| or |quickfix| list (depending on
+whether it is operating on a file) when adding entries. A value of 2 will
+preserve the cursor position when the |location-list| or |quickfix| window is
+opened. Defaults to 2.
+
+==============================================================================
+COMMANDS                                              *ChineseLinter-commands*
+
+:CheckChinese                                                  *:CheckChinese*
+  Start checking the document, and the results will be shown in the local
+  list.
+
+
+vim:tw=78:ts=8:ft=help:norl:

@@ -32,8 +32,8 @@ function! SpaceVim#layers#chinese#plugins() abort
         \ ['yianwillis/vimcdoc'          , {'merged' : 0}],
         \ ['NamelessUzer/Vim-Natural-Language-Number-Translator'          , {'merged' : 0}],
         \ ['voldikss/vim-translator' , {'merged' : 0, 'on_cmd' : ['Translate', 'TranslateW', 'TranslateR', 'TranslateX']}],
-        \ ['wsdjeg/ChineseLinter.vim'    , {'merged' : 0, 'on_cmd' : 'CheckChinese', 'on_ft' : ['markdown', 'text']}],
         \ ]
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/ChineseLinter.vim'    , {'merged' : 0, 'on_cmd' : 'CheckChinese', 'on_ft' : ['markdown', 'text']}])
   if SpaceVim#layers#isLoaded('ctrlp')
     call add(plugins, ['vimcn/ctrlp.cnx', {'merged' : 0}])
   endif

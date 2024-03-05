@@ -1,0 +1,7 @@
+Given markdown:
+  100 %
+Execute (test error E006):
+    CheckChinese
+    AssertEqual getqflist()[0].lnum, 1
+    AssertEqual getqflist()[0].col, 5
+    AssertEqual getqflist()[0].text[:3], 'E006'

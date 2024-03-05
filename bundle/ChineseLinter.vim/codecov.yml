@@ -1,0 +1,9 @@
+coverage:
+  range: 30..60
+  round: down
+  precision: 2
+comment:
+  layout: "header, diff, changes, uncovered"
+  behavior: default  # update if exists else create new
+codecov:
+  branch: master

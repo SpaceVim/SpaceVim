@@ -1,0 +1,7 @@
+Given markdown:
+  你好中文 
+Execute (test error E005):
+    CheckChinese
+    AssertEqual getqflist()[0].lnum, 1
+    AssertEqual getqflist()[0].col, 13
+    AssertEqual getqflist()[0].text[:3], 'E005'

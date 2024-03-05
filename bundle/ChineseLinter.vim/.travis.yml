@@ -1,0 +1,34 @@
+language: python
+dist: trusty
+sudo: false
+
+services:
+  - docker
+
+git:
+  depth: 3
+
+notifications:
+  slack:
+    on_success: never
+    on_failure: never
+  email:
+    on_success: never # default: change
+    on_failure: never # default: always
+cache:
+  bundler: true 
+  directories:
+    - $HOME/cache/
+    - $HOME/deps
+
+env:
+  global:
+    - DEPS=$HOME/deps
+    - PATH=$DEPS/bin:$HOME/vim/bin:$PATH
+
+jobs:
+  include:
+    - env: LINT=vader
+
+install: .ci/install.sh
+script: .ci/script.sh
