@@ -37,7 +37,7 @@ If you have any suggestions , please checkout feedback section on [community](..
     - [x] `:Git pull`
     - [x] `:Git push`
     - [ ] `:Git rebase`
-    - [ ] `:Git reflog`
+    - [x] `:Git reflog`
     - [x] `:Git remote`
     - [x] `:Git reset`
     - [x] `:Git rm`

@@ -1,6 +1,22 @@
+"=============================================================================
+" reflog.vim --- git-reflog
+" Copyright (c) 2016-2019 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:JOB = SpaceVim#api#import('job')
 let s:BUFFER = SpaceVim#api#import('vim#buffer')
-" @todo rewrite Git reflog in lua
+
+""
+" @section git-reflog, reflog
+" @parentsection commands
+" This commands is to view git reflog.
+" >
+"   :Git reflog
+" <
+
 function! git#reflog#run(args)
     let cmd = ['git', 'reflog'] + a:args
     let s:bufnr = s:openRefLogBuffer()
