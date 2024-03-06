@@ -4,6 +4,7 @@ local job = require('spacevim.api.job')
 local nt = require('spacevim.api.notify')
 local log = require('git.log')
 local str = require('spacevim.api.data.string')
+local branch_ui = require('git.ui.branch')
 
 local branch = ''
 local branch_info = {}
@@ -93,6 +94,7 @@ end
 
 local function on_exit(id, code, single)
   M.detect()
+  branch_ui.update()
   log.debug('branch exit code:' .. code .. ' single:' .. single)
   if id ~= branch_jobid then
     return
