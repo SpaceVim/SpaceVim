@@ -92,6 +92,7 @@ local function on_stderr(id, data)
 end
 
 local function on_exit(id, code, single)
+  M.detect()
   log.debug('branch exit code:' .. code .. ' single:' .. single)
   if id ~= branch_jobid then
     return
