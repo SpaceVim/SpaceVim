@@ -5,6 +5,12 @@
 [![Build Status](https://travis-ci.org/wsdjeg/ChineseLinter.vim.svg?branch=master)](https://travis-ci.org/wsdjeg/ChineseLinter.vim)
 [![codecov](https://codecov.io/gh/wsdjeg/ChineseLinter.vim/branch/master/graph/badge.svg)](https://codecov.io/gh/wsdjeg/ChineseLinter.vim)
 
+## 安装
+
+```vim
+call dein#add('https://wsdjeg.net/git/ChineseLinter.vim/')
+```
+
 ## 使用说明
 
 在编辑中文文档时，使用如下命令即可检查，错误信息将被展示在 `local list` 窗口。
@@ -12,6 +18,7 @@
 ```vim
 :CheckChinese
 ```
+
 
 ## 错误代码
 
@@ -34,6 +41,10 @@
 | `E015` | 英文标点重复                    |
 | `E016` | 连续的空行数量大于 2 行         |
 | `E017` | 数字之间存在空格                |
+| `E018` | 行首含有空格                    |
+| `E019` | 行首、行尾存在不应出现的标点    |
+| `E020` | 省略号“…”的数量不是 2 个        |
+| `E021` | 破折号“—”的数量不是 2 个        |
 
 ## 配置
 

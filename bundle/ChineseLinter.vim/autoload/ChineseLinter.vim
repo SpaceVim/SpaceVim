@@ -25,6 +25,10 @@ scriptencoding utf-8
 "   E015  |  英文标点重复
 "   E016  |  连续的空行数量大于 2 行
 "   E017  |  数字之间存在空格
+"   E018  |  行首含有空格
+"   E019  |  行首、行尾存在不应出现的标点
+"   E020  |  省略号“…”的数量不是 2 个
+"   E021  |  破折号“—”的数量不是 2 个
 " <
 
 let g:chinese_linter_disabled_nr = get(g:,'chinese_linter_disabled_nr', [])
@@ -47,11 +51,10 @@ let g:chinese_linter_open_list = 2
 let s:CHINESE_PUNCTUATION = '[\u2010-\u201f\u2026\uff01-\uff0f\uff1a-\uff1f\uff3b-\uff40\uff5b-\uff5e]'
 
 " 英文标点
-let s:punctuation_en = '[,:;?!-]'
+let s:punctuation_en = '[､,:;?!-]'
 
 " 中文标点符号
-" let s:punctuation_cn = '[‘’“”、。《》『』！＂＇（），／：；＜＝＞？［］｛｝]' 与下面这行代码等价
-let s:punctuation_cn = '[\u2018\u2019\u201c\u201d\u3001\u3002\u300a\u300b\u300e\u300f\uff01\uff02\uff07\uff08\uff09\uff0c\uff0f\uff1a\uff1b\uff1c\uff1d\uff1e\uff1f\uff3b\uff3d\uff5b\uff5d]'
+let s:punctuation_cn = '[、，：；。？！‘’“”（）《》『』＂＇／＜＞＝［］｛｝【】]'
 
 " 中文汉字
 let s:chars_cn = '[\u4e00-\u9fff]'
@@ -108,11 +111,11 @@ let s:ERRORS = {
             \               ['连续多个中文标点符号'                , '[、，：；。！？]\{2,}'],
             \          ],
             \ 'E010' : [
-            \               ['英文标点前侧存在空格'                , s:blank . '\+\ze' . s:punctuation_en],
-            \               ['英文标点符号后侧的空格数量多于 1 个' , s:punctuation_en  . '\zs' . s:blank . '\{2,}'],
-            \               ['英文标点与英文之间没有空格'          , '[,:;?!]' . s:chars_en],
-            \               ['英文标点与中文之间没有空格'          , '[,:;?!]' . s:chars_cn],
-            \               ['英文标点与数字之间没有空格'          , '[,:;?!]' . s:numbers],
+            \               ['英文标点前侧存在空格'                , s:blank . '\+\ze' . '[､,:;?!]'],
+            \               ['英文标点符号后侧的空格数量多于 1 个' , '[､,:;?!]' . s:blank . '\{2,}'],
+            \               ['英文标点与英文之间没有空格'          , '[､,:;?!]' . s:chars_en],
+            \               ['英文标点与中文之间没有空格'          , '[､,:;?!]' . s:chars_cn],
+            \               ['英文标点与数字之间没有空格'          , '[､,:;?!]' . s:numbers],
             \          ],
             \ 'E011' : [
             \               ['中文与英文之间空格数量多于 1 个'     , '\%#=2' . s:chars_cn . '\zs' . s:blank . '\{2,}\ze' . s:chars_en],
@@ -140,8 +143,23 @@ let s:ERRORS = {
             \ 'E017' : [
             \               ['数字之间存在空格'                    , s:numbers . '\zs' . s:blank . '\+\ze' . s:numbers],
             \          ],
+            \ 'E018' : [
+            \               ['行首有空格'                          , '^' . s:blank . '\+'],
+            \          ],
+            \ 'E019' : [
+            \               ['存在不应出现在行首的标点'            , '^' . '[､,:;｡?!/\)\]】}’”、，：；。？！／》』）］】｝]'],
+            \               ['存在不应出现在行尾的标点'            , '[､,/\(\[【{‘“、，／《『（［【｛]' . '$'],
+            \          ],
+            \ 'E020' : [
+            \               ['省略号“…”的数量只有 1 个'            , '\(^\|[^…]\)' . '\zs' . '…' . '\ze' . '\([^…]\|$\)'],
+            \               ['省略号“…”的数量大于 2 个'            , '…\{3,}'],
+            \          ],
+            \ 'E021' : [
+            \               ['省略号“—”的数量只有 1 个'            , '\(^\|[^—]\)' . '\zs' . '—' . '\ze' . '\([^—]\|$\)'],
+            \               ['省略号“—”的数量大于 2 个'            , '—\{3,}'],
+            \          ],
             \ }
-
+ab
 function! s:getNotIgnoreErrors()
     let s:notIgnoreErrorList = []
     for l:errors_nr in keys(s:ERRORS)
