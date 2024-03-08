@@ -38,6 +38,10 @@ Add the following snippet to your custom config file to enable this feature.
 
 ## Key bindings
 
-| Key Binding | Description                     |
-| ----------- | ------------------------------- |
-| `SPC n c d` | Convert Chinese Number to Digit |
+| Key Binding | Description                              |
+| ----------- | ---------------------------------------- |
+| `SPC x t t` | Translate current word                   |
+| `SPC x g c` | Check with ChineseLinter                 |
+| `SPC n c d` | Convert Chinese Number to Digit          |
+| `SPC n c z` | Translate digits to lower Chinese Number |
+| `SPC n c Z` | Translate digits to upper Chinese Number |
