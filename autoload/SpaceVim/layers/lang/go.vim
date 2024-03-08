@@ -17,8 +17,8 @@
 " <
 " @subsection layer options
 " 1. `enabled_linters`: set a list of enabled lint for golang. by default this
-" option is `['golint']`. The available linters includes: `go`,
-" `gometalinter`
+" option is `['golangci_lint']`. The available linters includes: `go`,
+" `gometalinter`, etc.
 " 2. go_file_head: the default file head for golang source code.
 " >
 "   [[layers]]
@@ -89,7 +89,7 @@ if exists('s:enabled_linters')
   finish
 endif
 
-let s:enabled_linters = ['golint']
+let s:enabled_linters = ['golangci_lint']
 let s:format_on_save = 0
 let s:go_file_head = [
       \ '// @Title',

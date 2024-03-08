@@ -3173,7 +3173,8 @@ development. This layer is not enabled by default, to enable it:
 <
 LAYER OPTIONS
   1. `enabled_linters`: set a list of enabled lint for golang. by default this
-option is `['golint']`. The available linters includes: `go`, `gometalinter`
+option is `['golangci_lint']`. The available linters includes: `go`,
+`gometalinter`, etc.
   2. go_file_head: the default file head for golang source code.
 
 >
