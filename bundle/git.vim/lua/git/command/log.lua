@@ -24,7 +24,7 @@ local function close_log_win()
     return
   end
   local ok = pcall(function()
-    vim.cmd('bp')
+    vim.cmd('b#')
   end)
 
   if not ok then
