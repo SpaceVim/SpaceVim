@@ -27,7 +27,7 @@ If you have any suggestions , please checkout feedback section on [community](..
     - [x] `:Git cherry-pick`
     - [x] `:Git clean`
     - [x] `:Git commit`
-    - [ ] `:Git config`
+    - [x] `:Git config`
     - [x] `:Git diff`
     - [x] `:Git fetch`
     - [x] `:Git log`

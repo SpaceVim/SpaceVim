@@ -8,6 +8,7 @@ local cmds = {
   'blame',
   'branch',
   'checkout',
+  'config',
   'cherry-pick',
   'clean',
   'commit',
