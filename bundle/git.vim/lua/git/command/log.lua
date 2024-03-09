@@ -11,6 +11,7 @@ local bufnr = -1
 local jobid = -1
 local commit_bufnr = -1
 local show_lines = {}
+local show_commit_jobid = -1
 
 local function close_commit_win()
   if vim.api.nvim_buf_is_valid(commit_bufnr) then
@@ -49,27 +50,36 @@ local function openShowCommitBuffer()
 end
 
 local function on_show_stdout(id, data)
-  for _,v in ipairs(data) do
+  if id ~= show_commit_jobid then
+    return
+  end
+  for _, v in ipairs(data) do
     log.debug('git-show stdout:' .. v)
     table.insert(show_lines, v)
   end
 end
 
 local function on_show_stderr(id, data)
-  for _,v in ipairs(data) do
+  if id ~= show_commit_jobid then
+    return
+  end
+  for _, v in ipairs(data) do
     log.debug('git-show stderr:' .. v)
     table.insert(show_lines, v)
   end
 end
 
 local function on_show_exit(id, code, single)
+  if id ~= show_commit_jobid then
+    return
+  end
   log.debug('git-show exit code:' .. code .. ' single:' .. single)
-  vim.api.nvim_buf_set_option(commit_bufnr, 'modifiable', true)
-  vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, show_lines)
-  vim.api.nvim_buf_set_option(commit_bufnr, 'modifiable', false)
+  if vim.api.nvim_buf_is_valid(commit_bufnr) then
+    vim.api.nvim_buf_set_option(commit_bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, show_lines)
+    vim.api.nvim_buf_set_option(commit_bufnr, 'modifiable', false)
+  end
 end
-
-
 
 local function show_commit()
   local commit = vim.fn.matchstr(vim.fn.getline('.'), [[^[* |\\\/_]\+\zs[a-z0-9A-Z]\+]])
@@ -81,7 +91,7 @@ local function show_commit()
   end
   local cmd = { 'git', 'show', commit }
   show_lines = {}
-  job.start(cmd, {
+  show_commit_jobid = job.start(cmd, {
     on_stdout = on_show_stdout,
     on_stderr = on_show_stderr,
     on_exit = on_show_exit,
