@@ -35,9 +35,17 @@ function M.parser(cmdline)
     elseif escape and c == '"' then
       argv = argv .. '"'
       escape = false
+    elseif escape then
+      argv = argv .. '\\' .. c
+      escape = false
     else
       argv = argv .. c
     end
+  end
+
+  -- is last char is \
+  if escape then
+    argv = argv .. '\\'
   end
 
   if argv ~= '' then
