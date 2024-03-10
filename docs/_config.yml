@@ -1,6 +1,7 @@
 theme: jekyll-theme-midnight
 title: SpaceVim
 description: A modular Vim/Neovim configuration
+description_cn: 一个模块化的 Vim/Neovim 配置集合
 show_downloads: false
 google_analytics: UA-89745542-1
 gitment_client_id: 8f0cd1f544d1e4219798

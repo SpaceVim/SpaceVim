@@ -8,14 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <title>{{ page.title }} | SpaceVim</title>
-    <meta name="baidu-site-verification" content="AN14j6xQVd" />
-    <!-- This is for google search console -->
-    <meta
-      name="google-site-verification"
-      content="2QrXyd7Wz5_ahXqefiYC_4-HvynQrefWDWORb7EjLCU"
-    />
-    <meta name="yandex-verification" content="8de09d07572b8dcc" />
-    <meta name="author" content="Shidong Wang" />
+    <meta name="author" content="Eric Wong" />
     <meta name="description" content="{{ page.description }}" />
     {% if page.type %}
     <meta property="og:type" content="{{ page.type }}" />
@@ -59,7 +52,7 @@
         </div>
         {% if page.lang == "zh" %}
         <div id="title">
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <p>{{ site.description_cn }}</p>
           <hr />
           <p align="center">
             <b><a href="{{ site.url }}/cn/">主页</a></b> |
@@ -75,7 +68,7 @@
         </div>
         {% else %}
         <div id="title">
-          <p>{{ site.description | default: site.github.project_tagline }}</p>
+          <p>{{ site.description }}</p>
           <hr />
           <p align="center">
             <b><a href="{{ site.url }}">Home</a></b> |
@@ -89,43 +82,10 @@
           </p>
           <hr />
         </div>
-        {% endif %} {{ content }} {% if page.comments %}
-
-        <div id="container"></div>
-        <script src="https://wsdjeg.github.io/gitment/dist/gitment.browser.js"></script>
-        <script>
-          var gitment = new Gitment({
-            id: "{{ page.commentsID | default: page.title }}", // 可选。默认为 location.href
-            owner: "wsdjeg",
-            repo: "SpaceVim-comments",
-            oauth: {
-              client_id: "{{ site.gitment_client_id }}",
-              client_secret: "{{ site.gitment_client_secret }}",
-            },
-          });
-          gitment.render("container");
-        </script>
-
         {% endif %}
+        {{ content }} 
       </section>
     </div>
-
-    {% if site.google_analytics %}
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "{{ site.google_analytics }}");
-    </script>
-    {% endif %}
   </body>
   <root>
     {% if page.lang == "zh" %}
@@ -133,26 +93,12 @@
       <span class="credits right"
         >由Jekyll强力驱动
       </span>
-      <br />
-      <input
-        id="textbox"
-        type="text"
-        placeholder="Search on Google..."
-        onkeydown="if (event.keyCode == 13 || event.which == 13) { location='https://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}"
-      />
     </p>
     {% else %}
     <p align="center">
       <span class="credits right"
         >Powered by Jekyll
       </span>
-      <br />
-      <input
-        id="textbox"
-        type="text"
-        placeholder="Search on Google..."
-        onkeydown="if (event.keyCode == 13 || event.which == 13) { location='https://www.google.com/search?q=' + encodeURIComponent(document.getElementById('textbox').value) + '+site%3Aspacevim.org';}"
-      />
     </p>
     {% endif %}
   </root>
