@@ -92,6 +92,12 @@ endfunction
 " @vimlint(EVL103, 0, a:event)
 
 function! SpaceVim#plugins#pmd#run(...) abort
+  if !executable(g:Pmd_Cmd[0])
+    echohl WarningMsg
+    echo g:Pmd_Cmd[0] .. ' is not executable'
+    echohl None
+    return
+  endif
   let argv = g:Pmd_Cmd + a:000
   if index(a:000, '-R') == -1
     let argv += g:Pmd_Rulesets
