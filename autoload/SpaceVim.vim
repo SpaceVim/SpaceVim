@@ -1668,6 +1668,8 @@ function! s:parser_argv() abort
         return [1, fnamemodify(expand(v:argv[-1]), ':p')]
       elseif filereadable(v:argv[-1])
         return [2, get(v:, 'argv', ['failed to get v:argv'])]
+      elseif v:argv[-1] == '-p' && v:argv[-2] == '--embed'
+        return [0]
       elseif v:argv[-1] != '--embed' && get(v:argv, -2, '') != '--cmd'
         return [2, v:argv[-1]]
       else
