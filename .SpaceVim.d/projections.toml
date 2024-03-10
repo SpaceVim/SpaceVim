@@ -144,6 +144,30 @@ alternate = "docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md"
 ["docs/_posts/2020-09-24-use-vim-as-a-kotlin-ide.md"]
 alternate = "docs/_posts/2020-09-25-use-vim-as-a-kotlin-ide.md"
 
+["docs/_posts/2020-11-28-use-vim-as-a-nim-ide.md"]
+alternate = "docs/_posts/2024-03-09-use-vim-as-a-nim-ide.md"
+
+["docs/_posts/2024-03-09-use-vim-as-a-nim-ide.md"]
+alternate = "docs/_posts/2020-11-28-use-vim-as-a-nim-ide.md"
+
+["docs/_posts/2020-08-10-use-vim-as-a-swift-ide.md"]
+alternate = "docs/_posts/2024-03-09-use-vim-as-a-swift-ide.md"
+
+["docs/_posts/2024-03-09-use-vim-as-a-swift-ide.md"]
+alternate = "docs/_posts/2020-08-10-use-vim-as-a-swift-ide.md"
+
+["docs/_posts/2022-04-24-use-vim-as-a-scala-ide.md"]
+alternate = "docs/_posts/2024-03-09-use-vim-as-a-scala-ide.md"
+
+["docs/_posts/2024-03-09-use-vim-as-a-scala-ide.md"]
+alternate = "docs/_posts/2022-04-24-use-vim-as-a-scala-ide.md"
+
+["docs/_posts/2024-03-01-use-vim-as-a-elixir-ide.md"]
+alternate = "docs/_posts/2020-08-13-use-vim-as-a-elixir-ide.md"
+
+["docs/_posts/2020-08-13-use-vim-as-a-elixir-ide.md"]
+alternate = "docs/_posts/2024-03-01-use-vim-as-a-elixir-ide.md"
+
 ["README.md"]
 alternate = "README.cn.md"
 

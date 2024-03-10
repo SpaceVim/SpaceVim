@@ -86,7 +86,7 @@ local function get_project_config(conf_file)
   else
     conf = sp_json.json_decode(fn.join(fn.readfile(conf_file), '\n'))
   end
-  logger.debug(vim.inspect(conf))
+  -- logger.debug(vim.inspect(conf))
   if type(conf) ~= 'table' then
     conf = {}
   end

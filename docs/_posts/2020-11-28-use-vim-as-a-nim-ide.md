@@ -100,3 +100,4 @@ of your project. The following nimble tesks will be detected automatically.
 
 To select a tast to run, use key binding `SPC p t r`, you can also use `SPC p t l` to list all the tasks
 in the tasks manager window.
+
