@@ -777,8 +777,6 @@ function M.open(argv)
     'setlocal buftype=nofile bufhidden=wipe nobuflisted nolist noswapfile nowrap cursorline nospell nonu norelativenumber'
   )
   vim.opt_local.fillchars = { eob = ' ' }
-  local save_tve = vim.o.t_ve
-  vim.cmd('setlocal t_ve=')
   local cursor_hi = {}
   cursor_hi = hi.group2dict('Cursor')
   local lcursor_hi = {}
@@ -836,7 +834,6 @@ function M.open(argv)
     close_statusline()
   end
   logger.info('FlyGrep ending  =====================')
-  vim.o.t_ve = save_tve
   hi.hi(cursor_hi)
   hi.hi(lcursor_hi)
   vim.o.guicursor = guicursor
