@@ -141,6 +141,7 @@ function! s:fix_colorschem_in_SpaceVim() abort
     endif
   endif
   hi SpaceVimLeaderGuiderGroupName cterm=bold ctermfg=175 gui=bold guifg=#d3869b
+  hi link WinSeparator VertSplit
 endfunction
 
 function! s:apply_custom_space_keybindings() abort
