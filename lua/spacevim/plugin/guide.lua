@@ -72,7 +72,6 @@ function M.register_prefix_descriptions(key, dictname)
   elseif desc_lookup[key] == nil then
     desc_lookup[key] = dictname
   end
-  log.debug('desc_lookup is:' .. vim.inspect(desc_lookup))
 end
 
 local function merge(dict_t, dict_o)
@@ -183,8 +182,6 @@ local function add_map_to_dict(map, level, dict)
     end
   else
     local cmd = escape_mappings(map)
-    log.debug(vim.inspect(map))
-    log.debug(level)
     if not dict[map.lhs[level]] then
       dict[map.lhs[level]] = { cmd, map.display }
     elseif not vim.tbl_islist(dict[map.lhs[level]]) and vim.g.leaderGuide_flatten == 1 then
@@ -257,7 +254,6 @@ local function start_parser(key, dict)
     log.debug('name is:' .. name)
     log.debug('line is:' .. line)
     local mapd = cmp.fn.maparg(name, string.sub(line, 1, 1), 0, 1)
-    log.debug('mapd is:' .. vim.inspect(mapd))
     if mapd.lhs == '\\' then
       mapd.feedkeyargs = ''
     elseif mapd.noremap == 1 then
@@ -274,9 +270,7 @@ local function start_parser(key, dict)
     mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
     mapd.rhs = cmp.fn.substitute(mapd.rhs, '<SID>', '<SNR>' .. mapd['sid'] .. '_', 'g')
     if mapd.lhs ~= '' and mapd.display ~= 'LeaderGuide.*' then
-      log.debug('mapd is:' .. vim.inspect(mapd))
       mapd.lhs = string_to_keys(mapd.lhs)
-      log.debug('mapd is:' .. vim.inspect(mapd))
       if
         (visual and vim.fn.match(mapd.mode, '[vx ]') >= 0)
         or (not visual and vim.fn.match(mapd.mode, '[vx ]') == -1)
@@ -291,14 +285,9 @@ end
 local function calc_layout()
   local ret = {}
 
-  log.debug('calc_layout:')
-  log.debug('lmap is:\n' .. vim.inspect(lmap))
 
   local smap = vim.fn.filter(vim.fn.copy(lmap), 'v:key !=# "name"')
-  log.debug('smap is:\n' .. vim.inspect(smap))
-  log.debug('#smap is:' .. #smap)
   ret.n_items = vim.fn.len(smap)
-  log.debug('n_items is:' .. ret.n_items)
   local length = {}
   for k, v in pairs(smap) do
     if v.name then
@@ -307,9 +296,7 @@ local function calc_layout()
       table.insert(length, vim.fn.strdisplaywidth('[' .. k .. ']' .. v[2]))
     end
   end
-  log.debug('length is:' .. vim.inspect(length))
   local maxlength = vim.fn.max(length) + vim.g.leaderGuide_hspace
-  log.debug('maxlength is:' .. maxlength)
 
   if vim.g.leaderGuide_vertical == 1 then
     ret.n_rows = vim.fn.winheight(0) - 2
@@ -332,7 +319,6 @@ local function calc_layout()
     end
     ret.win_dim = ret.n_rows
   end
-  log.debug('layout is:' .. vim.inspect(ret))
   return ret
 end
 
@@ -384,8 +370,6 @@ local function compare_key(i1, i2)
 end
 
 local function create_string(layout)
-  log.debug('create string:')
-  log.debug('layout is:' .. vim.inspect(layout))
   local l = layout
 
   l.capacity = l.n_rows * l.n_cols
@@ -403,7 +387,6 @@ local function create_string(layout)
   local col = 1
 
   local crow = {}
-  log.debug('lmap is:' .. vim.inspect(lmap))
   local smap = {}
   for k, _ in pairs(lmap) do
     if k ~= 'name' then
@@ -411,7 +394,6 @@ local function create_string(layout)
     end
   end
   table.sort(smap, compare_key)
-  -- log.debug('smap is:' .. vim.inspect(smap))
 
   for _, k in ipairs(smap) do
     local desc = ''
@@ -428,7 +410,6 @@ local function create_string(layout)
       displaystring = offset .. '[' .. k .. '] ' .. desc
     end
     crow = rows[row] or {}
-    -- log.debug('crow is:' .. vim.inspect(crow))
 
     if #crow == 0 then
       table.insert(rows, crow)
@@ -441,7 +422,6 @@ local function create_string(layout)
       table.insert(crow, vim.fn['repeat'](' ', l.col_width - vim.fn.strdisplaywidth(displaystring)))
     end
     if vim.g.leaderGuide_sort_horizontal == 0 then
-      log.debug('row is:' .. row)
       if row > n_rows then
         if overh > 0 and row < n_rows then
           overh = overh - 1
@@ -472,14 +452,10 @@ local function create_string(layout)
     end
   end
   table.insert(r, '')
-  log.debug('string is:\n' .. table.concat(r, '\n'))
   return r
 end
 
 local function highlight_cursor()
-  log.debug(
-    'highlight cursor: line ' .. vim.fn.line('.') .. ' col ' .. vim.fn.col('.') .. ' vis ' .. vis
-  )
   vim.cmd('hi! def link SpaceVimGuideCursor Cursor')
   if vis == 'gv' then
     local _begin = vim.fn.getpos("'<")
@@ -496,7 +472,6 @@ local function highlight_cursor()
         table.insert(pos, { lnum, 1, vim.fn.len(vim.fn.getline(lnum)) })
       end
     end
-    log.debug('pos:' .. vim.inspect(pos))
     cursor_hilight_id = vim.fn.matchaddpos('SpaceVimGuideCursor', pos)
   else
     cursor_hilight_id =
@@ -608,7 +583,6 @@ local function start_buffer()
     col = 0,
   })
 
-  log.debug('text is:\n' .. vim.inspect(text))
 
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, text)
 
@@ -629,7 +603,6 @@ local function winclose()
 end
 
 local function handle_input(input)
-  log.debug('handle_input:' .. vim.inspect(input))
   winclose()
   if not vim.tbl_islist(input) then
     lmap = input
@@ -648,7 +621,6 @@ local function handle_input(input)
 end
 
 local function page_down()
-  log.debug('page down')
   -- vim.api.nvim_feedkeys(Key.t('<C-c>'), 'n', false)
   vim.api.nvim_feedkeys(Key.t('<C-d>'), 'x', false)
   vim.cmd('redraw!')
@@ -667,7 +639,6 @@ local function page_undo()
 end
 
 local function page_up()
-  log.debug('page up')
 
   -- vim.api.nvim_feedkeys(Key.t('<C-c>'), 'n', false)
   vim.api.nvim_feedkeys(Key.t('<C-u>'), 'x', false)
