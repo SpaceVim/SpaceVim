@@ -1,0 +1,14 @@
+primitive long_parameter_list(
+  a: int,
+  b: string,
+  c: type
+)
+
+function f() =
+  (
+    long_parameter_list(
+      1,
+      "2",
+      nil
+    )
+  )

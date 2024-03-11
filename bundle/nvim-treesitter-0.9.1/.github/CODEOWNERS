@@ -1,0 +1,7 @@
+/lua/nvim-treesitter/textobjects/ @theHamsta
+/lua/nvim-treesitter/incremental_selection.lua @theHamsta
+
+/lua/nvim-treesitter/fold.lua @vigoux
+/lua/nvim-treesitter/highlight.lua @vigoux
+
+/lua/nvim-treesitter/refactor/ @steelsojka

@@ -1,0 +1,65 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+# Cancel any in-progress CI runs for a PR if it is updated
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  check_compilation:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        cc: [gcc]
+
+    name: Run tests
+    runs-on: ${{ matrix.os }}
+    env:
+      CC: ${{ matrix.cc }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+
+      - name: Install tree-sitter CLI
+        run: npm i -g tree-sitter-cli
+
+      - name: Test Dependencies
+        run: |
+          mkdir -p ~/.local/share/nvim/site/pack/plenary.nvim/start
+          cd ~/.local/share/nvim/site/pack/plenary.nvim/start
+          git clone https://github.com/nvim-lua/plenary.nvim
+          curl -L https://github.com/theHamsta/highlight-assertions/releases/download/v0.1.6/highlight-assertions_v0.1.6_x86_64-unknown-linux-gnu.tar.gz | tar -xz
+          cp highlight-assertions /usr/local/bin
+
+      - name: Install and prepare Neovim
+        env:
+          NVIM_TAG: stable
+          TREE_SITTER_CLI_TAG: v0.20.8
+        run: |
+          bash ./scripts/ci-install-${{ matrix.os }}.sh
+
+      - name: Setup Parsers Cache
+        id: parsers-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./parser/
+            ~/AppData/Local/nvim/pack/nvim-treesitter/start/nvim-treesitter/parser/
+          key: ${{ matrix.os }}-${{ matrix.cc }}-parsers-v1-${{ hashFiles('./lockfile.json', './lua/nvim-treesitter/parsers.lua', './lua/nvim-treesitter/install.lua', './lua/nvim-treesitter/shell_selectors.lua') }}
+
+      - name: Compile parsers Unix like
+        if: ${{ matrix.os != 'windows-latest' && steps.parsers-cache.outputs.cache-hit != 'true' }}
+        run: |
+          nvim --headless -c "TSInstallSync all" -c "q"
+
+      - name: Tests
+        run: PATH=/usr/local/bin:$PATH ./scripts/run_tests.sh

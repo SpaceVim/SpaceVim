@@ -1,0 +1,12 @@
+groups:
+- name: Hardware alerts
+  rules:
+  - alert: Node down
+    expr: up{job="node_exporter"} == 0
+    #     ^ promql
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      title: Node {{ $labels.instance }} is down
+      description: Failed to scrape {{ $labels.job }} on {{ $labels.instance }} for more than 3 minutes. Node seems down.

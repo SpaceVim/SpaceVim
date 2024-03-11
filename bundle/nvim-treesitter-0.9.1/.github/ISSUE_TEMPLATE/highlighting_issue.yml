@@ -1,0 +1,98 @@
+name: Highlighting issue
+description: Missing or incorrect highlights or you want to change the way something is highlighted
+labels: [highlights]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Before reporting
+        Please perform the following steps before reporting an issue.
+        - I have updated my neovim version to latest _master_.
+        - I have updated my plugin to the latest version.
+        - I have run `:TSUpdate`.
+        - I have inspected the syntax tree using https://github.com/nvim-treesitter/playground and made sure
+          that no `ERROR` nodes are in the syntax tree. nvim-treesitter can not guarantee correct highlighting in the
+          presence of `ERROR`s -- in this case, please report the bug directly at corresponding parser's repository. (You can find all repository URLs in [README.md](https://github.com/nvim-treesitter/nvim-treesitter#supported-languages).)
+        - I have used `:TSHighlightCapturesUnderCursor` from https://github.com/nvim-treesitter/playground to inspect which highlight groups Neovim is using and that legacy syntax highlighting is not interfering (i.e., what you are observing is actual tree-sitter highlighting).
+
+  - type: textarea
+    attributes:
+      label: Describe the highlighting problem
+      description: A clear and concise description of what should be highlighted in a different way.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Example snippet that causes the problem
+      description: Please provide an example snippet in plain text that causes the problem.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Tree-sitter parsing result
+      description: |
+        Please provide the output of `:TSPlaygroundToggle` from https://github.com/nvim-treesitter/playground
+        (screenshot or plain text) with the following options enabled (pressing the key):
+        - `I` (name of the parsed language)
+        - `t` (toggle injected languages)
+        - `a` (show anonymous nodes)
+      placeholder: |
+        This should look somehow like this:
+        ```
+        preproc_ifdef [0, 0] - [4, 6] cpp                                                                                                                                                                                                                                                                             
+          "#ifdef" [0, 0] - [0, 6] cpp                                                                                                                                                                                                                                                                                
+          name: identifier [0, 7] - [0, 17] cpp                                                                                                                                                                                                                                                                       
+          preproc_def [1, 0] - [2, 0] cpp                                                                                                                                                                                                                                                                             
+            "#define" [1, 0] - [1, 7] cpp                                                                                                                                                                                                                                                                             
+            name: identifier [1, 8] - [1, 16] cpp                                                                                                                                                                                                                                                                     
+            value: preproc_arg [1, 16] - [1, 27] cpp                                                                                                                                                                                                                                                                  
+            "\n" [1, 27] - [2, 0] cpp                                                                                                                                                                                                                                                                                 
+          alternative: preproc_else [2, 0] - [4, 0] cpp                                                                                                                                                                                                                                                               
+            "#else" [2, 0] - [2, 5] cpp                                                                                                                                                                                                                                                                               
+            preproc_def [3, 0] - [4, 0] cpp                                                                                                                                                                                                                                                                           
+              "#define" [3, 0] - [3, 7] cpp                                                                                                                                                                                                                                                                           
+              name: identifier [3, 8] - [3, 16] cpp                                                                                                                                                                                                                                                                   
+              value: preproc_arg [3, 16] - [3, 29] cpp        
+         ```
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Example screenshot
+      description: |
+        Please provide a screenshot of the current highlighting. Please also tell us the `:h colorscheme` you are using
+        and how to install it. If applicable, you can also upload a screenshot with the contents of
+        `:TSHighlightCapturesUnderCursor`.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: |
+        A clear and concise description of what you expect to be changed. You can provide screenshot of
+        other editors or traditional Vim highlighting that don't show this problem or show a screenshot how
+        nvim-treesitter highlighting would look like when a problematic query would be removed/altered.
+
+  - type: textarea
+    attributes:
+      label: Output of `:checkhealth nvim-treesitter`
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Output of `nvim --version`
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any context about the problem here.

@@ -1,0 +1,39 @@
+WinPOS ,,1000.,,,,myWatchWindow
+;        ^ number
+
+PRinTer.OPEN "~~~/varwatch.txt" ASCIIE
+;            ^ string
+
+sYmbol.NEW _InitialSP   0x34000100
+;                       ^ number
+
+DO ~~~~/test.cmm
+;  ^ string.special
+
+WAIT 1.ns
+;    ^ float
+
+SYStem.JtagClock  100.GHZ
+;                 ^ float
+
+DATA.SET P:&HEAD+0x4 %LONG DATA.LONG(EA:&HEAD+0x4)&0xFFFFFF
+;                                    ^ constant.builtin
+
+List `main`
+;    ^ symbol
+
+&range = 'a'--'z'||'0'--'9'
+;        ^ character
+;           ^ operator
+;                       ^ character
+
+Data.Set N: 0xffff800000 0y0011xx01xx&&a
+;        ^ constant.builtin
+;           ^ number
+;                        ^ number
+;                                    ^ operator
+
+WinPOS 0% 85% 100% 15%
+;             ^ float
+
+// vim: set ft=t32:

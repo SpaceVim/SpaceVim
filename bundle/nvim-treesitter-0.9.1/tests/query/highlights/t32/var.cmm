@@ -1,0 +1,75 @@
+Var.NEWGLOBAL char[4][32] \myarr
+; <- keyword
+;             ^ type.builtin
+;                          ^ variable.builtin
+LOCAL &i &data
+
+&data="zero|one|two|three"
+
+&i=0.
+WHILE &i<4
+(
+    PRIVATE &val
+    &val=STRing.SPLIT("&data","|",&i)
+    Var.Assign \myarr[&i]="&val"
+;              ^ variable.builtin
+;                        ^ operator
+    &i=&i+1.
+)
+
+Var.NEWLOCAL \x
+; <- keyword
+;             ^ variable.builtin
+Var.set \x=func3(5,3)
+;       ^ variable.builtin
+;          ^ function.call
+;                ^ number
+PRINT Var.VALUE(\x)
+;               ^ variable.builtin
+PRINT Var.VALUE('a')
+;               ^ character
+Var.Assign (*ap)[2..4] = &a
+;            ^ variable
+;                         ^ variable
+Var.Assign sp = &s.n+offset
+;          ^ variable
+;                ^ variable
+;                  ^ field
+;                    ^ variable
+Var.Assign padd = (CAddition const * volatile)&d
+;          ^ variable
+;                  ^ type
+;                            ^ type.qualifier
+;                                    ^ type.qualifier
+;                                              ^ variable
+Var.Assign e1 = (enum e2)&e
+;          ^ variable
+;                ^ keyword
+;                     ^ type
+;                         ^ variable
+Var.Assign *vector = (struct Vector3d*)&acceleration
+;           ^ variable
+;                     ^ keyword
+;                            ^ type
+;                                       ^ variable
+Var.Assign z = (union foo)x
+;          ^ variable
+;               ^ keyword
+;                     ^ type
+;                         ^ variable
+Var.Assign b = -a
+;          ^ variable
+;               ^ variable
+Var.Assign c = i++
+;          ^ variable
+;              ^ variable
+Var.Assign d = sizeof(int)
+;          ^ variable
+;              ^ keyword.operator
+;                     ^ type.builtin
+Var.call strcmp(key,buffer)
+;        ^ function.call
+;               ^ variable
+;                   ^ variable
+
+// vim: set ft=t32:

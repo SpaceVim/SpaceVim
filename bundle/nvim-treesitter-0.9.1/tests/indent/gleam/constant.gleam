@@ -1,0 +1,2 @@
+pub const foo = 
+  "bar"

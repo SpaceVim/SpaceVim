@@ -1,0 +1,27 @@
+RePeaT 10. PRINT "A"
+
+RePeaT &a
+  print
+
+REPEAT 0xaAfF09
+(
+  cont
+)
+
+RPT
+(
+  b
+)
+
+rpt
+(
+  s
+)
+WHILE &a
+
+REPEAT TRUE()
+; comment
+(
+  cont
+)
+

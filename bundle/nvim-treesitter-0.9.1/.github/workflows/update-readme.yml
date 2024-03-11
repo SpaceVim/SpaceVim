@@ -1,0 +1,42 @@
+name: Update README
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    name: Update README
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Prepare
+        env:
+          NVIM_TAG: stable
+        run: |
+          sudo apt install libfuse2
+          wget https://github.com/neovim/neovim/releases/download/${NVIM_TAG}/nvim.appimage
+          chmod u+x nvim.appimage
+          mkdir -p ~/.local/share/nvim/site/pack/nvim-treesitter/start
+          ln -s $(pwd) ~/.local/share/nvim/site/pack/nvim-treesitter/start
+
+      - name: Check README
+        run: |
+          git config user.email "actions@github"
+          git config user.name "Github Actions"
+          ./nvim.appimage --headless -c "luafile ./scripts/update-readme.lua" -c "q" || echo "Needs update"
+          git add README.md
+          git commit -m "Update README" || echo 'No commit necessary!'
+          git clean -xf
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Update README
+          title: Update README
+          branch: update-readme-pr
+          base: ${{ github.head_ref }}
+          draft: true

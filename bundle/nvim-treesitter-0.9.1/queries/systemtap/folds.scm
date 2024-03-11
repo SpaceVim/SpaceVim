@@ -1,0 +1,18 @@
+[
+  (preprocessor_macro_definition)
+  (preprocessor_macro_expansion)
+  (conditional_preprocessing)
+  (embedded_code)
+  (probe_point_definition)
+  (probe_point_alias_prologue)
+  (probe_point_alias_epilogue)
+  (variable_declaration)
+  (function_definition)
+  (if_statement)
+  (while_statement)
+  (for_statement)
+  (foreach_statement)
+  (try_statement)
+  (catch_clause)
+  (comment)
+] @fold

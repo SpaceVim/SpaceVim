@@ -1,0 +1,56 @@
+name: Update lockfile
+
+on:
+  schedule:
+    - cron: "30 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-lockfile:
+    name: Update lockfile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: Prepare
+        env:
+          NVIM_TAG: stable
+        run: |
+          wget https://github.com/josephburnett/jd/releases/download/v1.6.1/jd-amd64-linux
+          mv ./jd-amd64-linux /tmp/jd
+          chmod +x /tmp/jd
+          sudo apt install libfuse2
+          wget https://github.com/neovim/neovim/releases/download/${NVIM_TAG}/nvim.appimage
+          chmod u+x nvim.appimage
+          mkdir -p ~/.local/share/nvim/site/pack/nvim-treesitter/start
+          ln -s $(pwd) ~/.local/share/nvim/site/pack/nvim-treesitter/start
+
+      - name: Update parsers
+        env:
+          SKIP_LOCKFILE_UPDATE_FOR_LANGS: ""
+        run: |
+          cp lockfile.json /tmp/old_lockfile.json
+          ./nvim.appimage --headless -c "luafile ./scripts/write-lockfile.lua" -c "q"
+          # Pretty print
+          cp lockfile.json /tmp/lockfile.json
+          cat /tmp/lockfile.json | jq --sort-keys > lockfile.json
+
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub"
+          git config user.email "noreply@github.com"
+          git add lockfile.json
+          UPDATED_PARSERS=$(/tmp/jd -f merge /tmp/old_lockfile.json lockfile.json | jq -r 'keys | join(", ")')
+          echo "UPDATED_PARSERS=$UPDATED_PARSERS" >> $GITHUB_ENV
+          git commit -m "Update parsers: $UPDATED_PARSERS" || echo 'No commit necessary!'
+          git clean -xf
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "Update lockfile.json: ${{ env.UPDATED_PARSERS }}"
+          branch: update-lockfile-pr
+          base: ${{ github.head_ref }}
+          draft: true

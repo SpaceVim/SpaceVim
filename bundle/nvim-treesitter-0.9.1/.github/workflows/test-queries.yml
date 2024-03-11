@@ -1,0 +1,87 @@
+name: Test queries
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+
+# Cancel any in-progress CI runs for a PR if it is updated
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.sha }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check_compilation:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-2022, macos-latest]
+        cc: [gcc, clang]
+        nvim_tag: [stable]
+        exclude:
+          - os: ubuntu-latest
+            cc: clang
+            nvim_tag: stable
+
+          - os: macos-latest
+            cc: gcc
+            nvim_tag: stable
+
+          - os: windows-2022
+            cc: clang
+            nvim_tag: stable
+
+        include:
+          - os: windows-2022
+            cc: cl
+            nvim_tag: stable
+
+          - os: ubuntu-latest
+            cc: gcc
+            nvim_tag: nightly
+
+    name: Parser compilation
+    runs-on: ${{ matrix.os }}
+    env:
+      CC: ${{ matrix.cc }}
+      NVIM: ${{ matrix.os == 'windows-2022' && 'nvim-win64\\bin\\nvim.exe' || 'nvim' }}
+      ALLOWED_INSTALLATION_FAILURES: ${{ matrix.os == 'windows-2022' && 'rnoweb' }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ilammy/msvc-dev-cmd@v1
+      - uses: actions/setup-node@v3
+
+      - name: Install tree-sitter CLI
+        run: npm i -g tree-sitter-cli
+
+      - name: Install and prepare Neovim
+        env:
+          NVIM_TAG: ${{ matrix.nvim_tag }}
+        run: |
+          bash ./scripts/ci-install-${{ matrix.os }}.sh
+
+      - name: Setup Parsers Cache
+        id: parsers-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./parser/
+            ~/AppData/Local/nvim/pack/nvim-treesitter/start/nvim-treesitter/parser/
+          key: ${{ matrix.os }}-${{ matrix.cc }}-${{ matrix.nvim_tag }}-parsers-v1-${{ hashFiles('./lockfile.json', './lua/nvim-treesitter/parsers.lua', './lua/nvim-treesitter/install.lua', './lua/nvim-treesitter/shell_command_selectors.lua') }}
+
+      - name: Compile parsers
+        run: $NVIM --headless -c "lua require'nvim-treesitter.install'.prefer_git=false" -c "TSInstallSync all" -c "q"
+
+      - name: Post compile Windows
+        if: matrix.os == 'windows-2022'
+        run: cp -r ~/AppData/Local/nvim/pack/nvim-treesitter/start/nvim-treesitter/parser/* parser
+
+      - name: Check query files
+        run: $NVIM --headless -c "luafile ./scripts/check-queries.lua" -c "q"

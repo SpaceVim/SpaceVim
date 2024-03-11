@@ -1,0 +1,123 @@
+PRIVATE &password
+; <- keyword
+;        ^ variable.builtin
+ENTRY &password
+; <- keyword
+;        ^ parameter
+
+ENTRY %LINE &salt
+; <- keyword
+;      ^ constant.builtin
+;            ^ parameter
+
+IF "&password"==""
+; <- conditional
+;  ^ string
+;    ^ variable.builtin
+;             ^ operator
+(
+    ECHO "Failed to provide password."
+    ENDDO
+;   ^ keyword.return
+)
+ELSE
+; <- conditional
+(
+    PRIVATE &pass
+
+    &pass=FALSE()
+;          ^ function.builtin
+    WHILE !&pass
+;         ^ operator
+    (
+        GOSUB verify_password "&password"
+;             ^ function.call
+        RETURNVALUES &pass
+;                     ^ parameter
+        WAIT 10.ms
+;            ^ float
+    )
+
+    IF !&pass
+        GOTO fail
+;            ^ label
+    ELSE
+    (
+        GOSUB start_debug
+;             ^ function.call
+    )
+)
+
+LOCAL &num
+;      ^ variable.builtin
+
+&num = 2.
+;      ^ number
+
+RePeaT &num PRINT "Password: &password"
+;       ^ variable.builtin
+;                             ^ variable.builtin
+
+WinCLEAR
+FramePOS ,,,,Maximized
+;        ^ punctuation.delimiter
+;            ^ constant.builtin
+WinPOS 0% 50% 100% 35%
+;      ^ float
+COVerage.ListFunc
+
+ENDDO
+
+
+fail:
+; <- label
+    PRINT %ERROR "Password verification failed."
+    END
+;   ^ keyword.return
+
+
+verify_password:
+; <- function
+(
+    PARAMETERS &password
+;               ^ parameter
+
+    SYStem.Option.KEYCODE "&password"
+    SYStem.JtagClock  1kHz
+;                     ^ float
+    SYStem.Mode.Attach
+
+    Data.Set N: EAXI:0x34000000 %Long 0x34000100 0x34000021 /verify
+;            ^ constant.builtin
+;               ^ constant.builtin
+;                    ^ number
+;                                ^ constant.builtin
+;                                     ^ number
+;                                                            ^ constant.builtin
+
+    RETURN TRUE()
+;   ^ keyword.return
+)
+
+
+SUBROUTINE start_debug
+; <- keyword.function
+;          ^ function
+(
+    COVerage.ListModule %MULTI.OBC \sieve
+;    ^ keyword
+;                        ^ constant.builtin
+;                                  ^ symbol
+
+    Var.DRAW flags[0..16] /Alternate 3
+;    ^ keyword
+;             ^ variable
+;                          ^ constant.builtin
+;                                    ^ number
+
+    Go main
+    RETURN
+;   ^ keyword.return
+)
+
+// vim: set ft=t32:

@@ -1,0 +1,42 @@
+let
+/* <- keyword */
+
+  var a := 12
+  /* <- keyword */
+
+  function f() : int = a
+  /* <- keyword.function */
+  primitive g()
+  /* <- keyword.function */
+
+  import "lib.tih"
+  /* <- include */
+
+  type array_of_int = array of int
+  /* <- keyword */
+  /*                  ^ keyword */
+  /*                        ^ keyword */
+
+in
+/* <- keyword */
+
+  12;
+
+  if 12 then 27 else 42;
+  /* <- keyword */
+  /*    ^ keyword */
+  /*            ^ keyword */
+
+  for i := 12 to 27 do 42;
+  /* <- repeat */
+  /*          ^ repeat */
+  /*                ^ repeat */
+
+  while 12 do break
+  /* <- repeat */
+  /*       ^ repeat */
+  /*          ^ keyword */
+
+end
+/* <- keyword */
+/* vim: set ft=tiger: */
