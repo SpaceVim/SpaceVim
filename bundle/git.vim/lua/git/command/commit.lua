@@ -9,13 +9,14 @@ local commit_bufnr = -1
 local commit_context = {}
 
 local commit_jobid = -1
+local commit_buf_jobid = -1
 
 local function on_stdout(id, data)
   if id ~= commit_jobid then
     return
   end
   for _, d in ipairs(data) do
-    log.debug(d)
+    log.debug('git-commit stdout:' .. d)
     table.insert(commit_context, d)
   end
 end
@@ -25,17 +26,18 @@ local function on_stderr(id, data)
     return
   end
   for _, d in ipairs(data) do
-    log.debug(d)
+    log.debug('git-commit stderr:' .. d)
   end
 end
 
 local function on_exit(id, code, single)
-  -- log.debug(string.format('code %d, single %d', code, single))
+  log.debug(string.format('code %d, single %d', code, single))
   if id ~= commit_jobid then
     return
   end
   if code == 0 and single == 0 then
     nt.notify('commit done!')
+    return
   end
   if commit_bufnr ~= -1 and vim.api.nvim_buf_is_valid(commit_bufnr) then
     vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, commit_context)
@@ -52,13 +54,15 @@ local function QuitPre()
 end
 
 local function on_commit_exit(id, code, single)
+  if id ~= commit_buf_jobid then
+    return
+  end
   log.debug('git-commit exit code:' .. code .. ' single:' .. single)
   if code == 0 and single == 0 then
     nt.notify('commit done!')
   else
-    nt.notify('commit failed!' , 'WarningMsg')
+    nt.notify('commit failed!', 'WarningMsg')
   end
-
 end
 
 local function filter(t, f)
@@ -74,17 +78,21 @@ end
 
 local function WinLeave()
   if vim.b.git_commit_quitpre then
-    local cmd = { 'git', 'commit', '-F', '-' }
-    local id = job.start(cmd, {
+    local cmd = {
+      'git',
+      'commit',
+      '-m',
+      table.concat(
+        filter(commit_context, function(var)
+          return not string.find(var, '^%s*#')
+        end),
+        '\n'
+      ),
+    }
+    log.debug('git-commit cmd:' .. vim.inspect(cmd))
+    commit_buf_jobid = job.start(cmd, {
       on_exit = on_commit_exit,
     })
-    job.send(
-      id,
-      filter(commit_context, function(var)
-        return not string.find(var, '^%s*#')
-      end)
-    )
-    job.stop(id)
   end
 end
 
@@ -129,7 +137,9 @@ local function openCommitBuffer()
 end
 
 local function index(t, v)
-  if not t then return -1 end
+  if not t then
+    return -1
+  end
 
   return vim.fn.index(t, v)
 end
@@ -195,6 +205,7 @@ function M.run(...)
       table.insert(cmd, v)
     end
   end
+  log.debug('git-commit cmd:' .. vim.inspect(cmd))
   commit_jobid = job.start(cmd, {
     on_stdout = on_stdout,
     on_exit = on_exit,
