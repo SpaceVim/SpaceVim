@@ -200,7 +200,7 @@ endif
 if has('nvim')
   function! s:self.version() abort
     let v = api_info().version
-    return v.major . '.' . v.minor . '.' . v.patch
+    return v.major . '.' . v.minor . '.' . v.patch . (v.prerelease ? '(Prerelease)' : '(Release)')
   endfunction
 else
   function! s:self.version() abort
