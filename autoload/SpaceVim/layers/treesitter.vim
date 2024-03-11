@@ -33,6 +33,12 @@ function! SpaceVim#layers#treesitter#health() abort
   return 1
 endfunction
 
+function! SpaceVim#layers#treesitter#setup() abort
+
+  lua require('spacevim.treesitter').setup()
+
+endfunction
+
 function! SpaceVim#layers#treesitter#loadable() abort
 
   return has('nvim')
