@@ -1,0 +1,6 @@
+{
+  "name": "neoformat",
+  "description": "A Neovim plugin for formatting.",
+  "author": "Eric Wong & Steve Dignam"
+}
+

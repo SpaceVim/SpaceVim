@@ -1,5 +1,170 @@
+"=============================================================================
+" neoformat.vim --- A Neovim plugin for formatting
+" Copyright (c) 2016-2021 Steve Dignam
+" Copyright (c) 2022 Eric Wong
+" Author: Eric Wong < wsdjeg@outlook.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
+
 " Set global flag to allow checking in custom user config
 let g:neoformat = 1
+
+" @todo update `:h neoformat`
+" https://github.com/sbdchd/neoformat/blob/f1b6cd506b72be0a2aaf529105320ec929683920/doc/neoformat.txt
+
+""
+" @section Introduction, intro
+" @library
+" @order intro commands config adding-new-formatter managing-undo-history supported-filetypes
+" A [Neovim](https://neovim.io) and Vim8 plugin for formatting code.
+"
+" *Neoformat* uses a variety of formatters for many filetypes. Currently, Neoformat
+" will run a formatter using the current buffer data, and on success it will
+" update the current buffer with the formatted text. On a formatter failure,
+" Neoformat will try the next formatter defined for the filetype.
+"
+" By using `getbufline()` to read from the current buffer instead of file,
+" Neoformat is able to format your buffer without you having to `:w` your file first.
+" Also, by using `setline()`, marks, jumps, etc. are all maintained after formatting.
+"
+" Neoformat supports both sending buffer data to formatters via stdin, and also
+" writing buffer data to `/tmp/` for formatters to read that do not support input
+" via stdin.
+
+
+""
+" @section MANAGING UNDO HISTORY, managing-undo-history
+" If you use an |autocmd| to run Neoformat on save, and you have your editor
+" configured to save automatically on |CursorHold| then you might run into
+" problems reverting changes. Pressing |u| will undo the last change made by
+" Neoformat instead of the change that you made yourself - and then Neoformat
+" will run again redoing the change that you just reverted. To avoid this
+" problem you can run Neoformat with the Vim |undojoin| command to put changes
+" made by Neoformat into the same |undo-block| with the preceding change. For
+" example:
+"
+" >
+"     augroup fmt
+"       autocmd!
+"       autocmd BufWritePre * undojoin | Neoformat
+"     augroup END
+" <
+"
+" When |undojoin| is used this way pressing |u| will "skip over" the Neoformat
+" changes - it will revert both the changes made by Neoformat and the change
+" that caused Neoformat to be invoked.
+
+""
+" @section ADDING A NEW FORMATTER, adding-new-formatter
+" Note: you should replace everything `{{ }}` accordingly
+"
+" 1. Create a file in `autoload/neoformat/formatters/{{ filetype }}.vim` if it does not
+"    already exist for your filetype.
+"
+" 2. Follow the following format
+"
+" See Config above for options
+" >
+"     function! neoformat#formatters#{{ filetype }}#enabled() abort
+" 	return ['{{ formatter name }}', '{{ other formatter name for filetype }}']
+"     endfunction
+"
+"     function! neoformat#formatters#{{ filetype }}#{{ formatter name }}() abort
+" 	return {
+" 	    \ 'exe': '{{ formatter name }}',
+" 	    \ 'args': ['-s 4', '-q'],
+" 	    \ 'stdin': 1
+" 	    \ }
+"     endfunction
+"
+"     function! neoformat#formatters#{{ filetype }}#{{ other formatter name }}() abort
+"       return {'exe': {{ other formatter name }}
+"     endfunction
+" <
+" 3. Update `README.md` and `doc/neoformat.txt`
+
+""
+" @section Configuration, config
+" Define custom formatters.
+"
+" Options:
+"
+" | `exe`       | the name the formatter executable in the path | required
+" | `args`      | list of arguments | default: [] | optional
+" | `replace`   | overwrite the file, instead of updating the buffer | default: 0 | optional
+" | `stdin`     | send data to the stdin of the formatter | default 0 | optional
+" | `stderr`    | used to specify whether stderr output should be read along with
+" 	     the stdin, otherwise redirects stderr to `stderr.log` file in neoformat's
+" 	     temporary directory | default 0 | optional
+" | `no_append` | do not append the `path` of the file to the formatter command,
+" 	     used when the `path` is in the middle of a command | default: 0 |
+" 	     optional
+" | `env`       | list of environment variables to prepend to the command | default: [] | optional
+"
+" | `valid_exit_codes` | list of valid exit codes for formatters who do not respect common unix practices | \[0] | optional
+" | `try_node_exe` | attempt to find `exe` in a `node_modules/.bin` directory in the current working directory or one of its parents (requires setting `g:neoformat_try_node_exe`) | default: 0 | optional
+"
+" Example:
+"
+" Define custom formatters.
+" >
+"     let g:neoformat_python_autopep8 = {
+"             \ 'exe': 'autopep8',
+"             \ 'args': ['-s 4', '-E'],
+"             \ 'replace': 1 " replace the file, instead of updating buffer (default: 0),
+"             \ 'stdin': 1, " send data to stdin of formatter (default: 0)
+"             \ 'valid_exit_codes': [0, 23],
+"             \ 'no_append': 1,
+"             \ }
+"
+"     let g:neoformat_enabled_python = ['autopep8']
+" <
+" Have Neoformat use &formatprg as a formatter
+" >
+"     let g:neoformat_try_formatprg = 1
+" <
+" Enable basic formatting when a filetype is not found. Disabled by default.
+" >
+"     " Enable alignment globally
+"     let g:neoformat_basic_format_align = 1
+"
+"     " Enable tab to spaces conversion globally
+"     let g:neoformat_basic_format_retab = 1
+"
+"     " Enable trimmming of trailing whitespace globally
+"     let g:neoformat_basic_format_trim = 1
+"
+" Run all enabled formatters (by default Neoformat stops after the first
+" formatter succeeds)
+"
+"     let g:neoformat_run_all_formatters = 1
+"
+" Above options can be activated or deactivated per buffer. For example:
+"
+"     " runs all formatters for current buffer without tab to spaces conversion
+"     let b:neoformat_run_all_formatters = 1
+"     let b:neoformat_basic_format_retab = 0
+"
+" Have Neoformat only msg when there is an error
+" >
+"     let g:neoformat_only_msg_on_error = 1
+" <
+" When debugging, you can enable either of following variables for extra logging.
+" >
+"     let g:neoformat_verbose = 1 " only affects the verbosity of Neoformat
+"     " Or
+"     let &verbose            = 1 " also increases verbosity of the editor as a whole
+" <
+" Have Neoformat look for a formatter executable in the `node_modules/.bin`
+" directory in the current working directory or one of its parents (only applies
+" to formatters with `try_node_exe` set to `1`):
+" >
+"     let g:neoformat_try_node_exe = 1
+" <
+
+
 
 function! neoformat#Neoformat(bang, user_input, start_line, end_line) abort
     let view = winsaveview()
@@ -363,3 +528,8 @@ function! s:basic_format() abort
         call winrestview(view)
     endif
 endfunction
+
+""
+" @section Supported filetypes, supported-filetypes
+" This is a list of default formatters.
+

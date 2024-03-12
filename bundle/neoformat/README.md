@@ -1,6 +1,6 @@
-# Neoformat [![Build Status](https://travis-ci.org/sbdchd/neoformat.svg?branch=master)](https://travis-ci.org/sbdchd/neoformat)
+# Neoformat
 
-A (Neo)vim plugin for formatting code.
+A (Neo)vim plugin for formatting code. based on [`neoformat@f1b6cd50`](https://github.com/sbdchd/neoformat/tree/f1b6cd506b72be0a2aaf529105320ec929683920)
 
 Neoformat uses a variety of formatters for many filetypes. Currently, Neoformat
 will run a formatter using the current buffer data, and on success it will
@@ -14,6 +14,17 @@ Also, by using `setline()`, marks, jumps, etc. are all maintained after formatti
 Neoformat supports both sending buffer data to formatters via stdin, and also
 writing buffer data to `/tmp/` for formatters to read that do not support input
 via stdin.
+
+<!-- vim-markdown-toc GFM -->
+
+- [Basic Usage](#basic-usage)
+- [Current Limitation(s)](#current-limitations)
+- [Config Optional](#config-optional)
+- [Adding a New Formatter](#adding-a-new-formatter)
+- [Managing Undo History](#managing-undo-history)
+- [Supported Filetypes](#supported-filetypes)
+
+<!-- vim-markdown-toc -->
 
 ## Basic Usage
 
@@ -56,21 +67,13 @@ The `undojoin` command will put changes made by Neoformat into the same
 `undo-block` with the latest preceding change. See
 [Managing Undo History](#managing-undo-history).
 
-## Install
-
-The best way to install Neoformat is with your favorite plugin manager for Vim, such as [vim-plug](https://github.com/junegunn/vim-plug):
-
-```viml
-Plug 'sbdchd/neoformat'
-```
-
 ## Current Limitation(s)
 
 If a formatter is either not configured to use `stdin`, or is not able to read
 from `stdin`, then buffer data will be written to a file in `/tmp/neoformat/`,
 where the formatter will then read from
 
-## Config [Optional]
+## Config Optional
 
 Define custom formatters.
 
@@ -83,6 +86,7 @@ Options:
 | `replace`          | overwrite the file, instead of updating the buffer                                                                                                            | 0       | optional            |
 | `stdin`            | send data to the stdin of the formatter                                                                                                                       | 0       | optional            |
 | `stderr`           | capture stderr output from formatter                                                                                                                          | 0       | optional            |
+| `output_encode`    | set the output encoding of formatter, default is `utf-8`                                                                                                      | 0       | optional            |
 | `no_append`        | do not append the `path` of the file to the formatter command, used when the `path` is in the middle of a command                                             | 0       | optional            |
 | `env`              | list of environment variable definitions to be prepended to the formatter command                                                                             | \[]     | optional            |
 | `valid_exit_codes` | list of valid exit codes for formatters who do not respect common unix practices                                                                              | \[0]    | optional            |
