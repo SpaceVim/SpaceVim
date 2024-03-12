@@ -90,21 +90,22 @@ let g:neoformat = 1
 " Define custom formatters.
 "
 " Options:
-"
-" | `exe`       | the name the formatter executable in the path | required
-" | `args`      | list of arguments | default: [] | optional
-" | `replace`   | overwrite the file, instead of updating the buffer | default: 0 | optional
-" | `stdin`     | send data to the stdin of the formatter | default 0 | optional
-" | `stderr`    | used to specify whether stderr output should be read along with
-" 	     the stdin, otherwise redirects stderr to `stderr.log` file in neoformat's
-" 	     temporary directory | default 0 | optional
-" | `no_append` | do not append the `path` of the file to the formatter command,
-" 	     used when the `path` is in the middle of a command | default: 0 |
-" 	     optional
-" | `env`       | list of environment variables to prepend to the command | default: [] | optional
-"
-" | `valid_exit_codes` | list of valid exit codes for formatters who do not respect common unix practices | \[0] | optional
-" | `try_node_exe` | attempt to find `exe` in a `node_modules/.bin` directory in the current working directory or one of its parents (requires setting `g:neoformat_try_node_exe`) | default: 0 | optional
+" 1. `exe`: the name the formatter executable in the path, required
+" 2. `args`: list of arguments, default: [], optional
+" 3. `replace`: overwrite the file, instead of updating the buffer, default: 0, optional
+" 4. `stdin`: send data to the stdin of the formatter, default 0, optional
+" 5. `stderr`: used to specify whether stderr output should be read along with
+" 	 the stdin, otherwise redirects stderr to `stderr.log` file in neoformat's
+" 	 temporary directory, default 0, optional
+" 6. `no_append`: do not append the `path` of the file to the formatter command,
+" 	 used when the `path` is in the middle of a command, default: 0, optional
+" 7. `env`: list of environment variables to prepend to the command, default: [], optional
+" 8. `valid_exit_codes`: list of valid exit codes for formatters who do not
+"    respect common unix practices, default is [0], optional
+" 9. `try_node_exe`: attempt to find `exe` in a `node_modules/.bin` directory
+"    in the current working directory or one of its parents (requires setting
+"    `g:neoformat_try_node_exe`), default: 0, optional
+" 10. `output_encode`: set the output encoding of formatter, default is `utf-8`
 "
 " Example:
 "
