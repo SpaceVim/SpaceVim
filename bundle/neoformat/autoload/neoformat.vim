@@ -130,6 +130,10 @@ function! s:neoformat(bang, user_input, start_line, end_line) abort
 
                 call s:deletelines(len(new_buffer), line('$'))
 
+                if cmd.output_encode != 'utf-8'
+                    let new_buffer = map(new_buffer, 'iconv(v:val, "cp936", "utf-8")')
+                endif
+
                 call setline(1, new_buffer)
 
                 call add(formatters_changed, cmd.name)
@@ -239,6 +243,7 @@ endfunction
 
 function! s:generate_cmd(definition, filetype) abort
     let executable = get(a:definition, 'exe', '')
+    let output_encode = get(a:definition, 'output_encode', 'utf-8')
     if executable == ''
         call neoformat#utils#log('no exe field in definition')
         return {}
@@ -309,6 +314,7 @@ function! s:generate_cmd(definition, filetype) abort
     return {
         \ 'exe':       fullcmd,
         \ 'stdin':     using_stdin,
+        \ 'output_encode' : output_encode,
         \ 'stderr_log': stderr_log,
         \ 'name':      a:definition.exe,
         \ 'replace':   get(a:definition, 'replace', 0),

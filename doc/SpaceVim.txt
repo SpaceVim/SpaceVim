@@ -5186,11 +5186,18 @@ add following snippet to your |SpaceVim-options| file.
 OPTIONS
 
   1. `enabled_formater`: set the default formatter for sql, default is
-    ['sqlfmtorg'] https://github.com/sql-formatter-org/sql-formatter
+    ['sqlfmtorg'] https://github.com/sql-formatter-org/sql-formatter you can
+    also use `sqlformat` which is from
+    https://github.com/andialbrecht/sqlparse
   2. `sql_formatter_command`: Set the command of sql-formatter.
   3. `sql_dialect`: set the SQL dialect, default is basic sql.
   4. `sql_formatter_config`: set the path of config path. default is empty
 string.
+  5. `sqlformat_cmd`: set the command for sqlformat.
+  6. `sqlformat_output_encode`: set the output encoding of sqlformat, default
+is `utf-8`. If you are using window, maybe need to change this option to
+`cp936`.
+
 
 
 ==============================================================================
