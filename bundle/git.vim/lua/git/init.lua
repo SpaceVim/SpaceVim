@@ -25,6 +25,7 @@ local cmds = {
   'reflog',
   'shortlog',
   'status',
+  'grep',
   'tag',
 }
 local supported_commands = {}
