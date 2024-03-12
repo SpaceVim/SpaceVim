@@ -18,6 +18,9 @@
 " 2. `format_method`: set the format plugin, default plugin is `neoformat`.
 " You can also use `vim-codefmt`.
 " 3. `silent_format`: Runs the formatter without any messages.
+" 4. `format_notify_width`: set the neoformat notify window width.
+" 5. `format_notify_timeout`: set the neoformat notify clear timeout. default
+" is 5000 milliseconds.
 "
 " @subsection key bindings
 " >
@@ -33,6 +36,8 @@ else
   let s:format_on_save = 0
   let s:silent_format = 0
   let s:format_ft = []
+  let s:format_notify_timeout = 5000
+  let s:format_notify_width = &columns * 0.50
 endif
 
 function! SpaceVim#layers#format#health() abort
@@ -76,6 +81,17 @@ function! SpaceVim#layers#format#set_variable(var) abort
   let s:format_method = get(a:var, 'format_method', s:format_method)
   let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
   let s:silent_format = get(a:var, 'silent_format', s:silent_format)
+  let s:format_notify_width = get(a:var, 'format_notify_width', s:format_notify_width)
+  let s:format_notify_timeout = get(a:var, 'format_notify_timeout', s:format_notify_timeout)
+endfunction
+
+function! SpaceVim#layers#format#get_format_option() abort
+
+  return {
+        \ 'format_notify_width' : s:format_notify_width,
+        \ 'format_notify_timeout' : s:format_notify_timeout,
+        \ }
+
 endfunction
 
 function! SpaceVim#layers#format#get_options() abort
