@@ -8,6 +8,7 @@ local commit_bufnr = -1
 
 local commit_output = {}
 local commitmsg = {}
+local isamend = false
 
 local commit_jobid = -1
 local commit_buf_jobid = -1
@@ -77,6 +78,9 @@ local function WinLeave()
         '\n'
       ),
     }
+    if isamend then
+      table.insert(cmd, '--amend')
+    end
     log.debug('git-commit cmd:' .. vim.inspect(cmd))
     commit_buf_jobid = job.start(cmd, {
       on_exit = on_commit_exit,
@@ -169,53 +173,29 @@ local function index(t, v)
   return vim.fn.index(t, v)
 end
 
-function M.run(...)
-  local a1 = select(1, ...)
+function M.run(argv)
   local cmd
   commit_output = {}
   commitmsg = {}
-  if vim.fn.empty(a1) == 1 then
-    cmd = {
-      'git',
-      '--no-pager',
-      '-c',
-      [[core.editor=nvim -u NONE --headless  --cmd "call chansend(v:stderr, ['1111111111111111111111', ''])" --cmd "call chansend(v:stderr, readfile(bufname()))" --cmd "call chansend(v:stderr, ['', '22222222222222222222'])" --cmd "cq 1"]],
-      '-c',
-      'color.status=always',
-      '-C',
-      vim.fn.expand(vim.fn.getcwd(), ':p'),
-      'commit',
-    }
-  elseif index(a1, '-m') ~= -1 then
-    cmd = {
-      'git',
-      '--no-pager',
-      '-c',
-      'core.editor=cat',
-      '-c',
-      'color.status=always',
-      '-C',
-      vim.fn.expand(vim.fn.getcwd(), ':p'),
-      'commit',
-    }
-    for _, v in ipairs(a1) do
-      table.insert(cmd, v)
-    end
+
+  if index(argv, '--amend') ~= -1 then
+    isamend = true
   else
-    cmd = {
-      'git',
-      '--no-pager',
-      '-c',
-      'core.editor=cat',
-      '-c',
-      'color.status=always',
-      '-C',
-      vim.fn.expand(vim.fn.getcwd(), ':p'),
-      'commit',
-    }
-    for _, v in ipairs(a1) do
-      table.insert(cmd, v)
-    end
+    isamend = false
+  end
+  cmd = {
+    'git',
+    '--no-pager',
+    '-c',
+    [[core.editor=nvim -u NONE --headless  --cmd "call chansend(v:stderr, ['1111111111111111111111', ''])" --cmd "call chansend(v:stderr, readfile(bufname()))" --cmd "call chansend(v:stderr, ['', '22222222222222222222'])" --cmd "cq 1"]],
+    '-c',
+    'color.status=always',
+    '-C',
+    vim.fn.expand(vim.fn.getcwd(), ':p'),
+    'commit',
+  }
+  for _, v in ipairs(argv) do
+    table.insert(cmd, v)
   end
   log.debug('git-commit cmd:' .. vim.inspect(cmd))
   commit_jobid = job.start(cmd, {
