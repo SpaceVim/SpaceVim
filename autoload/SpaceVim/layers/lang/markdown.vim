@@ -20,7 +20,7 @@
 "
 " The following layer options are supported in this layer:
 "
-" 1. `enabled_formater`: Set the enabled formater, by default it is 
+" 1. `enabled_formatters`: Set the enabled formatters, by default it is 
 " `['remark']`. To use `prettier`, you need to install `prettier` via:
 " >
 "   npm install --global prettier
@@ -36,7 +36,7 @@
 "       name = 'lang#markdown'
 "       enableWcwidth = 1
 "       listItemIndent = 1
-"       enabled_formater = ['prettier']
+"       enabled_formatters = ['prettier']
 " <
 " @subsection key bindings
 "
@@ -58,12 +58,13 @@ let s:md_listItemIndent = 1
 let s:md_enableWcwidth = 0
 let s:md_listItemChar = '-'
 let g:vmt_list_indent_text = '  '
-let s:md_enabled_formater = ['remark']
+let s:md_enabled_formatters = ['remark']
 function! SpaceVim#layers#lang#markdown#set_variable(var) abort
   let s:md_listItemIndent = get(a:var, 'listItemIndent', s:md_listItemIndent)
   let s:md_enableWcwidth = get(a:var, 'enableWcwidth', s:md_enableWcwidth)
   let s:md_listItemChar = get(a:var, 'listItemChar', s:md_listItemChar)
-  let s:md_enabled_formater = get(a:var, 'enabled_formater', s:md_enabled_formater)
+  " old option name is enabled_formater, just keep backword compatibility
+  let s:md_enabled_formatters = get(a:var, 'enabled_formatters', get(a:var, 'enabled_formater', s:md_enabled_formatters))
 endfunction
 
 function! SpaceVim#layers#lang#markdown#plugins() abort
@@ -115,7 +116,7 @@ function! SpaceVim#layers#lang#markdown#config() abort
         \},
         \}
   let remarkrc = s:generate_remarkrc()
-  let g:neoformat_enabled_markdown = s:md_enabled_formater
+  let g:neoformat_enabled_markdown = s:md_enabled_formatters
   let g:neoformat_markdown_remark = {
         \ 'exe': 'remark',
         \ 'args': ['--no-color', '--silent'] + (empty(remarkrc) ?  [] : ['-r', remarkrc]),

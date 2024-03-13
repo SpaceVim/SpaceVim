@@ -4104,7 +4104,7 @@ LAYER OPTIONS
 
 The following layer options are supported in this layer:
 
-  1. `enabled_formater`: Set the enabled formater, by default it is
+  1. `enabled_formatters`: Set the enabled formatters, by default it is
 `['remark']`. To use `prettier`, you need to install `prettier` via:
 >
   npm install --global prettier
@@ -4120,7 +4120,7 @@ Here is an example for loading `lang#markdown` layer:
       name = 'lang#markdown'
       enableWcwidth = 1
       listItemIndent = 1
-      enabled_formater = ['prettier']
+      enabled_formatters = ['prettier']
 <
 KEY BINDINGS
 
@@ -5217,7 +5217,7 @@ add following snippet to your |SpaceVim-options| file.
 
 OPTIONS
 
-  1. `enabled_formater`: set the default formatter for sql, default is
+  1. `enabled_formatters`: set the default formatters for sql, default is
     ['sqlfmtorg'] https://github.com/sql-formatter-org/sql-formatter you can
     also use `sqlformat` which is from
     https://github.com/andialbrecht/sqlparse

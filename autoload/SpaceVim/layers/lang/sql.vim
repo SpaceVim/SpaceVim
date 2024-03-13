@@ -18,7 +18,7 @@
 "
 " @subsection Options
 "
-" 1. `enabled_formater`: set the default formatter for sql, default is ['sqlfmtorg']
+" 1. `enabled_formatters`: set the default formatters for sql, default is ['sqlfmtorg']
 "   https://github.com/sql-formatter-org/sql-formatter
 "   you can also use `sqlformat` which is from https://github.com/andialbrecht/sqlparse
 " 2. `sql_formatter_command`: Set the command of sql-formatter.
@@ -32,11 +32,11 @@
 "
 "
 
-if exists('s:enabled_formater')
+if exists('s:enabled_formatters')
   finish
 endif
 
-let s:enabled_formater = ['sqlfmtorg']
+let s:enabled_formatters = ['sqlfmtorg']
 let s:sql_formatter_command = 'sql-formatter'
 let s:sql_dialect = 'sql'
 let s:sql_formatter_config = ''
@@ -50,7 +50,8 @@ function! SpaceVim#layers#lang#sql#plugins() abort
 endfunction
 
 function! SpaceVim#layers#lang#sql#set_variable(opt) abort
-  let s:enabled_formater = get(a:opt, 'enabled_formater', s:enabled_formater) 
+  " keep compatibility with enabled_formater
+  let s:enabled_formatters = get(a:opt, 'enabled_formatters', get(a:opt, 'enabled_formater', s:enabled_formatters)) 
   let s:sql_formatter_command = get(a:opt, 'sql_formatter_command', s:sql_formatter_command) 
   let s:sql_dialect = get(a:opt, 'sql_dialect', s:sql_dialect)
   let s:sql_formatter_config = get(a:opt, 'sql_formatter_config', s:sql_formatter_config)
@@ -60,7 +61,7 @@ endfunction
 
 function! SpaceVim#layers#lang#sql#config() abort
   
-  let g:neoformat_enabled_sql = s:enabled_formater
+  let g:neoformat_enabled_sql = s:enabled_formatters
   let argv = []
   if !empty(s:sql_formatter_config)
     let argv = ['-c', s:sql_formatter_config]

@@ -46,7 +46,7 @@ npm -g install wcwidth
 ```
 
 To use [Prettier](https://github.com/prettier/prettier),
-you need to change the layer option: `enabled_formater`.
+you need to change the layer option: `enabled_formatters`.
 
 You can install [Prettier](https://github.com/prettier/prettier) via [yarn](https://yarnpkg.com/lang/zh-hans/docs/install/#windows-stable) or [npm](https://www.npmjs.com/get-npm), the commands are shown below:
 
@@ -80,7 +80,7 @@ Enable/Disable wcwidth for detecting the length of a table cell, default is 0. T
 
 Bullet marker to use for list items (`'-'`, `'*'`, or `'+'`, default: `'-'`).
 
-**enabled_formater**
+**enabled_formatters**
 
 Specify the enabled formater for markdown file, default is `['remark']`. You can also append multiple formatters to this list. e.g. `["remark", "prettier"]`.
 

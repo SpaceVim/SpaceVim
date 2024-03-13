@@ -80,7 +80,7 @@ npm install --global prettier
 
 设置无序列表前缀 (`'-'`, `'*'`, or `'+'`, 默认: `'-'`)。
 
-**enabled_formater**
+**enabled_formatters**
 
 为 markdown 文件指定启用的格式化工具，默认值是`["remark"]`，您也可以添加其它格式化工具到此列表，例如：`["remark", "prettier"]`。
 
