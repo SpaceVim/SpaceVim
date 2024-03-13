@@ -4,16 +4,16 @@ endfunction
 
 function! neoformat#formatters#ps1#PowerShellBeautifier() abort
     return {
-        \ 'exe'   : 'Edit-DTWBeautifyScript',
-        \ 'args'  : ["-IndentType FourSpaces", "-StandardOutput"],
+        \ 'exe'   : 'powershell',
+        \ 'args'  : ['-noprofile', '-Command', "Edit-DTWBeautifyScript", "-IndentType", "FourSpaces", "-StandardOutput"],
         \ 'stdin' : 0,
         \ }
 endfunction
 
 function! neoformat#formatters#ps1#PSScriptAnalyzer() abort
     return {
-        \ 'exe'   : 'Invoke-Formatter',
-        \ 'args' : ['-ScriptDefinition (Get-Content ' . expand('%') . ' -Raw)'],
+        \ 'exe'   : 'powershell',
+        \ 'args' : ['-noprofile', '-Command', 'Invoke-Formatter', '-ScriptDefinition (Get-Content ' . expand('%') . ' -Raw)'],
         \ 'stdin' : 0,
         \ 'no_append' : 1,
         \ }
