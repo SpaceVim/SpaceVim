@@ -161,7 +161,7 @@ local function on_exit(id, code, single)
     vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, commitmsg)
     vim.bo.modified = false
   else
-    nt.notify(commit_output, 'WarningMsg')
+    nt.notify(table.concat(commit_output, "\n"), 'WarningMsg')
   end
 end
 
