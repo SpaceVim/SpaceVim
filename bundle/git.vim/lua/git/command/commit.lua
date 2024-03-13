@@ -27,6 +27,7 @@ local function on_stderr(id, data)
   end
   for _, d in ipairs(data) do
     log.debug('git-commit stderr:' .. d)
+    table.insert(commit_context, d)
   end
 end
 
@@ -40,7 +41,14 @@ local function on_exit(id, code, single)
     return
   end
   if commit_bufnr ~= -1 and vim.api.nvim_buf_is_valid(commit_bufnr) then
-    vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, commit_context)
+    local commitmsg = {}
+    for _, line in ipairs(commit_context) do
+      if vim.startswith(line, '22222222222222222222')  then
+        break
+      end
+      table.insert(commitmsg, line)
+    end
+    vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, commitmsg)
   end
 end
 
@@ -166,13 +174,12 @@ function M.run(...)
       'git',
       '--no-pager',
       '-c',
-      'core.editor=cat',
+      [[core.editor=nvim --headless --cmd "call chansend(v:stderr, readfile(bufname()))" --cmd "call chansend(v:stderr, ['', '22222222222222222222'])" --cmd "cq 1"]],
       '-c',
       'color.status=always',
       '-C',
       vim.fn.expand(vim.fn.getcwd(), ':p'),
       'commit',
-      '--edit',
     }
   elseif index(a1, '-m') ~= -1 then
     cmd = {
