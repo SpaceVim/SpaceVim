@@ -9,7 +9,8 @@ CONTENTS                                                  *neoformat-contents*
   4. ADDING A NEW FORMATTER...................|neoformat-adding-new-formatter|
   5. MANAGING UNDO HISTORY...................|neoformat-managing-undo-history|
   6. Supported filetypes.......................|neoformat-supported-filetypes|
-      1. SQL formatters....................|neoformat-supported-filetypes-sql|
+      1. PowerShell formatters......|neoformat-supported-filetypes-powershell|
+      2. SQL formatters....................|neoformat-supported-filetypes-sql|
 
 ==============================================================================
 INTRODUCTION                                                 *neoformat-intro*
@@ -226,6 +227,31 @@ that caused Neoformat to be invoked.
 SUPPORTED FILETYPES                            *neoformat-supported-filetypes*
 
 This is a list of default formatters.
+
+==============================================================================
+POWERSHELL FORMATTERS               *neoformat-supported-filetypes-powershell*
+
+For PowerShell script, there are two default formatters.
+
+POWERSHELLBEAUTIFIER
+
+>
+  {
+    'exe'   : 'Edit-DTWBeautifyScript',
+    'args'  : ["-IndentType FourSpaces", "-StandardOutput"],
+    'stdin' : 0,
+  }
+<
+PSSCRIPTANALYZER
+
+>
+  {
+    'exe'   : 'Invoke-Formatter',
+    'args' : ['-ScriptDefinition (Get-Content ' . expand('%') . ' -Raw)'],
+    'stdin' : 0,
+    'no_append' : 1,
+  }
+<
 
 ==============================================================================
 SQL FORMATTERS                             *neoformat-supported-filetypes-sql*
