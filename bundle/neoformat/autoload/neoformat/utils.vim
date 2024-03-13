@@ -7,7 +7,7 @@
 "=============================================================================
 
 
-let s:LOGGER =SpaceVim#logger#derive('neoformat')
+let s:LOGGER = SpaceVim#logger#derive('neoformat')
 let s:NT = SpaceVim#api#import('notify')
 let s:formatopt = SpaceVim#layers#format#get_format_option()
 let s:NT.notify_max_width = s:formatopt.format_notify_width
