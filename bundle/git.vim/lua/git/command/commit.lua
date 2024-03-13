@@ -6,7 +6,8 @@ local log = require('git.log')
 
 local commit_bufnr = -1
 
-local commit_context = {}
+local commit_output = {}
+local commitmsg = {}
 
 local commit_jobid = -1
 local commit_buf_jobid = -1
@@ -17,7 +18,7 @@ local function on_stdout(id, data)
   end
   for _, d in ipairs(data) do
     log.debug('git-commit stdout:' .. d)
-    table.insert(commit_context, d)
+    table.insert(commit_output, d)
   end
 end
 
@@ -27,33 +28,12 @@ local function on_stderr(id, data)
   end
   for _, d in ipairs(data) do
     log.debug('git-commit stderr:' .. d)
-    table.insert(commit_context, d)
-  end
-end
-
-local function on_exit(id, code, single)
-  log.debug(string.format('code %d, single %d', code, single))
-  if id ~= commit_jobid then
-    return
-  end
-  if code == 0 and single == 0 then
-    nt.notify('commit done!')
-    return
-  end
-  if commit_bufnr ~= -1 and vim.api.nvim_buf_is_valid(commit_bufnr) then
-    local commitmsg = {}
-    for _, line in ipairs(commit_context) do
-      if vim.startswith(line, '22222222222222222222')  then
-        break
-      end
-      table.insert(commitmsg, line)
-    end
-    vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, commitmsg)
+    table.insert(commit_output, d)
   end
 end
 
 local function BufWriteCmd()
-  commit_context = vim.fn.getline(1, '$')
+  commitmsg = vim.fn.getline(1, '$')
   vim.bo.modified = false
 end
 
@@ -91,7 +71,7 @@ local function WinLeave()
       'commit',
       '-m',
       table.concat(
-        filter(commit_context, function(var)
+        filter(commitmsg, function(var)
           return not string.find(var, '^%s*#')
         end),
         '\n'
@@ -103,7 +83,6 @@ local function WinLeave()
     })
   end
 end
-
 local function openCommitBuffer()
   vim.cmd([[
   10split git://commit
@@ -143,6 +122,44 @@ local function openCommitBuffer()
   })
   return bufid
 end
+local function on_exit(id, code, single)
+  log.debug(string.format('code %d, single %d', code, single))
+  if id ~= commit_jobid then
+    return
+  end
+  if code == 0 and single == 0 then
+    nt.notify('commit done!')
+    return
+  end
+  local iscommitmsg = false
+  for _, line in ipairs(commit_output) do
+    if not iscommitmsg and vim.startswith(line, '1111111111111111111111') then
+      iscommitmsg = true
+    else
+      if vim.startswith(line, '22222222222222222222') then
+        break
+      end
+      if iscommitmsg then
+        table.insert(commitmsg, line)
+      end
+    end
+  end
+  if #commitmsg > 0 then
+    if
+      vim.api.nvim_buf_is_valid(commit_bufnr)
+      and vim.fn.index(vim.fn.tabpagebuflist(), commit_bufnr) ~= -1
+    then
+      local winnr = vim.fn.bufwinnr(commit_bufnr)
+      vim.cmd(winnr .. 'wincmd w')
+    else
+      commit_bufnr = openCommitBuffer()
+    end
+    vim.api.nvim_buf_set_lines(commit_bufnr, 0, -1, false, commitmsg)
+    vim.bo.modified = false
+  else
+    nt.notify(commit_output, 'WarningMsg')
+  end
+end
 
 local function index(t, v)
   if not t then
@@ -154,27 +171,15 @@ end
 
 function M.run(...)
   local a1 = select(1, ...)
-  if index(a1, '-m') == -1 then
-    if
-      vim.api.nvim_buf_is_valid(commit_bufnr)
-      and vim.fn.index(vim.fn.tabpagebuflist(), commit_bufnr) ~= -1
-    then
-      local winnr = vim.fn.bufwinnr(commit_bufnr)
-      vim.cmd(winnr .. 'wincmd w')
-    else
-      commit_bufnr = openCommitBuffer()
-    end
-  else
-    commit_bufnr = -1
-  end
   local cmd
-  commit_context = {}
+  commit_output = {}
+  commitmsg = {}
   if vim.fn.empty(a1) == 1 then
     cmd = {
       'git',
       '--no-pager',
       '-c',
-      [[core.editor=nvim --headless --cmd "call chansend(v:stderr, readfile(bufname()))" --cmd "call chansend(v:stderr, ['', '22222222222222222222'])" --cmd "cq 1"]],
+      [[core.editor=nvim -u NONE --headless  --cmd "call chansend(v:stderr, ['1111111111111111111111', ''])" --cmd "call chansend(v:stderr, readfile(bufname()))" --cmd "call chansend(v:stderr, ['', '22222222222222222222'])" --cmd "cq 1"]],
       '-c',
       'color.status=always',
       '-C',
