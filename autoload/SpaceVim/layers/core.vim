@@ -319,7 +319,9 @@ function! SpaceVim#layers#core#config() abort
     " TODO: fix all these command
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'Defx', 'toggle-file-tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['f', 'T'], 'Defx -no-toggle', 'show-file-tree', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], "Defx  -no-toggle -search=`expand('%:p')` `stridx(expand('%:p'), getcwd()) < 0? expand('%:p:h'): getcwd()`", 'open-file-tree', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['f', 'o'], 'call call('
+          \ . string(s:_function('s:defx_find_current_file')) . ', [])',
+          \ 'open-file-tree', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['b', 't'], 'exe "Defx -no-toggle " . fnameescape(expand("%:p:h"))', 'show-file-tree-at-buffer-dir', 1)
   elseif g:spacevim_filemanager ==# 'nvim-tree'
     call SpaceVim#mapping#space#def('nnoremap', ['f', 't'], 'NvimTreeToggle', 'toggle-file-tree', 1)
@@ -1065,6 +1067,21 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let s:enable_netrw = get(a:var,
         \ 'enable_netrw',
         \ 0)
+endfunction
+
+function! s:defx_find_current_file() abort
+    let current_file = s:FILE.unify_path(expand('%'), ':p')
+    let current_dir  = s:FILE.unify_path(getcwd())
+
+    let command = "Defx  -no-toggle -search=`expand('%:p')` "
+    if stridx(current_file, current_dir) < 0
+      let command .= expand('%:p:h')
+    else
+      let command .= getcwd()
+    endif
+
+    call execute(command)
+  
 endfunction
 
 function! SpaceVim#layers#core#get_options() abort

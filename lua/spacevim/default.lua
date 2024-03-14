@@ -28,6 +28,8 @@ function M.options()
 
   vim.o.showcmd = false
 
+  vim.o.shada = ''
+
   vim.o.autoindent = true
 
   vim.o.linebreak = true

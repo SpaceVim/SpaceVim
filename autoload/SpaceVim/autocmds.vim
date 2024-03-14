@@ -34,10 +34,7 @@ function! SpaceVim#autocmds#init() abort
       autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
       autocmd BufLeave,WinLeave,InsertEnter * setl nocursorcolumn
     endif
-    autocmd BufReadPost *
-          \ if line("'\"") > 0 && line("'\"") <= line("$") |
-          \   exe "normal! g`\"" |
-          \ endif
+    autocmd BufLeave * call SpaceVim#plugins#history#savepos()
     autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
     autocmd BufWinLeave * let b:_winview = winsaveview()
     autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
@@ -66,7 +63,12 @@ function! SpaceVim#autocmds#init() abort
     autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
     autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
     if has('nvim')
-      autocmd CursorHold,FocusGained,FocusLost * rshada|wshada
+      autocmd VimEnter,FocusGained * call SpaceVim#plugins#history#readcache()
+      autocmd FocusLost,VimLeave * call SpaceVim#plugins#history#writecache()
+      autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   call SpaceVim#plugins#history#jumppos() |
+            \ endif
     endif
   augroup END
 endfunction
@@ -89,7 +91,7 @@ function! s:reload_touchpad_status() abort
   if s:touchpadoff
     call s:disable_touchpad()
   endif
-endf
+endfunction
 function! s:disable_touchpad() abort
   let s:touchpadoff = 1
   call system('synclient touchpadoff=1')

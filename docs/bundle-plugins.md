@@ -12,6 +12,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 - [Changed plugin:](#changed-plugin)
   - [`core` layer](#core-layer)
   - [`edit` layer](#edit-layer)
+  - [`ui` layer](#ui-layer)
 - [No changed plugins](#no-changed-plugins)
   - [`core` layer](#core-layer-1)
 - [`lsp` layer](#lsp-layer)
@@ -20,7 +21,6 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`lang#liquid` layer](#langliquid-layer)
   - [`lang#go` layer](#langgo-layer)
   - [`tmux` layer](#tmux-layer)
-  - [`ui` layer](#ui-layer)
   - [`incsearch` layer](#incsearch-layer)
   - [`lang#java` layer](#langjava-layer)
   - [`lang#plantuml` layer](#langplantuml-layer)
@@ -52,6 +52,9 @@ These plugins are changed based on a specific version of origin plugin.
 
 - `vim-grammarous`: based on [`rhysd/vim-grammarous@db46357`](https://github.com/rhysd/vim-grammarous/tree/db46357465ce587d5325e816235b5e92415f8c05)
 
+#### `ui` layer
+
+- `vim-startify`: based on [`mhinz/vim-startify@4e089dffd`](https://github.com/mhinz/vim-startify/tree/4e089dffdad46f3f5593f34362d530e8fe823dcf)
 
 ### No changed plugins
 
@@ -106,9 +109,6 @@ These plugins are changed based on a specific version of origin plugin.
 
 - [christoomey/vim-tmux-navigator@9ca5bfe5b](https://github.com/christoomey/vim-tmux-navigator/tree/9ca5bfe5bd274051b5dd796cc150348afc993b80)
 
-#### `ui` layer
-
-- [`mhinz/vim-startify@81e36c35`](https://github.com/mhinz/vim-startify/tree/81e36c352a8deea54df5ec1e2f4348685569bed2)
 
 #### `incsearch` layer
 

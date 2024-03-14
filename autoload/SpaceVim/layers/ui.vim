@@ -97,6 +97,7 @@ function! SpaceVim#layers#ui#plugins() abort
           \ 'EnableWhitespace'
           \ ]}],
           \ ]
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/neomru.vim', {'merged' : 0}])
   if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version())
         \ || has('nvim-0.6.0')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/indent-blankline.nvim',

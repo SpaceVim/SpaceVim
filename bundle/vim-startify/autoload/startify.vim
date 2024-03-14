@@ -7,6 +7,9 @@
 if exists('g:autoloaded_startify') || &compatible
   finish
 endif
+
+let s:FILE = SpaceVim#api#import('file')
+
 let g:autoloaded_startify = 1
 
 " Function: #get_lastline {{{1
@@ -111,10 +114,6 @@ function! startify#insane_in_the_membrane(on_vimenter) abort
           \ 'call startify#session_delete_buffers() | source', 'Session.vim')
     let b:startify.entry_number = 1
     let l:show_session = 1
-  endif
-
-  if empty(v:oldfiles)
-    call s:warn("Can't read viminfo file. Read :help startify-faq-02")
   endif
 
   let b:startify.section_header_lines = []
@@ -588,7 +587,7 @@ function! s:filter_oldfiles(path_prefix, path_format, use_env) abort
   let entries     = {}
   let oldfiles    = []
 
-  for fname in v:oldfiles
+  for fname in neomru#_gather_file_candidates()
     if counter <= 0
       break
     endif
@@ -599,7 +598,7 @@ function! s:filter_oldfiles(path_prefix, path_format, use_env) abort
     endif
 
     try
-      let absolute_path = fnamemodify(resolve(fname), ":p")
+      let absolute_path = s:FILE.unify_path(resolve(fname), ":p")
     catch /E655/  " Too many symbolic links (cycle?)
       call s:warn('Symlink loop detected! Skipping: '. fname)
       continue
@@ -617,7 +616,7 @@ function! s:filter_oldfiles(path_prefix, path_format, use_env) abort
       let entry_path = s:transform(absolute_path)
     endif
     if empty(entry_path)
-      let entry_path = fnamemodify(absolute_path, a:path_format)
+      let entry_path = s:FILE.unify_path(absolute_path, a:path_format)
     endif
 
     let entries[absolute_path]  = 1
@@ -649,7 +648,7 @@ function! s:filter_oldfiles_unsafe(path_prefix, path_format, use_env) abort
   let oldfiles    = []
   let is_dir      = escape(s:sep, '\') . '$'
 
-  for fname in v:oldfiles
+  for fname in neomru#_gather_file_candidates()
     if counter <= 0
       break
     endif
@@ -679,7 +678,7 @@ endfunction
 
 " Function: s:show_dir {{{1
 function! s:show_dir() abort
-  return s:display_by_path(getcwd() . s:sep, ':.', 0)
+  return s:display_by_path(s:FILE.unify_path(getcwd()), ':.', 0)
 endfunction
 
 " Function: s:show_files {{{1
