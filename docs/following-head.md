@@ -15,6 +15,7 @@ This page documents changes in master branch since last release v2.2.0
 - [Docs](#docs)
 - [Tests](#tests)
 - [Others](#others)
+- [Breakchanges](#breakchanges)
 - [Latest Release](#latest-release)
 
 <!-- vim-markdown-toc -->
@@ -23,9 +24,35 @@ This page documents changes in master branch since last release v2.2.0
 
 The next release is `v0.2.3`
 
+<!--
+call SpaceVim#dev#followHEAD#update('en')
+-->
 <!-- SpaceVim follow HEAD start -->
+
 ## New features
 
+- perf(powershell): add `enabled_formatters` layer option
+- perf(powershell): fix powershell formatters
+- perf(git): merge commit output date
+- perf(git): improve commit logic
+- feat(git): add `:Git grep` command
+- feat(format): add layer option notify width and timeout
+- perf(neoformat): use SpaceVim notify api instead of `echo`
+- perf(neoformat): improve neoformat
+- feat(sql): support sqlformat & fix encoding
+- feat(sql): improve `lang#sql` layer
+- perf(api): include neovim prerelease info
+- perf(treesitter): add default setup function
+- perf(guide): remove debug log
+- perf(git): add git commit debug info
+- perf(git): use `b#` to jump to previous buf
+- feat(git): check buf is valid before setline
+- feat(git): rewrite `:Git config` in lua
+- perf(git): update branch manager after delete branch
+- feat(git): rewrite `:Git reflog` in lua
+- feat(git): compete merge options
+- perf(git): notify commit done when use `-m`
+- feat(git): add vim cmdline parser function
 - perf(project): display path relative to the home directory
 - feat(git): add git branch sidebar
 - feat(git): rewrite `:Git branch` with lua
@@ -87,6 +114,18 @@ The next release is `v0.2.3`
 
 ## Bugfixs
 
+- fix(powershell): fix default powershell formatters
+- fix(git): fix `:Git commit --amend`
+- fix(git): fix commit buffer
+- fix(flygrep): remove `t_ve` option
+- fix(colorscheme): link WinSeparator to VertSplit
+- fix(telescope): fix deoplete autocmd
+- fix(pmd): check executable of Pmd_Cmd
+- fix(neovide): fix neovide startup
+- fix(git): check buf exists before show commit
+- fix(api): fix argv api
+- fix(git): update branch name after `:Git branch` command
+- fix(git): fix close_diff_win in diff.lua
 - fix(git): fix delete_branch function && check bufnr
 - fix(statusline): fix statusline highlight
 - fix(scrollbar): fix scrollbar for vim
@@ -116,11 +155,24 @@ The next release is `v0.2.3`
 - fix(job): support cwd option and check executable
 - fix(flygrep): fix version checking
 - fix(job): support shell/shellcmdflag opt
-- fix(opt): remove guioption  for nvim
+- fix(opt): remove guioption for nvim
 - fix(indent-blankline): set max_indent_increase = 1
 
 ## Docs
 
+- docs(typo): rename `enabled_formater` to `enabled_formatters`
+- docs(neoformat): update `:h neoformat`
+- docs(guide): add guide for scala nim and swift
+- docs(elixir): add elixir guide
+- docs(chinese): update doc of chinese layer
+- docs(todo): remove targed todos
+- docs(source): add source code page
+- docs(roadmap): update roadmap page
+- docs(key): format key binding list
+- docs(sponsor): update sponsors page
+- docs(kotlin): fix 404 link
+- docs(neovim): update neovim.zip link
+- docs(roadmap): update roadmap and following head
 - docs(community): add discord and slack link
 - docs(screenshot): update workflow screenshot
 - docs(license): add `:h spacevim-dev-license`
@@ -194,6 +246,13 @@ The next release is `v0.2.3`
 
 ## Others
 
+- chore(treesitter): update nvim-treesitter to 0.9.1 for Nvim-0.8.x
+- chore(website): clear website
+- chore(bundle): update ChineseLinter
+- chore(ChineseLinter): update ChineseLinter
+- chore(startup): add startup log
+- chore(chinese): use bundle ChineseLinter
+- chore(bundle): update vim-startify
 - chore(todo): remove todo tag
 - chore(conduct): remove CODE_OF_CONDUCT.md
 - chore(todo): add todo item for git log
@@ -219,7 +278,6 @@ The next release is `v0.2.3`
 - chore(dev): remove github specific files
 - revert(rtp): remove `:GrepRtp` command
 - chore(spinners): change file format
-- revert(url)!: revert url
 - chore(url): change to dev.spacevim.org
 - chore(a.lua): remove alternate json conf
 - chore(linguist): update gitattributes
@@ -229,6 +287,12 @@ The next release is `v0.2.3`
 - revert(ui): revert indent-blankline config
 - chore(ui): update bundle indent-blankline.nvim
 - chore(version): update version to v2.3.0-dev
+
+## Breakchanges
+
+- feat(history)!: use history plugin instead of shada
+- perf(go)!: change default lint to golangci_lint
+- revert(url)!: revert url
 <!-- SpaceVim follow HEAD end -->
 
 ## Latest Release

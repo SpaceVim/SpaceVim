@@ -18,16 +18,20 @@ function! s:generate_content(lang) abort
     let docs = ['', '## 文档更新', '']
     let tests = ['', '## 测试', '']
     let others = ['', '## 其他', '']
+    let breakchanges = ['', '## 非兼容变更']
   else
     let features = ['## New features', '']
     let bugfixs = ['', '## Bugfixs', '']
     let docs = ['', '## Docs', '']
     let tests = ['', '## Tests', '']
     let others = ['', '## Others', '']
+    let breakchanges = ['', '## Breakchanges']
   endif
   let logs = systemlist('git log --oneline --pretty="- %s" 8a7ec458..HEAD')
   for l in logs
-    if l =~ '^- feat(' || l =~ '^- perf('
+    if l =~ '^- [^(]*([^)]*)!:'
+      call add(breakchanges, l)
+    elseif l =~ '^- feat(' || l =~ '^- perf('
       call add(features, l)
     elseif l =~ '^- fix('
       call add(bugfixs, l)
@@ -40,7 +44,7 @@ function! s:generate_content(lang) abort
     endif
   endfor
 
-  return features + bugfixs + docs + tests + others
+  return features + bugfixs + docs + tests + others + breakchanges
 endfunction
 
 let s:AUTODOC.content_func = function('s:generate_content')
