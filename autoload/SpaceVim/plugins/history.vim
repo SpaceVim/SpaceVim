@@ -41,20 +41,28 @@ function! s:read_cache() abort
   if filereadable(s:history_cache_path)
     let his = s:JSON.json_decode(join(readfile(s:history_cache_path, ''), ''))
     if type(his) ==# type({})
-      call map(deepcopy(his.commands), 'histadd("cmd", v:val)')
+      call map(deepcopy(his.cmd), 'histadd("cmd", v:val)')
+      call map(deepcopy(his.search), 'histadd("search", v:val)')
       let s:filepos = get(his, 'filepos', {})
     endif
   endif
 endfunction
 
 function! s:write_cache() abort
-  let his = { 'commands' : [], 'filepos' : s:filepos}
+  let his = { 'cmd' : [], 'filepos' : s:filepos, 'search' : []}
   for i in range(1, 100)
     let cmd = histget('cmd', 0 - i)
     if empty(cmd)
       break
     endif
-    call add(his.commands, histget('cmd', i))
+    call insert(his.cmd, cmd)
+  endfor
+  for i in range(1, 100)
+    let search = histget('search', 0 - i)
+    if empty(search)
+      break
+    endif
+    call insert(his.search, search)
   endfor
   call writefile([s:JSON.json_encode(his)], s:history_cache_path)
 endfunction
