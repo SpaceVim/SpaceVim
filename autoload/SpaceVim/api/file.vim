@@ -45,6 +45,117 @@ else
   let s:self.pathSeparator = ':'
 endif
 
+let s:gui_colors = {
+      \ 'brown' : '#905532',
+      \ 'aqua' : '#3AFFDB',
+      \ 'blue' : '#689FB6',
+      \ 'darkBlue' : '#44788E',
+      \ 'purple' : '#834F79',
+      \ 'lightPurple' : '#834F79',
+      \ 'red' : '#AE403F',
+      \ 'beige' : '#F5C06F',
+      \ 'yellow' : '#F09F17',
+      \ 'orange' : '#D4843E',
+      \ 'darkOrange' : '#F16529',
+      \ 'pink' : '#CB6F6F',
+      \ 'salmon' : '#EE6E73',
+      \ 'green' : '#8FAA54',
+      \ 'lightGreen' : '#31B53E',
+      \ 'default': synIDattr(hlID('Normal'), 'fg'),
+      \ }
+
+let s:term_colors = {
+      \ 'brown'       : 130,
+      \ 'aqua'        : 66,
+      \ 'blue'        : 67,
+      \ 'darkBlue'    : 57,
+      \ 'purple'      : 60,
+      \ 'lightPurple' : 103,
+      \ 'red'         : 131,
+      \ 'beige'       : 137,
+      \ 'yellow'      : 229,
+      \ 'orange'      : 208,
+      \ 'darkOrange'  : 166,
+      \ 'pink'        : 205,
+      \ 'salmon'      : 209,
+      \ 'green'       : 65,
+      \ 'lightGreen'  : 108,
+      \ 'default'       : 231,
+      \ }
+let s:icons_color = {
+      \ 'jpg' : {'icon': '', 'color': s:gui_colors.aqua, 'term_color': s:term_colors.aqua},
+      \ 'json' : {'icon': '', 'color': s:gui_colors.beige, 'term_color': s:term_colors.beige},
+      \ 'mjs' : {'icon': '', 'color': s:gui_colors.beige, 'term_color': s:term_colors.beige},
+      \ 'hs' : {'icon': '', 'color': s:gui_colors.beige, 'term_color': s:term_colors.beige},
+      \ 'go' : {'icon': '', 'color': s:gui_colors.beige, 'term_color': s:term_colors.beige},
+      \ 'css' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'jsx' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'c' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'db' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'pl' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'fsscript' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'ts' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'tsx' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'cs' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'hh' : {'icon': '', 'color': s:gui_colors.blue, 'term_color': s:term_colors.blue},
+      \ 'coffee' : {'icon': '', 'color': s:gui_colors.brown, 'term_color': s:term_colors.brown},
+      \ 'less' : {'icon': '', 'color': s:gui_colors.darkBlue, 'term_color': s:term_colors.darkBlue},
+      \ 'sql' : {'icon': '', 'color': s:gui_colors.darkBlue, 'term_color': s:term_colors.darkBlue},
+      \ 'psd' : {'icon': '', 'color': s:gui_colors.darkBlue, 'term_color': s:term_colors.darkBlue},
+      \ 'fsharp' : {'icon': '', 'color': s:gui_colors.darkBlue, 'term_color': s:term_colors.darkBlue},
+      \ 'html' : {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
+      \ 'xul' : {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
+      \ 'rss' : {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
+      \ 'rs' : {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
+      \ 'rlib' : {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
+      \ 'ai' : {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
+      \ 'svelte' : {'icon': '', 'color': s:gui_colors.darkOrange, 'term_color': s:term_colors.darkOrange},
+      \ 'sass' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'rmd' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'conf' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'h' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'bash' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'diff' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'dart' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'pp' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'key' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'elm' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'gemspec' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'haml' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'leex' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'rake' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'tex' : {'icon': 'ﭨ', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'webmanifest' : {'icon': '', 'color': s:gui_colors.default, 'term_color': s:term_colors.default},
+      \ 'styl' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'twig' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'fish' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'clj' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'cljc' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'cljs' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'edn' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'vim' : {'icon': '', 'color': s:gui_colors.green, 'term_color': s:term_colors.green},
+      \ 'sh' : {'icon': '', 'color': s:gui_colors.lightPurple, 'term_color': s:term_colors.lightPurple},
+      \ 'erl' : {'icon': '', 'color': s:gui_colors.lightPurple, 'term_color': s:term_colors.lightPurple},
+      \ 'ex' : {'icon': '', 'color': s:gui_colors.lightPurple, 'term_color': s:term_colors.lightPurple},
+      \ 'slim' : {'icon': '', 'color': s:gui_colors.orange, 'term_color': s:term_colors.orange},
+      \ 'mustache' : {'icon': '', 'color': s:gui_colors.orange, 'term_color': s:term_colors.orange},
+      \ 'swift' : {'icon': '', 'color': s:gui_colors.orange, 'term_color': s:term_colors.orange},
+      \ 'scss' : {'icon': '', 'color': s:gui_colors.pink, 'term_color': s:term_colors.pink},
+      \ 'hrl' : {'icon': '', 'color': s:gui_colors.pink, 'term_color': s:term_colors.pink},
+      \ 'php' : {'icon': '', 'color': s:gui_colors.purple, 'term_color': s:term_colors.purple},
+      \ 'lua' : {'icon': '', 'color': s:gui_colors.purple, 'term_color': s:term_colors.purple},
+      \ 'java' : {'icon': '', 'color': s:gui_colors.purple, 'term_color': s:term_colors.purple},
+      \ 'sln' : {'icon': '', 'color': s:gui_colors.purple, 'term_color': s:term_colors.purple},
+      \ 'jl' : {'icon': '', 'color': s:gui_colors.purple, 'term_color': s:term_colors.purple},
+      \ 'rb' : {'icon': '', 'color': s:gui_colors.red, 'term_color': s:term_colors.red},
+      \ 'scala' : {'icon': '', 'color': s:gui_colors.red, 'term_color': s:term_colors.red},
+      \ 'd' : {'icon': '', 'color': s:gui_colors.red, 'term_color': s:term_colors.red},
+      \ 'ejs' : {'icon': '', 'color': s:gui_colors.yellow, 'term_color': s:term_colors.yellow},
+      \ 'md' : {'icon': '', 'color': s:gui_colors.yellow, 'term_color': s:term_colors.yellow},
+      \ 'py' : {'icon': '', 'color': s:gui_colors.yellow, 'term_color': s:term_colors.yellow},
+      \ 'ml' : {'icon': 'λ', 'color': s:gui_colors.yellow, 'term_color': s:term_colors.yellow},
+      \}
+
 let s:file_node_extensions = {
       \  'styl'     : '',
       \  'scss'     : '',
@@ -57,7 +168,7 @@ let s:file_node_extensions = {
       \  'css'      : '',
       \  'less'     : '',
       \  'wxss'     : '',
-      \  'md'       : '',
+      \  'md'       : '',
       \  'doc'      : '',
       \  'help'     : '',
       \  'txt'      : '',
@@ -128,7 +239,7 @@ let s:file_node_extensions = {
       \  'd'        : '',
       \  'erl'      : '',
       \  'hrl'      : '',
-      \  'vim'      : '',
+      \  'vim'      : '',
       \  'ai'       : '',
       \  'psd'      : '',
       \  'psb'      : '',
@@ -193,7 +304,19 @@ function! s:self.fticon(path) abort
     return s:file_node_extensions[ext]
   endif
   return ''
+endfunction
 
+function! s:self.hi_icons() abort
+  for [name, icon] in items(s:icons_color)
+    call execute(printf('hi! SpaceVim_API_FILE_%s guifg=%s ctermfg=%s', name, icon.color, icon.term_color))
+    call execute(printf('call matchadd("SpaceVim_API_FILE_%s", "%s", 2)', name, icon.icon))
+  endfor
+endfunction
+
+function! s:self.clear_icons() abort
+
+  call clearmatches()
+  
 endfunction
 
 function! s:self.write(msg, fname) abort
