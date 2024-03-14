@@ -103,7 +103,7 @@ function! SpaceVim#layers#telescope#config() abort
         \ 1)
 
   let lnum = expand('<slnum>') + s:lnum - 1
-  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Telescope oldfiles',
+  call SpaceVim#mapping#space#def('nnoremap', ['f', 'r'], 'Telescope neomru',
         \ ['open-recent-file',
         \ [
         \ 'SPC f r is to open recent file list',

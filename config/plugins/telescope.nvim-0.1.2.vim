@@ -4,6 +4,7 @@ lua require('telescope').load_extension('project')
 lua require('telescope').load_extension('scriptnames')
 lua require('telescope').load_extension('neoyank')
 lua require('telescope').load_extension('task')
+lua require('telescope').load_extension('neomru')
 if SpaceVim#layers#isLoaded('zettelkasten')
   lua require('telescope').load_extension('zettelkasten_template')
 endif
