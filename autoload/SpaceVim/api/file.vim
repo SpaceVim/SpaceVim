@@ -265,6 +265,8 @@ let s:file_node_exact_matches = {
       \  '.ds_store'                        : '',
       \  '.gitconfig'                       : '',
       \  '.gitignore'                       : '',
+      \  'config'                           : '',
+      \  'muttrc'                           : '',
       \  '.bashrc'                          : '',
       \  '.bashprofile'                     : '',
       \  'favicon.ico'                      : '',
