@@ -1489,7 +1489,6 @@ Buffer manipulation commands (start with `b`):
 | `SPC b Ctrl-d`       | kill other buffers                                                             |
 | `SPC b Ctrl-Shift-d` | kill buffers using a regular expression                                        |
 | `SPC b e`            | erase the content of the buffer (ask for confirmation)                         |
-| `SPC b h`            | open _SpaceVim_ home buffer                                                    |
 | `SPC b n`            | switch to next buffer avoiding special buffers                                 |
 | `SPC b m`            | open _Messages_ buffer                                                         |
 | `SPC b o`            | kill all saved buffers and windows except the current one                      |
