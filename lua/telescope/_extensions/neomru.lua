@@ -32,6 +32,7 @@ local function show_script_names(opts)
             results = prepare_output_table()
         },
         sorter = conf.generic_sorter(opts),
+        previewer = conf.file_previewer({}),
         attach_mappings = function(prompt_bufnr, map)
             actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
