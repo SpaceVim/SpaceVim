@@ -29,6 +29,7 @@ You can only think about reading the part that is relevant to what you are going
   - [Contributing a keybinding](#contributing-a-keybinding)
     - [Language specified key bindings](#language-specified-key-bindings)
   - [Contributing a banner](#contributing-a-banner)
+- [Bundle plugins](#bundle-plugins)
 - [Build with SpaceVim](#build-with-spacevim)
 - [Newsletters](#newsletters)
 - [Changelog](#changelog)
@@ -356,6 +357,16 @@ If you have some ASCII skills you can submit your artwork!
 
 You are free to choose a reasonable height size.
 but the width size should be around 75 characters.
+
+## Bundle plugins
+
+In `bundle/` directory, there are two kinds of plugins:
+
+1. unmodified plugins, same as the upstream.
+2. modified plugins based on specific commit.
+
+checkout the [bundle plugins](../bundle-plugins/) page for more info.
+
 
 ## Build with SpaceVim
 

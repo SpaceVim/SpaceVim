@@ -1,2 +1,1 @@
-require'cmp'.register_source('buffer', require'cmp_buffer'.new())
-
+require('cmp').register_source('buffer', require('cmp_buffer'))

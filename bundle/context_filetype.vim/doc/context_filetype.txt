@@ -10,15 +10,17 @@ Introduction		|context_filetype-introduction|
 Interface		|context_filetype-interface|
   Variables		  |context_filetype-variables|
   Functions		  |context_filetype-functions|
-Changelog		|context_filetype-changelog|
 
 ==============================================================================
-INTRODUCTION					*context_filetype-introduction*
+INTRODUCTION				*context_filetype-introduction*
 
 *context_filetype* provides functions to find fenced code blocks and their
 filetype.
-For example Javascript blocks inside of HTML.
+For example JavaScript blocks inside of HTML.
 The fenced code is detected by predefined regular expressions.
+
+Requirements:
+* Vim 8.2+ or NeoVim 0.8+.
 
 ==============================================================================
 INTERFACE					*context_filetype-interface*
@@ -34,6 +36,7 @@ g:context_filetype#filetypes			*g:context_filetype#filetypes*
 		"filetype" : includes filetype name.
 		"start" : filetype start pattern.
 		"end" : filetype end pattern.
+		Note that "start" and "end" patterns shouldn't be identical.
 
 		The patterns in "start" and "end" are always interpreted as if
 		'magic' is set, ignoring the actual value of the 'magic'
@@ -42,17 +45,20 @@ g:context_filetype#filetypes			*g:context_filetype#filetypes*
 		sub-matches in "end" and "filetype".
 >
 		" Examples:
-		if !exists('g:context_filetype#filetypes')
+		if !('g:context_filetype#filetypes'->exists())
 		  let g:context_filetype#filetypes = {}
 		endif
-		let g:context_filetype#filetypes.perl6 =
-		\ [{'filetype' : 'pir', 'start' : 'Q:PIR\s*{', 'end' : '}'}]
-		let g:context_filetype#filetypes.vim =
-		\ [{'filetype' : 'python',
-		\   'start' : '^\s*python <<\s*\(\h\w*\)', 'end' : '^\1'}]
+		let g:context_filetype#filetypes.vim = [
+		\   #{
+		\     filetype: 'python',
+		\     start: '^\s*python <<\s*\(\h\w*\)',
+		\     end: '^\1',
+		\   },
+		\ ]
 <
-		Because it is complicated, refer to s:initialize() in
-		autoload/context_filetype.vim for the initial value.
+		Because it is complicated, refer to
+		g:context_filetype#defaults#_filetypes for the initial
+		value.
 
 b:context_filetype_filetypes			*b:context_filetype_filetypes*
 		It is the buffer variable version of
@@ -68,7 +74,7 @@ g:context_filetype#same_filetypes
 		buffers.  If the key is "_", the value will be used for
 		default same filetypes.
 >
-		if !exists('g:context_filetype#same_filetypes')
+		if !('g:context_filetype#same_filetypes'->exists())
 		  let g:context_filetype#same_filetypes = {}
 		endif
 		" In c buffers, completes from cpp and d buffers.
@@ -80,18 +86,19 @@ g:context_filetype#same_filetypes
 		" In default, completes from all buffers.
 		let g:context_filetype#same_filetypes._ = '_'
 <
-		Because it is complicated, refer to s:initialize() in
-		autoload/context_filetype.vim for the initial value.
+		Because it is complicated, refer to
+		g:context_filetype#defaults#_same_filetypes for the initial
+		value.
 
-				*g:context_filetype#ignore_composite_filetypes*
+			*g:context_filetype#ignore_composite_filetypes*
 g:context_filetype#ignore_composite_filetypes
 		It is a dictionary to ignore composite file type.
 		The dictionary's key is composite filetype and value is
 		filetype.
 >
 		" Examples:
-		let g:context_filetype#ignore_composite_filetypes = {
-			\ 'ruby.spec' : 'ruby'
+		let g:context_filetype#ignore_composite_filetypes = #{
+			\   ruby.spec : 'ruby',
 			\ }
 <
 		If you open filetype like "ruby.spec", completion is
@@ -100,6 +107,23 @@ g:context_filetype#ignore_composite_filetypes
 		you can set this variable to ignore "spec".
 
 		Default value is {}.
+
+				*g:context_filetype#ignore_patterns*
+g:context_filetype#ignore_patterns
+		It is a dictionary to ignore start patterns.
+		The dictionary's key is filetype and value is ignore pattern.
+		It is useful to ignore comment outed texts.
+
+		Note: The feature is slow.
+>
+		" Examples:
+		let g:context_filetype#ignore_patterns = #{
+			\   toml: ['^\s*#\s*'],
+			\ }
+<
+		Because it is complicated, refer to
+		g:context_filetype#defaults#_ignore_patterns for the initial
+		value.
 
 					*g:context_filetype#search_offset*
 g:context_filetype#search_offset
@@ -132,9 +156,9 @@ context_filetype#default_filetypes()
 context_filetype#filetypes()
 		Get the dictionary of all filetypes with
 		* |b:context_filetype_filetypes| (if defined)
-		* Or merged dictionary
-		  * |context_filetype#default_filetypes()|
-		  * |g:context_filetype#filetypes|
+		or merged dictionary
+		* |context_filetype#default_filetypes()|
+		* |g:context_filetype#filetypes|
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
