@@ -61,7 +61,7 @@ let s:gui_colors = {
       \ 'salmon' : '#EE6E73',
       \ 'green' : '#8FAA54',
       \ 'lightGreen' : '#31B53E',
-      \ 'default': synIDattr(hlID('Normal'), 'fg'),
+      \ 'default': '#ffffff',
       \ }
 
 let s:term_colors = {
@@ -310,6 +310,8 @@ endfunction
 
 function! s:self.hi_icons() abort
   for [name, icon] in items(s:icons_color)
+    let str = printf('hi! SpaceVim_API_FILE_%s guifg=%s ctermfg=%s', name, icon.color, icon.term_color)
+    echom str
     call execute(printf('hi! SpaceVim_API_FILE_%s guifg=%s ctermfg=%s', name, icon.color, icon.term_color))
     call execute(printf('call matchadd("SpaceVim_API_FILE_%s", "%s", 2)', name, icon.icon))
   endfor
