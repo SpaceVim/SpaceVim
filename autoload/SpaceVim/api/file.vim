@@ -267,6 +267,7 @@ let s:file_node_exact_matches = {
       \  '.gitignore'                       : '',
       \  'config'                           : '',
       \  'muttrc'                           : '',
+      \  'Makefile'                         : '',
       \  '.bashrc'                          : '',
       \  '.bashprofile'                     : '',
       \  'favicon.ico'                      : '',
@@ -274,7 +275,8 @@ let s:file_node_exact_matches = {
       \  'node_modules'                     : '',
       \  'react.jsx'                        : '',
       \  'Procfile'                         : '',
-      \  '.vimrc'                           : '',
+      \  '.vimrc'                           : '',
+      \  'vimrc'                            : '',
       \  'mix.lock'                         : '',
       \}
 
