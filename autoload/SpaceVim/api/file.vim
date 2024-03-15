@@ -61,7 +61,7 @@ let s:gui_colors = {
       \ 'salmon' : '#EE6E73',
       \ 'green' : '#8FAA54',
       \ 'lightGreen' : '#31B53E',
-      \ 'default': '#ffffff',
+      \ 'default': '#abb2bf',
       \ }
 
 let s:term_colors = {
