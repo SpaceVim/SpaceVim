@@ -27,6 +27,9 @@ function! SpaceVim#plugins#history#jumppos() abort
 endfunction
 
 function! SpaceVim#plugins#history#savepos() abort
+  if empty(bufname()) || &buftype == 'nofile'
+    return
+  endif
   call s:LOG.debug('save pos for:' . bufname())
   let [_, l, c, _] = getpos('.')
   call s:LOG.debug(printf('line %d, col %d', l, c))

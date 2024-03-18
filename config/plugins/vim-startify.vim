@@ -60,7 +60,7 @@ augroup END
 if !exists('g:startify_custom_header')
   call s:update_logo()
 endif
-call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'Startify | doautocmd WinEnter', 'fancy start screen',1)
+call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'call SpaceVim#plugins#history#savepos() | Startify | doautocmd WinEnter', 'fancy start screen',1)
 
 if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)
   " the old option g:spacevim_enable_tabline_filetype_icon should also works
