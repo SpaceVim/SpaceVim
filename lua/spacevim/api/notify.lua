@@ -177,7 +177,11 @@ function M.redraw_windows()
       focusable = false,
       noautocmd = true,
     })
-    vim.api.nvim_win_set_option(M.winid, 'winhighlight', 'Normal:' .. M.notification_color)
+    vim.api.nvim_win_set_option(M.winid, 'winhighlight', 'NormalFloat:Normal')
+    -- vim.api.nvim_win_set_option(M.winid, 'winhighlight', 'Search:' .. M.notification_color)
+    vim.fn.matchadd(M.notification_color, '.*', 10, -1, {
+      window = M.winid
+    })
     M.border.winid = vim.api.nvim_open_win(M.border.bufnr, false, {
       relative = 'editor',
       width = M.notification_width + 2,
@@ -187,7 +191,11 @@ function M.redraw_windows()
       focusable = false,
       noautocmd = true,
     })
-    vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Normal:VertSplit')
+    -- vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Normal:VertSplit')
+    -- vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Search:VertSplit')
+    vim.fn.matchadd('VertSplit', '.*', 10, -1, {
+      window = M.border.winid
+    })
     if
       M.winblend > 0
       and vim.fn.exists('&winblend') == 1
