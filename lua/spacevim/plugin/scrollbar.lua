@@ -37,23 +37,24 @@ local default_conf = {
   },
 }
 local function get(opt)
-
   return default_conf[opt]
-
 end
 
 local scrollbar_bufnr = -1
 local scrollbar_winid = -1
 local scrollbar_size = -1
-local ns_id = vim.api.nvim_create_namespace('scrollbar')
+local ns_id = -1
 
-local function add_highlight(bufnr, size)
-  local highlight = get('highlight')
-  vim.api.nvim_buf_add_highlight(bufnr, ns_id, highlight.head, 0, 0, -1)
-  for i = 1, size - 2 do
-    vim.api.nvim_buf_add_highlight(bufnr, ns_id, highlight.body, i, 0, -1)
+local function add_highlight(winid, size)
+  if vim.api.nvim_win_is_valid(winid) then
+    local highlight = get('highlight')
+    vim.fn.clearmatches(winid)
+    vim.fn.matchaddpos(highlight.head, { 1 }, 10, ns_id, { window = winid })
+    for i = 1, size - 2 do
+      vim.fn.matchaddpos(highlight.body, { i + 1 }, 10, ns_id, { window = winid })
+    end
+    vim.fn.matchaddpos(highlight.tail, { size }, 10, ns_id, { window = winid })
   end
-  vim.api.nvim_buf_add_highlight(bufnr, ns_id, highlight.tail, size - 1, 0, -1)
 end
 
 local function fix_size(size)
@@ -76,7 +77,6 @@ local function create_scrollbar_buffer(size, lines)
   end
   vim.api.nvim_buf_set_option(scrollbar_bufnr, 'buftype', 'nofile')
   vim.api.nvim_buf_set_lines(scrollbar_bufnr, 0, -1, false, lines)
-  add_highlight(scrollbar_bufnr, size)
   return scrollbar_bufnr
 end
 
@@ -132,7 +132,6 @@ function M.show()
       scrollbar_size = bar_size
       local bar_lines = gen_bar_lines(bar_size)
       vim.api.nvim_buf_set_lines(scrollbar_bufnr, 0, -1, false, bar_lines)
-      add_highlight(scrollbar_bufnr, bar_size)
     end
     vim.api.nvim_win_set_config(scrollbar_winid, opts)
   else
@@ -140,12 +139,13 @@ function M.show()
     local bar_lines = gen_bar_lines(bar_size)
     scrollbar_bufnr = create_scrollbar_buffer(bar_size, bar_lines)
     scrollbar_winid = vim.api.nvim_open_win(scrollbar_bufnr, false, opts)
-    vim.fn.setwinvar(
-      vim.fn.win_id2win(scrollbar_winid),
-      '&winhighlight',
-      'Normal:ScrollbarWinHighlight'
-    )
+    -- vim.fn.setwinvar(
+      -- vim.fn.win_id2win(scrollbar_winid),
+      -- '&winhighlight',
+      -- 'Normal:ScrollbarWinHighlight'
+    -- )
   end
+  add_highlight(scrollbar_winid, scrollbar_size)
   vim.o.eventignore = saved_ei
 end
 
