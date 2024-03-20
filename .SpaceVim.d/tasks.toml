@@ -13,6 +13,16 @@
     VIM_BIN = 'D:\Neovim\v0.7.2\bin\nvim.exe'
     VIM_Es = "--headless"
     VIM = 'D:\Neovim\v0.7.2'
+# vim 7.4.1185 
+# https://github.com/vim/vim-win32-installer/releases/tag/v7.4.1185
+[vader-vim-741185]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-vim-741185.options.env]
+    VIM_BIN = 'D:\Vim\gvim_7.4.1185_x64\vim.exe'
+    VIM_Es = "-Es"
+    VIM = 'D:\Vim\gvim_7.4.1185_x64'
 [generate-vim-doc]
     command = "python"
     args = ['-m', 'vimdoc', '.']
