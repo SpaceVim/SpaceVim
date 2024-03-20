@@ -5,6 +5,14 @@
 [vader-test.options.env]
     VIM_BIN = 'nvim'
     VIM_Es = "--headless"
+[vader-nvim-072]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-nvim-072.options.env]
+    VIM_BIN = 'D:\Neovim\v0.7.2\bin\nvim.exe'
+    VIM_Es = "--headless"
+    VIM = 'D:\Neovim\v0.7.2'
 [generate-vim-doc]
     command = "python"
     args = ['-m', 'vimdoc', '.']
