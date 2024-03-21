@@ -181,6 +181,31 @@ cmp.scroll_docs = cmp.sync(function(delta)
   end
 end)
 
+---Whether the documentation window is visible or not.
+cmp.visible_docs = cmp.sync(function()
+  return cmp.core.view.docs_view:visible()
+end)
+
+---Opens the documentation window.
+cmp.open_docs = cmp.sync(function()
+  if not cmp.visible_docs() then
+    cmp.core.view:open_docs()
+    return true
+  else
+    return false
+  end
+end)
+
+---Closes the documentation window.
+cmp.close_docs = cmp.sync(function()
+  if cmp.visible_docs() then
+    cmp.core.view:close_docs()
+    return true
+  else
+    return false
+  end
+end)
+
 ---Confirm completion
 cmp.confirm = cmp.sync(function(option, callback)
   option = option or {}

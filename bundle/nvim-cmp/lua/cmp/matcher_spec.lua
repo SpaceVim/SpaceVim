@@ -40,6 +40,9 @@ describe('matcher', function()
     assert.is.truthy(matcher.match('emg', 'error_msg') >= 1)
     assert.is.truthy(matcher.match('sasr', 'saved_splitright') >= 1)
 
+    -- TODO: #1420 test-case
+    -- assert.is.truthy(matcher.match('asset_', '????') >= 0)
+
     local score, matches
     score, matches = matcher.match('tail', 'HCDetails', {
       disallow_fuzzy_matching = false,

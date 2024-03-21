@@ -99,8 +99,8 @@ end
 
 ---get_word
 ---@param text string
----@param stop_char integer
----@param min_length integer
+---@param stop_char? integer
+---@param min_length? integer
 ---@return string
 str.get_word = function(text, stop_char, min_length)
   min_length = min_length or 0

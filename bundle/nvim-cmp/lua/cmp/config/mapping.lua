@@ -178,6 +178,24 @@ mapping.scroll_docs = function(delta)
   end
 end
 
+--- Opens the documentation window.
+mapping.open_docs = function()
+  return function(fallback)
+    if not require('cmp').open_docs() then
+      fallback()
+    end
+  end
+end
+
+--- Close the documentation window.
+mapping.close_docs = function()
+  return function(fallback)
+    if not require('cmp').close_docs() then
+      fallback()
+    end
+  end
+end
+
 ---Select next completion item.
 mapping.select_next_item = function(option)
   return function(fallback)

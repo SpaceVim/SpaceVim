@@ -114,9 +114,6 @@ entry.get_word = function(self)
     local word
     if self:get_completion_item().textEdit and not misc.empty(self:get_completion_item().textEdit.newText) then
       word = str.trim(self:get_completion_item().textEdit.newText)
-      if self:get_completion_item().insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-        word = vim.lsp.util.parse_snippet(word)
-      end
       local overwrite = self:get_overwrite()
       if 0 < overwrite[2] or self:get_completion_item().insertTextFormat == types.lsp.InsertTextFormat.Snippet then
         word = str.get_word(word, string.byte(self.context.cursor_after_line, 1), overwrite[1] or 0)
@@ -124,7 +121,7 @@ entry.get_word = function(self)
     elseif not misc.empty(self:get_completion_item().insertText) then
       word = str.trim(self:get_completion_item().insertText)
       if self:get_completion_item().insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-        word = str.get_word(vim.lsp.util.parse_snippet(word))
+        word = str.get_word(word)
       end
     else
       word = str.trim(self:get_completion_item().label)
@@ -383,12 +380,11 @@ entry.match = function(self, input, matching_config)
     score, matches = matcher.match(input, filter_text, option)
 
     -- Support the language server that doesn't respect VSCode's behaviors.
-    local prefix = ''
     if score == 0 then
       if self:get_completion_item().textEdit and not misc.empty(self:get_completion_item().textEdit.newText) then
         local diff = self.source_offset - self:get_offset()
         if diff > 0 then
-          prefix = string.sub(self.context.cursor_line, self:get_offset(), self:get_offset() + diff)
+          local prefix = string.sub(self.context.cursor_line, self:get_offset(), self:get_offset() + diff)
           local accept = nil
           accept = accept or string.match(prefix, '^[^%a]+$')
           accept = accept or string.find(self:get_completion_item().textEdit.newText, prefix, 1, true)
@@ -433,7 +429,7 @@ entry.get_completion_item = function(self)
 end
 
 ---Create documentation
----@return string
+---@return string[]
 entry.get_documentation = function(self)
   local item = self:get_completion_item()
 
@@ -561,6 +557,17 @@ entry.convert_range_encoding = function(self, range)
       ['end'] = types.lsp.Position.to_utf8(self.context.cursor_line, range['end'], from_encoding),
     }
   end)
+end
+
+---Return true if the entry is invalid.
+entry.is_invalid = function(self)
+  local is_invalid = false
+  is_invalid = is_invalid or misc.empty(self.completion_item.label)
+  if self.completion_item.textEdit then
+    local range = self.completion_item.textEdit.range or self.completion_item.textEdit.insert
+    is_invalid = is_invalid or range.start.line ~= range['end'].line or range.start.line ~= self.context.cursor.line
+  end
+  return is_invalid
 end
 
 return entry

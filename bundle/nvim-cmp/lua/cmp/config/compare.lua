@@ -1,9 +1,21 @@
 local types = require('cmp.types')
 local cache = require('cmp.utils.cache')
 
+---@type cmp.Comparator[]
 local compare = {}
 
--- offset
+--- Comparators (:help cmp-config.sorting.comparators) should return
+--- true when the first entry should come EARLIER (i.e., higher ranking) than the second entry,
+--- or nil if no pairwise ordering preference from the comparator.
+--- See also :help table.sort() and cmp.view.open() to see how comparators are used.
+
+---@class cmp.ComparatorFunctor
+---@overload fun(entry1: cmp.Entry, entry2: cmp.Entry): boolean | nil
+---@alias cmp.ComparatorFunction fun(entry1: cmp.Entry, entry2: cmp.Entry): boolean | nil
+---@alias cmp.Comparator cmp.ComparatorFunction | cmp.ComparatorFunctor
+
+---offset: Entries with smaller offset will be ranked higher.
+---@type cmp.ComparatorFunction
 compare.offset = function(entry1, entry2)
   local diff = entry1:get_offset() - entry2:get_offset()
   if diff < 0 then
@@ -11,16 +23,20 @@ compare.offset = function(entry1, entry2)
   elseif diff > 0 then
     return false
   end
+  return nil
 end
 
--- exact
+---exact: Entries with exact == true will be ranked higher.
+---@type cmp.ComparatorFunction
 compare.exact = function(entry1, entry2)
   if entry1.exact ~= entry2.exact then
     return entry1.exact
   end
+  return nil
 end
 
--- score
+---score: Entries with higher score will be ranked higher.
+---@type cmp.ComparatorFunction
 compare.score = function(entry1, entry2)
   local diff = entry2.score - entry1.score
   if diff < 0 then
@@ -28,29 +44,36 @@ compare.score = function(entry1, entry2)
   elseif diff > 0 then
     return false
   end
+  return nil
 end
 
--- recently_used
+---recently_used: Entries that are used recently will be ranked higher.
+---@type cmp.ComparatorFunctor
 compare.recently_used = setmetatable({
   records = {},
   add_entry = function(self, e)
     self.records[e.completion_item.label] = vim.loop.now()
   end,
 }, {
+  ---@type fun(self: table, entry1: cmp.Entry, entry2: cmp.Entry): boolean|nil
   __call = function(self, entry1, entry2)
     local t1 = self.records[entry1.completion_item.label] or -1
     local t2 = self.records[entry2.completion_item.label] or -1
     if t1 ~= t2 then
       return t1 > t2
     end
+    return nil
   end,
 })
 
--- kind
+---kind: Entires with smaller ordinal value of 'kind' will be ranked higher.
+---(see lsp.CompletionItemKind enum).
+---Exceptions are that Text(1) will be ranked the lowest, and snippets be the highest.
+---@type cmp.ComparatorFunction
 compare.kind = function(entry1, entry2)
-  local kind1 = entry1:get_kind()
+  local kind1 = entry1:get_kind() --- @type lsp.CompletionItemKind | number
+  local kind2 = entry2:get_kind() --- @type lsp.CompletionItemKind | number
   kind1 = kind1 == types.lsp.CompletionItemKind.Text and 100 or kind1
-  local kind2 = entry2:get_kind()
   kind2 = kind2 == types.lsp.CompletionItemKind.Text and 100 or kind2
   if kind1 ~= kind2 then
     if kind1 == types.lsp.CompletionItemKind.Snippet then
@@ -66,9 +89,11 @@ compare.kind = function(entry1, entry2)
       return false
     end
   end
+  return nil
 end
 
--- sortText
+---sort_text: Entries will be ranked according to the lexicographical order of sortText.
+---@type cmp.ComparatorFunction
 compare.sort_text = function(entry1, entry2)
   if entry1.completion_item.sortText and entry2.completion_item.sortText then
     local diff = vim.stricmp(entry1.completion_item.sortText, entry2.completion_item.sortText)
@@ -78,9 +103,11 @@ compare.sort_text = function(entry1, entry2)
       return false
     end
   end
+  return nil
 end
 
--- length
+---length: Entires with shorter label length will be ranked higher.
+---@type cmp.ComparatorFunction
 compare.length = function(entry1, entry2)
   local diff = #entry1.completion_item.label - #entry2.completion_item.label
   if diff < 0 then
@@ -88,9 +115,11 @@ compare.length = function(entry1, entry2)
   elseif diff > 0 then
     return false
   end
+  return nil
 end
 
--- order
+----order: Entries with smaller id will be ranked higher.
+---@type fun(entry1: cmp.Entry, entry2: cmp.Entry): boolean|nil
 compare.order = function(entry1, entry2)
   local diff = entry1.id - entry2.id
   if diff < 0 then
@@ -98,9 +127,12 @@ compare.order = function(entry1, entry2)
   elseif diff > 0 then
     return false
   end
+  return nil
 end
 
--- locality
+---locality: Entries with higher locality (i.e., words that are closer to the cursor)
+---will be ranked higher. See GH-183 for more details.
+---@type cmp.ComparatorFunctor
 compare.locality = setmetatable({
   lines_count = 10,
   lines_cache = cache.new(),
@@ -146,6 +178,7 @@ compare.locality = setmetatable({
     end
   end,
 }, {
+  ---@type fun(self: table, entry1: cmp.Entry, entry2: cmp.Entry): boolean|nil
   __call = function(self, entry1, entry2)
     local local1 = self.locality_map[entry1:get_word()]
     local local2 = self.locality_map[entry2:get_word()]
@@ -158,10 +191,12 @@ compare.locality = setmetatable({
       end
       return local1 < local2
     end
+    return nil
   end,
 })
 
--- scopes
+---scopes: Entries defined in a closer scope will be ranked higher (e.g., prefer local variables to globals).
+---@type cmp.ComparatorFunctor
 compare.scopes = setmetatable({
   scopes_map = {},
   update = function(self)
@@ -216,6 +251,7 @@ compare.scopes = setmetatable({
     end
   end,
 }, {
+  ---@type fun(self: table, entry1: cmp.Entry, entry2: cmp.Entry): boolean|nil
   __call = function(self, entry1, entry2)
     local local1 = self.scopes_map[entry1:get_word()]
     local local2 = self.scopes_map[entry2:get_word()]

@@ -79,7 +79,7 @@ end
 ---@param input string
 ---@param word string
 ---@param option { synonyms: string[], disallow_fullfuzzy_matching: boolean, disallow_fuzzy_matching: boolean, disallow_partial_fuzzy_matching: boolean, disallow_partial_matching: boolean, disallow_prefix_unmatching: boolean }
----@return integer
+---@return integer, table
 matcher.match = function(input, word, option)
   option = option or {}
 
@@ -257,7 +257,7 @@ matcher.fuzzy = function(input, word, matches, option)
     word_offset = word_offset + 1
   end
 
-  if input_index > #input then
+  if matched and input_index > #input then
     table.insert(matches, {
       input_match_start = input_match_start,
       input_match_end = input_match_end,

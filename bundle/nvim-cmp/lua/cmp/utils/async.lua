@@ -32,18 +32,24 @@ async.throttle = function(fn, timeout)
   local timer = assert(vim.loop.new_timer())
   local _async = nil ---@type Async?
   timers[#timers + 1] = timer
-  return setmetatable({
+  local throttle
+  throttle = setmetatable({
     running = false,
     timeout = timeout,
     sync = function(self, timeout_)
+      if not self.running then
+        return
+      end
       vim.wait(timeout_ or 1000, function()
         return not self.running
-      end)
+      end, 10)
     end,
     stop = function(reset_time)
       if reset_time ~= false then
         time = nil
       end
+      -- can't use self here unfortunately
+      throttle.running = false
       timer:stop()
       if _async then
         _async:cancel()
@@ -57,9 +63,8 @@ async.throttle = function(fn, timeout)
       if time == nil then
         time = vim.loop.now()
       end
-
-      self.running = true
       self.stop(false)
+      self.running = true
       timer:start(math.max(1, self.timeout - (vim.loop.now() - time)), 0, function()
         vim.schedule(function()
           time = nil
@@ -68,6 +73,7 @@ async.throttle = function(fn, timeout)
             ---@cast ret Async
             _async = ret
             _async:await(function(_, error)
+              _async = nil
               self.running = false
               if error and error ~= 'abort' then
                 vim.notify(error, vim.log.levels.ERROR)
@@ -80,6 +86,7 @@ async.throttle = function(fn, timeout)
       end)
     end,
   })
+  return throttle
 end
 
 ---Control async tasks.
@@ -217,12 +224,18 @@ end
 ---@param result? any
 ---@param error? string
 function Async:_done(result, error)
-  self.running = false
-  self.result = result
-  self.error = error
+  if self.running then
+    self.running = false
+    self.result = result
+    self.error = error
+  end
   for _, callback in ipairs(self.callbacks) do
     callback(result, error)
   end
+  -- only run each callback once.
+  -- _done can possibly be called multiple times.
+  -- so we need to clear callbacks after executing them.
+  self.callbacks = {}
 end
 
 function Async:_step()
@@ -237,7 +250,7 @@ function Async:_step()
 end
 
 function Async:cancel()
-  self.running = false
+  self:_done(nil, 'abort')
 end
 
 ---@param cb AsyncCallback
@@ -276,7 +289,7 @@ end
 
 -- This will yield when called from a coroutine
 function async.yield(...)
-  if not coroutine.isyieldable() then
+  if coroutine.running() == nil then
     error('Trying to yield from a non-yieldable context')
     return ...
   end

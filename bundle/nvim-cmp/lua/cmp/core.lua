@@ -1,7 +1,6 @@
 local debug = require('cmp.utils.debug')
 local str = require('cmp.utils.str')
 local char = require('cmp.utils.char')
-local pattern = require('cmp.utils.pattern')
 local feedkeys = require('cmp.utils.feedkeys')
 local async = require('cmp.utils.async')
 local keymap = require('cmp.utils.keymap')
@@ -190,6 +189,16 @@ core.on_moved = function(self)
   self:filter()
 end
 
+---Returns the suffix of the specified `line`.
+---
+---Contains `%s`: returns everything after the last `%s` in `line`
+---Else:          returns `line` unmodified
+---@param line string
+---@return string suffix
+local function find_line_suffix(line)
+  return line:match('%S*$') --[[@as string]]
+end
+
 ---Check autoindent
 ---@param trigger_event cmp.TriggerEvent
 ---@param callback function
@@ -203,7 +212,7 @@ core.autoindent = function(self, trigger_event, callback)
 
   -- Check prefix
   local cursor_before_line = api.get_cursor_before_line()
-  local prefix = pattern.matchstr('[^[:blank:]]\\+$', cursor_before_line) or ''
+  local prefix = find_line_suffix(cursor_before_line) or ''
   if #prefix == 0 then
     return callback()
   end
@@ -351,6 +360,10 @@ core.confirm = function(self, e, option, callback)
 
   debug.log('entry.confirm', e:get_completion_item())
 
+  async.sync(function(done)
+    e:resolve(done)
+  end, config.get().performance.confirm_resolve_timeout)
+
   local release = self:suspend()
 
   -- Close menus.
@@ -423,7 +436,11 @@ core.confirm = function(self, e, option, callback)
     local completion_item = misc.copy(e:get_completion_item())
     if not completion_item.textEdit then
       completion_item.textEdit = {}
-      completion_item.textEdit.newText = completion_item.insertText or completion_item.word or completion_item.label
+      local insertText = completion_item.insertText
+      if misc.empty(insertText) then
+        insertText = nil
+      end
+      completion_item.textEdit.newText = insertText or completion_item.word or completion_item.label
     end
     local behavior = option.behavior or config.get().confirmation.default_behavior
     if behavior == types.cmp.ConfirmBehavior.Replace then

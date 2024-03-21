@@ -1,7 +1,6 @@
 local config = require('cmp.config')
 local misc = require('cmp.utils.misc')
 local str = require('cmp.utils.str')
-local types = require('cmp.types')
 local api = require('cmp.utils.api')
 
 ---@class cmp.GhostTextView
@@ -15,7 +14,7 @@ local has_inline = (function()
       virt_text = { { ' ', 'Comment' } },
       virt_text_pos = 'inline',
       hl_mode = 'combine',
-      ephemeral = true,
+      ephemeral = false,
     })
     vim.api.nvim_buf_del_extmark(0, ghost_text_view.ns, id)
   end))
@@ -25,11 +24,17 @@ ghost_text_view.new = function()
   local self = setmetatable({}, { __index = ghost_text_view })
   self.win = nil
   self.entry = nil
+  self.extmark_id = nil
   vim.api.nvim_set_decoration_provider(ghost_text_view.ns, {
     on_win = function(_, win)
-      return win == self.win
-    end,
-    on_line = function(_, _, _, on_row)
+      if self.extmark_id then
+        vim.api.nvim_buf_del_extmark(0, ghost_text_view.ns, self.extmark_id)
+      end
+
+      if win ~= self.win then
+        return false
+      end
+
       local c = config.get().experimental.ghost_text
       if not c then
         return
@@ -40,9 +45,6 @@ ghost_text_view.new = function()
       end
 
       local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-      if on_row ~= row - 1 then
-        return
-      end
 
       local line = vim.api.nvim_get_current_line()
       if not has_inline then
@@ -53,12 +55,12 @@ ghost_text_view.new = function()
 
       local text = self.text_gen(self, line, col)
       if #text > 0 then
-        vim.api.nvim_buf_set_extmark(0, ghost_text_view.ns, row - 1, col, {
-          right_gravity = false,
+        self.extmark_id = vim.api.nvim_buf_set_extmark(0, ghost_text_view.ns, row - 1, col, {
+          right_gravity = true,
           virt_text = { { text, type(c) == 'table' and c.hl_group or 'Comment' } },
           virt_text_pos = has_inline and 'inline' or 'overlay',
           hl_mode = 'combine',
-          ephemeral = true,
+          ephemeral = false,
         })
       end
     end,
@@ -71,9 +73,6 @@ end
 ---  of character differences instead of just byte difference.
 ghost_text_view.text_gen = function(self, line, cursor_col)
   local word = self.entry:get_insert_text()
-  if self.entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-    word = vim.lsp.util.parse_snippet(word)
-  end
   word = str.oneline(word)
   local word_clen = vim.str_utfindex(word)
   local cword = string.sub(line, self.entry:get_offset(), cursor_col)

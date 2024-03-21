@@ -23,8 +23,8 @@ describe('feedkeys', function()
     })
   end)
 
-  it('bacckspace', function()
-    vim.cmd([[setlocal backspace=0]])
+  it('backspace', function()
+    vim.cmd([[setlocal backspace=""]])
     feedkeys.call(keymap.t('iaiueo'), 'nx')
     feedkeys.call(keymap.t('a<BS><BS>'), 'nx')
     assert.are.same(vim.api.nvim_buf_get_lines(0, 0, -1, false), {

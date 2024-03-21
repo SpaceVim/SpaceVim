@@ -1,19 +1,25 @@
 name: "release"
 on:
   push:
-    tags:
-      - 'v*'
+    tags: # Will upload to luarocks.org when a tag is pushed
+      - "*"
+  pull_request: # Will test a local install without uploading to luarocks.org
+
 jobs:
-  luarocks-upload:
-    runs-on: ubuntu-22.04
+  luarocks-release:
+    name: LuaRocks upload
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: LuaRocks Upload
-        uses: nvim-neorocks/luarocks-tag-release@v3
+        uses: nvim-neorocks/luarocks-tag-release@v5
         env:
           LUAROCKS_API_KEY: ${{ secrets.LUAROCKS_API_KEY }}
         with:
+          labels: |
+            neovim
+            nvim-cmp
           detailed_description: |
             A completion engine plugin for neovim written in Lua.
             Completion sources are installed from external repositories and "sourced".
-

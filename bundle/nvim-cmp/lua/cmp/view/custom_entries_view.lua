@@ -140,7 +140,13 @@ custom_entries_view.open = function(self, offset, entries)
       end
     end
   end
-  vim.api.nvim_buf_set_lines(entries_buf, 0, -1, false, lines)
+  if vim.bo[entries_buf].modifiable == false then
+    vim.bo[entries_buf].modifiable = true
+    vim.api.nvim_buf_set_lines(entries_buf, 0, -1, false, lines)
+    vim.bo[entries_buf].modifiable = false
+  else
+    vim.api.nvim_buf_set_lines(entries_buf, 0, -1, false, lines)
+  end
   vim.api.nvim_buf_set_option(entries_buf, 'modified', false)
 
   local width = 0
@@ -264,7 +270,13 @@ custom_entries_view.draw = function(self)
       table.insert(texts, table.concat(text, ''))
     end
   end
-  vim.api.nvim_buf_set_lines(entries_buf, topline, botline, false, texts)
+  if vim.bo[entries_buf].modifiable == false then
+    vim.bo[entries_buf].modifiable = true
+    vim.api.nvim_buf_set_lines(entries_buf, topline, botline, false, texts)
+    vim.bo[entries_buf].modifiable = false
+  else
+    vim.api.nvim_buf_set_lines(entries_buf, topline, botline, false, texts)
+  end
   vim.api.nvim_buf_set_option(entries_buf, 'modified', false)
 
   if api.is_cmdline_mode() then

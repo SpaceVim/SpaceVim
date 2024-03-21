@@ -220,11 +220,11 @@ describe('cmp.core', function()
                 character = 6,
               },
             },
-            newText = 'foobarbaz',
+            newText = 'AIUEO',
           },
         })
-        assert.are.same(state.buffer, { '***foobarbaz***' })
-        assert.are.same(state.cursor[2], 12)
+        assert.are.same(state.buffer, { '***AIUEO***' })
+        assert.are.same(state.cursor[2], 6)
       end)
     end)
   end)
