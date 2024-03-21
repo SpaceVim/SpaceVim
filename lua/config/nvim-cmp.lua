@@ -10,7 +10,7 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
-local function expand_snippet(fallback) -- {{{
+local function expand_snippet(_) -- {{{
   if vim.g.spacevim_snippet_engine == 'neosnippet' then
     if vim.fn['neosnippet#expandable']() == 1 then
       feedkey('<plug>(neosnippet_expand)', '')
@@ -75,7 +75,33 @@ end
 -- }}}
 
 -- }}}
-
+local kind_icons = {
+  Text = '',
+  Method = '󰆧',
+  Function = '󰊕',
+  Constructor = '',
+  Field = '󰇽',
+  Variable = '󰂡',
+  Class = '󰠱',
+  Interface = '',
+  Module = '',
+  Property = '󰜢',
+  Unit = '',
+  Value = '󰎠',
+  Enum = '',
+  Keyword = '󰌋',
+  Snippet = '',
+  Color = '󰏘',
+  File = '󰈙',
+  Reference = '',
+  Folder = '󰉋',
+  EnumMember = '',
+  Constant = '󰏿',
+  Struct = '',
+  Event = '',
+  Operator = '󰆕',
+  TypeParameter = '󰅲',
+}
 --2. `auto_completion_tab_key_behavior` set the action to
 --   perform when the `TAB` key is pressed, the possible values are:
 --   - `smart` cycle candidates, expand snippets, jump parameters
@@ -106,6 +132,29 @@ cmp.setup({
     ['<C-p>'] = ctrl_p,
     ['<CR>'] = enter,
   },
+  formatting = {
+    format = function(entry, vim_item)
+      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatenates the icons with the name of the item kind
+      vim_item.menu = ({
+        buffer = '[Buffer]',
+        nvim_lsp = '[LSP]',
+        luasnip = '[LuaSnip]',
+        nvim_lua = '[Lua]',
+        latex_symbols = '[LaTeX]',
+      })[entry.source.name]
+      return vim_item
+    end,
+    expandable_indicator = true,
+    fields = { 'abbr', 'kind', 'menu' },
+  },
+  window = {
+    completion = cmp.config.window.bordered({
+      winhighlight = 'Normal:Normal,FloatBorder:WinSeparator,CursorLine:Visual,Search:None',
+    }),
+    documentation = cmp.config.window.bordered({
+      winhighlight = 'Normal:Normal,FloatBorder:WinSeparator,CursorLine:Visual,Search:None',
+    }),
+  },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     {
@@ -124,8 +173,8 @@ cmp.setup({
             bufs[vim.api.nvim_win_get_buf(win)] = true
           end
           return vim.tbl_keys(bufs)
-        end
-      }
+        end,
+      },
     },
   }),
 })
@@ -145,12 +194,13 @@ cmp.setup({
 -- },
 -- })
 -- Setup lspconfig.
-local capabilities =
-  require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities =
+-- require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 
 -- for cmp dictionary
-local dict = require("cmp_dictionary")
+local dict = require('cmp_dictionary')
 
 dict.setup({
   -- The following are default values.
@@ -165,17 +215,16 @@ dict.setup({
   debug = false,
 })
 
-
 -- dict.switcher({
-  -- filetype = {
-    -- lua = "/path/to/lua.dict",
-    -- javascript = { "/path/to/js.dict", "/path/to/js2.dict" },
-  -- },
-  -- filepath = {
-    -- [".*xmake.lua"] = { "/path/to/xmake.dict", "/path/to/lua.dict" },
-    -- ["%.tmux.*%.conf"] = { "/path/to/js.dict", "/path/to/js2.dict" },
-  -- },
-  -- spelllang = {
-    -- en = "/path/to/english.dict",
-  -- },
+-- filetype = {
+-- lua = '/path/to/lua.dict',
+-- javascript = { '/path/to/js.dict', '/path/to/js2.dict' },
+-- },
+-- filepath = {
+-- ['.*xmake.lua'] = { '/path/to/xmake.dict', '/path/to/lua.dict' },
+-- ['%.tmux.*%.conf'] = { '/path/to/js.dict', '/path/to/js2.dict' },
+-- },
+-- spelllang = {
+-- en = '/path/to/english.dict',
+-- },
 -- })
