@@ -30,8 +30,12 @@ if has('nvim')
 else
   let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
 endif
+if has('win32')
+  let &rtp = &rtp . ',' . fnamemodify($VIMRUNTIME, ':h:h:h') . '\lib\nvim'
+endif
 call SpaceVim#logger#info('Loading SpaceVim from: ' . g:_spacevim_root_dir)
-
+call SpaceVim#logger#info('default rtp is:')
+call map(split(&rtp, ','), 'SpaceVim#logger#info("  > " . v:val)')
 if has('vim_starting')
   " python host
   " @bug python2 error on neovim 0.6.1
