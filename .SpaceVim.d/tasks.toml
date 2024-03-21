@@ -1,9 +1,16 @@
-[vader-test]
+[vader-nvim-win]
     command = "make"
     args = ['test']
     isBackground = false
-[vader-test.options.env]
+[vader-nvim-win.options.env]
     VIM_BIN = 'nvim'
+    VIM_Es = "--headless"
+[vader-nvim-wsl]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-nvim-wsl.options.env]
+    VIM_BIN = 'wsl -e nvim'
     VIM_Es = "--headless"
 [vader-nvim-050]
     command = "make"
