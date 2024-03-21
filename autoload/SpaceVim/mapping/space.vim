@@ -14,7 +14,6 @@ let s:file = expand('<sfile>:~')
 let s:funcbeginline =  expand('<slnum>') + 1
 function! SpaceVim#mapping#space#init() abort
   call SpaceVim#logger#debug('init SPC key bindings')
-  let g:_spacevim_mappings_space = {}
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
   let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
   let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}

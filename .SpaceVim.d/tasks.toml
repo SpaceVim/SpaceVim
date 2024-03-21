@@ -5,6 +5,14 @@
 [vader-test.options.env]
     VIM_BIN = 'nvim'
     VIM_Es = "--headless"
+[vader-nvim-050]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-nvim-050.options.env]
+    VIM_BIN = 'D:\Neovim\v0.5.0\bin\nvim.exe'
+    VIM_Es = "--headless"
+    VIM = 'D:\Neovim\v0.5.0'
 [vader-nvim-072]
     command = "make"
     args = ['test']
@@ -23,6 +31,21 @@
     VIM_BIN = 'D:\Vim\gvim_7.4.1185_x64\vim.exe'
     VIM_Es = "-Es"
     VIM = 'D:\Vim\gvim_7.4.1185_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_7.4.1185_x64'
+[vader-vim-741185-buf]
+    command = 'D:\Vim\gvim_7.4.1185_x64\vim.exe'
+    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-vim-741185-buf.options.env]
+    VIM = 'D:\Vim\gvim_7.4.1185_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_7.4.1185_x64'
+[vader-nvim-buf]
+    command = 'nvim'
+    args = ['-Nu', 'test/vimrc', '--headless', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-nvim-buf.options.env]
+    VIM = ''
+    VIMRUNTIME = ''
 [generate-vim-doc]
     command = "python"
     args = ['-m', 'vimdoc', '.']

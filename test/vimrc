@@ -5,6 +5,7 @@ filetype off
 set rtp+=build/vader
 set rtp+=.
 set rtp+=after
+set noswapfile
 filetype plugin indent on
 syntax enable
 set nocompatible

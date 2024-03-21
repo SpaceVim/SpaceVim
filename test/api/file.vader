@@ -2,7 +2,7 @@ Execute ( SpaceVim api: file.fticon ):
   scriptencoding utf-8
   let g:spacevim_filetype_icons = {}
   let file = SpaceVim#api#import('file')
-  AssertEqual file.fticon('foo.md'), ''
+  AssertEqual file.fticon('foo.md'), ''
 
 Execute ( SpaceVim api: file.unify_path ):
   let path = fnamemodify('.SpaceVim.d/init.vim', ':p')

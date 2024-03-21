@@ -1,4 +1,9 @@
 Execute ( SpaceVim plugin: help ):
+  runtime autoload/SpaceVim.vim
+  call SpaceVim#mapping#g#init()
+  call SpaceVim#mapping#z#init()
+  call SpaceVim#mapping#leader#defindKEYs()
+  call SpaceVim#mapping#space#init()
   let g:_spacevim_input_list = ['h', 'd', 'k', ' ', 'b', 'n']
   LeaderGuide " "
   AssertEqual &ft, 'HelpDescribe'

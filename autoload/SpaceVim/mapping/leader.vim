@@ -13,7 +13,6 @@ function! SpaceVim#mapping#leader#defindWindowsLeader(key) abort
     exe 'nnoremap <silent><nowait> [Window] :<c-u>LeaderGuide "' .
           \ a:key . '"<CR>'
     exe 'nmap ' .a:key . ' [Window]'
-    let g:_spacevim_mappings_windows = {}
     nnoremap <silent> [Window]v
           \ :<C-u>split<CR>
     let lnum = expand('<slnum>') + s:lnum - 4
@@ -200,7 +199,6 @@ endfunction
 
 function! SpaceVim#mapping#leader#defindKEYs() abort
   call SpaceVim#logger#debug('defind SPC h k prefixs')
-  let g:_spacevim_mappings_prefixs = {}
   if !g:spacevim_vimcompatible && !empty(g:spacevim_windows_leader)
     let g:_spacevim_mappings_prefixs[g:spacevim_windows_leader] = {'name' : '+Window prefix'}
     call extend(g:_spacevim_mappings_prefixs[g:spacevim_windows_leader], g:_spacevim_mappings_windows)

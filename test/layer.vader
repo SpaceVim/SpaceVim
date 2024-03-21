@@ -1,4 +1,9 @@
 Execute ( SpaceVim layer health: ):
+  runtime autoload/SpaceVim.vim
+  call SpaceVim#mapping#g#init()
+  call SpaceVim#mapping#z#init()
+  call SpaceVim#mapping#leader#defindKEYs()
+  call SpaceVim#mapping#space#init()
   for layer in SpaceVim#layers#list()
     Log 'testing ' . layer . ' layer'
     Assert SpaceVim#layers#{layer}#health(), 'function SpaceVim#layers#' . layer . '#health() return false' 

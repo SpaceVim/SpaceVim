@@ -87,8 +87,8 @@ local function pick()
 end
 
 local function replace_variables(str)
-  for key, _ in ipairs(variables) do
-    str = vim.fn.substitute(str, '${' .. key .. '}', variables[key], 'g')
+  for key, value in pairs(variables) do
+    str = vim.fn.substitute(str, '${' .. key .. '}', value, 'g')
   end
   return str
 end
@@ -140,6 +140,11 @@ function M.get()
   init_variables()
   local task = expand_task(pick())
   return task
+end
+
+function M.expand_task(t)
+  init_variables()
+  return expand_task(t)
 end
 
 

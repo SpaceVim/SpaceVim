@@ -52,7 +52,6 @@ let s:SYSTEM = SpaceVim#api#import('system')
 ""
 " Version of SpaceVim , this value can not be changed.
 let g:spacevim_version = '2.3.0-dev'
-lockvar g:spacevim_version
 
 ""
 " @section default_indent, options-default_indent
@@ -1367,6 +1366,9 @@ let g:spacevim_smartcloseignoreft      = [
       \ 'SpaceVimGitRemoteManager'
       \ ]
 let g:_spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
+let g:_spacevim_mappings_space = {}
+let g:_spacevim_mappings_prefixs = {}
+let g:_spacevim_mappings_windows = {}
 let g:spacevim_enable_javacomplete2_py = 0
 ""
 " @section src_root, options-src_root

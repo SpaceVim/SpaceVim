@@ -1,5 +1,4 @@
 Execute ( SpaceVim plugin: key bindings guide ):
-  let g:_spacevim_input_list = ['t', 't']
-  LeaderGuide " "
+  call SpaceVim#plugins#tabmanager#open()
   AssertEqual &ft, 'SpaceVimTabsManager'
 

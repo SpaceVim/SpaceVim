@@ -165,7 +165,12 @@ function! SpaceVim#layers#lang#scala#config() abort
     autocmd BufRead,BufNewFile *.sbt set filetype=scala
   augroup END
 
-  let g:neoformat_enabled_scala = neoformat#formatters#scala#enabled()
+  try
+    
+    let g:neoformat_enabled_scala = neoformat#formatters#scala#enabled()
+  catch
+    let g:neoformat_enabled_scala = []
+  endtry
   let g:neoformat_scala_scalariform = {
         \ 'exe': 'java',
         \ 'args': ['-jar', s:scalariform_jar, '-'],

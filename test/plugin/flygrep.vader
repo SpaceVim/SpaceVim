@@ -1,17 +1,16 @@
 Execute ( SpaceVim plugin: flygrep ):
+  runtime autoload/SpaceVim.vim
   edit Makefile
-  let g:_spacevim_input_list = ["\<C-u>", 'C', 'O', 'V', 'I', 'M', 'E', 'R', 'A', 'G', 'E', "\<Enter>"]
+  let g:_spacevim_input_list = ["\<C-u>", 'b', 'u', 'i', 'l', 'd', '/', 'v', 'a', 'd', 'e', 'r', ':', "\<Enter>"]
   let g:_spacevim_input_timeout = 400
-  exe 'call SpaceVim#plugins#flygrep#open('
-        \ . '{"input" : expand("<cword>"), "files": bufname("%")}'
-        \ . ')'
+  exe 'call SpaceVim#plugins#flygrep#open({"input" : expand("<cword>"), "files": bufname("%")})'
   let g:_spacevim_input_timeout = 0
   let lnr = 0
   let current_line = line('.')
   Log getline('.')
   for line in readfile('Makefile')
     let lnr += 1
-    if line =~# 'COVIMERAGE'
+    if line =~# 'build/vader:'
       break
     endif
   endfor
