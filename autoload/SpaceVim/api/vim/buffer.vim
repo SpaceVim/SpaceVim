@@ -32,6 +32,14 @@
 "     initfunc: the function which will be call after creating buffer
 "
 "     cmd: the ex command which will be run after the new buffer is created
+"
+" get_option(bufnr, name)
+"
+" Gets a buffer option value. 
+"
+" set_option(buf, opt, value)  
+"
+" Set a buffer option value.
 
 
 let s:self = {}
