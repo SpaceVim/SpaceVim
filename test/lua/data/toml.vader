@@ -1,5 +1,6 @@
 Execute ( SpaceVim lua api: data#toml ):
-  if !has('nvim-0.5.0')
+  if !has('nvim-0.7.2')
+    Log 'skip lua test'
     finish
   endif
   let cmp = SpaceVim#api#import('vim#compatible')

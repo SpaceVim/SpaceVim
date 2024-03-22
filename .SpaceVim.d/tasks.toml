@@ -99,7 +99,7 @@
     VIMRUNTIME = 'D:\Vim\gvim_9.1.0196_x64'
 [vader-vim-910196-buf]
     command = 'D:\Vim\gvim_9.1.0196_x64\vim.exe'
-    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    args = ['-Nu', 'test/vimrc', '-Es', '-c', 'Vader! ${relativeFile}']
     isBackground = false
 [vader-vim-910196-buf.options.env]
     VIM = 'D:\Vim\gvim_9.1.0196_x64'

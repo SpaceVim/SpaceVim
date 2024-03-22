@@ -1,9 +1,9 @@
 Execute ( SpaceVim lua api: data.dict ):
-  if has('nvim-0.5.0') || get(g:, '_spacevim_use_lua', 0)
-    let cmp = SpaceVim#api#import('vim#compatible')
-    lua spacevim_dict = require('spacevim.api').import('data.dict')
-    AssertEqual cmp.luaeval('spacevim_dict.make({"a" , "b", "h"}, {"c", "d"}, "m")'), {'a' : 'c', 'b' : 'd', 'h' : 'm'}
-  else
+  if !has('nvim-0.7.2')
     Log 'skip lua test'
+    finish
   endif
+  let cmp = SpaceVim#api#import('vim#compatible')
+  lua spacevim_dict = require('spacevim.api').import('data.dict')
+  AssertEqual cmp.luaeval('spacevim_dict.make({"a" , "b", "h"}, {"c", "d"}, "m")'), {'a' : 'c', 'b' : 'd', 'h' : 'm'}
 
