@@ -65,50 +65,122 @@ function! SpaceVim#layers#chinese#health() abort
   return 1
 endfunction
 
-command! -nargs=0 -range ConvertChineseNumberToDigit :<line1>,<line2>call s:ConvertChineseNumberToDigit()
-nnoremap <silent> <Plug>ConvertChineseNumberToDigit  :ConvertChineseNumberToDigit<cr>
-vnoremap <silent> <Plug>ConvertChineseNumberToDigit  :ConvertChineseNumberToDigit<cr>
-function! s:ConvertChineseNumberToDigit() range
+
+" 定义快捷键映射
+nnoremap <silent> <Plug>ConvertChineseNumberToDigit  :call <sid>ConvertChineseNumberToDigit('normal')<cr>
+vnoremap <silent> <Plug>ConvertChineseNumberToDigit  :call <sid>ConvertChineseNumberToDigit('visual')<cr>
+
+" 函数定义
+function! s:ConvertChineseNumberToDigit(mode) range
   let save_cursor = getcurpos()
-  let ChineseNumberPattern = '[〇一二三四五六七八九十百千万亿兆零壹贰叁肆伍陆柒捌玖拾佰仟萬億两点]\+'
-  if mode() ==? 'n' && a:firstline == a:lastline
+  let save_register = @k
+  if a:mode == 'normal'
+    " 正常模式处理
     let cword = expand('<cword>')
-    let cword = substitute(cword, ChineseNumberPattern, '\=Zh2Num#Translator(submatch(0))', "g")
-    let save_register_k = getreg("k")
-    call setreg("k", cword)
-    normal! viw"kp
-    call setreg("k", save_register_k)
+    let rst = substitute(cword, Zh2Num#getZhNumPattern(), '\=Zh2Num#Translator(submatch(0))', "g")
+    if rst != cword
+      let @k = rst
+      normal! viw"kp
+    endif
   else
-    silent execute a:firstline . "," . a:lastline . 'substitute/' . ChineseNumberPattern . '/\=Zh2Num#Translator(submatch(0))/g'
+    " 可视模式处理
+    normal! gv
+    if mode() == "\<C-V>"
+      " 块选择模式
+      let [line_start, column_start] = getpos("'<")[1:2]
+      let [line_end, column_end] = getpos("'>")[1:2]
+      if column_end < column_start
+        let [column_start, column_end] = [column_end, column_start]
+      endif
+      for line_num in range(line_start, line_end)
+        let line = getline(line_num)
+        let line_utf8 = iconv(line, &encoding, 'UTF-8')
+        let selectedText = line_utf8[column_start - 1: column_end - 1]
+        let translatedText = substitute(selectedText, Zh2Num#getZhNumPattern(), '\=Zh2Num#Translator(submatch(0))', 'g')
+        let newLine = line[:column_start - 2] . translatedText . line[column_end:]
+        call setline(line_num, newLine)
+      endfor
+    else
+      " 其他可视模式
+      normal! "ky
+      let selectedText = iconv(@k, &encoding, 'UTF-8')
+      let translatedText = substitute(selectedText, Zh2Num#getZhNumPattern(), '\=Zh2Num#Translator(submatch(0))', 'g')
+      if translatedText != selectedText
+        call setreg('k', translatedText)
+        normal! gv"kp
+      endif
+    endif
   endif
   call setpos('.', save_cursor)
+  let @k = save_register
 endfunction
 
-command! -nargs=0 -range ConvertDigitToChineseNumberLower :<line1>,<line2>call s:ConvertDigitToChineseNumber("lower")
-nnoremap <silent> <Plug>ConvertDigitToChineseNumberLower  :ConvertDigitToChineseNumberLower<cr>
-vnoremap <silent> <Plug>ConvertDigitToChineseNumberLower  :ConvertDigitToChineseNumberLower<cr>
+nnoremap <silent> <Plug>ConvertDigitToChineseNumberLower  :call <sid>ConvertDigitToChineseNumber('normal', "lower")<cr>
+vnoremap <silent> <Plug>ConvertDigitToChineseNumberLower  :call <sid>ConvertDigitToChineseNumber('visual', "lower")<cr>
 
-command! -nargs=0 -range ConvertDigitToChineseNumberUpper :<line1>,<line2>call s:ConvertDigitToChineseNumber("upper")
-nnoremap <silent> <Plug>ConvertDigitToChineseNumberUpper  :ConvertDigitToChineseNumberUpper<cr>
-vnoremap <silent> <Plug>ConvertDigitToChineseNumberUpper  :ConvertDigitToChineseNumberUpper<cr>
+nnoremap <silent> <Plug>ConvertDigitToChineseNumberUpper  :call <sid>ConvertDigitToChineseNumber('normal', "upper")<cr>
+vnoremap <silent> <Plug>ConvertDigitToChineseNumberUpper  :call <sid>ConvertDigitToChineseNumber('visual', "upper")<cr>
 
-function! s:ConvertDigitToChineseNumber(style) range
+function! s:ConvertDigitToChineseNumber(mode, caseType) abort
   let save_cursor = getcurpos()
-  let NumberPattern = '\v\d+(\.\d+)?'
-  if mode() ==? 'n' && a:firstline == a:lastline
-    let cword = expand('<cword>')
-    " 在这里使用双引号和 . 连接符来正确地引用 a:style
-    let cword = substitute(cword, NumberPattern, '\=Num2Zh#Translator(submatch(0), "'.a:style.'")', "g")
-    let save_register_k = getreg("k")
-    call setreg("k", cword)
-    normal! viw"kp
-    call setreg("k", save_register_k)
-  else
-    " 在执行替换的字符串中正确使用 a:style 参数
-    silent execute a:firstline . "," . a:lastline . 'substitute/' . NumberPattern . '/\=Num2Zh#Translator(submatch(0), "'.a:style.'")/g'
+  let save_register = @k
+  let cword = expand('<cword>')
+  if a:mode == 'normal'
+    if !empty(cword)
+      let rst = substitute(cword, Num2Zh#getNumberPattern(), '\=Num2Zh#Translator(submatch(0), "'. a:caseType .'")', "g")
+      if rst != cword
+          let @k = rst
+          normal! viw"kp
+      endif
+    endif
+    " 如果是block模式，则特别处理
+  elseif a:mode == 'visual'
+    normal! gv
+    if mode() == "\<C-V>"
+        let [line_start, column_start] = getpos("'<")[1:2]
+        let [line_end, column_end] = getpos("'>")[1:2]
+        if column_end < column_start
+            let [column_start, column_end] = [column_end, column_start]
+        endif
+        for line_num in range(line_start, line_end)
+            let line = getline(line_num)
+            " 将行文本转换为UTF-8编码
+            let line_utf8 = iconv(line, &encoding, 'UTF-8')
+            let selectedText = line_utf8[column_start - 1: column_end - 1]
+            let translatedText = substitute(selectedText, Num2Zh#getNumberPattern(), '\=Num2Zh#Translator(submatch(0), "' . a:caseType . '")', 'g')
+            let newLine = line[:column_start - 2] . translatedText . line[column_end:]
+            call setline(line_num, newLine)
+        endfor
+    else
+        " 对其他模式的处理
+        if mode() == 'line'
+            normal! '[V']
+        elseif mode() == 'char'
+            normal! `[v`]
+        elseif mode() ==? 'v'
+            normal! gv
+        else
+            normal! '[v']
+        endif
+
+        " 获取选择的文本，将其保存在寄存器t中
+        normal! "ky
+        let selectedText = iconv(@k, &encoding, 'UTF-8')
+
+        " 转换文本
+        let translatedText = substitute(selectedText, Num2Zh#getNumberPattern(), '\=Num2Zh#Translator(submatch(0), "' . a:caseType . '")', 'g')
+
+        if translatedText != selectedText
+          " 替换原文本
+          call setreg('k', translatedText)
+          normal! gv"kp
+        endif
+    endif
   endif
   call setpos('.', save_cursor)
+  let @k = save_register
 endfunction
+
 " function() wrapper
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! s:_function(fstr) abort
