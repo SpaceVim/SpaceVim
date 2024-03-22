@@ -37,7 +37,6 @@
     VIM_Es = "--headless"
     VIM = 'D:\Neovim\v0.8.0'
 # vim 7.4.1185 
-# https://github.com/vim/vim-win32-installer/releases/tag/v7.4.1185
 [vader-vim-741185]
     command = "make"
     args = ['test']
@@ -54,6 +53,57 @@
 [vader-vim-741185-buf.options.env]
     VIM = 'D:\Vim\gvim_7.4.1185_x64'
     VIMRUNTIME = 'D:\Vim\gvim_7.4.1185_x64'
+# vim 7.4.1689
+[vader-vim-741689]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-vim-741689.options.env]
+    VIM_BIN = 'D:\Vim\gvim_7.4.1689_x64\vim.exe'
+    VIM_Es = "-Es"
+    VIM = 'D:\Vim\gvim_7.4.1689_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_7.4.1689_x64'
+[vader-vim-741689-buf]
+    command = 'D:\Vim\gvim_7.4.1689_x64\vim.exe'
+    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-vim-741689-buf.options.env]
+    VIM = 'D:\Vim\gvim_7.4.1689_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_7.4.1689_x64'
+# vim 8.0.0027
+[vader-vim-800027]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-vim-800027.options.env]
+    VIM_BIN = 'D:\Vim\gvim_8.0.0027_x64\vim.exe'
+    VIM_Es = "-Es"
+    VIM = 'D:\Vim\gvim_8.0.0027_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.0.0027_x64'
+[vader-vim-800027-buf]
+    command = 'D:\Vim\gvim_8.0.0027_x64\vim.exe'
+    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-vim-800027-buf.options.env]
+    VIM = 'D:\Vim\gvim_8.0.0027_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.0.0027_x64'
+# vim 9.1.0196
+[vader-vim-910196]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-vim-910196.options.env]
+    VIM_BIN = 'D:\Vim\gvim_9.1.0196_x64\vim.exe'
+    VIM_Es = "-Es"
+    VIM = 'D:\Vim\gvim_9.1.0196_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_9.1.0196_x64'
+[vader-vim-910196-buf]
+    command = 'D:\Vim\gvim_9.1.0196_x64\vim.exe'
+    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-vim-910196-buf.options.env]
+    VIM = 'D:\Vim\gvim_9.1.0196_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_9.0.0196_x64'
 [vader-nvim-buf]
     command = 'nvim'
     args = ['-Nu', 'test/vimrc', '--headless', '-c', 'Vader! ${relativeFile}']
