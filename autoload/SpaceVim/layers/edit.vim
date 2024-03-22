@@ -270,6 +270,11 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nmap' , ['x' , 'U'] , '<Plug>Uppercase'  , 'uppercase-text'   , 0, 1)
   call SpaceVim#mapping#space#def('nmap' , ['x' , '~'] , '<Plug>ToggleCase' , 'toggle-case-text' , 0, 1)
 
+  " 定义 SpaceVim 键映射
+  call SpaceVim#mapping#space#def('nmap', ['x', 'H'], '<Plug>ConvertToFullWidth', 'convert to fullWidth', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['x', 'h'], '<Plug>ConvertToHalfWidth', 'convert to halfWidth', 0, 1)
+  call SpaceVim#mapping#space#def('nmap', ['x', 'W'], '<Plug>ToggleFullHalfWidth', 'toggle fullWidth and halfWidth', 0, 1)
+
   " word
   let g:_spacevim_mappings_space.x.w = {'name' : '+Word'}
   call SpaceVim#mapping#space#def('vnoremap', ['x', 'w', 'c'], 'normal! ' . ":'<,'>s/\\\w\\+//gn" . "\<cr>", 'count the words in the select region', 1)
@@ -990,6 +995,71 @@ endfunction
 
 function! s:parse(line) abort
   return s:VIM.parse_string(a:line)
+endfunction
+
+" 为插件定义普通模式和视觉模式映射
+nnoremap <silent> <Plug>ConvertToFullWidth :call <sid>ConvertFullHalfWidth('normal', 'fullWidth')<cr>
+vnoremap <silent> <Plug>ConvertToFullWidth :call <sid>ConvertFullHalfWidth('visual', 'fullWidth')<cr>
+
+nnoremap <silent> <Plug>ConvertToHalfWidth :call <sid>ConvertFullHalfWidth('normal', 'halfWidth')<cr>
+vnoremap <silent> <Plug>ConvertToHalfWidth :call <sid>ConvertFullHalfWidth('visual', 'halfWidth')<cr>
+
+nnoremap <silent> <Plug>ToggleFullHalfWidth :call <sid>ConvertFullHalfWidth('normal', 'toggleWidth')<cr>
+vnoremap <silent> <Plug>ToggleFullHalfWidth :call <sid>ConvertFullHalfWidth('visual', 'toggleWidth')<cr>
+
+" 定义转换函数
+function! s:ConvertFullHalfWidth(mode, widthType) abort
+  let save_cursor = getcurpos()
+  let save_register = getreg("k")
+  if a:mode == 'normal'
+    let cword = expand('<cword>')
+    if !empty(cword)
+      let rst = FullHalfWidthTranslator#Translate(cword, a:widthType)
+      if rst != cword
+          let @k = rst
+          normal! viw"kp
+      endif
+    endif
+  elseif a:mode == 'visual'
+    normal! gv
+    if mode() == "\<C-V>" " 块选择模式
+        let [line_start, column_start] = getpos("'<")[1:2]
+        let [line_end, column_end] = getpos("'>")[1:2]
+        if column_end < column_start
+            let [column_start, column_end] = [column_end, column_start]
+        endif
+        for line_num in range(line_start, line_end)
+            let line = getline(line_num)
+            " 将行文本转换为UTF-8编码
+            let line_utf8 = iconv(line, &encoding, 'UTF-8')
+            let selectedText = line_utf8[column_start - 1: column_end - 1]
+            let translatedText = FullHalfWidthTranslator#Translate(selectedText, a:widthType)
+            let newLine = line[:column_start - 2] . translatedText . line[column_end:]
+            call setline(line_num, newLine)
+        endfor
+    else
+    " 对其他模式的处理
+        if mode() == 'line'
+            normal! '[V']
+        elseif mode() == 'char'
+            normal! `[v`]
+        elseif mode() ==? 'v'
+            normal! gv
+        else
+            normal! '[v']
+        endif
+        " 行选择或字符选择模式的处理
+        normal! "ky
+        let selectedText = @k
+        let translatedText = FullHalfWidthTranslator#Translate(selectedText, a:widthType)
+        if translatedText != selectedText
+          call setreg('k', translatedText)
+          normal! gv"kp
+        endif
+    endif
+  endif
+  call setpos('.', save_cursor)
+  call setreg("k", save_register)
 endfunction
 
 function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort
