@@ -28,6 +28,14 @@
     VIM_BIN = 'D:\Neovim\v0.7.2\bin\nvim.exe'
     VIM_Es = "--headless"
     VIM = 'D:\Neovim\v0.7.2'
+[vader-nvim-080]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-nvim-080.options.env]
+    VIM_BIN = 'D:\Neovim\v0.8.0\bin\nvim.exe'
+    VIM_Es = "--headless"
+    VIM = 'D:\Neovim\v0.8.0'
 # vim 7.4.1185 
 # https://github.com/vim/vim-win32-installer/releases/tag/v7.4.1185
 [vader-vim-741185]
