@@ -86,6 +86,15 @@
 [vader-nvim-wsl.options.env]
     VIM_BIN = 'wsl -e nvim'
     VIM_Es = "--headless"
+[vader-nvim-038]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-nvim-038.options.env]
+    VIM_BIN = 'D:\Neovim\v0.3.8\bin\nvim.exe'
+    VIM_Es = "--headless"
+    VIM = 'D:\Neovim\v0.3.8'
+    VIMRUNTIME = 'D:\Neovim\v0.3.8\share\nvim\runtime'
 [vader-nvim-050]
     command = "make"
     args = ['test']
