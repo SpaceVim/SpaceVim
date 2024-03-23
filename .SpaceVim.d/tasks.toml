@@ -180,6 +180,57 @@
 [vader-vim-800027-buf.options.env]
     VIM = 'D:\Vim\gvim_8.0.0027_x64'
     VIMRUNTIME = 'D:\Vim\gvim_8.0.0027_x64'
+# vim 8.0.1453
+[vader-vim-801453]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-vim-801453.options.env]
+    VIM_BIN = 'D:\Vim\gvim_8.0.1453_x64\vim.exe'
+    VIM_Es = "-Es"
+    VIM = 'D:\Vim\gvim_8.0.1453_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.0.1453_x64'
+[vader-vim-801453-buf]
+    command = 'D:\Vim\gvim_8.0.1453_x64\vim.exe'
+    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-vim-801453-buf.options.env]
+    VIM = 'D:\Vim\gvim_8.0.1453_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.0.1453_x64'
+# vim 8.1.2269
+[vader-vim-812269]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-vim-812269.options.env]
+    VIM_BIN = 'D:\Vim\gvim_8.1.2269_x64\vim.exe'
+    VIM_Es = "-Es"
+    VIM = 'D:\Vim\gvim_8.1.2269_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.1.2269_x64'
+[vader-vim-812269-buf]
+    command = 'D:\Vim\gvim_8.1.2269_x64\vim.exe'
+    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-vim-812269-buf.options.env]
+    VIM = 'D:\Vim\gvim_8.1.2269_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.1.2269_x64'
+# vim 8.2.3995
+[vader-vim-823995]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-vim-823995.options.env]
+    VIM_BIN = 'D:\Vim\gvim_8.2.3995_x64\vim.exe'
+    VIM_Es = "-Es"
+    VIM = 'D:\Vim\gvim_8.2.3995_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.2.3995_x64'
+[vader-vim-823995-buf]
+    command = 'D:\Vim\gvim_8.2.3995_x64\vim.exe'
+    args = ['-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = false
+[vader-vim-823995-buf.options.env]
+    VIM = 'D:\Vim\gvim_8.2.3995_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_8.2.3995_x64'
 # vim 9.1.0196
 [vader-vim-910196]
     command = "make"
