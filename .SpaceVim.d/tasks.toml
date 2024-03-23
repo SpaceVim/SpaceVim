@@ -1,3 +1,15 @@
+# 测试版本：
+# vim 7.4.052 Ubuntu 14.04
+# vim 7.4.1689 Ubuntu 16.04
+# vim 8.0.1453 Ubuntu 18.04
+# vim 8.1.2269 Ubuntu 20.04
+# vim 8.2.3995 Ubuntu 22.04
+# vim 9.1.0016 Ubuntu 24.04
+# nvim 0.4.3 Ubuntu 20.04
+# nvim 0.6.1 Ubuntu 22.04
+# nvim 0.7.2 Ubuntu 24.04
+
+
 [vader-nvim-win]
     command = "make"
     args = ['test']
