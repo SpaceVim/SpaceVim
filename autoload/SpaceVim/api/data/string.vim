@@ -120,7 +120,10 @@ endfunction
 
 
 " note: this function only works when encoding is utf-8
-" ref: https://github.com/SpaceVim/SpaceVim/pull/2515
+" old vim always add ^@ after chinese char.
+" and it is fixed in 8.1.2269 ~ 8.2.3395
+" and I do not know which patch fix it.
+" @bug find the patch for split-\zs
 function! s:self.string2chars(str) abort
   let save_enc = &encoding
   let &encoding = 'utf-8'
