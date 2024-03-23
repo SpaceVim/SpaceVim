@@ -61,11 +61,18 @@ local function open_diff_buffer()
 end
 
 local function on_exit(id, code, single)
+  if id ~= jobid then
+    return
+  end
   log.debug('git-diff exit code:' .. code .. ' single:' .. single)
-  bufnr = open_diff_buffer()
-  vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, diff_lines)
-  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+  if #diff_lines > 0 then
+    bufnr = open_diff_buffer()
+    vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, diff_lines)
+    vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+  else
+    nt.notify('No Changes!')
+  end
 end
 
 function M.run(argv)
