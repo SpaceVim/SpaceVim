@@ -97,6 +97,7 @@ local function openCommitBuffer()
   setlocal noswapfile
   setlocal modifiable
   setf git-commit
+  set syntax=gitcommit
   nnoremap <buffer><silent> q :bd!<CR>
   let b:git_commit_quitpre = 0
   ]])

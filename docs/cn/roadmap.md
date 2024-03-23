@@ -36,8 +36,8 @@ lang: zh
     - [x] `:Git mv`
     - [x] `:Git pull`
     - [x] `:Git push`
-    - [ ] `:Git rebase`
-    - [ ] `:Git reflog`
+    - [x] `:Git rebase`
+    - [x] `:Git reflog`
     - [x] `:Git remote`
     - [x] `:Git reset`
     - [x] `:Git rm`
