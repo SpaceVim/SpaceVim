@@ -17,7 +17,6 @@ It will give you a good idea of what SpaceVim is like.
 - [Installation](#installation)
   - [Linux and macOS](#linux-and-macos)
   - [Windows](#windows)
-- [Run in docker](#run-in-docker)
 - [Configuration](#configuration)
 - [Online tutorials](#online-tutorials)
 - [Learning SpaceVim](#learning-spacevim)
@@ -69,19 +68,6 @@ and a C compiler (like `gcc`) to build the dll.
 ### Windows
 
 The easiest way is to download and run [install.cmd](../install.cmd) or install [SpaceVim manually](../faq/#how-to-install-spacevim-manually). The script installs or updates SpaceVim (if it exists) for Vim and Neovim.
-
-## Run in docker
-
-```sh
-docker pull spacevim/spacevim
-docker run -it --rm spacevim/spacevim nvim
-```
-
-You can also load local configurations:
-
-```sh
-docker run -it -v ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d --rm spacevim/spacevim nvim
-```
 
 ## Configuration
 

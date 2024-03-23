@@ -17,7 +17,6 @@ lang: zh
 - [安装指南](#安装指南)
   - [Linux 或 macOS](#linux-或-macos)
   - [Windows](#windows)
-- [Docker 支持](#docker-支持)
 - [基本配置](#基本配置)
 - [在线教程](#在线教程)
 - [其他资源](#其他资源)
@@ -46,23 +45,6 @@ curl -sLf https://spacevim.org/cn/install.sh | bash -s -- -h
 ### Windows
 
 Windows 下最快捷的安装方法是下载安装脚本 [install.cmd](https://spacevim.org/cn/install.cmd) 并运行。
-
-## Docker 支持
-
-```sh
-docker pull spacevim/spacevim
-docker run -it --rm spacevim/spacevim nvim
-```
-
-也可以通过挂载的方式载入本地配置：
-
-```sh
-docker run
-  \ -it -v
-  \ ~/.SpaceVim.d:/home/spacevim/.SpaceVim.d
-  \ --rm
-  \ spacevim/spacevim nvim
-```
 
 ## 基本配置
 
