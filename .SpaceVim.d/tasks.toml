@@ -32,6 +32,16 @@
     VIM_BIN = 'D:\Neovim\v0.5.0\bin\nvim.exe'
     VIM_Es = "--headless"
     VIM = 'D:\Neovim\v0.5.0'
+    VIMRUNTIME = 'D:\Neovim\v0.5.0\share\nvim\runtime'
+[vader-nvim-061]
+    command = "make"
+    args = ['test']
+    isBackground = false
+[vader-nvim-061.options.env]
+    VIM_BIN = 'D:\Neovim\v0.6.1\bin\nvim.exe'
+    VIM_Es = "--headless"
+    VIM = 'D:\Neovim\v0.6.1'
+    VIMRUNTIME = 'D:\Neovim\v0.6.1\share\nvim\runtime'
 [vader-nvim-072]
     command = "make"
     args = ['test']
