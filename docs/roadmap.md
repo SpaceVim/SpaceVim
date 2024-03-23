@@ -45,7 +45,7 @@ If you have any suggestions , please checkout feedback section on [community](..
     - [ ] `:Git shortlog` (viml)
     - [x] `:Git tag` (lua)
     - [ ] `:Git tag` (viml)
-    - [ ] `:Git stash`
+    - [x] `:Git stash`
     - [x] `:Git status`
     - [x] plugin log manager derived from SPC runtime logger
   - [x] rewrite code runner with lua

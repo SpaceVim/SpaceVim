@@ -27,6 +27,7 @@ local cmds = {
   'status',
   'grep',
   'rebase',
+  'stash',
   'tag',
 }
 local supported_commands = {}

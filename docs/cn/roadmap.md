@@ -45,7 +45,7 @@ lang: zh
     - [ ] `:Git shortlog` (viml)
     - [x] `:Git tag` (lua)
     - [ ] `:Git tag` (viml)
-    - [ ] `:Git stash`
+    - [x] `:Git stash`
     - [x] `:Git status`
     - [x] 日志系统整合至 SpaceVim 运行时日志
   - [x] 使用 lua 重写 code runner
