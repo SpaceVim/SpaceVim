@@ -46,6 +46,7 @@ end
 function M.run(argv)
   if tag_jobid ~= -1 then
     nt.notify('previous tag command is not finished')
+    return
   end
 
   nt.notify_max_width = vim.fn.float2nr(vim.o.columns * 0.3)

@@ -55,6 +55,8 @@ function! git#run(...) abort
         call git#commit#run(a:000[1:])
     elseif cmd ==# 'branch'
         call git#branch#run(a:000[1:])
+    elseif cmd ==# 'tag'
+        call git#tag#run(a:000[1:])
     elseif cmd ==# 'checkout'
         call git#checkout#run(a:000[1:])
     elseif cmd ==# 'cherry-pick'
@@ -95,6 +97,8 @@ function! git#complete(ArgLead, CmdLine, CursorPos) abort
         return git#push#complete(a:ArgLead, a:CmdLine, a:CursorPos)
     elseif str =~# '^Git\s\+diff\s\+.*$'
         return git#diff#complete(a:ArgLead, a:CmdLine, a:CursorPos)
+    elseif str =~# '^Git\s\+tag\s\+.*$'
+        return git#tag#complete(a:ArgLead, a:CmdLine, a:CursorPos)
     elseif str =~# '^Git\s\+blame\s\+.*$'
         return git#blame#complete(a:ArgLead, a:CmdLine, a:CursorPos)
     elseif str =~# '^Git\s\+merge\s\+.*$'

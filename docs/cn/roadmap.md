@@ -27,7 +27,7 @@ lang: zh
     - [x] `:Git cherry-pick`
     - [x] `:Git clean`
     - [x] `:Git commit`
-    - [ ] `:Git config`
+    - [x] `:Git config`
     - [x] `:Git diff`
     - [x] `:Git fetch`
     - [x] `:Git log`
@@ -44,7 +44,7 @@ lang: zh
     - [x] `:Git shortlog` (lua)
     - [ ] `:Git shortlog` (viml)
     - [x] `:Git tag` (lua)
-    - [ ] `:Git tag` (viml)
+    - [x] `:Git tag` (viml)
     - [x] `:Git stash`
     - [x] `:Git status`
     - [x] 日志系统整合至 SpaceVim 运行时日志
