@@ -1,10 +1,7 @@
 # SpaceVim
 
-[![matrix](https://img.spacevim.org/spacevim-cn-matrix.svg)](https://app.element.io/#/room/#spacevim-cn:matrix.org)
-[![Telegram](https://img.spacevim.org/telegram-spacevim-cn.svg)](https://t.me/SpaceVim_CN/)
 [![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
-[![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
 
 SpaceVim is a modular configuration of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,
