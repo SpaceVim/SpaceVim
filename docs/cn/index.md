@@ -10,7 +10,7 @@ lang: zh
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
 [![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
 
-![welcome page](https://img.spacevim.org/release-v2.2.0.png)
+![welcome page](https://img.spacevim.org/release-v2.3.0.png)
 
 SpaceVim 是一个模块化的 Vim 和 Neovim 配置集合，它的灵感来自于 [spacemacs](https://www.spacemacs.org/)。
 以模块的方式组织插件及相关配置，将相关插件组合在一起提供完整的功能。
@@ -21,13 +21,13 @@ SpaceVim 是一个模块化的 Vim 和 Neovim 配置集合，它的灵感来自�
 - [使用文档](documentation/): 完整的使用文档，详细介绍了每一个快捷键以及配置的功能。
 - [可用模块](layers/): 罗列了目前已经实现的所有模块，包括功能模块和语言模块。
 
-当前最新的稳定版为[v2.2.0](https://spacevim.org/SpaceVim-release-v2.2.0/)，发布于2023年7月5日。
-[following-HEAD](following-head/) 页面罗列了自 `v2.2.0` 至今最新的更新以及变动。若需要了解项目的后续开发路线及计划，可以查阅[开发路线](roadmap/)页面。
+当前最新的稳定版为[v2.3.0](https://spacevim.org/SpaceVim-release-v2.3.0/)，发布于2024年3月24日。
+[following-HEAD](following-head/) 页面罗列了自 `v2.3.0` 至今最新的更新以及变动。若需要了解项目的后续开发路线及计划，可以查阅[开发路线](roadmap/)页面。
 
-## 最新特性
+## 最新消息
 
 <ul>
-    {% for post in site.categories.feature_cn offset: 0 limit: 5  %}
+    {% for post in site.categories.blog_cn offset: 0 limit: 5  %}
                <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
                <br>
                <span class="post-date">{{ post.date | date_to_string }}</span>

@@ -19,7 +19,7 @@ comments: true
 
 <!-- vim-markdown-toc -->
 
-The last release is v2.2.0, After 3 months development.
+The last release is v2.1.0, After 3 months development.
 The v2.2.0 has been released.
 So let's take a look at what happened since last release.
 

@@ -9,7 +9,7 @@ description: "SpaceVim is a modular Vim/Neovim configuration that seeks to provi
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#license)
 [![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
 
-![welcome page](https://img.spacevim.org/release-v2.2.0.png)
+![welcome page](https://img.spacevim.org/release-v2.3.0.png)
 
 SpaceVim is a modular configuration of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,
@@ -22,13 +22,13 @@ what packages to install.
 - [Documentation](documentation/): the primary official documentation of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The project is currently under active development and the latest stable release is [v2.2.0](https://spacevim.org/SpaceVim-release-v2.2.0/) which was released at 2023-07-05,
+The project is currently under active development and the latest stable release is [v2.3.0](https://spacevim.org/SpaceVim-release-v2.3.0/) which was released at 2024-03-24,
 check out [following-HEAD](following-head/) page for what happened since last release. The [roadmap](roadmap/) page defines the project direction and priorities.
 
-## New features
+## News
 
 <ul>
-    {% for post in site.categories.feature offset: 0 limit: 5  %}
+    {% for post in site.categories.blog offset: 0 limit: 5  %}
                <strong><a href="{{ post.url }}">{{ post.title }}</a></strong>
                <br>
                <span class="post-date">{{ post.date | date_to_string }}</span>
