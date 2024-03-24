@@ -32,8 +32,6 @@ SpaceVim 是一个模块化的 Vim 和 Neovim 配置集合，它的灵感来自�
                <br>
                <span class="post-date">{{ post.date | date_to_string }}</span>
                <p>{{ post.description | truncatewords: 100 }}</p>
-               <br>
-               <img alt="{{ post.title }}" src="{{ post.image }}">
     {% endfor %}
 </ul>
 
