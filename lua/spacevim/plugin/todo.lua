@@ -86,7 +86,9 @@ end
 -- }}}
 local function open_todo() -- {{{
   local t = todos[vim.fn.line('.')]
-  vim.cmd('close')
+  if vim.g.spacevim_todo_close_list == 1 or vim.g.spacevim_todo_close_list == true then
+    vim.cmd('close')
+  end
   vim.cmd(winnr .. 'wincmd w')
   vim.cmd('e ' .. t.file)
   vim.fn.cursor(t.line, t.column)

@@ -1279,6 +1279,17 @@ let g:spacevim_commandline_prompt = '>'
 let g:spacevim_todo_labels = ['fixme', 'question', 'todo', 'idea']
 
 ""
+" @section todo_close_list, options-close_list
+" @parentsection options
+" Option for setting todo windows behavior when open item in todo list.
+" Default is `true`, set to `false` will not close todo windows.
+
+""
+" Option for setting todo windows behavior when open item in todo list.
+" Default is 1, set to 0 will not close todo windows.
+let g:spacevim_todo_close_list = 0
+
+""
 " @section todo_prefix, options-todo_prefix
 " @parentsection options
 " Option for setting todo prefix in current project.

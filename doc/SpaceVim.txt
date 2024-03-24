@@ -83,16 +83,17 @@ CONTENTS                                                   *SpaceVim-contents*
       63. statusline_separator.........|SpaceVim-options-statusline_separator|
       64. statusline_unicode.............|SpaceVim-options-statusline_unicode|
       65. terminal_cursor_shape.......|SpaceVim-options-terminal_cursor_shape|
-      66. todo_labels...........................|SpaceVim-options-todo_labels|
-      67. todo_prefix...........................|SpaceVim-options-todo_prefix|
-      68. vim_help_language...............|SpaceVim-options-vim_help_language|
-      69. vimcompatible.......................|SpaceVim-options-vimcompatible|
-      70. warning_symbol.....................|SpaceVim-options-warning_symbol|
-      71. wildignore.............................|SpaceVim-options-wildignore|
-      72. windisk_encoding.................|SpaceVim-options-windisk_encoding|
-      73. windows_index_type.............|SpaceVim-options-windows_index_type|
-      74. windows_leader.....................|SpaceVim-options-windows_leader|
-      75. windows_smartclose.............|SpaceVim-options-windows_smartclose|
+      66. todo_close_list........................|SpaceVim-options-close_list|
+      67. todo_labels...........................|SpaceVim-options-todo_labels|
+      68. todo_prefix...........................|SpaceVim-options-todo_prefix|
+      69. vim_help_language...............|SpaceVim-options-vim_help_language|
+      70. vimcompatible.......................|SpaceVim-options-vimcompatible|
+      71. warning_symbol.....................|SpaceVim-options-warning_symbol|
+      72. wildignore.............................|SpaceVim-options-wildignore|
+      73. windisk_encoding.................|SpaceVim-options-windisk_encoding|
+      74. windows_index_type.............|SpaceVim-options-windows_index_type|
+      75. windows_leader.....................|SpaceVim-options-windows_leader|
+      76. windows_smartclose.............|SpaceVim-options-windows_smartclose|
   3. Configuration...........................................|SpaceVim-config|
   4. Commands..............................................|SpaceVim-commands|
   5. Public functions.....................................|SpaceVim-functions|
@@ -928,6 +929,12 @@ the following to ~/.tmux.conf:
 <
 
 ==============================================================================
+TODO_CLOSE_LIST                                  *SpaceVim-options-close_list*
+
+Option for setting todo windows behavior when open item in todo list. Default
+is `true`, set to `false` will not close todo windows.
+
+==============================================================================
 TODO_LABELS                                     *SpaceVim-options-todo_labels*
 
 Option for setting todo labels in current project.
@@ -1530,6 +1537,10 @@ Config the command line prompt for flygrep and denite etc.
 
                                                       *g:spacevim_todo_labels*
 Option for setting todo labels in current project.
+
+                                                  *g:spacevim_todo_close_list*
+Option for setting todo windows behavior when open item in todo list. Default
+is 1, set to 0 will not close todo windows.
 
                                                   *g:spacevim_lint_on_the_fly*
 Enable/Disable lint on the fly feature of SpaceVim's maker. Default is 0.
