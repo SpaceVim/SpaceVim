@@ -3,7 +3,7 @@ title: SpaceVim release v2.3.0
 categories: [changelog, blog]
 description: "SpaceVim release v2.3.0 with more lua plugins and better experience."
 type: article
-image: https://img.spacevim.org/release-v2.2.0.png
+image: https://img.spacevim.org/release-v2.3.0.png
 commentsID: "SpaceVim release v2.3.0"
 ---
 
