@@ -273,9 +273,9 @@
 [test_regexp.problemMatcher]
     useStdout = true
 [test_regexp.problemMatcher.pattern]
-      regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
-      file = 1
-      line = 2
-      column = 3
-      #severity = 4
-      message = 4
+    regexp = '\(.*\):\(\d\+\):\(\d\+\)\s\(\S.*\)'
+    file = 1
+    line = 2
+    column = 3
+    #severity = 4
+    message = 4

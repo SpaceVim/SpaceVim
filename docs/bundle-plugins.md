@@ -16,6 +16,7 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
   - [`chat` layer](#chat-layer)
   - [`cscope` layer](#cscope-layer)
   - [`lang#java` layer](#langjava-layer)
+  - [`lang#toml` layer](#langtoml-layer)
 - [No changed plugins](#no-changed-plugins)
   - [`autocomplete` layer](#autocomplete-layer)
   - [`core` layer](#core-layer-1)
@@ -79,6 +80,10 @@ These plugins are changed based on a specific version of origin plugin.
 #### `lang#java` layer
 
 - `vim-javacomplete2`: based on [artur-shaik/vim-javacomplete2@a716e32](https://github.com/artur-shaik/vim-javacomplete2/tree/a716e32bbe36daaed6ebc9aae76525aad9536245)
+
+#### `lang#toml` layer
+
+- `vim-toml`: based on [cespare/vim-toml@717bd87](https://github.com/cespare/vim-toml/tree/717bd87ef928293e0cc6cfc12ebf2e007cb25311)
 
 
 ### No changed plugins
