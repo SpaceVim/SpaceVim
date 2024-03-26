@@ -36,11 +36,12 @@ To use this configuration layer, update your custom configuration file with:
 
 This layer also includes `vim-bookmarks`, the following key binding can be used:
 
-| key binding | description               |
-| ----------- | ------------------------- |
-| `m m`       | toggle bookmark           |
-| `m c`       | clear bookmarks           |
-| `m i`       | add bookmark annote       |
-| `m a`       | show all bookmarks        |
-| `m n`       | jump to next bookmark     |
-| `m p`       | jump to previous bookmark |
+| key binding    | description               |
+| -------------- | ------------------------- |
+| `m m`          | toggle bookmark           |
+| `m c`          | clear bookmarks           |
+| `m i`          | add bookmark annote       |
+| `m a`          | show all bookmarks        |
+| `m n`          | jump to next bookmark     |
+| `m p`          | jump to previous bookmark |
+| `<Leader> f b` | fuzzy find bookmarks      |
