@@ -4,7 +4,7 @@ let s:last_file = ''
 
 function! AddBookmarkRoot(root)
   call add(s:autoload_roots, a:root)
-endfunction!
+endfunction
 
 function! AutoloadBookmarks(file_name)
   let root_is_found = 0
