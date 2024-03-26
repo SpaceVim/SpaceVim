@@ -179,13 +179,14 @@ function! SpaceVim#layers#telescope#config() abort
   call s:defind_fuzzy_finder()
 
   " this autocmd should only be called when using deoplete
-  if g:spacevim_autocomplete_method == 'deoplete'
-    augroup spacevim_telescope_layer
-      autocmd!
+  augroup spacevim_telescope_layer
+    autocmd!
+    if g:spacevim_autocomplete_method == 'deoplete'
       " https://github.com/nvim-telescope/telescope.nvim/issues/161
       autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_complete', v:false)
-    augroup END
-  endif
+    endif
+    autocmd FileType TelescopePrompt iunmap <buffer> jk
+  augroup END
 endfunction
 
 function! s:get_help_with_cursor_symbol() abort
