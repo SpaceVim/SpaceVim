@@ -17,23 +17,14 @@ local file = require('spacevim.api.file')
 
 local function get_all_bookmarks()
   local p = {}
-  local files = vim.fn['bm#all_files']()
+  local bookmarks = vim.fn['bookmarks#get_all_bookmarks']()
 
-  for _, k in ipairs(files) do
-    local line_nrs = vim.fn['bm#all_lines'](k)
-    for _, line_nr in ipairs(line_nrs) do
-      local bookmark = vim.fn['bm#get_bookmark_by_line'](k, line_nr)
-
-      local text = 'EMPTY LINE'
-      if #bookmark.annotation > 0 then
-        text = bookmark.annotation
-      elseif #bookmark.content > 0 then
-        text = bookmark.content
-      end
+  for f, l in pairs(bookmarks) do
+    for nr, b in pairs(l) do
       table.insert(p, {
-        file = file.unify_path(k, ':.'),
-        linenr = line_nr,
-        text = text,
+        file = file.unify_path(f, ':.'),
+        linenr = nr,
+        text = b.text,
       })
     end
   end
@@ -75,7 +66,8 @@ local function show_changes(opts)
           local entry = action_state.get_selected_entry()
           actions.close(prompt_bufnr)
           vim.cmd('e ' .. entry.value.file)
-          vim.api.nvim_win_set_cursor(0, { entry.value.linenr, 1 })
+          -- vim.api.nvim_win_set_cursor(0, { entry.value.linenr, 1 })
+          vim.cmd(entry.value.linenr)
         end)
         return true
       end,

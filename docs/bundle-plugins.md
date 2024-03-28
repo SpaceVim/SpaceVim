@@ -44,7 +44,6 @@ In `bundle/` directory, there are two kinds of plugins: forked plugins without c
 
 These plugins are changed based on a specific version of origin plugin.
 
-- `vim-bookmarks`: based on [MattesGroeger/vim-bookmarks@3adeae1](https://github.com/MattesGroeger/vim-bookmarks/commit/3adeae10639edcba29ea80dafa1c58cf545cb80e)
 - `delimitMate`: based on [Raimondi/delimitMate@537a1da](https://github.com/Raimondi/delimitMate/tree/537a1da0fa5eeb88640425c37e545af933c56e1b)
 - `vim-toml`: based on [cespare/vim-toml@717bd87ef9](https://github.com/cespare/vim-toml/tree/717bd87ef928293e0cc6cfc12ebf2e007cb25311)
 - `neoformat`: based on [neoformat@f1b6cd50](https://github.com/sbdchd/neoformat/tree/f1b6cd506b72be0a2aaf529105320ec929683920)

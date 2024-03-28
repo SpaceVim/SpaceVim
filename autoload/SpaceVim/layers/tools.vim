@@ -26,7 +26,7 @@ function! SpaceVim#layers#tools#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/calendar.vim',{ 'on_cmd' : 'Calendar'}])
   call add(plugins, ['junegunn/limelight.vim',                    { 'on_cmd' : 'Limelight'}])
   call add(plugins, ['junegunn/goyo.vim',                         { 'on_cmd' : 'Goyo', 'loadconf' : 1}])
-  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-bookmarks',
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/bookmarks.vim',
         \ {'merged': 0,
         \ 'loadconf_before' : 1}])
   if s:CMP.has('python3')

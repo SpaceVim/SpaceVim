@@ -34,7 +34,7 @@ To use this configuration layer, update your custom configuration file with:
 - `:Calendar`: open vim calendar
 - `:UnstackFromText`: Call unstack with text as input.
 
-This layer also includes `vim-bookmarks`, the following key binding can be used:
+This layer also includes `bookmarks.vim`, the following key binding can be used:
 
 | key binding    | description               |
 | -------------- | ------------------------- |

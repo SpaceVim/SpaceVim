@@ -1,0 +1,6 @@
+{
+  "name": "bookmarks",
+  "description": "bookmark plugin for neovim and vim.",
+  "author": "Eric Wong"
+}
+

@@ -1,0 +1,30 @@
+*bookmarks.txt*	bookmark plugin for neovim and vim.
+Eric Wong                                                          *bookmarks*
+
+==============================================================================
+CONTENTS                                                  *bookmarks-contents*
+  1. Commands.............................................|bookmarks-commands|
+
+==============================================================================
+COMMANDS                                                  *bookmarks-commands*
+
+:BookmarkToggle                                              *:BookmarkToggle*
+  toggle bookmark of cursor position
+
+:BookmarkAnnotate                                          *:BookmarkAnnotate*
+  Add bookmark with annotation
+
+:BookmarkNext                                                  *:BookmarkNext*
+  Jump to next bookmark in current buffer.
+
+:BookmarkPrev                                                  *:BookmarkPrev*
+  Jump to previous bookmark in current buffer.
+
+:BookmarkClear                                                *:BookmarkClear*
+  clear all bookmarks in current buffer.
+
+:BookmarkShowAll                                            *:BookmarkShowAll*
+  show all bookmarks in quickfix windows.
+
+
+vim:tw=78:ts=8:ft=help:norl:
