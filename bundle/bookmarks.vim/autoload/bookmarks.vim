@@ -26,11 +26,11 @@ function! bookmarks#annotate() abort
   if !empty(annotation)
     let file = s:FILE.unify_path(expand('%'), ':p')
     let lnum = line('.')
-    call bookmarks#add(file, lnum, annotation)
+    call bookmarks#add(file, lnum, annotation, 1)
   else
     call s:NT.notify('empty annotation, skipped!')
   endif
-  
+
 endfunction
 
 function! bookmarks#get_all_bookmarks() abort
@@ -42,18 +42,28 @@ function! bookmarks#add(file, lnum, text, ...) abort
   if !has_key(s:bookmarks, a:file)
     let s:bookmarks[a:file] = {}
   endif
+  if has_key(s:bookmarks[a:file], a:lnum) && has_key(s:bookmarks[a:file][a:lnum], 'vtextid')
+    call bookmarks#vtext#delete(a:file, s:bookmarks[a:file][a:lnum].vtextid)
+  endif
   let s:bookmarks[a:file][a:lnum] = {
         \ 'text' : a:text,
         \ 'file' : a:file,
         \ 'lnum' : a:lnum,
         \ 'signid' : bookmarks#sign#add(a:file, a:lnum)
         \ }
+  if get(a:000, 0, 0)
+    let s:bookmarks[a:file][a:lnum].vtextid = bookmarks#vtext#add(a:file, a:lnum, a:text)
+    let s:bookmarks[a:file][a:lnum].annotation = a:text
+  endif
   call bookmarks#cache#write(s:bookmarks)
 endfunction
 
 function! bookmarks#delete(file, lnum) abort
   if has_key(s:bookmarks, a:file) && has_key(s:bookmarks[a:file], a:lnum)
     exe 'sign unplace ' . s:bookmarks[a:file][a:lnum].signid
+    if has_key(s:bookmarks[a:file][a:lnum], 'vtextid')
+      call bookmarks#vtext#delete(a:file, s:bookmarks[a:file][a:lnum].vtextid)
+    endif
     unlet s:bookmarks[a:file][a:lnum]
     call bookmarks#cache#write(s:bookmarks)
   endif
@@ -63,7 +73,7 @@ function! s:jump_to_bookmark(bookmark) abort
 
   exe 'e ' . a:bookmark.file
   exe a:bookmark.lnum
-  
+
 endfunction
 
 function! bookmarks#next() abort
@@ -76,7 +86,7 @@ function! bookmarks#next() abort
       endif
     endfor
   endif
-  
+
 endfunction
 
 function! bookmarks#showall() abort
@@ -104,7 +114,10 @@ function! bookmarks#on_enter_buffer() abort
   let file = s:FILE.unify_path(expand('%'), ':p')
   if has_key(s:bookmarks, file)
     for lnum in keys(s:bookmarks[file])
-        let s:bookmarks[file][lnum].signid = bookmarks#sign#add(file, lnum)
+      let s:bookmarks[file][lnum].signid = bookmarks#sign#add(file, lnum)
+      if has_key(s:bookmarks[file][lnum], 'annotation') && !empty(s:bookmarks[file][lnum].annotation)
+        call bookmarks#vtext#add(file, lnum, s:bookmarks[file][lnum].annotation)
+      endif
     endfor
   endif
 
@@ -115,7 +128,7 @@ function! bookmarks#clear() abort
   let file = s:FILE.unify_path(expand('%'), ':p')
   if has_key(s:bookmarks, file)
     for lnum in keys(s:bookmarks[file])
-        call bookmarks#delete(file, lnum)
+      call bookmarks#delete(file, lnum)
     endfor
   endif
 
