@@ -65,6 +65,9 @@ function! bookmarks#delete(file, lnum) abort
       call bookmarks#vtext#delete(a:file, s:bookmarks[a:file][a:lnum].vtextid)
     endif
     unlet s:bookmarks[a:file][a:lnum]
+    if empty(s:bookmarks[a:file])
+      unlet s:bookmarks[a:file]
+    endif
     call bookmarks#cache#write(s:bookmarks)
   endif
 endfunction
@@ -130,6 +133,7 @@ function! bookmarks#clear() abort
     for lnum in keys(s:bookmarks[file])
       call bookmarks#delete(file, lnum)
     endfor
+    unlet s:bookmarks[file]
   endif
-
+  call bookmarks#cache#write(s:bookmarks)
 endfunction
