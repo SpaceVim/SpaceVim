@@ -62,6 +62,10 @@ function! SpaceVim#layers#tools#config() abort
     nnoremap <silent> <C-_> <Esc>:Ydc<CR>
   endif
 endfunction
+function! SpaceVim#layers#tools#set_variable(var) abort
+  let g:bookmarks_sign_text = get(a:var, 'bookmarks_sign_text', '=>')
+  let g:bookmarks_sign_highlight = get(a:var, 'bookmarks_sign_highlight', 'Normal')
+endfunction
 
 function! SpaceVim#layers#tools#health() abort
   call SpaceVim#layers#tools#plugins()

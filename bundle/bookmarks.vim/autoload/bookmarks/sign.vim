@@ -9,8 +9,8 @@
 let s:sign_name = 'bookmarks'
 
 call sign_define(s:sign_name, {
-      \ 'text' : '=>',
-      \ 'texthl' : 'Normal'
+      \ 'text' : g:bookmarks_sign_text,
+      \ 'texthl' : g:bookmarks_sign_highlight
       \ })
 
 
