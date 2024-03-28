@@ -133,7 +133,6 @@ function! bookmarks#clear() abort
     for lnum in keys(s:bookmarks[file])
       call bookmarks#delete(file, lnum)
     endfor
-    unlet s:bookmarks[file]
   endif
   call bookmarks#cache#write(s:bookmarks)
 endfunction
