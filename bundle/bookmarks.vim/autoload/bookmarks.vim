@@ -19,16 +19,32 @@ function! bookmarks#toggle() abort
   endif
 endfunction
 
+function! s:has_annotation(file, lnum) abort
+  return has_key(s:bookmarks, a:file) 
+        \ && has_key(s:bookmarks[a:file], a:lnum)
+        \ && has_key(s:bookmarks[a:file][a:lnum], 'annotation')
+        \ && !empty(s:bookmarks[a:file][a:lnum].annotation)
+endfunction
+
 function! bookmarks#annotate() abort
 
-  let annotation = input('Annotation:')
-
-  if !empty(annotation)
-    let file = s:FILE.unify_path(expand('%'), ':p')
-    let lnum = line('.')
-    call bookmarks#add(file, lnum, annotation, 1)
+  let file = s:FILE.unify_path(expand('%'), ':p')
+  let lnum = line('.')
+  if s:has_annotation(file, lnum)
+    let default_annotation = s:bookmarks[file][lnum].annotation
+    let annotation = input({'prompt' : 'Annotation:', 'default' : default_annotation, 'cancelreturn' : ''})
+    if !empty(annotation)
+      call bookmarks#add(file, lnum, annotation, 1)
+    else
+      call s:NT.notify('canceled, no changes.')
+    endif
   else
-    call s:NT.notify('empty annotation, skipped!')
+    let annotation = input('Annotation:')
+    if !empty(annotation)
+      call bookmarks#add(file, lnum, annotation, 1)
+    else
+      call s:NT.notify('empty annotation, skipped!')
+    endif
   endif
 
 endfunction
