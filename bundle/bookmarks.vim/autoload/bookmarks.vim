@@ -9,7 +9,20 @@ let s:NT = SpaceVim#api#import('notify')
 
 let s:bookmarks = bookmarks#cache#read()
 
+function! s:skip_current_buf() abort
+  if empty(bufname())
+    call s:NT.notify('skip empty bufname.')
+    return v:true
+  elseif !empty(&buftype)
+    call s:NT.notify('skip buftype: ' . &buftype)
+    return v:true
+  endif
+endfunction
+
 function! bookmarks#toggle() abort
+  if s:skip_current_buf()
+    return
+  endif
   let file = s:FILE.unify_path(expand('%'), ':p')
   let lnum = line('.')
   if has_key(s:bookmarks, file) && has_key(s:bookmarks[file], lnum)
@@ -27,7 +40,9 @@ function! s:has_annotation(file, lnum) abort
 endfunction
 
 function! bookmarks#annotate() abort
-
+  if s:skip_current_buf()
+    return
+  endif
   let file = s:FILE.unify_path(expand('%'), ':p')
   let lnum = line('.')
   if s:has_annotation(file, lnum)
