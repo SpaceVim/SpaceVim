@@ -61,6 +61,9 @@ function! bookmarks#add(file, lnum, text, ...) abort
   if has_key(s:bookmarks[a:file], a:lnum) && has_key(s:bookmarks[a:file][a:lnum], 'vtextid')
     call bookmarks#vtext#delete(a:file, s:bookmarks[a:file][a:lnum].vtextid)
   endif
+  if has_key(s:bookmarks[a:file], a:lnum) && has_key(s:bookmarks[a:file][a:lnum], 'signid')
+    exe 'sign unplace ' . s:bookmarks[a:file][a:lnum].signid
+  endif
   let s:bookmarks[a:file][a:lnum] = {
         \ 'text' : a:text,
         \ 'file' : a:file,
