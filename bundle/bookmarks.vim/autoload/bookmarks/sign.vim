@@ -17,3 +17,16 @@ call sign_define(s:sign_name, {
 function! bookmarks#sign#add(file, lnum) abort
   return sign_place(0, '', s:sign_name, a:file, {'lnum':a:lnum} )
 endfunction
+
+function! bookmarks#sign#get_lnums(buf) abort
+
+  let signs = filter(sign_getplaced(a:buf)[0].signs, 'v:val.name == "bookmarks"')
+
+  let map = {}
+
+  for sign in signs
+    call extend(map, { sign.id : sign.lnum })
+  endfor
+  
+  return map
+endfunction

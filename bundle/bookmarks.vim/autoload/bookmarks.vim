@@ -11,11 +11,37 @@ let s:bookmarks = bookmarks#cache#read()
 
 function! s:skip_current_buf() abort
   if empty(bufname())
-    call s:NT.notify('skip empty bufname.')
     return v:true
   elseif !empty(&buftype)
-    call s:NT.notify('skip buftype: ' . &buftype)
     return v:true
+  endif
+endfunction
+
+function! bookmarks#on_leave_buffer() abort
+  if s:skip_current_buf()
+    return
+  endif
+
+  let file = s:FILE.unify_path(expand('%'), ':p')
+
+  if has_key(s:bookmarks, file)
+    let sign_lnum_map = bookmarks#sign#get_lnums(bufnr('%'))
+    let new_file_bms = {}
+    for lnum in keys(s:bookmarks[file])
+      let signid = s:bookmarks[file][lnum].signid
+      if has_key(sign_lnum_map, signid)
+        let new_lnum = sign_lnum_map[signid]
+        let new_file_bms[new_lnum] = s:bookmarks[file][lnum]
+        let new_file_bms[new_lnum].lnum = new_lnum
+      else
+        " the signid does not exist, maybe that line has been removed
+        if has_key(s:bookmarks[file][lnum], 'vtextid')
+          call bookmarks#vtext#delete(file, s:bookmarks[file][lnum].vtextid)
+        endif
+      endif
+    endfor
+    let s:bookmarks[file] = new_file_bms
+    call bookmarks#cache#write(s:bookmarks)
   endif
 endfunction
 
@@ -70,6 +96,11 @@ endfunction
 
 
 function! bookmarks#add(file, lnum, text, ...) abort
+  call bookmarks#logger#info('add bookmarks:')
+  call bookmarks#logger#info('         file:' .. a:file)
+  call bookmarks#logger#info('         lnum:' .. a:lnum)
+  call bookmarks#logger#info('         text:' .. a:text)
+  call bookmarks#logger#info('        a:000:' .. string(a:000))
   if !has_key(s:bookmarks, a:file)
     let s:bookmarks[a:file] = {}
   endif

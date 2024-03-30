@@ -21,4 +21,5 @@ command! BookmarkShowAll call bookmarks#showall()
 augroup bookmarks
   autocmd!
   autocmd BufEnter * call bookmarks#on_enter_buffer()
+  autocmd BufLeave * call bookmarks#on_leave_buffer()
 augroup END
