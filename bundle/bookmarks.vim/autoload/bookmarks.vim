@@ -138,21 +138,27 @@ function! bookmarks#delete(file, lnum) abort
 endfunction
 
 function! s:jump_to_bookmark(bookmark) abort
+  let file = s:FILE.unify_path(expand('%'), ':p')
 
-  exe 'e ' . a:bookmark.file
+  if file !=# a:bookmark.file
+    exe 'e ' . a:bookmark.file
+  endif
   exe a:bookmark.lnum
 
 endfunction
 
 function! bookmarks#next() abort
   let file = s:FILE.unify_path(expand('%'), ':p')
-
-  if has_key(s:bookmarks, file)
-    for lnum in keys(s:bookmarks[file])
+  if has_key(s:bookmarks, file) && !empty(keys(s:bookmarks[file]))
+    for lnum in sort(keys(s:bookmarks[file]))
       if lnum > line('.')
         call s:jump_to_bookmark(s:bookmarks[file][lnum])
+        return
       endif
     endfor
+    " if all bookmarks < line('.')
+    " jump to first bookmark
+    call s:jump_to_bookmark(s:bookmarks[file][keys(s:bookmarks[file])[0]])
   else
     call s:NT.notify('no bookmarks found')
   endif
@@ -162,12 +168,16 @@ endfunction
 function! bookmarks#previous() abort
   let file = s:FILE.unify_path(expand('%'), ':p')
 
-  if has_key(s:bookmarks, file)
-    for lnum in reverse(keys(s:bookmarks[file]))
+  if has_key(s:bookmarks, file) && !empty(keys(s:bookmarks[file]))
+    for lnum in reverse(sort(keys(s:bookmarks[file])))
       if lnum < line('.')
         call s:jump_to_bookmark(s:bookmarks[file][lnum])
+        return
       endif
     endfor
+    " if all bookmarks > line('.')
+    " jump to first bookmark
+    call s:jump_to_bookmark(s:bookmarks[file][keys(s:bookmarks[file])[-1]])
   else
     call s:NT.notify('no bookmarks found')
   endif
