@@ -153,8 +153,25 @@ function! bookmarks#next() abort
         call s:jump_to_bookmark(s:bookmarks[file][lnum])
       endif
     endfor
+  else
+    call s:NT.notify('no bookmarks found')
   endif
 
+endfunction
+
+function! bookmarks#previous() abort
+  let file = s:FILE.unify_path(expand('%'), ':p')
+
+  if has_key(s:bookmarks, file)
+    for lnum in reverse(keys(s:bookmarks[file]))
+      if lnum < line('.')
+        call s:jump_to_bookmark(s:bookmarks[file][lnum])
+      endif
+    endfor
+  else
+    call s:NT.notify('no bookmarks found')
+  endif
+  
 endfunction
 
 function! bookmarks#showall() abort
