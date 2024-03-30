@@ -68,7 +68,7 @@ function M.notify(msg, ...) -- {{{
   vim.fn.setbufvar(M.border.bufnr, '&relativenumber', 0)
   vim.fn.setbufvar(M.border.bufnr, '&cursorline', 0)
   vim.fn.setbufvar(M.border.bufnr, '&bufhidden', 'wipe')
-  extend(notifications, { [M.hashkey] = M })
+  notifications[M.hashkey] = M
   M.increase_window()
   if type(msg) == 'table' then
     vim.fn.timer_start(M.timeout, M.close, { ['repeat'] = #msg })
@@ -137,7 +137,11 @@ function M.redraw_windows()
     return
   end
   M.begin_row = 2
-  for _, hashkey in ipairs(notifications) do
+  local viml_notify = vim.fn['SpaceVim#api#notify#shared_notifys']()
+  for hashkey, _ in pairs(viml_notify) do
+    M.begin_row = M.begin_row + msg_real_len(viml_notify[hashkey].message) + 2
+  end
+  for hashkey, _ in pairs(notifications) do
     if hashkey ~= M.hashkey then
       M.begin_row = M.begin_row + msg_real_len(notifications[hashkey].message) + 2
     else

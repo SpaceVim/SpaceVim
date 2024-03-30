@@ -29,6 +29,12 @@ scriptencoding utf-8
 
 let s:notifications = {}
 
+function! SpaceVim#api#notify#shared_notifys() abort
+
+  return s:notifications
+
+endfunction
+
 " dictionary values and functions
 
 let s:self = {}
