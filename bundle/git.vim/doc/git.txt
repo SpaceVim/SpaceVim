@@ -1,5 +1,5 @@
 *git.txt*	Git support in vim
-Wang Shidong                                                             *git*
+Wang Shidong & Mattes Groeger                                            *git*
 
 ==============================================================================
 CONTENTS                                                        *git-contents*

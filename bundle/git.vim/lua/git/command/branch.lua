@@ -146,4 +146,11 @@ function M.run(argv)
   end
 end
 
+function M.complete(arglead, cmdline, cursorpos)
+  if vim.startswith(arglead, '-') then
+    return table.concat({'-d', '-D'}, '\n')
+  end
+  return table.concat(vim.fn.map(vim.fn.systemlist('git branch --no-merged'), 'trim(v:val)'), '\n')
+end
+
 return M
