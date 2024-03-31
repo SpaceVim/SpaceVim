@@ -62,6 +62,11 @@ end
 
 local function on_key(key)
   table.insert(keys, key)
+  vim.fn.timer_start(timeout, function()
+    if #keys > 0 then
+      table.remove(keys, 1)
+    end
+  end, { ['repeat'] = 1 })
   display()
 end
 
