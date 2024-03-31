@@ -67,7 +67,7 @@ local function display()
 end
 
 local function on_key(key)
-  table.insert(keys, key)
+  table.insert(keys, vim.fn.keytrans(key))
   vim.fn.timer_start(timeout, function()
     if #keys > 0 then
       table.remove(keys, 1)
