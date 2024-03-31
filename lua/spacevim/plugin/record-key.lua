@@ -14,12 +14,15 @@ local max_count = 5
 
 local keys = {}
 
+local winids = {}
+
 local pos = 0
 
 local enabled = false
 local ns_is = vim.api.nvim_create_namespace('record-key')
+local logger = require('spacevim.logger').derive('recordkey')
 
-local function show_key(key)
+local function show_key(key, where)
   local save_ei = vim.o.eventignore
   vim.o.eventignore = 'all'
   local buf = vim.api.nvim_create_buf(false, true)
@@ -28,19 +31,19 @@ local function show_key(key)
   local w = 8
 
   if vim.fn.strdisplaywidth(key) > 8 then
-    w = vim.fn.strdisplaywidth(key) + 2
+    w = vim.fn.strdisplaywidth(key)
   end
-
   local winid = vim.api.nvim_open_win(buf, false, {
     relative = 'editor',
     width = w,
     height = 1,
-    row = vim.o.lines - w - 2 - pos * 3,
+    row = vim.o.lines - 5 - where * 3,
     col = vim.o.columns - 25,
     focusable = false,
     noautocmd = true,
     border = 'single',
   })
+  table.insert(winids, winid)
   vim.fn.setbufvar(buf, '&number', 0)
   vim.fn.setbufvar(buf, '&relativenumber', 0)
   vim.fn.setbufvar(buf, '&cursorline', 0)
@@ -58,15 +61,25 @@ local function show_key(key)
 end
 
 local function display()
+  local save_ei = vim.o.eventignore
+  vim.o.eventignore = 'all'
+  for _, id in ipairs(winids) do
+    if vim.api.nvim_win_is_valid(id) then
+      vim.api.nvim_win_close(id, true)
+    end
+  end
+  vim.o.eventignore = save_ei
+  winids = {}
   pos = 0
+  logger.debug(vim.inspect(keys))
   if #keys > max_count then
     for i = 1, max_count, 1 do
-      show_key(keys[#keys - i + 1])
+      show_key(keys[#keys - i + 1], pos)
       pos = pos + 1
     end
   else
     for i = 1, #keys, 1 do
-      show_key(keys[#keys - i + 1])
+      show_key(keys[#keys - i + 1], pos)
       pos = pos + 1
     end
   end
@@ -85,6 +98,7 @@ local function on_key(oldkey, key)
     if #key == 0 then
       return
     end
+    logger.debug('   key:>' .. key .. '<')
     table.insert(keys, vim.fn.keytrans(key))
     vim.fn.timer_start(timeout, function()
       if #keys > 0 then
