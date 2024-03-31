@@ -701,6 +701,10 @@ function! SpaceVim#mapping#space#init() abort
   else
     call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
   endif
+
+  if has('nvim-0.9.5')
+    call SpaceVim#custom#SPC('nnoremap', ['a', 'r'], 'lua require("spacevim.plugin.record-key").toggle()', 'toggle-record-keyboard', 1)
+  endif
 endfunction
 
 function! SpaceVim#mapping#space#def(m, keys, cmd, desc, is_cmd, ...) abort
