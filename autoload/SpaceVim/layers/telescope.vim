@@ -185,7 +185,8 @@ function! SpaceVim#layers#telescope#config() abort
       " https://github.com/nvim-telescope/telescope.nvim/issues/161
       autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_complete', v:false)
     endif
-    autocmd FileType TelescopePrompt iunmap <buffer> jk
+    " @fixme 无法移除 jk 映射
+    " autocmd FileType TelescopePrompt iunmap <buffer> jk
   augroup END
 endfunction
 

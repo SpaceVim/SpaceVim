@@ -25,21 +25,27 @@ local function show_key(key)
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, { string.format('%8s', key) })
 
+  local w = 8
+
+  if vim.fn.strdisplaywidth(key) > 8 then
+    w = vim.fn.strdisplaywidth(key) + 2
+  end
+
   local winid = vim.api.nvim_open_win(buf, false, {
     relative = 'editor',
-    width = 8,
+    width = w,
     height = 1,
-    row = vim.o.lines - 10 - pos * 3,
+    row = vim.o.lines - w - 2 - pos * 3,
     col = vim.o.columns - 25,
     focusable = false,
     noautocmd = true,
-    border = "single"
+    border = 'single',
   })
   vim.fn.setbufvar(buf, '&number', 0)
   vim.fn.setbufvar(buf, '&relativenumber', 0)
   vim.fn.setbufvar(buf, '&cursorline', 0)
   vim.fn.setbufvar(buf, '&bufhidden', 'wipe')
-  vim.api.nvim_win_set_option(winid, 'winhighlight', 'NormalFloat:Normal')
+  vim.api.nvim_win_set_option(winid, 'winhighlight', 'NormalFloat:Normal,FloatBorder:WinSeparator')
   vim.fn.timer_start(timeout, function()
     local ei = vim.o.eventignore
     vim.o.eventignore = 'all'
@@ -66,14 +72,27 @@ local function display()
   end
 end
 
-local function on_key(key)
-  table.insert(keys, vim.fn.keytrans(key))
-  vim.fn.timer_start(timeout, function()
-    if #keys > 0 then
-      table.remove(keys, 1)
+local function on_key(oldkey, key)
+  if not key then
+    table.insert(keys, vim.fn.keytrans(oldkey))
+    vim.fn.timer_start(timeout, function()
+      if #keys > 0 then
+        table.remove(keys, 1)
+      end
+    end, { ['repeat'] = 1 })
+    display()
+  else
+    if #key == 0 then
+      return
     end
-  end, { ['repeat'] = 1 })
-  display()
+    table.insert(keys, vim.fn.keytrans(key))
+    vim.fn.timer_start(timeout, function()
+      if #keys > 0 then
+        table.remove(keys, 1)
+      end
+    end, { ['repeat'] = 1 })
+    display()
+  end
 end
 
 function M.toggle()
