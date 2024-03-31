@@ -20,6 +20,8 @@ local enabled = false
 local ns_is = vim.api.nvim_create_namespace('record-key')
 
 local function show_key(key)
+  local save_ei = vim.o.eventignore
+  vim.o.eventignore = 'all'
   local buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, { string.format('%8s', key) })
 
@@ -39,10 +41,14 @@ local function show_key(key)
   vim.fn.setbufvar(buf, '&bufhidden', 'wipe')
   vim.api.nvim_win_set_option(winid, 'winhighlight', 'NormalFloat:Normal')
   vim.fn.timer_start(timeout, function()
+    local ei = vim.o.eventignore
+    vim.o.eventignore = 'all'
     if vim.api.nvim_win_is_valid(winid) then
       vim.api.nvim_win_close(winid, true)
     end
+    vim.o.eventignore = ei
   end, { ['repeat'] = 1 })
+  vim.o.eventignore = save_ei
 end
 
 local function display()
