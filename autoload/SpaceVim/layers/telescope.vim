@@ -340,7 +340,7 @@ function! s:defind_fuzzy_finder() abort
   if SpaceVim#layers#isLoaded('tools')
     nnoremap <silent> <Leader>fb  :<C-u>Telescope bookmarks<CR>
     let lnum = expand('<slnum>') + s:unite_lnum - 4
-    let g:_spacevim_mappings.f.s = ['Telescope bookmarks',
+    let g:_spacevim_mappings.f.b = ['Telescope bookmarks',
           \ 'fuzzy find bookmarks',
           \ [
           \ '[Leader f b] is to fuzzy find bookmarks',
