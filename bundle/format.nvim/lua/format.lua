@@ -18,6 +18,9 @@ function M.format(bang, user_input, start_line, end_line)
   local ok, formatter
   if custom_formatters[filetype] then
     formatter = custom_formatters[filetype]
+    if formatter.exe and type(formatter.exe) == "string" then
+      util.info('using custom formatter:' .. formatter.exe)
+    end
   end
 
   if not formatter then
@@ -25,6 +28,7 @@ function M.format(bang, user_input, start_line, end_line)
     if not ok then
       return util.msg('no formatter for ' .. filetype)
     end
+    util.info('using default formatter:' .. formatter.exe)
   end
 
   task.run({
@@ -39,7 +43,9 @@ end
 function M.setup(opt)
   if opt.custom_formatters and type(opt.custom_formatters) == 'table' then
     for k, v in pairs(opt.custom_formatters) do
-      custom_formatters[k] = v
+      if type(v) == "table" then
+        custom_formatters[k] = v
+      end
     end
   end
 end
