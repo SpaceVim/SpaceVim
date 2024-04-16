@@ -10,8 +10,6 @@ local M = {}
 
 local uv = vim.loop
 
-local logger = require('spacevim.logger').derive('job')
-
 local _jobs = {}
 local _jobid = 0
 
@@ -46,28 +44,28 @@ local function new_job_obj(id, handle, opt, state)
 end
 
 local function default_dev() -- {{{
-local env = vim.fn.environ()
-env['NVIM'] = vim.v.servername
-env['NVIM_LISTEN_ADDRESS'] = nil
-env['NVIM_LOG_FILE'] = nil
-env['VIMRUNTIME'] = nil
-return env
+  local env = vim.fn.environ()
+  env['NVIM'] = vim.v.servername
+  env['NVIM_LISTEN_ADDRESS'] = nil
+  env['NVIM_LOG_FILE'] = nil
+  env['VIMRUNTIME'] = nil
+  return env
 end
 -- }}}
 
 local function setup_env(env, clear_env) -- {{{
-if clear_env then
-  return env
-end
---- @type table<string,string|number>
-env = vim.tbl_extend('force', default_dev(), env or {})
+  if clear_env then
+    return env
+  end
+  --- @type table<string,string|number>
+  env = vim.tbl_extend('force', default_dev(), env or {})
 
-local renv = {} --- @type string[]
-for k, v in pairs(env) do
-  renv[#renv + 1] = string.format('%s=%s', k, tostring(v))
-end
+  local renv = {} --- @type string[]
+  for k, v in pairs(env) do
+    renv[#renv + 1] = string.format('%s=%s', k, tostring(v))
+  end
 
-return renv
+  return renv
 end
 -- }}}
 
@@ -157,7 +155,7 @@ function M.start(cmd, opts)
         if data then
           local stdout_data
           _jobs['jobid_' .. current_id].state.stdout_eof, stdout_data =
-          buffered_data(_jobs['jobid_' .. current_id].state.stdout_eof, data)
+            buffered_data(_jobs['jobid_' .. current_id].state.stdout_eof, data)
           vim.schedule(function()
             opts.on_stdout(current_id, stdout_data)
           end)
@@ -168,7 +166,7 @@ function M.start(cmd, opts)
         if data then
           local stdout_data
           _jobs['jobid_' .. current_id].state.stdout_eof, stdout_data =
-          buffered_data(_jobs['jobid_' .. current_id].state.stdout_eof, data)
+            buffered_data(_jobs['jobid_' .. current_id].state.stdout_eof, data)
           vim.schedule(function()
             opts.on_stdout(current_id, stdout_data, 'stdout')
           end)
@@ -184,7 +182,7 @@ function M.start(cmd, opts)
         if data then
           local stderr_data
           _jobs['jobid_' .. current_id].state.stderr_eof, stderr_data =
-          buffered_data(_jobs['jobid_' .. current_id].state.stderr_eof, data)
+            buffered_data(_jobs['jobid_' .. current_id].state.stderr_eof, data)
           vim.schedule(function()
             opts.on_stderr(current_id, stderr_data)
           end)
@@ -195,7 +193,7 @@ function M.start(cmd, opts)
         if data then
           local stderr_data
           _jobs['jobid_' .. current_id].state.stderr_eof, stderr_data =
-          buffered_data(_jobs['jobid_' .. current_id].state.stderr_eof, data)
+            buffered_data(_jobs['jobid_' .. current_id].state.stderr_eof, data)
           vim.schedule(function()
             opts.on_stderr(current_id, stderr_data, 'stderr')
           end)
@@ -207,35 +205,35 @@ function M.start(cmd, opts)
 end
 
 function M.send(id, data) -- {{{
-local jobobj = _jobs['jobid_' .. id]
+  local jobobj = _jobs['jobid_' .. id]
 
-if not jobobj then
-  error('can not find job:' .. id)
-end
-
-local stdin = jobobj.state.stdin
-
-if not stdin then
-  error('no stdin stream for jobid:' .. id)
-end
-
-if type(data) == 'table' then
-  for _, v in ipairs(data) do
-    stdin:write(v)
-    stdin:write('\n')
+  if not jobobj then
+    error('can not find job:' .. id)
   end
-elseif type(data) == 'string' then
-  stdin:write(data)
-  stdin:write('\n')
-elseif data == nil then
-  stdin:write('', function()
-    stdin:shutdown(function()
-      if stdin then
-        stdin:close()
-      end
+
+  local stdin = jobobj.state.stdin
+
+  if not stdin then
+    error('no stdin stream for jobid:' .. id)
+  end
+
+  if type(data) == 'table' then
+    for _, v in ipairs(data) do
+      stdin:write(v)
+      stdin:write('\n')
+    end
+  elseif type(data) == 'string' then
+    stdin:write(data)
+    stdin:write('\n')
+  elseif data == nil then
+    stdin:write('', function()
+      stdin:shutdown(function()
+        if stdin then
+          stdin:close()
+        end
+      end)
     end)
-  end)
-end
+  end
 end
 
 function M.chanclose(id, t)
@@ -250,7 +248,6 @@ function M.chanclose(id, t)
     if stdin and stdin:is_active() then
       stdin:close()
     end
-
   elseif t == 'stdout' then
   elseif t == 'stderr' then
   else
@@ -268,5 +265,4 @@ function M.stop(id)
   local handle = jobobj.handle
   handle:kill(6)
 end
-
 return M
