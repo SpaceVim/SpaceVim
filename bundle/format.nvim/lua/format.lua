@@ -11,6 +11,10 @@ function M.format(bang, user_input, start_line, end_line)
   end
 
   local filetype = vim.o.filetype
+  local argvs = vim.split(user_input, '%s+')
+  if bang and #argvs > 0 then
+    filetype = argvs[1]
+  end
 
   if filetype == '' then
     return util.msg('format: skip empty filetype')
