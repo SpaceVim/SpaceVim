@@ -92,6 +92,9 @@ function M.start(cmd, opts)
     end
     table.insert(argv, cmd)
   elseif type(cmd) == 'table' then
+    if #cmd == 0 then
+      return 0
+    end
     for _, v in ipairs(cmd) do
       if type(v) ~= 'string' then
         return 0
