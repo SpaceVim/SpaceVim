@@ -79,6 +79,9 @@ function M.start(cmd, opts)
   local command = ''
   local argv = {}
   if type(cmd) == 'string' then
+    if cmd == '' then
+      return 0
+    end
     local shell = vim.fn.split(vim.o.shell)
     local shellcmdflag = vim.fn.split(vim.o.shellcmdflag)
     -- :call jobstart(split(&shell) + split(&shellcmdflag) + ['{cmd}'])
@@ -89,7 +92,15 @@ function M.start(cmd, opts)
     end
     table.insert(argv, cmd)
   elseif type(cmd) == 'table' then
+    for _, v in ipairs(cmd) do
+      if type(v) ~= 'string' then
+        return 0
+      end
+    end
     command = cmd[1]
+    if command == '' then
+      return 0
+    end
     if vim.fn.executable(command) == 0 then
       return -1
     end
