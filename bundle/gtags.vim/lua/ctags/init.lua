@@ -90,6 +90,7 @@ function M.update() -- {{{
   end
 
   if vim.fn.isdirectory(dir) == 1 then
+    vim.fn.delete(dir .. '/tags')
     extend(cmd, { '-R', '--extra=+f', '-o', dir .. '/tags', project_root })
     log.debug('ctags command:' .. vim.inspect(cmd))
     local jobid = job.start(cmd, {
