@@ -31,27 +31,23 @@ local function on_exit(id, code, single)
       .. single
   )
   if code == 0 and single == 0 then
+    local formatted_context
     if current_task.formatter.use_stderr then
+      formatted_context = stderr
+    else
+      formatted_context = stdout
+    end
+    if table.concat(stdout, '\n') == table.concat(current_task.stdin, '\n') then
+      util.msg('no necessary changes')
+    else
+      util.msg((current_task.formatter.name or current_task.formatter.exe) .. ' formatted buffer')
       vim.api.nvim_buf_set_lines(
         current_task.bufnr,
         current_task.start_line,
         current_task.end_line,
         false,
-        stderr
+        formatted_context
       )
-    else
-      if table.concat(stdout, '\n') == table.concat(current_task.stdin, '\n') then
-        util.msg('no necessary changes')
-      else
-        util.msg((current_task.formatter.name or current_task.formatter.exe) .. ' formatted buffer')
-        vim.api.nvim_buf_set_lines(
-          current_task.bufnr,
-          current_task.start_line,
-          current_task.end_line,
-          false,
-          stdout
-        )
-      end
     end
   else
     util.msg('formatter ' .. current_task.formatter.exe .. ' failed to run')
