@@ -18,7 +18,7 @@ function M.format(bang, user_input, start_line, end_line)
   local ok, formatter
   if custom_formatters[filetype] then
     formatter = custom_formatters[filetype]
-    if formatter.exe and type(formatter.exe) == "string" then
+    if formatter.exe and type(formatter.exe) == 'string' then
       util.info('using custom formatter:' .. formatter.exe)
     end
   end
@@ -33,9 +33,9 @@ function M.format(bang, user_input, start_line, end_line)
 
   task.run({
     bufnr = vim.fn.bufnr(),
-    stdin = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line - 1, false),
+    stdin = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false),
     start_line = start_line - 1,
-    end_line = end_line - 1,
+    end_line = end_line,
     formatter = formatter,
   })
 end
@@ -43,10 +43,11 @@ end
 function M.setup(opt)
   if opt.custom_formatters and type(opt.custom_formatters) == 'table' then
     for k, v in pairs(opt.custom_formatters) do
-      if type(v) == "table" then
+      if type(v) == 'table' then
         custom_formatters[k] = v
       end
     end
   end
 end
+
 return M
