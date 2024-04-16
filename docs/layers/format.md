@@ -23,7 +23,6 @@ The `format` layer provides code formatting for SpaceVim, with support for
 [`codefmt`](https://github.com/google/vim-codefmt) underlying code
 formatting plugins.
 
-
 ## Install
 
 This layer is enabled by default. If you want to disable it, add the following to your configuration file:
@@ -71,7 +70,7 @@ This layer is enabled by default. If you want to disable it, add the following t
   ```
 
 - **`silent_format`**: Setting this to true will run the formatter silently without any messages. Default is
-disabled.
+  disabled.
 
   ```toml
   [[layers]]
@@ -84,9 +83,7 @@ disabled.
 neoformat is a formatting framework, all of it's options can be used in bootstrap function. You can read
 `:help neoformat` for more info.
 
-
 Here is an example for add formatter for java file, and it has been included into `lang#java` layer:
-
 
 ```viml
 let g:neoformat_enabled_java = ['googlefmt']
@@ -99,6 +96,6 @@ let g:neoformat_java_googlefmt = {
 
 ## Key bindings
 
-| Key binding | Description                           |
-| ----------- | ------------------------------------- |
+| Key binding | Description |
+| ----------- | ----------- |
 | `SPC b f`   | format whole buffer or selected lines |

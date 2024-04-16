@@ -2243,7 +2243,7 @@ LAYER OPTIONS
 
   1. `format_on_save`: disabled by default.
   2. `format_method`: set the format plugin, default plugin is `neoformat`.
-You can also use `vim-codefmt`.
+You can also use `vim-codefmt` or `format.nvim`
   3. `silent_format`: Runs the formatter without any messages.
   4. `format_notify_width`: set the neoformat notify window width.
   5. `format_notify_timeout`: set the neoformat notify clear timeout. default

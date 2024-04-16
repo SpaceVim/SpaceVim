@@ -16,7 +16,7 @@
 "
 " 1. `format_on_save`: disabled by default.
 " 2. `format_method`: set the format plugin, default plugin is `neoformat`.
-" You can also use `vim-codefmt`.
+" You can also use `vim-codefmt` or `format.nvim`
 " 3. `silent_format`: Runs the formatter without any messages.
 " 4. `format_notify_width`: set the neoformat notify window width.
 " 5. `format_notify_timeout`: set the neoformat notify clear timeout. default
@@ -57,6 +57,10 @@ function! SpaceVim#layers#format#plugins() abort
           \ ['google/vim-glaive', {'merged' : 0, 'loadconf' : 1}],
           \ ['google/vim-codefmt', {'merged' : 0}],
           \ ]
+  elseif s:format_method ==# 'format.nvim'
+    return [
+          \ [g:_spacevim_root_dir . 'bundle/format.nvim', {'merged' : 0, 'loadconf' : 1, 'loadconf_before' : 1}],
+          \ ]
   endif
 endfunction
 
@@ -66,6 +70,8 @@ function! SpaceVim#layers#format#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
   elseif s:format_method ==# 'codefmt'
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'FormatCode', 'format-code', 1)
+  elseif s:format_method ==# 'format.nvim'
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Format', 'format-code', 1)
   endif
   augroup spacevim_layer_format
     autocmd!
@@ -118,6 +124,8 @@ function! s:format() abort
       undojoin | Neoformat
     elseif s:format_method ==# 'codefmt'
       undojoin | FormatCode
+    elseif s:format_method ==# 'format.nvim'
+      undojoin | Format
     endif
   endif
 endfunction

@@ -1,7 +1,6 @@
 # SpaceVim
 
 [![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
-[![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
 
 SpaceVim is a modular configuration of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,
@@ -23,7 +22,4 @@ what packages to install.
 
 - English: [https://spacevim.org/development/](https://spacevim.org/development/)
 - Chinese: [https://spacevim.org/cn/development/](https://spacevim.org/cn/development/)
-
-
-
 <!-- vim:set nowrap: -->

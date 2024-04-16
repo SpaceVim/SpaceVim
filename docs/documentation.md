@@ -2627,5 +2627,4 @@ export PATH=$PATH:$HOME/.SpaceVim/bin
 ```
 
 Use `svc` to open a file in the existing Vim server, or use `nsvc` to open a file in the existing Neovim server.
-
 ![server-and-client](https://img.spacevim.org/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
