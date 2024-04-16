@@ -37,7 +37,7 @@ local function on_exit(id, code, single)
     else
       formatted_context = stdout
     end
-    if table.concat(stdout, '\n') == table.concat(current_task.stdin, '\n') then
+    if table.concat(formatted_context, '\n') == table.concat(current_task.stdin, '\n') then
       util.msg('no necessary changes')
     else
       util.msg((current_task.formatter.name or current_task.formatter.exe) .. ' formatted buffer')
