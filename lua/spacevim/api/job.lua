@@ -129,23 +129,40 @@ function M.start(cmd, opts)
   local exit_cb
   if opts.on_exit then
     exit_cb = function(code, singin)
-      if stdout and stdout:is_active() then
+      if stdout and not stdout:is_closing() then
         stdout:close()
       end
-      if stderr and stderr:is_active() then
+      if stderr and not stderr:is_closing() then
         stderr:close()
       end
+      if stdin and not stdin:is_closing() then
+        stdin:close()
+      end
+      local job = _jobs['jobid_' .. current_id]
+
+      if job and job.handle and not job.handle:is_closing() then
+        job.handle:close()
+      end
+
       vim.schedule(function()
         opts.on_exit(current_id, code, singin)
       end)
     end
   else
     exit_cb = function(code, singin)
-      if stdout and stdout:is_active() then
+      if stdout and not stdout:is_closing() then
         stdout:close()
       end
-      if stderr and stderr:is_active() then
+      if stderr and not stderr:is_closing() then
         stderr:close()
+      end
+      if stdin and not stdin:is_closing() then
+        stdin:close()
+      end
+      local job = _jobs['jobid_' .. current_id]
+
+      if job and job.handle and not job.handle:is_closing() then
+        job.handle:close()
       end
     end
   end
@@ -257,13 +274,20 @@ function M.chanclose(id, t)
     error('can not find job:' .. id)
   end
   if t == 'stdin' then
-    -- close stdio
     local stdin = jobobj.state.stdin
-    if stdin and stdin:is_active() then
+    if stdin and not stdin:is_closing() then
       stdin:close()
     end
   elseif t == 'stdout' then
+    local stdout = jobobj.state.stdout
+    if stdout and not stdout:is_closing() then
+      stdout:close()
+    end
   elseif t == 'stderr' then
+    local stderr = jobobj.state.stderr
+    if stderr and not stderr:is_closing() then
+      stderr:close()
+    end
   else
     error('the type only can be:stdout, stdin or stderr')
   end
