@@ -30,13 +30,17 @@ function M.format(bang, user_input, start_line, end_line)
   if not formatter then
     ok = pcall(function()
       local default = require('format.ft.' .. filetype)
-      local formatname = default.enabled()[1]
-      formatter = default[formatname]({
-        filepath = vim.fn.expand('%:p'),
-        start_line = start_line,
-        end_line = end_line,
-      })
-      util.info('using default formatter:' .. formatname)
+      for _, formatname in ipairs(default.enabled()) do
+        formatter = default[formatname]({
+          filepath = vim.fn.expand('%:p'),
+          start_line = start_line,
+          end_line = end_line,
+        })
+        if vim.fn.executable(formatter.exe) == 1 then
+          util.info('using default formatter:' .. formatname)
+          break
+        end
+      end
     end)
     if not ok then
       return util.msg('no formatter for ' .. filetype)
