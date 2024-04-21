@@ -188,6 +188,10 @@ function! SpaceVim#mapping#vertical_split_previous_buffer(...) abort
 endfunction
 
 function! SpaceVim#mapping#close_current_buffer(...) abort
+  if has('nvim-0.9.5')
+    lua require('spacevim.plugin.tabline').close_current_buffer()
+    return
+  endif
   if index(
         \ ['startify', 'defx'],
         \ &filetype) !=# -1

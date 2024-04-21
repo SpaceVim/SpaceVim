@@ -513,19 +513,32 @@ function! SpaceVim#layers#core#tabline#get() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#config() abort
-  let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:separators['arrow'])
-  set tabline=%!SpaceVim#layers#core#tabline#get()
-  augroup SpaceVim_tabline
-    autocmd!
-    autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
-  augroup END
+  if has('nvim-0.9.5')
+    lua require('spacevim.plugin.tabline').enable()
+    set tabline=%!v:lua.require('spacevim.plugin.tabline').get()
+    augroup SpaceVim_tabline
+      autocmd!
+      autocmd ColorScheme * lua require('spacevim.plugin.tabline').def_colors()
+    augroup END
+    if s:enable_default_mappings
+      nnoremap <silent> <C-S-Left> <cmd>lua require('spacevim.plugin.tabline').move_to_previous()<CR>
+      nnoremap <silent> <C-S-Right> <cmd>lua require('spacevim.plugin.tabline').move_to_next()<CR>
+    endif
+  else
+    let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
+    let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:separators['arrow'])
+    set tabline=%!SpaceVim#layers#core#tabline#get()
+    augroup SpaceVim_tabline
+      autocmd!
+      autocmd ColorScheme * call SpaceVim#layers#core#tabline#def_colors()
+    augroup END
 
-  if s:enable_default_mappings
-    nnoremap <silent> <C-S-Left> :call <SID>move_tabpage(-1)<CR>
-    nnoremap <silent> <C-S-Right> :call <SID>move_tabpage(1)<CR>
+    if s:enable_default_mappings
+      nnoremap <silent> <C-S-Left> :call <SID>move_tabpage(-1)<CR>
+      nnoremap <silent> <C-S-Right> :call <SID>move_tabpage(1)<CR>
+    endif
+
   endif
-
   let shift_keys = {
         \  '1': '!',
         \  '2': '@',
@@ -554,6 +567,12 @@ function! SpaceVim#layers#core#tabline#config() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
+  call SpaceVim#logger#info(a:id)
+  call SpaceVim#logger#info(string(a:000))
+  if has('nvim-0.9.5')
+    lua require('spacevim.plugin.tabline').jump(vim.api.nvim_eval('a:id'))
+    return
+  endif
   if len(s:shown_items) >= a:id
     let item = s:shown_items[a:id - 1]
     let mouse = get(a:000, 1, '')

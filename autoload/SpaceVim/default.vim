@@ -275,6 +275,10 @@ function! SpaceVim#default#keyBindings() abort
 endfunction
 
 fu! s:tobur(num) abort
+  if has('nvim-0.9.5')
+    lua require('spacevim.plugin.tabline').jump(vim.api.nvim_eval('a:num'))
+    return
+  endif
   if index(get(g:,'_spacevim_altmoveignoreft',[]), &filetype) == -1
     if a:num ==# 'next'
       if tabpagenr('$') > 1
@@ -301,42 +305,42 @@ fu! s:tobur(num) abort
       endif
     endif
   endif
-  endf
+endfunction
 
-  function! SpaceVim#default#UseSimpleMode() abort
+function! SpaceVim#default#UseSimpleMode() abort
 
-  endfunction
+endfunction
 
-  function! SpaceVim#default#Customfoldtext() abort
-    "get first non-blank line
-    let fs = v:foldstart
-    while getline(fs) =~# '^\s*$' | let fs = nextnonblank(fs + 1)
-    endwhile
-    if fs > v:foldend
-      let line = getline(v:foldstart)
-    else
-      let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
-    endif
+function! SpaceVim#default#Customfoldtext() abort
+  "get first non-blank line
+  let fs = v:foldstart
+  while getline(fs) =~# '^\s*$' | let fs = nextnonblank(fs + 1)
+  endwhile
+  if fs > v:foldend
+    let line = getline(v:foldstart)
+  else
+    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  endif
 
-    let foldsymbol='+'
-    let repeatsymbol='-'
-    let prefix = foldsymbol . ' '
+  let foldsymbol='+'
+  let repeatsymbol='-'
+  let prefix = foldsymbol . ' '
 
-    let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
-    let foldSize = 1 + v:foldend - v:foldstart
-    let foldSizeStr = ' ' . foldSize . ' lines '
-    let foldLevelStr = repeat('+--', v:foldlevel)
-    let lineCount = line('$')
-    let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
-    let expansionString = repeat(repeatsymbol, w - strwidth(prefix.foldSizeStr.line.foldLevelStr.foldPercentage))
-    return prefix . line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
-  endfunction
+  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldSize = 1 + v:foldend - v:foldstart
+  let foldSizeStr = ' ' . foldSize . ' lines '
+  let foldLevelStr = repeat('+--', v:foldlevel)
+  let lineCount = line('$')
+  let foldPercentage = printf('[%.1f', (foldSize*1.0)/lineCount*100) . '%] '
+  let expansionString = repeat(repeatsymbol, w - strwidth(prefix.foldSizeStr.line.foldLevelStr.foldPercentage))
+  return prefix . line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+endfunction
 
-  function! s:switch_tabs() abort
-    let previous_tab = s:TAB.previous_tabpagenr()
-    if previous_tab > 0
-      exe 'tabnext ' . previous_tab
-    endif
-  endfunction
+function! s:switch_tabs() abort
+  let previous_tab = s:TAB.previous_tabpagenr()
+  if previous_tab > 0
+    exe 'tabnext ' . previous_tab
+  endif
+endfunction
 
-  " vim:set et sw=2:
+" vim:set et sw=2:
