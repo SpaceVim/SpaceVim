@@ -13,14 +13,22 @@ let s:history_cache_path = s:FILE.unify_path(g:spacevim_data_dir, ':p') . 'Space
 let s:filepos = {}
 
 function! SpaceVim#plugins#history#readcache() abort
+  call s:LOG.debug('read cache')
   call s:read_cache()
 endfunction
 function! SpaceVim#plugins#history#writecache() abort
+  call s:LOG.debug('write cache')
   call s:write_cache()
 endfunction
 
 function! SpaceVim#plugins#history#jumppos() abort
+  " nvim filename 
+  " BufReadPost event before VimEnter
+  if empty(s:filepos)
+    call s:read_cache()
+  endif
   let [l, c] = get(s:filepos, expand('%:p'), [0, 0])
+  call s:LOG.debug(printf('jump to pos: [%s, %s]', l, c))
   if l != 0 && c != 0
     call cursor(l, c)
   endif
