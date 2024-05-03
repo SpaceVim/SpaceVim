@@ -27,7 +27,7 @@ function! s:generate_content(lang) abort
     let others = ['', '## Others', '']
     let breakchanges = ['', '## Breakchanges']
   endif
-  let logs = systemlist('git log --oneline --pretty="- %s" 8a7ec458..HEAD')
+  let logs = systemlist('git log --oneline --pretty="- %s" 2a2deac2..HEAD')
   for l in logs
     if l =~ '^- [^(]*([^)]*)!:'
       call add(breakchanges, l)
