@@ -241,17 +241,27 @@ end
 function M.add(bufnr) end
 
 function M.move_to_previous()
-  local bufnr = vim.api.nvim_get_current_buf()
+  local ntp = vim.fn.tabpagenr('$')
+  if ntp > 1 then
+    local ctpn = vim.fn.tabpagenr()
+    local idx = ctpn - 2
+    if idx == -1 then
+      idx = ntp
+    end
+    vim.cmd('tabmove ' .. idx)
+  else
+    local bufnr = vim.api.nvim_get_current_buf()
 
-  local idx = index(visiable_bufs, bufnr)
+    local idx = index(visiable_bufs, bufnr)
 
-  if idx > 0 then -- second item or others
-    visiable_bufs[idx + 1] = visiable_bufs[idx]
-    visiable_bufs[idx] = bufnr
-  elseif idx == 0 and #left_hide_bufs > 0 then
-    table.insert(visiable_bufs, 2, table.remove(left_hide_bufs, #left_hide_bufs))
-    while check_len(visiable_bufs) and #visiable_bufs > 1 do
-      table.insert(right_hide_bufs, 1, table.remove(visiable_bufs, #visiable_bufs))
+    if idx > 0 then -- second item or others
+      visiable_bufs[idx + 1] = visiable_bufs[idx]
+      visiable_bufs[idx] = bufnr
+    elseif idx == 0 and #left_hide_bufs > 0 then
+      table.insert(visiable_bufs, 2, table.remove(left_hide_bufs, #left_hide_bufs))
+      while check_len(visiable_bufs) and #visiable_bufs > 1 do
+        table.insert(right_hide_bufs, 1, table.remove(visiable_bufs, #visiable_bufs))
+      end
     end
   end
 
@@ -259,17 +269,27 @@ function M.move_to_previous()
 end
 
 function M.move_to_next()
-  local bufnr = vim.api.nvim_get_current_buf()
+  local ntp = vim.fn.tabpagenr('$')
+  if ntp > 1 then
+    local ctpn = vim.fn.tabpagenr()
+    local idx = ctpn + 1
+    if idx > ntp then
+      idx = 0
+    end
+    vim.cmd('tabmove ' .. idx)
+  else
+    local bufnr = vim.api.nvim_get_current_buf()
 
-  local idx = index(visiable_bufs, bufnr)
+    local idx = index(visiable_bufs, bufnr)
 
-  if idx > -1 and idx < #visiable_bufs - 1 then -- second item or others
-    visiable_bufs[idx + 1] = visiable_bufs[idx + 2]
-    visiable_bufs[idx + 2] = bufnr
-  elseif idx == #visiable_bufs - 1 and #right_hide_bufs > 0 then
-    table.insert(visiable_bufs, #visiable_bufs - 1, table.remove(right_hide_bufs, 1))
-    while check_len(visiable_bufs) and #visiable_bufs > 1 do
-      table.insert(left_hide_bufs, table.remove(visiable_bufs, 1))
+    if idx > -1 and idx < #visiable_bufs - 1 then -- second item or others
+      visiable_bufs[idx + 1] = visiable_bufs[idx + 2]
+      visiable_bufs[idx + 2] = bufnr
+    elseif idx == #visiable_bufs - 1 and #right_hide_bufs > 0 then
+      table.insert(visiable_bufs, #visiable_bufs - 1, table.remove(right_hide_bufs, 1))
+      while check_len(visiable_bufs) and #visiable_bufs > 1 do
+        table.insert(left_hide_bufs, table.remove(visiable_bufs, 1))
+      end
     end
   end
 
@@ -501,35 +521,43 @@ end
 
 function M.jump(id)
   if id == 'next' then
-    local bufnr = vim.api.nvim_get_current_buf()
+    if vim.fn.tabpagenr('$') > 1 then
+      vim.cmd('tabnext')
+    else
+      local bufnr = vim.api.nvim_get_current_buf()
 
-    local idx = index(visiable_bufs, bufnr)
+      local idx = index(visiable_bufs, bufnr)
 
-    if idx > -1 and idx < #visiable_bufs - 1 then
-      vim.cmd('b' .. visiable_bufs[idx + 2])
-    elseif idx > -1 and idx == #visiable_bufs - 1 then
-      if #right_hide_bufs > 0 then
-        vim.cmd('b' .. right_hide_bufs[1])
-      elseif #left_hide_bufs > 0 then
-        vim.cmd('b' .. left_hide_bufs[1])
-      else
-        vim.cmd('b' .. visiable_bufs[1])
+      if idx > -1 and idx < #visiable_bufs - 1 then
+        vim.cmd('b' .. visiable_bufs[idx + 2])
+      elseif idx > -1 and idx == #visiable_bufs - 1 then
+        if #right_hide_bufs > 0 then
+          vim.cmd('b' .. right_hide_bufs[1])
+        elseif #left_hide_bufs > 0 then
+          vim.cmd('b' .. left_hide_bufs[1])
+        else
+          vim.cmd('b' .. visiable_bufs[1])
+        end
       end
     end
   elseif id == 'prev' then
-    local bufnr = vim.api.nvim_get_current_buf()
+    if vim.fn.tabpagenr('$') > 1 then
+      vim.cmd('tabprevious')
+    else
+      local bufnr = vim.api.nvim_get_current_buf()
 
-    local idx = index(visiable_bufs, bufnr)
+      local idx = index(visiable_bufs, bufnr)
 
-    if idx > 0 then
-      vim.cmd('b' .. visiable_bufs[idx])
-    elseif idx == 0 and idx < #visiable_bufs - 1 then
-      if #left_hide_bufs > 0 then
-        vim.cmd('b' .. left_hide_bufs[#left_hide_bufs])
-      elseif #right_hide_bufs > 0 then
-        vim.cmd('b' .. right_hide_bufs[#right_hide_bufs])
-      else
-        vim.cmd('b' .. visiable_bufs[#visiable_bufs])
+      if idx > 0 then
+        vim.cmd('b' .. visiable_bufs[idx])
+      elseif idx == 0 and idx < #visiable_bufs - 1 then
+        if #left_hide_bufs > 0 then
+          vim.cmd('b' .. left_hide_bufs[#left_hide_bufs])
+        elseif #right_hide_bufs > 0 then
+          vim.cmd('b' .. right_hide_bufs[#right_hide_bufs])
+        else
+          vim.cmd('b' .. visiable_bufs[#visiable_bufs])
+        end
       end
     end
   elseif #shown_items >= id then
