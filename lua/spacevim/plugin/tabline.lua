@@ -72,7 +72,7 @@ local function build_item(bufnr, n)
 
   local icon = ''
 
-  local tablineat = '%' .. n .. '@SpaceVim#layers#core#tabline#jump@'
+  local tablineat = '%' .. n .. '@v:lua.___spacevim_tabline.jump@'
 
   if name == '' then
     name = 'No Name'
@@ -447,7 +447,8 @@ function M.get()
   local preview_item
   if #left_hide_bufs > 0 and vim.fn.tabpagenr('$') == 1 then
     tablinestr = '%#SpaceVim_tabline_b# << '
-      .. #left_hide_bufs .. ' '
+      .. #left_hide_bufs
+      .. ' '
       .. tabline_sep(preview_item, shown_items[1])
   end
   for _, item in ipairs(shown_items) do
@@ -572,5 +573,7 @@ function M.jump(id)
     end
   end
 end
+
+_G.___spacevim_tabline = { jump = M.jump }
 
 return M
