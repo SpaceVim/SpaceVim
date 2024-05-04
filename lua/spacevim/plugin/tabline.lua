@@ -152,7 +152,9 @@ local function tabline_sep(a, b)
   local hi_a
   local hi_b
 
-  if vim.api.nvim_buf_get_option(a.bufnr, 'modified') then
+  if not a then
+    hi_a = 'SpaceVim_tabline_b'
+  elseif vim.api.nvim_buf_get_option(a.bufnr, 'modified') then
     hi_a = 'SpaceVim_tabline_m'
   elseif a.bufnr == vim.api.nvim_get_current_buf() then
     hi_a = 'SpaceVim_tabline_a'
@@ -444,7 +446,9 @@ function M.get()
   shown_items = get_show_items()
   local preview_item
   if #left_hide_bufs > 0 and vim.fn.tabpagenr('$') == 1 then
-    tablinestr = '%#SpaceVim_tabline_b# << ' .. #left_hide_bufs .. ' '
+    tablinestr = '%#SpaceVim_tabline_b# << '
+      .. #left_hide_bufs .. ' '
+      .. tabline_sep(preview_item, shown_items[1])
   end
   for _, item in ipairs(shown_items) do
     if preview_item then
