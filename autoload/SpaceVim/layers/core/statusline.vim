@@ -59,6 +59,7 @@ let s:separators = {
       \ }
 let s:i_separators = {
       \ 'arrow' : ["\ue0b1", "\ue0b3"],
+      \ 'curve' : ["\ue0b5", "\ue0b7"],
       \ 'slant' : ["\ue0b9", "\ue0bb"],
       \ 'bar' : ['|', '|'],
       \ 'nil' : ['', ''],
