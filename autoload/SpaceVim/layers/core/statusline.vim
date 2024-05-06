@@ -166,7 +166,7 @@ function! s:fileformat() abort
   else
     let g:_spacevim_statusline_fileformat = &ff
   endif
-  return '%{" " . g:_spacevim_statusline_fileformat . " | " . (&fenc!=""?&fenc:&enc) . " "}'
+  return '%{" " . g:_spacevim_statusline_fileformat . " ' . s:irsep .  ' " . (&fenc!=""?&fenc:&enc) . " "}'
 endfunction
 
 function! s:major_mode() abort
@@ -682,7 +682,7 @@ function! s:inactive() abort
     let l .= '%{ get(w:, "winwidth", 150) < ' . base . ' ? "" : (" ' . s:STATUSLINE.eval(sec) . ' ' . s:ilsep . '")}'
   endfor
   if get(w:, 'winwidth', 150) > base + 10
-    let l .= join(['%=', '%{" " . &ff . "|" . (&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
+    let l .= join(['%=', '%{" " . &ff}', '%{(&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
   endif
   return l
 endfunction
