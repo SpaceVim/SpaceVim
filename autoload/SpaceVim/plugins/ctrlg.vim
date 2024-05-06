@@ -26,7 +26,7 @@ function! SpaceVim#plugins#ctrlg#display() abort
     let project_name = ''
   endif
 
-  let file = fnamemodify(expand('%'), '.')
+  let file = fnamemodify(expand('%'), ':.')
 
   if !empty(project_name)
     echohl Constant   | echo project_name
@@ -35,6 +35,7 @@ function! SpaceVim#plugins#ctrlg#display() abort
   echohl Special    | echon pwd
   echohl WarningMsg | echon "  >>  "
   echohl Directory  | echon file
+  echohl NONE
 endfun
 
 let &cpo = s:save_cpo
