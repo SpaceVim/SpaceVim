@@ -13,7 +13,7 @@ local buffer = require('spacevim.api.vim.buffer')
 
 local default_conf = {
   max_size = 10,
-  min_size = 3,
+  min_size = 5,
   width = 1,
   right_offset = 1,
   excluded_filetypes = {
