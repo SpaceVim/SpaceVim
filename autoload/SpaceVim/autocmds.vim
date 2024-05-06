@@ -124,6 +124,8 @@ function! s:fix_colorschem_in_SpaceVim() abort
       hi VertSplit guibg=#282c34 guifg=#181A1F
       hi SPCFloatBorder guibg=#282c34 guifg=#181A1F
       hi SPCNormalFloat guifg=#abb2bf guibg=#282c34
+      hi clear StatusLineNC
+      hi link StatusLineNC Normal
     elseif g:colors_name ==# 'jellybeans'
       hi VertSplit guibg=#151515 guifg=#080808
     elseif g:colors_name ==# 'nord'

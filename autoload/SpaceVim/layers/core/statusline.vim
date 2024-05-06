@@ -682,7 +682,7 @@ function! s:inactive() abort
     let l .= '%{ get(w:, "winwidth", 150) < ' . base . ' ? "" : (" ' . s:STATUSLINE.eval(sec) . ' ' . s:ilsep . '")}'
   endfor
   if get(w:, 'winwidth', 150) > base + 10
-    let l .= join(['%=', '%{" " . &ff}', '%{(&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
+    let l .= join(['%=', '%{" " . g:_spacevim_statusline_fileformat . " "}', '%{" " . (&fenc!=""?&fenc:&enc) . " "}', ' %P '], s:irsep)
   endif
   return l
 endfunction
