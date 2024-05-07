@@ -33,4 +33,4 @@ defaults:
   - scope:
       path: ""
     values:
-      image: https://img.spacevim.org/release-v2.2.0.png
+      image: https://img.spacevim.org/workflow.png

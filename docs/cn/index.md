@@ -10,7 +10,7 @@ lang: zh
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
 [![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
 
-![welcome page](https://img.spacevim.org/release-v2.3.0.png)
+![work-flow](https://img.spacevim.org/workflow.png)
 
 SpaceVim 是一个模块化的 Vim 和 Neovim 配置集合，它的灵感来自于 [spacemacs](https://www.spacemacs.org/)。
 以模块的方式组织插件及相关配置，将相关插件组合在一起提供完整的功能。

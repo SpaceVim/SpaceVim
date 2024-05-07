@@ -9,7 +9,7 @@ description: "SpaceVim is a modular Vim/Neovim configuration that seeks to provi
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#license)
 [![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
 
-![welcome page](https://img.spacevim.org/release-v2.3.0.png)
+![work-flow](https://img.spacevim.org/workflow.png)
 
 SpaceVim is a modular configuration of Vim and Neovim.
 It's inspired by spacemacs. It manages collections of plugins in layers,
