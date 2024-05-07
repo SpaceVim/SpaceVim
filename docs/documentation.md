@@ -7,11 +7,9 @@ description: "General documentation about how to use SpaceVim, including the qui
 
 <!-- vim-markdown-toc GFM -->
 
-- [Core Pillars](#core-pillars)
-- [Highlighted features](#highlighted-features)
+- [Highlighted Features](#highlighted-features)
 - [Screenshots](#screenshots)
-- [Concepts](#concepts)
-- [Who can benefit from this?](#who-can-benefit-from-this)
+- [New Concepts](#new-concepts)
 - [Update and Rollback](#update-and-rollback)
   - [Update SpaceVim itself](#update-spacevim-itself)
   - [Update plugins](#update-plugins)
@@ -97,47 +95,15 @@ description: "General documentation about how to use SpaceVim, including the qui
 
 <!-- vim-markdown-toc -->
 
-## Core Pillars
+## Highlighted Features
 
-Four core pillars: Mnemonic, Discoverable, Consistent and “Crowd-Configured”.
-
-If any of these core pillars are violated open an issue, and we’ll try our best to fix it.
-
-**Mnemonic**
-
-Key bindings are organized using mnemonic prefixes,
-like b for buffer, p for project, s for search, h for help,
-etc…
-
-**Discoverable**
-
-Innovative real-time display of available key bindings.
-Simple query system to quickly find available layers,
-packages, and more.
-
-**Consistent**
-
-Similar functionalities have the same key bindings
-everywhere thanks to a clearly defined set of conventions.
-Documentation is mandatory for any layer that ships with
-SpaceVim.
-
-**Crowd-Configured**
-
-Community-driven configuration provides curated
-packages tuned by power users and bugs are fixed quickly.
-
-## Highlighted features
-
-- **Modularization:** plugins and functions are organized in [layers](https://spacevim.org/layers/).
-- **Compatible api:** a series of [compatible APIs](https://spacevim.org/api/) for Vim/Neovim.
-- **Great documentation:** online [documentation](https://spacevim.org/documentation/) and `:h SpaceVim`.
-- **Better experience:** rewrite core plugins using lua
-- **Beautiful UI:** you'll love the awesome UI and its useful features.
-- **Mnemonic key bindings:** key binding guide will be displayed automatically
-- **Fast boot time:** Lazy-load 90% of plugins with [dein.vim](https://github.com/Shougo/dein.vim)
-- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
-- **Consistent experience:** consistent experience between terminal and gui
+- **Modularization:** Plugins are organized in [layers](https://spacevim.org/layers/).
+- **Compatible API:** A series of [compatible API](https://spacevim.org/api/) for Vim/Neovim.
+- **Great documentation:** Everything is documented in `:h SpaceVim`.
+- **Better experience:** Most of the core plugins have been rewritten using Lua.
+- **Beautiful UI:** The interface has been carefully designed.
+- **Mnemonic key bindings:**  Key bindings are organized using mnemonic prefixes.
+- **Lower the risk of RSI:** Heavily using the `<Space>` key instead of modifiers.
 
 ## Screenshots
 
@@ -153,7 +119,7 @@ packages tuned by power users and bugs are fixed quickly.
 - windows: Git remotes, outline, Todos, Code runner, Terminal, file explore.
 - code completion engine: nvim-cmp
 
-## Concepts
+## New Concepts
 
 **Transient-states**
 
@@ -167,14 +133,6 @@ transient state buffer. Additional information may as well be displayed in it.
 Move Text Transient State:
 
 ![Move Text Transient State](https://img.spacevim.org/28489559-4fbc1930-6ef8-11e7-9d5a-716fe8dbb881.png)
-
-## Who can benefit from this?
-
-- **Elementary** Vim users.
-- Vim users pursuing a beautiful appearance.
-- Vim users wanting to lower the [risk of RSI](http://en.wikipedia.org/wiki/Repetitive_strain_injury).
-- Vim users wanting to learn a different way to edit files.
-- Vim users wanting a simple but deep configuration system.
 
 ## Update and Rollback
 
