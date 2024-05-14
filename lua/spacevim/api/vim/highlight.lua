@@ -41,6 +41,7 @@ M.hide_in_normal = function(name)
   group.guibg = guibg
   group.ctermfg = ctermbg
   group.ctermbg = ctermbg
+  group.blend = 100
   M.hi(group)
 end
 
@@ -72,6 +73,9 @@ M.hi = function(info)
 
   if vim.fn.empty(style) == 0 then
     cmd = cmd .. ' gui=' .. vim.fn.join(style, ',') .. ' cterm=' .. vim.fn.join(style, ',')
+  end
+  if info.blend then
+    cmd = cmd .. ' blend=' .. info.blend
   end
   pcall(vim.cmd, cmd)
 end
