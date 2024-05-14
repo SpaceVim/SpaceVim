@@ -188,6 +188,10 @@ install_neovim () {
         success "BackUp '${XDGnvimDir}' to '${XDGnvimDir}_back'"
     fi
 
+    if [[ ! -d "$(dirname "${XDGnvimDir}")" ]]; then
+        mkdir "$(dirname "${XDGnvimDir}")"
+    fi
+
     ln -s "${XDGSpaceDir:?}" "${XDGnvimDir:?}"
     success "Installed SpaceVim for nvim in '${XDGnvimDir}'"
 }
