@@ -54,7 +54,6 @@ function! s:read_cache() abort
     if type(his) ==# type({})
       call map(deepcopy(his.cmd), 'histadd("cmd", v:val)')
       call map(deepcopy(his.search), 'histadd("search", v:val)')
-      let @/ = histget('search', -1)
       let s:filepos = get(his, 'filepos', {})
     endif
   endif
