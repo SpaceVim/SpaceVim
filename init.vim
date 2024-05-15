@@ -21,17 +21,17 @@ let g:_spacevim_root_dir = escape(fnamemodify(resolve(fnamemodify(expand('<sfile
       \ || has('win64'))?'\':'/') . '?')), ':p:gs?[\\/]?/?'), ' ')
 lockvar g:_spacevim_root_dir
 if has('nvim')
-  let s:qtdir = split(&rtp, ',')[-1]
-  if s:qtdir =~# 'nvim-qt'
-    let &rtp = s:qtdir . ',' . g:_spacevim_root_dir . ',' . $VIMRUNTIME
-  else
-    let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
-  endif
+  let rtps = [g:_spacevim_root_dir]
+  for rtp in split(&rtp, ',')
+    if rtp =~# 'nvim-qt'
+      call insert(rtps, 0, rtp)
+    else
+      call add(rtps, rtp)
+    endif
+  endfor
+  let &rtp = join(rtps, ',')
 else
   let &rtp = g:_spacevim_root_dir . ',' . $VIMRUNTIME
-endif
-if has('win32')
-  let &rtp = &rtp . ',' . fnamemodify($VIMRUNTIME, ':h:h:h') . '\lib\nvim'
 endif
 call SpaceVim#logger#info('Loading SpaceVim from: ' . g:_spacevim_root_dir)
 call SpaceVim#logger#info('default rtp is:')
