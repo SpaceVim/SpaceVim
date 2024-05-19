@@ -650,10 +650,8 @@ function M.start(...) -- {{{
     echo('no pattern found under cursor')
     return
   end
-  local save_tve = vim.o.t_ve
   local save_cl = vim.wo.cursorline
   vim.wo.cursorline = false
-  vim.o.t_ve = ''
   hi.hi(iedit_hi_info[1])
   hi.hi(iedit_hi_info[2])
   hi.hi(iedit_hi_info[3])
@@ -718,7 +716,6 @@ function M.start(...) -- {{{
   mode = ''
   vim.w.spacevim_iedit_mode = mode
   vim.w.spacevim_statusline_mode = 'in'
-  vim.o.t_ve = save_tve
   hi.hi(cursor_hi)
   hi.hi(lcursor_hi)
   vim.o.guicursor = guicursor
