@@ -300,6 +300,8 @@ function! s:self.redraw_windows() abort
   call self.__buffer.buf_set_lines(self.border.bufnr, 0 , -1, 0,
         \ self.draw_border(self.title, self.notification_width, s:msg_real_len(self.message)))
   call self.__buffer.buf_set_lines(self.bufnr, 0 , -1, 0, s:message_body(self.message))
+  call nvim_win_set_cursor(self.winid, [1, 0])
+  call nvim_win_set_cursor(self.border.winid, [1, 0])
 endfunction
 
 

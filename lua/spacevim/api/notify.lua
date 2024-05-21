@@ -217,6 +217,8 @@ function M.redraw_windows()
     M.draw_border(M.title, M.notification_width, msg_real_len(M.message))
   )
   vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, message_body(M.message))
+  vim.api.nvim_win_set_cursor(M.winid, {1, 0})
+  vim.api.nvim_win_set_cursor(M.border.winid, {1, 0})
 end
 
 function M.increase_window()
