@@ -23,6 +23,12 @@ function M.setup(enabled_clients, override_client_cmds) -- {{{
       vim.api.nvim_buf_set_var(args.buf, 'lsp_server_ready', true)
     end,
   })
+  vim.api.nvim_create_autocmd('LspDetach', {
+    group = augroup,
+    callback = function(args)
+      vim.api.nvim_buf_set_var(args.buf, 'lsp_server_ready', false)
+    end,
+  })
 
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
