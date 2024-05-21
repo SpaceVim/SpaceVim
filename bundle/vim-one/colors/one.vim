@@ -355,6 +355,7 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
 
   " Vim editor color --------------------------------------------------------{{{
   call <sid>X('Normal',       s:syntax_fg,     s:syntax_bg,      '')
+  call <sid>X('NormalFloat',  '',              s:pmenu,          '')
   call <sid>X('bold',         '',              '',               'bold')
   call <sid>X('ColorColumn',  '',              s:syntax_cursor,  '')
   call <sid>X('Conceal',      s:mono_4,        s:syntax_bg,      '')
