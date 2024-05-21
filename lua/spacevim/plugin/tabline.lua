@@ -492,7 +492,7 @@ function M.def_colors()
     end)
 
     if not ok then
-      t = vim.fn['Vim#mapping#guide#theme#gruvbox#palette']()
+      t = vim.fn['SpaceVim#mapping#guide#theme#gruvbox#palette']()
     end
   end
   vim.api.nvim_set_hl(0, 'SpaceVim_tabline_a', {
