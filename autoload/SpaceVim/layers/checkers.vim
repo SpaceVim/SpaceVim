@@ -206,6 +206,7 @@ function! s:toggle_show_error(...) abort
     " if buf_server_ready return false, the language server loclist
     " should be cleared.
     if get(getloclist(0, {'title': 0}), 'title', '') ==# 'Language Server'
+          \ || get(getloclist(0, {'title': 0}), 'title', '') ==# 'Diagnostics'
       call setloclist(0, [], 'r')
     endif
     let llist = getloclist(0, {'size' : 1, 'winid' : 1})

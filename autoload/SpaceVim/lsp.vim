@@ -66,7 +66,7 @@ if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version()) || has('nvim-0.6.0
     lua vim.lsp.buf.remove_workspace_folder()
   endfunction
   function! SpaceVim#lsp#buf_server_ready() abort
-    return v:lua.vim.lsp.buf.server_ready()
+    return luaeval('require("spacevim.lsp").server_ready()')
   endfunction
   function! SpaceVim#lsp#diagnostic_set_loclist() abort
     lua require('spacevim.diagnostic').set_loclist()

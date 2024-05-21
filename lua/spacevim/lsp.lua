@@ -1,5 +1,9 @@
 local M = {}
 
+function M.server_ready()
+  return vim.b.lsp_server_ready
+end
+
 M.clients = {}
 -- store the clients for different filetype
 -- which can be called via vim.lsp.start_client()
@@ -12,6 +16,13 @@ end
 
 function M.setup(enabled_clients, override_client_cmds) -- {{{
   local nvim_lsp = require('lspconfig')
+  local augroup = vim.api.nvim_create_augroup('spacevim_lsp', { clear = true })
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = augroup,
+    callback = function(args)
+      vim.api.nvim_buf_set_var(args.buf, 'lsp_server_ready', true)
+    end,
+  })
 
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
