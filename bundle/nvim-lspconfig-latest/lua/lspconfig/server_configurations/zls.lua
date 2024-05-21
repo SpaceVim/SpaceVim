@@ -4,7 +4,7 @@ return {
   default_config = {
     cmd = { 'zls' },
     filetypes = { 'zig', 'zir' },
-    root_dir = util.root_pattern('zls.json', '.git'),
+    root_dir = util.root_pattern('zls.json', 'build.zig', '.git'),
     single_file_support = true,
   },
   docs = {
@@ -14,7 +14,7 @@ https://github.com/zigtools/zls
 Zig LSP implementation + Zig Language Server
         ]],
     default_config = {
-      root_dir = [[util.root_pattern("zls.json", ".git")]],
+      root_dir = [[util.root_pattern("zls.json", "build.zig", ".git")]],
     },
   },
 }

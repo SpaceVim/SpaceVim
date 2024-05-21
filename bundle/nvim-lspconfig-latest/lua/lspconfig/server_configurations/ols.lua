@@ -4,8 +4,7 @@ return {
   default_config = {
     cmd = { 'ols' },
     filetypes = { 'odin' },
-    root_dir = util.root_pattern('ols.json', '.git'),
-    single_file_support = true,
+    root_dir = util.root_pattern('ols.json', '.git', '*.odin'),
   },
   docs = {
     description = [[
@@ -14,7 +13,7 @@ return {
            `Odin Language Server`.
         ]],
     default_config = {
-      root_dir = [[util.root_pattern("ols.json", ".git")]],
+      root_dir = [[util.root_pattern("ols.json", ".git", "*.odin")]],
     },
   },
 }

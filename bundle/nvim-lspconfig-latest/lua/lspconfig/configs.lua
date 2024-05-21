@@ -1,26 +1,28 @@
 local util = require 'lspconfig.util'
+local async = require 'lspconfig.async'
 local api, validate, lsp, uv, fn = vim.api, vim.validate, vim.lsp, vim.loop, vim.fn
 local tbl_deep_extend = vim.tbl_deep_extend
 
 local configs = {}
 
-local function reenter()
-  if vim.in_fast_event() then
-    local co = assert(coroutine.running())
-    vim.schedule(function()
-      coroutine.resume(co)
-    end)
-    coroutine.yield()
-  end
-end
+--- @class lspconfig.Config : vim.lsp.ClientConfig
+--- @field enabled? boolean
+--- @field single_file_support? boolean
+--- @field filetypes? string[]
+--- @field filetype? string
+--- @field on_new_config? function
+--- @field autostart? boolean
+--- @field package _on_attach? fun(client: vim.lsp.Client, bufnr: integer)
 
-local function async_run(func)
-  coroutine.resume(coroutine.create(function()
-    local status, err = pcall(func)
-    if not status then
-      vim.notify(('[lspconfig] unhandled error: %s'):format(tostring(err)), vim.log.levels.WARN)
+--- @param cmd any
+local function sanitize_cmd(cmd)
+  if cmd and type(cmd) == 'table' and not vim.tbl_isempty(cmd) then
+    local original = cmd[1]
+    cmd[1] = vim.fn.exepath(cmd[1])
+    if #cmd[1] == 0 then
+      cmd[1] = original
     end
-  end))
+  end
 end
 
 function configs.__newindex(t, config_name, config_def)
@@ -60,6 +62,7 @@ function configs.__newindex(t, config_name, config_def)
   -- Force this part.
   default_config.name = config_name
 
+  --- @param user_config lspconfig.Config
   function M.setup(user_config)
     local lsp_group = api.nvim_create_augroup('lspconfig', { clear = false })
 
@@ -86,13 +89,7 @@ function configs.__newindex(t, config_name, config_def)
 
     local config = tbl_deep_extend('keep', user_config, default_config)
 
-    if config.cmd and type(config.cmd) == 'table' and not vim.tbl_isempty(config.cmd) then
-      local original = config.cmd[1]
-      config.cmd[1] = vim.fn.exepath(config.cmd[1])
-      if #config.cmd[1] == 0 then
-        config.cmd[1] = original
-      end
-    end
+    sanitize_cmd(config.cmd)
 
     if util.on_setup then
       pcall(util.on_setup, config, user_config)
@@ -104,7 +101,7 @@ function configs.__newindex(t, config_name, config_def)
       api.nvim_create_autocmd(event_conf.event, {
         pattern = event_conf.pattern or '*',
         callback = function(opt)
-          M.manager.try_add(opt.buf)
+          M.manager:try_add(opt.buf)
         end,
         group = lsp_group,
         desc = string.format(
@@ -118,6 +115,9 @@ function configs.__newindex(t, config_name, config_def)
 
     function M.launch(bufnr)
       bufnr = bufnr or api.nvim_get_current_buf()
+      if not api.nvim_buf_is_valid(bufnr) then
+        return
+      end
       local bufname = api.nvim_buf_get_name(bufnr)
       if (#bufname == 0 and not config.single_file_support) or (#bufname ~= 0 and not util.bufname_valid(bufname)) then
         return
@@ -125,11 +125,11 @@ function configs.__newindex(t, config_name, config_def)
 
       local pwd = uv.cwd()
 
-      async_run(function()
+      async.run(function()
         local root_dir
         if get_root_dir then
           root_dir = get_root_dir(util.path.sanitize(bufname), bufnr)
-          reenter()
+          async.reenter()
           if not api.nvim_buf_is_valid(bufnr) then
             return
           end
@@ -139,7 +139,10 @@ function configs.__newindex(t, config_name, config_def)
           api.nvim_create_autocmd('BufReadPost', {
             pattern = fn.fnameescape(root_dir) .. '/*',
             callback = function(arg)
-              M.manager.try_add_wrapper(arg.buf, root_dir)
+              if #M.manager:clients() == 0 then
+                return true
+              end
+              M.manager:try_add_wrapper(arg.buf, root_dir)
             end,
             group = lsp_group,
             desc = string.format(
@@ -154,7 +157,7 @@ function configs.__newindex(t, config_name, config_def)
             if util.bufname_valid(buf_name) then
               local buf_dir = util.path.sanitize(buf_name)
               if buf_dir:sub(1, root_dir:len()) == root_dir then
-                M.manager.try_add_wrapper(buf, root_dir)
+                M.manager:try_add_wrapper(buf, root_dir)
               end
             end
           end
@@ -167,7 +170,7 @@ function configs.__newindex(t, config_name, config_def)
             return
           end
           local pseudo_root = #bufname == 0 and pwd or util.path.dirname(util.path.sanitize(bufname))
-          M.manager.add(pseudo_root, true, bufnr)
+          M.manager:add(pseudo_root, true, bufnr)
         end
       end)
     end
@@ -182,7 +185,7 @@ function configs.__newindex(t, config_name, config_def)
     -- In the case of a reload, close existing things.
     local reload = false
     if M.manager then
-      for _, client in ipairs(M.manager.clients()) do
+      for _, client in ipairs(M.manager:clients()) do
         client.stop(true)
       end
       reload = true
@@ -190,7 +193,7 @@ function configs.__newindex(t, config_name, config_def)
     end
 
     local make_config = function(root_dir)
-      local new_config = tbl_deep_extend('keep', vim.empty_dict(), config)
+      local new_config = tbl_deep_extend('keep', vim.empty_dict(), config) --[[@as lspconfig.Config]]
       new_config.capabilities = tbl_deep_extend('keep', new_config.capabilities, {
         workspace = {
           configuration = true,
@@ -221,9 +224,6 @@ function configs.__newindex(t, config_name, config_def)
           return client.notify('workspace/didChangeConfiguration', {
             settings = settings,
           })
-        end
-        if not vim.tbl_isempty(new_config.settings) then
-          client.workspace_did_change_configuration(new_config.settings)
         end
       end)
 
@@ -257,69 +257,13 @@ function configs.__newindex(t, config_name, config_def)
       return new_config
     end
 
-    local manager = util.server_per_root_dir_manager(function(root_dir)
-      return make_config(root_dir)
-    end)
-
-    -- Try to attach the buffer `bufnr` to a client using this config, creating
-    -- a new client if one doesn't already exist for `bufnr`.
-    function manager.try_add(bufnr, project_root)
-      bufnr = bufnr or api.nvim_get_current_buf()
-
-      if api.nvim_buf_get_option(bufnr, 'buftype') == 'nofile' then
-        return
-      end
-      local pwd = uv.cwd()
-
-      local bufname = api.nvim_buf_get_name(bufnr)
-      if #bufname == 0 and not config.single_file_support then
-        return
-      elseif #bufname ~= 0 then
-        if not util.bufname_valid(bufname) then
-          return
-        end
-      end
-
-      if project_root then
-        manager.add(project_root, false, bufnr)
-        return
-      end
-
-      local buf_path = util.path.sanitize(bufname)
-
-      async_run(function()
-        local root_dir
-        if get_root_dir then
-          root_dir = get_root_dir(buf_path, bufnr)
-          reenter()
-          if not api.nvim_buf_is_valid(bufnr) then
-            return
-          end
-        end
-
-        if root_dir then
-          manager.add(root_dir, false, bufnr)
-        elseif config.single_file_support then
-          local pseudo_root = #bufname == 0 and pwd or util.path.dirname(buf_path)
-          manager.add(pseudo_root, true, bufnr)
-        end
-      end)
-    end
-
-    -- Check that the buffer `bufnr` has a valid filetype according to
-    -- `config.filetypes`, then do `manager.try_add(bufnr)`.
-    function manager.try_add_wrapper(bufnr, project_root)
-      -- `config.filetypes = nil` means all filetypes are valid.
-      if not config.filetypes or vim.tbl_contains(config.filetypes, vim.bo[bufnr].filetype) then
-        manager.try_add(bufnr, project_root)
-      end
-    end
+    local manager = require('lspconfig.manager').new(config, make_config)
 
     M.manager = manager
     M.make_config = make_config
     if reload and config.autostart ~= false then
       for _, bufnr in ipairs(api.nvim_list_bufs()) do
-        manager.try_add_wrapper(bufnr)
+        manager:try_add_wrapper(bufnr)
       end
     end
   end
@@ -329,8 +273,9 @@ function configs.__newindex(t, config_name, config_def)
     if not client then
       return
     end
-    if client.config._on_attach then
-      client.config._on_attach(client, bufnr)
+    local config = client.config --[[@as lspconfig.Config]]
+    if config._on_attach then
+      config._on_attach(client, bufnr)
     end
     if client.config.commands and not vim.tbl_isempty(client.config.commands) then
       M.commands = vim.tbl_deep_extend('force', M.commands, client.config.commands)

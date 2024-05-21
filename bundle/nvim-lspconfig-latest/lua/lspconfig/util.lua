@@ -3,6 +3,7 @@ local validate = vim.validate
 local api = vim.api
 local lsp = vim.lsp
 local uv = vim.loop
+local nvim_ten = vim.fn.has 'nvim-0.10' == 1
 
 local is_windows = uv.os_uname().version:match 'Windows'
 
@@ -100,6 +101,8 @@ M.path = (function()
     return path:gsub('([%[%]%?%*])', '\\%1')
   end
 
+  --- @param path string
+  --- @return string
   local function sanitize(path)
     if is_windows then
       path = path:sub(1, 1):upper() .. path:sub(2)
@@ -108,19 +111,27 @@ M.path = (function()
     return path
   end
 
+  --- @param filename string
+  --- @return string|false
   local function exists(filename)
     local stat = uv.fs_stat(filename)
     return stat and stat.type or false
   end
 
+  --- @param filename string
+  --- @return boolean
   local function is_dir(filename)
     return exists(filename) == 'directory'
   end
 
+  --- @param filename string
+  --- @return boolean
   local function is_file(filename)
     return exists(filename) == 'file'
   end
 
+  --- @param path string
+  --- @return boolean
   local function is_fs_root(path)
     if is_windows then
       return path:match '^%a:$'
@@ -129,6 +140,8 @@ M.path = (function()
     end
   end
 
+  --- @param filename string
+  --- @return boolean
   local function is_absolute(filename)
     if is_windows then
       return filename:match '^%a:' or filename:match '^\\\\'
@@ -137,11 +150,14 @@ M.path = (function()
     end
   end
 
+  --- @generic T: string?
+  --- @param path T
+  --- @return T
   local function dirname(path)
     local strip_dir_pat = '/([^/]+)$'
     local strip_sep_pat = '/$'
     if not path or #path == 0 then
-      return
+      return path
     end
     local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
     if #result == 0 then
@@ -155,7 +171,7 @@ M.path = (function()
   end
 
   local function path_join(...)
-    return table.concat(vim.tbl_flatten { ... }, '/')
+    return table.concat(M.tbl_flatten { ... }, '/')
   end
 
   -- Traverse the path calling cb along the way.
@@ -227,191 +243,6 @@ M.path = (function()
   }
 end)()
 
-local function check_in_workspace(client, root_dir)
-  if not client.workspace_folders then
-    return false
-  end
-
-  for _, dir in ipairs(client.workspace_folders) do
-    if (root_dir .. '/'):sub(1, #dir.name + 1) == dir.name .. '/' then
-      return true
-    end
-  end
-
-  return false
-end
-
--- Returns a function(root_dir), which, when called with a root_dir it hasn't
--- seen before, will call make_config(root_dir) and start a new client.
-function M.server_per_root_dir_manager(make_config)
-  -- a table store the root dir with clients in this dir
-  local clients = {}
-  local manager = {}
-
-  function manager.add(root_dir, single_file, bufnr)
-    root_dir = M.path.sanitize(root_dir)
-
-    local function get_client_from_cache(client_name)
-      if vim.tbl_count(clients) == 0 then
-        return
-      end
-
-      if clients[root_dir] then
-        for _, id in pairs(clients[root_dir]) do
-          local client = lsp.get_client_by_id(id)
-          if client and client.name == client_name then
-            return client
-          end
-        end
-      end
-
-      local all_client_ids = {}
-      vim.tbl_map(function(val)
-        vim.list_extend(all_client_ids, { unpack(val) })
-      end, clients)
-
-      for _, id in ipairs(all_client_ids) do
-        local client = lsp.get_client_by_id(id)
-        if client and client.name == client_name then
-          return client
-        end
-      end
-    end
-
-    local function attach_and_cache(root, client_id)
-      lsp.buf_attach_client(bufnr, client_id)
-      if not clients[root] then
-        clients[root] = {}
-      end
-      if not vim.tbl_contains(clients[root], client_id) then
-        clients[root][#clients[root] + 1] = client_id
-      end
-    end
-
-    local new_config = make_config(root_dir)
-
-    local function register_workspace_folders(client)
-      local params = {
-        event = {
-          added = { { uri = vim.uri_from_fname(root_dir), name = root_dir } },
-          removed = {},
-        },
-      }
-      client.rpc.notify('workspace/didChangeWorkspaceFolders', params)
-      if not client.workspace_folders then
-        client.workspace_folders = {}
-      end
-      client.workspace_folders[#client.workspace_folders + 1] = params.event.added[1]
-      attach_and_cache(root_dir, client.id)
-    end
-
-    local function start_new_client()
-      -- do nothing if the client is not enabled
-      if new_config.enabled == false then
-        return
-      end
-      if not new_config.cmd then
-        vim.notify(
-          string.format(
-            '[lspconfig] cmd not defined for %q. Manually set cmd in the setup {} call according to server_configurations.md, see :help lspconfig-index.',
-            new_config.name
-          ),
-          vim.log.levels.ERROR
-        )
-        return
-      end
-      new_config.on_exit = M.add_hook_before(new_config.on_exit, function()
-        for index, id in pairs(clients[root_dir]) do
-          local exist = lsp.get_client_by_id(id)
-          if exist.name == new_config.name then
-            table.remove(clients[root_dir], index)
-          end
-        end
-      end)
-
-      -- Launch the server in the root directory used internally by lspconfig, if otherwise unset
-      -- also check that the path exist
-      if not new_config.cmd_cwd and uv.fs_realpath(root_dir) then
-        new_config.cmd_cwd = root_dir
-      end
-
-      -- Sending rootDirectory and workspaceFolders as null is not explicitly
-      -- codified in the spec. Certain servers crash if initialized with a NULL
-      -- root directory.
-      if single_file then
-        new_config.root_dir = nil
-        new_config.workspace_folders = nil
-      end
-      local client_id = lsp.start_client(new_config)
-      if not client_id then
-        return
-      end
-      attach_and_cache(root_dir, client_id)
-    end
-
-    local function attach_or_spawn(client)
-      if check_in_workspace(client, root_dir) then
-        return attach_and_cache(root_dir, client.id)
-      end
-
-      local supported = vim.tbl_get(client, 'server_capabilities', 'workspace', 'workspaceFolders', 'supported')
-      if supported then
-        return register_workspace_folders(client)
-      end
-      start_new_client()
-    end
-
-    local attach_after_client_initialized = function(client)
-      local timer = vim.loop.new_timer()
-      timer:start(
-        0,
-        10,
-        vim.schedule_wrap(function()
-          if client.initialized and client.server_capabilities and not timer:is_closing() then
-            attach_or_spawn(client)
-            timer:stop()
-            timer:close()
-          end
-        end)
-      )
-    end
-
-    local client = get_client_from_cache(new_config.name)
-
-    if not client then
-      return start_new_client()
-    end
-
-    if clients[root_dir] or single_file then
-      lsp.buf_attach_client(bufnr, client.id)
-      return
-    end
-
-    -- make sure neovim had exchanged capabilities from language server
-    -- it's useful to check server support workspaceFolders or not
-    if client.initialized and client.server_capabilities then
-      attach_or_spawn(client)
-    else
-      attach_after_client_initialized(client)
-    end
-  end
-
-  function manager.clients()
-    local res = {}
-    for _, client_ids in pairs(clients) do
-      for _, id in ipairs(client_ids) do
-        local client = lsp.get_client_by_id(id)
-        if client then
-          res[#res + 1] = client
-        end
-      end
-    end
-    return res
-  end
-
-  return manager
-end
-
 function M.search_ancestors(startpath, func)
   validate { func = { func, 'f' } }
   if func(startpath) then
@@ -431,22 +262,34 @@ function M.search_ancestors(startpath, func)
   end
 end
 
+function M.tbl_flatten(t)
+  return nvim_ten and vim.iter(t):flatten(math.huge):totable() or vim.tbl_flatten(t)
+end
+
+function M.get_lsp_clients(filter)
+  return nvim_ten and lsp.get_clients(filter) or lsp.get_active_clients(filter)
+end
+
 function M.root_pattern(...)
-  local patterns = vim.tbl_flatten { ... }
-  local function matcher(path)
+  local patterns = M.tbl_flatten { ... }
+  return function(startpath)
+    startpath = M.strip_archive_subpath(startpath)
     for _, pattern in ipairs(patterns) do
-      for _, p in ipairs(vim.fn.glob(M.path.join(M.path.escape_wildcards(path), pattern), true, true)) do
-        if M.path.exists(p) then
-          return path
+      local match = M.search_ancestors(startpath, function(path)
+        for _, p in ipairs(vim.fn.glob(M.path.join(M.path.escape_wildcards(path), pattern), true, true)) do
+          if M.path.exists(p) then
+            return path
+          end
         end
+      end)
+
+      if match ~= nil then
+        return match
       end
     end
   end
-  return function(startpath)
-    startpath = M.strip_archive_subpath(startpath)
-    return M.search_ancestors(startpath, matcher)
-  end
 end
+
 function M.find_git_ancestor(startpath)
   return M.search_ancestors(startpath, function(path)
     -- Support git directories and git files (worktrees)
@@ -455,6 +298,7 @@ function M.find_git_ancestor(startpath)
     end
   end)
 end
+
 function M.find_mercurial_ancestor(startpath)
   return M.search_ancestors(startpath, function(path)
     -- Support Mercurial directories
@@ -463,6 +307,7 @@ function M.find_mercurial_ancestor(startpath)
     end
   end)
 end
+
 function M.find_node_modules_ancestor(startpath)
   return M.search_ancestors(startpath, function(path)
     if M.path.is_dir(M.path.join(path, 'node_modules')) then
@@ -470,6 +315,7 @@ function M.find_node_modules_ancestor(startpath)
     end
   end)
 end
+
 function M.find_package_json_ancestor(startpath)
   return M.search_ancestors(startpath, function(path)
     if M.path.is_file(M.path.join(path, 'package.json')) then
@@ -496,7 +342,7 @@ function M.insert_package_json(config_files, field, fname)
 end
 
 function M.get_active_clients_list_by_ft(filetype)
-  local clients = vim.lsp.get_active_clients()
+  local clients = M.get_lsp_clients()
   local clients_list = {}
   for _, client in pairs(clients) do
     local filetypes = client.config.filetypes or {}
@@ -541,7 +387,8 @@ function M.get_config_by_ft(filetype)
 end
 
 function M.get_active_client_by_name(bufnr, servername)
-  for _, client in pairs(vim.lsp.get_active_clients { bufnr = bufnr }) do
+  --TODO(glepnir): remove this for loop when we want only support 0.10+
+  for _, client in pairs(M.get_lsp_clients { bufnr = bufnr }) do
     if client.name == servername then
       return client
     end
@@ -553,8 +400,7 @@ function M.get_managed_clients()
   local clients = {}
   for _, config in pairs(configs) do
     if config.manager then
-      vim.list_extend(clients, config.manager.clients())
-      vim.list_extend(clients, config.manager.clients(true))
+      vim.list_extend(clients, config.manager:clients())
     end
   end
   return clients
@@ -578,40 +424,6 @@ function M.strip_archive_subpath(path)
   path = vim.fn.substitute(path, 'zipfile://\\(.\\{-}\\)::[^\\\\].*$', '\\1', '')
   path = vim.fn.substitute(path, 'tarfile:\\(.\\{-}\\)::.*$', '\\1', '')
   return path
-end
-
-function M.async_run_command(cmd)
-  local co = assert(coroutine.running())
-
-  local stdout = {}
-  local stderr = {}
-  local jobid = vim.fn.jobstart(cmd, {
-    on_stdout = function(_, data, _)
-      data = table.concat(data, '\n')
-      if #data > 0 then
-        stdout[#stdout + 1] = data
-      end
-    end,
-    on_stderr = function(_, data, _)
-      stderr[#stderr + 1] = table.concat(data, '\n')
-    end,
-    on_exit = function()
-      coroutine.resume(co)
-    end,
-    stdout_buffered = true,
-    stderr_buffered = true,
-  })
-
-  if jobid <= 0 then
-    vim.notify(('[lspconfig] cmd go failed:\n%s'):format(table.concat(stderr, '')), vim.log.levels.WARN)
-    return
-  end
-
-  coroutine.yield()
-  if next(stdout) == nil then
-    return nil
-  end
-  return stdout and stdout or nil
 end
 
 return M

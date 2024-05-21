@@ -2,7 +2,7 @@ local util = require 'lspconfig.util'
 
 return {
   default_config = {
-    cmd = {},
+    cmd = { 'perlnavigator' },
     filetypes = { 'perl' },
     root_dir = util.find_git_ancestor,
     single_file_support = true,
@@ -11,16 +11,10 @@ return {
     description = [[
 https://github.com/bscan/PerlNavigator
 
-A Perl language server
+A Perl language server. It can be installed via npm:
 
-**By default, perlnavigator doesn't have a `cmd` set.** This is because nvim-lspconfig does not make assumptions about your path.
-You have to install the language server manually.
-
-Clone the PerlNavigator repo, install based on the [instructions](https://github.com/bscan/PerlNavigator#installation-for-other-editors),
-and point `cmd` to `server.js` inside the `server/out` directory:
-
-```lua
-cmd = {'node', '<path_to_repo>/server/out/server.js', '--stdio'}
+```sh
+npm i -g perlnavigator-server
 ```
 
 At minimum, you will need `perl` in your path. If you want to use a non-standard `perl` you will need to set your configuration like so:

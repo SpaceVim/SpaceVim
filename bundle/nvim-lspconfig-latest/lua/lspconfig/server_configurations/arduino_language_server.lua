@@ -46,7 +46,7 @@ $ arduino-cli sketch new test
 $ cd  test
 ```
 
-You will need a `sketch.json` file in order for the language server to understand your project. It will also save you passing options to `arduino-cli` each time you compile or upload a file. You can generate the file like using the following commands.
+You will need a `sketch.yaml` file in order for the language server to understand your project. It will also save you passing options to `arduino-cli` each time you compile or upload a file. You can generate the file like using the following commands.
 
 
 First gather some information about your board. Make sure your board is connected and run the following:
@@ -60,19 +60,14 @@ Port         Protocol Type              Board Name  FQBN            Core
 Then generate the file:
 
 ```sh
-arduino-cli board attach -p /dev/ttyACM0 test.ino
+arduino-cli board attach -p /dev/ttyACM0 -b arduino:avr:uno test.ino
 ```
 
 The resulting file should like like this:
 
-```json
-{
-  "cpu": {
-    "fqbn": "arduino:avr:uno",
-    "name": "Arduino Uno",
-    "port": "serial:///dev/ttyACM0"
-  }
-}
+```yaml
+default_fqbn: arduino:avr:uno
+default_port: /dev/ttyACM0
 ```
 
 Your folder structure should look like this:
@@ -80,7 +75,7 @@ Your folder structure should look like this:
 ```
 .
 ├── test.ino
-└── sketch.json
+└── sketch.yaml
 ```
 
 For further instruction about configuration options, run `arduino-language-server --help`.

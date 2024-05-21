@@ -1,4 +1,4 @@
-local api, fn, lsp = vim.api, vim.fn, vim.lsp
+local api, fn = vim.api, vim.fn
 local windows = require 'lspconfig.ui.windows'
 local util = require 'lspconfig.util'
 
@@ -120,7 +120,7 @@ local function make_config_info(config, bufnr)
   return lines
 end
 
----@param client table
+---@param client vim.lsp.Client
 ---@param fname string
 local function make_client_info(client, fname)
   local client_info = {}
@@ -138,7 +138,7 @@ local function make_client_info(client, fname)
     for _, schema in ipairs(workspace_folders) do
       local matched = true
       local root_dir = uv.fs_realpath(schema.name)
-      if fname:sub(1, root_dir:len()) ~= root_dir then
+      if root_dir == nil or fname:sub(1, root_dir:len()) ~= root_dir then
         matched = false
       end
 
@@ -188,8 +188,8 @@ return function()
   -- These options need to be cached before switching to the floating
   -- buffer.
   local original_bufnr = api.nvim_get_current_buf()
-  local buf_clients = lsp.get_active_clients { bufnr = original_bufnr }
-  local clients = lsp.get_active_clients()
+  local buf_clients = util.get_lsp_clients { bufnr = original_bufnr }
+  local clients = util.get_lsp_clients()
   local buffer_filetype = vim.bo.filetype
   local fname = api.nvim_buf_get_name(original_bufnr)
 
@@ -200,7 +200,7 @@ return function()
 
   local win_info = windows.percentage_range_window(0.8, 0.7)
   local bufnr, win_id = win_info.bufnr, win_info.win_id
-  api.nvim_buf_set_option(bufnr, 'bufhidden', 'wipe')
+  vim.bo.bufhidden = 'wipe'
 
   local buf_lines = {}
 
@@ -273,11 +273,9 @@ return function()
 
   local fmt_buf_lines = indent_lines(buf_lines, ' ')
 
-  fmt_buf_lines = vim.lsp.util._trim(fmt_buf_lines, {})
-
   api.nvim_buf_set_lines(bufnr, 0, -1, true, fmt_buf_lines)
-  api.nvim_buf_set_option(bufnr, 'modifiable', false)
-  api.nvim_buf_set_option(bufnr, 'filetype', 'lspinfo')
+  vim.bo.modifiable = false
+  vim.bo.filetype = 'lspinfo'
 
   local augroup = api.nvim_create_augroup('lspinfo', { clear = false })
 
@@ -348,7 +346,6 @@ return function()
 
     local info = windows.percentage_range_window(0.8, 0.7)
     lines = indent_lines(lines, ' ')
-    lines = vim.lsp.util._trim(lines, {})
     api.nvim_buf_set_lines(info.bufnr, 0, -1, false, lines)
     api.nvim_buf_add_highlight(info.bufnr, 0, 'LspInfoTip', 0, 0, -1)
 

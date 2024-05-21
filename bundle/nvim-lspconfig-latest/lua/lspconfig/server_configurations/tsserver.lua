@@ -12,10 +12,7 @@ return {
       'typescriptreact',
       'typescript.tsx',
     },
-    root_dir = function(fname)
-      return util.root_pattern 'tsconfig.json'(fname)
-        or util.root_pattern('package.json', 'jsconfig.json', '.git')(fname)
-    end,
+    root_dir = util.root_pattern('tsconfig.json', 'package.json', 'jsconfig.json', '.git'),
     single_file_support = true,
   },
   docs = {
@@ -46,9 +43,46 @@ Here's an example that disables type checking in JavaScript files.
   ]
 }
 ```
+
+### Vue support
+
+As of 2.0.0, Volar no longer supports TypeScript itself. Instead, a plugin
+adds Vue support to this language server.
+
+*IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `volar `are of identical versions.
+
+```lua
+require'lspconfig'.tsserver.setup{
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
+        languages = {"javascript", "typescript", "vue"},
+      },
+    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "vue",
+  },
+}
+
+-- You must make sure volar is setup
+-- e.g. require'lspconfig'.volar.setup{}
+-- See volar's section for more information
+```
+
+`location` MUST be defined. If the plugin is installed in `node_modules`,
+`location` can have any value.
+
+`languages` must include `vue` even if it is listed in `filetypes`.
+
+`filetypes` is extended here to include Vue SFC.
 ]],
     default_config = {
-      root_dir = [[root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")]],
+      root_dir = [[root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git")]],
     },
   },
 }

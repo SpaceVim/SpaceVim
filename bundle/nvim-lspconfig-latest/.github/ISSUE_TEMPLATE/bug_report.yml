@@ -5,73 +5,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Before reporting: search existing issues and ensure you are running the latest nightly of neovim and the latest version of nvim-lspconfig. Note that this repository implements configuration and initialization of language servers. Implementation of the language server spec itself is located in the neovim core repository.
+        Do NOT file bugs in this repo. The configs in this repo are unsupported and provided only as a starting point. We depend on users (like you) to troubleshoot issues with their specific LSP setups and [send improvements](https://github.com/neovim/nvim-lspconfig/blob/master/CONTRIBUTING.md).
+        
+        If you have a feature request or found a bug in the core Nvim `vim.lsp` module (not this repo), [report it to Nvim](https://github.com/neovim/neovim/issues/new?assignees=&labels=bug%2Clsp&projects=&template=lsp_bug_report.yml).
   - type: textarea
     attributes:
       label: "Description"
       description: "A short description of the problem you are reporting."
     validations:
       required: true
-  - type: textarea
-    attributes:
-      label: "Neovim version"
-      description: "Output of `nvim --version`"
-      placeholder: |
-        NVIM v0.6.0-dev+209-g0603eba6e
-        Build type: Release
-        LuaJIT 2.1.0-beta3
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: "Nvim-lspconfig version"
-      description: "Commit hash"
-      placeholder: 1344a859864d4e6d23d3f3adf56d49e6386ec0d2
-  - type: input
-    attributes:
-      label: "Operating system and version"
-      placeholder: "macOS 11.5"
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: "Affected language servers"
-      description: "If this issue is specific to one or more language servers, list them here. If not, write 'all'."
-      placeholder: "clangd"
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: "Steps to reproduce"
-      description: "Steps to reproduce using the minimal config provided below."
-      placeholder: |
-        1. `nvim -nu minimal.lua`
-        2. ...
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: "Actual behavior"
-      description: "Observed behavior."
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: "Expected behavior"
-      description: "A description of the behavior you expected."
-  - type: textarea
-    attributes:
-      label: "Minimal config"
-      render: Lua
-      description: "You can download a minimal_init.lua via `curl -fLO https://raw.githubusercontent.com/neovim/nvim-lspconfig/master/test/minimal_init.lua`. Then edit it to include your language server and add necessary configuration and paste it here."
-    validations:
-      required: true
-  - type: input
-    attributes:
-      label: "LSP log"
-      description: "If not using the `minimal_init.lua`, add `vim.lsp.set_log_level('debug')` to your LSP setup, upload the log file at `$HOME/.cache/nvim/lsp.log` to https://gist.github.com, and paste the link here."
-    validations:
-      required: true
-
-
-

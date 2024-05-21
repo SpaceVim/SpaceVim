@@ -136,7 +136,7 @@ describe('lspconfig', function()
         -- change the working directory to test directory
         vim.api.nvim_command 'cd ./test/test_dir/a'
         local cwd = vim.fn.getcwd()
-        eq(true, cwd == lspconfig.util.root_pattern { 'root_marker.txt', 'a_marker.txt' }(cwd))
+        eq(true, cwd == lspconfig.util.root_pattern { 'a_marker.txt', 'root_marker.txt' }(cwd))
       end)
 
       it('resolves to root_marker.txt', function()

@@ -1,4 +1,4 @@
-*lspconfig.txt*         For Nvim version 0.7+
+*lspconfig.txt*         For Nvim version 0.8+
 
 nvim-lspconfig provides user-contributed configs for the Nvim |lsp| client.
 
@@ -168,13 +168,13 @@ passed overrides to `setup {}` are:
 
   Callback invoked by Nvim's built-in client when attaching a buffer to a
   language server. Often used to set Nvim (buffer or global) options or to
-  override the Nvim client properties (`resolved_capabilities`) after a
+  override the Nvim client properties (`server_capabilities`) after a
   language server attaches. Most commonly used for settings buffer
   local keybindings. See |lspconfig-keybindings| for a usage example.
 
 - {settings} `table <string, string|table|bool>`  
 
-  The `settings` table is sent in `on_init` via a
+  The `settings` table is sent after initialization via a
   `workspace/didChangeConfiguration` notification from the Nvim client to
   the language server. These settings allow a user to change optional runtime
   settings of the language server. 
@@ -371,7 +371,8 @@ below returns a function that takes as its argument the current buffer path.
 - `util.root_pattern`: function which takes multiple arguments, each 
   corresponding to a different root pattern against which the contents of the
   current directory are matched using |vim.fn.glob()| while traversing up the
-  filesystem.
+  filesystem. Parent directories are traversed once per pattern, in the order
+  the patterns are specified.
 >
    root_dir = util.root_pattern('pyproject.toml', 'requirements.txt')
 <
@@ -389,7 +390,7 @@ below returns a function that takes as its argument the current buffer path.
 - `util.find_package_json_ancestor`: a function that locates the first parent
   directory containing a `package.json`.
 >
-   root_dir = util.find_json_ancestor
+   root_dir = util.find_package_json_ancestor
 <
 Note: On Windows, `lspconfig` always assumes forward slash normalized paths with
 capitalized drive letters.
@@ -476,71 +477,65 @@ contained in `:LspInfo`:
 EXAMPLE KEYBINDINGS                                      *lspconfig-keybindings*
 
 `lspconfig`, and the core client, do not map any keybindings by default. The
-following is an example Lua block which demonstrates how to leverage
-`on-attach` to selectively apply keybindings after a language servers has
-attached to a given buffer.
+following is an example Lua block which demonstrates how to leverage the
+`LspAttach` (Nvim 0.8+) autocommand to apply keybindings after a language
+server has attached to a given buffer.
 >
->
-  -- Mappings.
+  -- Setup language servers.
+  local lspconfig = require('lspconfig')
+  lspconfig.pyright.setup {}
+  lspconfig.tsserver.setup {}
+  lspconfig.rust_analyzer.setup {
+    -- Server-specific settings. See `:help lspconfig-setup`
+    settings = {
+      ['rust-analyzer'] = {},
+    },
+  }
+
+
+  -- Global mappings.
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  local opts = { noremap=true, silent=true }
-  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
-  -- Use an on_attach function to only map the following keys
+  -- Use LspAttach autocommand to only map the following keys
   -- after the language server attaches to the current buffer
-  local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+      -- Enable completion triggered by <c-x><c-o>
+      vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-    vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, bufopts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-  end
-
-  local lsp_flags = {
-    -- This is the default in Nvim 0.7+
-    debounce_text_changes = 150,
-  }
-  require('lspconfig')['pyright'].setup{
-      on_attach = on_attach,
-      flags = lsp_flags,
-  }
-  require('lspconfig')['tsserver'].setup{
-      on_attach = on_attach,
-      flags = lsp_flags,
-  }
-  require('lspconfig')['rust_analyzer'].setup{
-      on_attach = on_attach,
-      flags = lsp_flags,
-      -- Server-specific settings...
-      settings = {
-        ["rust-analyzer"] = {}
-      }
-  }
+      -- Buffer local mappings.
+      -- See `:help vim.lsp.*` for documentation on any of the below functions
+      local opts = { buffer = ev.buf }
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+      vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+      vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+      vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+      vim.keymap.set('n', '<space>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, opts)
+      vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+      vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+      vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      vim.keymap.set('n', '<space>f', function()
+        vim.lsp.buf.format { async = true }
+      end, opts)
+    end,
+  })
 
 ==============================================================================
 COMPLETION SUPPORT                                        *lspconfig-completion*
 
 Manually triggered completion can be provided by Nvim's built-in omnifunc.
-See |lsp-config|.
+See |lspconfig|.
 
 For autocompletion, Nvim does not provide built-in functionality. Consult the
 nvim-lspconfig wiki, which provides configuration examples for using

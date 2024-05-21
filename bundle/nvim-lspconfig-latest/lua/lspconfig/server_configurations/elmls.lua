@@ -18,7 +18,10 @@ return {
       end
     end,
     init_options = {
-      elmAnalyseTrigger = 'change',
+      elmReviewDiagnostics = 'off', -- 'off' | 'warning' | 'error'
+      skipInstallPackageConfirmation = false,
+      disableElmLSDiagnostics = false,
+      onlyUpdateDiagnosticsOnSave = false,
     },
   },
   docs = {

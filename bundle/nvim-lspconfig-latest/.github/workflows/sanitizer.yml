@@ -3,12 +3,11 @@ on: [pull_request]
 jobs:
   disallowed-root-checker:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
       - run: |
           if ! bash .github/ci/run_sanitizer.sh ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}; then
             exit 1

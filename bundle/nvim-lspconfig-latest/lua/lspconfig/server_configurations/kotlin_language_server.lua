@@ -15,9 +15,6 @@ local root_files = {
   'settings.gradle.kts', -- Gradle (multi-project)
   'build.xml', -- Ant
   'pom.xml', -- Maven
-}
-
-local fallback_root_files = {
   'build.gradle', -- Gradle
   'build.gradle.kts', -- Gradle
 }
@@ -25,10 +22,11 @@ local fallback_root_files = {
 return {
   default_config = {
     filetypes = { 'kotlin' },
-    root_dir = function(fname)
-      return util.root_pattern(unpack(root_files))(fname) or util.root_pattern(unpack(fallback_root_files))(fname)
-    end,
+    root_dir = util.root_pattern(unpack(root_files)),
     cmd = { bin_name },
+    init_options = {
+      storagePath = util.root_pattern(unpack(root_files))(vim.fn.expand '%:p:h'),
+    },
   },
   docs = {
     description = [[
@@ -44,28 +42,16 @@ return {
     You could refer for this capability to:
     https://github.com/udalov/kotlin-vim (recommended)
     Note that there is no LICENSE specified yet.
+
+    For faster startup, you can setup caching by specifying a storagePath
+    in the init_options. The default is your home directory.
     ]],
     default_config = {
-      root_dir = [[root_pattern("settings.gradle")]],
+      root_dir = [[See source]],
       cmd = { 'kotlin-language-server' },
-      capabilities = [[
-      smart code completion,
-      diagnostics,
-      hover,
-      document symbols,
-      definition lookup,
-      method signature help,
-      dependency resolution,
-      additional plugins from: https://github.com/fwcd
-
-      Snipped of License (refer to source for full License):
-
-      The MIT License (MIT)
-
-      Copyright (c) 2016 George Fraser
-      Copyright (c) 2018 fwcd
-
-      ]],
+      init_options = {
+        storagePath = [[Enables caching and use project root to store cache data. See source]],
+      },
     },
   },
 }

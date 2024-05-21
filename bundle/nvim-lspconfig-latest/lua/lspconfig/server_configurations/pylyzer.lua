@@ -14,6 +14,7 @@ return {
       }
       return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
     end,
+    single_file_support = true,
     settings = {
       python = {
         diagnostics = true,

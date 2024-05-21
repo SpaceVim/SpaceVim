@@ -8,6 +8,7 @@ return {
     init_options = {
       formatter = 'auto',
     },
+    single_file_support = true,
   },
   docs = {
     description = [[

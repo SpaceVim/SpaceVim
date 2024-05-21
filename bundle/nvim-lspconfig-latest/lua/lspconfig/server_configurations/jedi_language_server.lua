@@ -6,6 +6,7 @@ local root_files = {
   'setup.cfg',
   'requirements.txt',
   'Pipfile',
+  '.git',
 }
 
 return {

@@ -7,7 +7,7 @@ return {
     on_new_config = function(config)
       if not config.cmd and config.apex_jar_path then
         config.cmd = {
-          'java',
+          vim.env.JAVA_HOME and util.path.join(vim.env.JAVA_HOME, 'bin', 'java') or 'java',
           '-cp',
           config.apex_jar_path,
           '-Ddebug.internal.errors=true',

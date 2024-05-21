@@ -129,6 +129,6 @@ by neovim.
       dap,
     }
 
-    config.cmd = vim.tbl_flatten { java_cmd, vdmj_cmd }
+    config.cmd = util.tbl_flatten { java_cmd, vdmj_cmd }
   end,
 }

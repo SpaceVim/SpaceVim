@@ -1,17 +1,17 @@
 local util = require 'lspconfig.util'
 
-local texlab_build_status = vim.tbl_add_reverse_lookup {
-  Success = 0,
-  Error = 1,
-  Failure = 2,
-  Cancelled = 3,
+local texlab_build_status = {
+  [0] = 'Success',
+  [1] = 'Error',
+  [2] = 'Failure',
+  [3] = 'Cancelled',
 }
 
-local texlab_forward_status = vim.tbl_add_reverse_lookup {
-  Success = 0,
-  Error = 1,
-  Failure = 2,
-  Unconfigured = 3,
+local texlab_forward_status = {
+  [0] = 'Success',
+  [1] = 'Error',
+  [2] = 'Failure',
+  [3] = 'Unconfigured',
 }
 
 local function buf_build(bufnr)
@@ -70,9 +70,7 @@ return {
   default_config = {
     cmd = { 'texlab' },
     filetypes = { 'tex', 'plaintex', 'bib' },
-    root_dir = function(fname)
-      return util.root_pattern '.latexmkrc'(fname) or util.find_git_ancestor(fname)
-    end,
+    root_dir = util.root_pattern('.git', '.latexmkrc', '.texlabroot', 'texlabroot', 'Tectonic.toml'),
     single_file_support = true,
     settings = {
       texlab = {

@@ -3,11 +3,11 @@ local util = require 'lspconfig.util'
 local language_id_mapping = {
   bib = 'bibtex',
   plaintex = 'tex',
-  rnoweb = 'sweave',
+  rnoweb = 'rsweave',
   rst = 'restructuredtext',
   tex = 'latex',
-  xhtml = 'xhtml',
   pandoc = 'markdown',
+  text = 'plaintext',
 }
 
 local bin_name = 'ltex-ls'
@@ -15,20 +15,57 @@ if vim.fn.has 'win32' == 1 then
   bin_name = bin_name .. '.bat'
 end
 
+local filetypes = {
+  'bib',
+  'gitcommit',
+  'markdown',
+  'org',
+  'plaintex',
+  'rst',
+  'rnoweb',
+  'tex',
+  'pandoc',
+  'quarto',
+  'rmd',
+  'context',
+  'html',
+  'xhtml',
+  'mail',
+  'text',
+}
+
+local function get_language_id(_, filetype)
+  local language_id = language_id_mapping[filetype]
+  if language_id then
+    return language_id
+  else
+    return filetype
+  end
+end
+local enabled_ids = {}
+do
+  local enabled_keys = {}
+  for _, ft in ipairs(filetypes) do
+    local id = get_language_id({}, ft)
+    if not enabled_keys[id] then
+      enabled_keys[id] = true
+      table.insert(enabled_ids, id)
+    end
+  end
+end
+
 return {
   default_config = {
     cmd = { bin_name },
-    filetypes = { 'bib', 'gitcommit', 'markdown', 'org', 'plaintex', 'rst', 'rnoweb', 'tex', 'pandoc' },
+    filetypes = filetypes,
     root_dir = util.find_git_ancestor,
     single_file_support = true,
-    get_language_id = function(_, filetype)
-      local language_id = language_id_mapping[filetype]
-      if language_id then
-        return language_id
-      else
-        return filetype
-      end
-    end,
+    get_language_id = get_language_id,
+    settings = {
+      ltex = {
+        enabled = enabled_ids,
+      },
+    },
   },
   docs = {
     description = [=[

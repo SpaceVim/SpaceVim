@@ -1,26 +1,33 @@
 local util = require 'lspconfig.util'
+local async = require 'lspconfig.async'
 
 local function reload_workspace(bufnr)
   bufnr = util.validate_bufnr(bufnr)
-  vim.lsp.buf_request(bufnr, 'rust-analyzer/reloadWorkspace', nil, function(err)
-    if err then
-      error(tostring(err))
-    end
-    vim.notify 'Cargo workspace reloaded'
-  end)
+  local clients = util.get_lsp_clients { bufnr = bufnr, name = 'rust_analyzer' }
+  for _, client in ipairs(clients) do
+    vim.notify 'Reloading Cargo Workspace'
+    client.request('rust-analyzer/reloadWorkspace', nil, function(err)
+      if err then
+        error(tostring(err))
+      end
+      vim.notify 'Cargo workspace reloaded'
+    end, 0)
+  end
 end
 
 local function is_library(fname)
-  local cargo_home = os.getenv 'CARGO_HOME' or util.path.join(vim.env.HOME, '.cargo')
+  local user_home = util.path.sanitize(vim.env.HOME)
+  local cargo_home = os.getenv 'CARGO_HOME' or util.path.join(user_home, '.cargo')
   local registry = util.path.join(cargo_home, 'registry', 'src')
+  local git_registry = util.path.join(cargo_home, 'git', 'checkouts')
 
-  local rustup_home = os.getenv 'RUSTUP_HOME' or util.path.join(vim.env.HOME, '.rustup')
+  local rustup_home = os.getenv 'RUSTUP_HOME' or util.path.join(user_home, '.rustup')
   local toolchains = util.path.join(rustup_home, 'toolchains')
 
-  for _, item in ipairs { toolchains, registry } do
-    if fname:sub(1, #item) == item then
-      local clients = vim.lsp.get_active_clients { name = 'rust_analyzer' }
-      return clients[#clients].config.root_dir
+  for _, item in ipairs { toolchains, registry, git_registry } do
+    if util.path.is_descendant(item, fname) then
+      local clients = util.get_lsp_clients { name = 'rust_analyzer' }
+      return #clients > 0 and clients[#clients].config.root_dir or nil
     end
   end
 end
@@ -37,6 +44,7 @@ return {
   default_config = {
     cmd = { 'rust-analyzer' },
     filetypes = { 'rust' },
+    single_file_support = true,
     root_dir = function(fname)
       local reuse_active = is_library(fname)
       if reuse_active then
@@ -44,19 +52,26 @@ return {
       end
 
       local cargo_crate_dir = util.root_pattern 'Cargo.toml'(fname)
-      local cmd = { 'cargo', 'metadata', '--no-deps', '--format-version', '1' }
-      if cargo_crate_dir ~= nil then
-        cmd[#cmd + 1] = '--manifest-path'
-        cmd[#cmd + 1] = util.path.join(cargo_crate_dir, 'Cargo.toml')
-      end
-
-      local result = util.async_run_command(cmd)
       local cargo_workspace_root
 
-      if result and result[1] then
-        result = vim.json.decode(table.concat(result, ''))
-        if result['workspace_root'] then
-          cargo_workspace_root = util.path.sanitize(result['workspace_root'])
+      if cargo_crate_dir ~= nil then
+        local cmd = {
+          'cargo',
+          'metadata',
+          '--no-deps',
+          '--format-version',
+          '1',
+          '--manifest-path',
+          util.path.join(cargo_crate_dir, 'Cargo.toml'),
+        }
+
+        local result = async.run_command(cmd)
+
+        if result and result[1] then
+          result = vim.json.decode(table.concat(result, ''))
+          if result['workspace_root'] then
+            cargo_workspace_root = util.path.sanitize(result['workspace_root'])
+          end
         end
       end
 

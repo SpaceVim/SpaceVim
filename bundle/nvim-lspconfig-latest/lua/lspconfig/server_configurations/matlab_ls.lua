@@ -7,18 +7,12 @@ return {
     root_dir = util.find_git_ancestor,
     single_file_support = false,
     settings = {
-      matlab = {
+      MATLAB = {
         indexWorkspace = false,
         installPath = '',
         matlabConnectionTiming = 'onStart',
         telemetry = true,
       },
-    },
-    handlers = {
-      ['workspace/configuration'] = function(_, _, ctx)
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        return { client.config.settings.matlab }
-      end,
     },
   },
   docs = {

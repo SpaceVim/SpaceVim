@@ -8,7 +8,7 @@ return {
   },
   docs = {
     description = [[
-https://github.com/dalance/veryl
+https://github.com/veryl-lang/veryl
 
 Language server for Veryl
 

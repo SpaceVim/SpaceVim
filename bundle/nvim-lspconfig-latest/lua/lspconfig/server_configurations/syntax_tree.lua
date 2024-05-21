@@ -4,9 +4,7 @@ return {
   default_config = {
     cmd = { 'stree', 'lsp' },
     filetypes = { 'ruby' },
-    root_dir = function(fname)
-      return util.root_pattern '.streerc'(fname) or util.root_pattern('Gemfile', '.git')(fname)
-    end,
+    root_dir = util.root_pattern('.streerc', 'Gemfile', '.git'),
   },
   docs = {
     description = [[

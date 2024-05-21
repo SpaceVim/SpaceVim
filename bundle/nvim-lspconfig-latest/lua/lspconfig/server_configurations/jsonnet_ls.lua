@@ -13,6 +13,7 @@ return {
   default_config = {
     cmd = { 'jsonnet-language-server' },
     filetypes = { 'jsonnet', 'libsonnet' },
+    single_file_support = true,
     root_dir = function(fname)
       return util.root_pattern 'jsonnetfile.json'(fname) or util.find_git_ancestor(fname)
     end,

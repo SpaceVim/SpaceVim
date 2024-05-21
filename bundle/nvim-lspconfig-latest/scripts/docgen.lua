@@ -4,7 +4,6 @@ local util = require 'lspconfig.util'
 local inspect = vim.inspect
 local uv = vim.loop
 local fn = vim.fn
-local tbl_flatten = vim.tbl_flatten
 
 local function template(s, params)
   return (s:gsub('{{([^{}]+)}}', params))
@@ -40,12 +39,15 @@ local function indent(n, s)
 end
 
 local function make_parts(fns)
-  return tbl_flatten(map_list(fns, function(v)
-    if type(v) == 'function' then
-      v = v()
-    end
-    return { v }
-  end))
+  return vim
+    .iter(fns)
+    :map(function(v)
+      if type(v) == 'function' then
+        v = v()
+      end
+      return { v }
+    end)
+    :totable()
 end
 
 local function make_section(indentlvl, sep, parts)
@@ -215,7 +217,7 @@ local function make_lsp_sections()
                                 return tick('enum ' .. inspect(v.enum))
                               end
                               if v.type then
-                                return tick(table.concat(tbl_flatten { v.type }, '|'))
+                                return tick(table.concat(util.tbl_flatten { v.type }, '|'))
                               end
                             end,
                           }),

@@ -3,7 +3,7 @@ local util = require 'lspconfig.util'
 return {
   default_config = {
     cmd = { 'vscode-html-language-server', '--stdio' },
-    filetypes = { 'html' },
+    filetypes = { 'html', 'templ' },
     root_dir = util.root_pattern('package.json', '.git'),
     single_file_support = true,
     settings = {},

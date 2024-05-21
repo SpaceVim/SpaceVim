@@ -1,6 +1,5 @@
 blank_issues_enabled: false
 contact_links:
    - name: Question
-     url: https://neovim.discourse.group/c/language-server-protocol-lsp/7
-     about: Usage questions and support requests are answered in the Neovim Discourse
-
+     url: https://vi.stackexchange.com/
+     about: Usage questions and support requests
