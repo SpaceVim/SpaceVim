@@ -120,6 +120,8 @@ function! s:fix_colorschem_in_SpaceVim() abort
   if &background ==# 'dark'
     if g:colors_name ==# 'gruvbox'
       hi VertSplit guibg=#282828 guifg=#181A1F
+      hi clear NormalFloat
+      hi link NormalFloat PMenu
     elseif g:colors_name ==# 'one'
       hi VertSplit guibg=#282c34 guifg=#181A1F
       hi SPCFloatBorder guibg=#282c34 guifg=#181A1F
