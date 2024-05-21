@@ -256,7 +256,14 @@ endfunction
 
 
 function! s:syntax_checking() abort
-  if g:spacevim_lint_engine ==# 'neomake'
+  if SpaceVim#lsp#buf_server_ready()
+    let counts = v:lua.vim.diagnostic.count(0)
+    let warnings = get(counts, 1, 0)
+    let errors = get(counts, 0, 0)
+    let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
+    return l
+  elseif g:spacevim_lint_engine ==# 'neomake'
     if !exists('g:loaded_neomake')
       return ''
     endif
