@@ -257,7 +257,7 @@ endfunction
 
 function! s:syntax_checking() abort
   if SpaceVim#lsp#buf_server_ready()
-    let counts = v:lua.vim.diagnostic.count(0)
+    let counts = v:lua.require('spacevim.lsp').lsp_diagnostic_count()
     let warnings = get(counts, 1, 0)
     let errors = get(counts, 0, 0)
     let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''

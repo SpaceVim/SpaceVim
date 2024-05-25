@@ -4,6 +4,13 @@ function M.server_ready()
   return vim.b.lsp_server_ready
 end
 
+function M.lsp_diagnostic_count()
+  if vim.diagnostic.count then
+    return vim.diagnostic.count(0)
+  end
+  return {}
+end
+
 M.clients = {}
 -- store the clients for different filetype
 -- which can be called via vim.lsp.start_client()
