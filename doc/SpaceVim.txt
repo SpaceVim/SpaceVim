@@ -3187,7 +3187,31 @@ development. This layer is not enabled by default, to enable it:
   [[layers]]
     name = 'go'
 <
+LANGUAGE SERVER
+
+There are two ways to setup the golang language server protocol.
+
+neovim(`>=0.5.0`)
+
+If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` option of
+`lsp` layer to specific the language servers. for example:
+>
+  [[layers]]
+    name = 'lsp'
+    enabled_clients = ['gopls']
+<
+vim or neovim(`<0.5.0`)
+
+To enable language server protocol support, you may need to enable lsp layer.
+>
+  [[layers]]
+    name = "lsp"
+    filetypes = [
+      "go"
+    ]
+<
 LAYER OPTIONS
+
   1. `enabled_linters`: set a list of enabled lint for golang. by default this
 option is `['golangci_lint']`. The available linters includes: `go`,
 `gometalinter`, etc.
