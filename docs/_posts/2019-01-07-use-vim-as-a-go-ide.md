@@ -16,6 +16,9 @@ Each of the following sections will be covered:
 <!-- vim-markdown-toc GFM -->
 
 - [Enable language layer](#enable-language-layer)
+- [Language server](#language-server)
+  - [neovim(`>=0.5.0`)](#neovim050)
+  - [vim or neovim(`<0.5.0`)](#vim-or-neovim050)
 - [code completion](#code-completion)
 - [alternate file jumping](#alternate-file-jumping)
 - [code running](#code-running)
@@ -37,6 +40,33 @@ SpaceVim configuration file, and add following configuration:
 ```
 
 for more info, you can read the [lang#go](../layers/lang/go/) layer documentation.
+
+### Language server
+
+There are two ways to setup the golang language server protocol.
+
+#### neovim(`>=0.5.0`)
+
+If you are using `nvim(>=0.5.0)`. You need to use `enabled_clients` to specific the language servers.
+for example:
+
+```toml
+[[layers]]
+    name = 'lsp'
+    enabled_clients = ['gopls']
+```
+
+#### vim or neovim(`<0.5.0`)
+
+To enable language server protocol support, you may need to enable lsp layer.
+
+```toml
+[[layers]]
+  name = "lsp"
+  filetypes = [
+    "go"
+  ]
+```
 
 ### code completion
 
