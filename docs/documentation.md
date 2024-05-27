@@ -102,7 +102,7 @@ description: "General documentation about how to use SpaceVim, including the qui
 - **Great documentation:** Everything is documented in `:h SpaceVim`.
 - **Better experience:** Most of the core plugins have been rewritten using Lua.
 - **Beautiful UI:** The interface has been carefully designed.
-- **Mnemonic key bindings:**  Key bindings are organized using mnemonic prefixes.
+- **Mnemonic key bindings:** Key bindings are organized using mnemonic prefixes.
 - **Lower the risk of RSI:** Heavily using the `<Space>` key instead of modifiers.
 
 ## Screenshots
@@ -634,6 +634,15 @@ By default SpaceVim uses nerd-fonts, which can be downloaded from their [website
 **syntax checking integration:**
 
 When syntax checking major mode is enabled, a new element appears showing the number of errors and warnings.
+
+The default highlight group and colors are:
+
+| highlight group             | color     |
+| --------------------------- | --------- |
+| `SpaceVim_statusline_error` | `#ffc0b9` |
+| `SpaceVim_statusline_warn`  | `#fce094` |
+| `SpaceVim_statusline_info`  | `#8cf8f7` |
+| `SpaceVim_statusline_hint`  | `#a6dbff` |
 
 **Search index integration:**
 

@@ -258,11 +258,20 @@ endfunction
 function! s:syntax_checking() abort
   if SpaceVim#lsp#buf_server_ready()
     let counts = v:lua.require('spacevim.lsp').lsp_diagnostic_count()
-    let warnings = get(counts, 1, 0)
     let errors = get(counts, 0, 0)
-    let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
-    return l
+    let warnings = get(counts, 1, 0)
+    let infos = get(counts, 2, 0)
+    let hints = get(counts, 3, 0)
+    let errors_l = errors ? '%#SpaceVim_statusline_error#● ' . errors : ''
+    let warnings_l = warnings ? '%#SpaceVim_statusline_warn#● ' . warnings : ''
+    let infos_l = infos ? '%#SpaceVim_statusline_info#● ' . infos : ''
+    let hints_l = hints ? '%#SpaceVim_statusline_hint#● ' . hints : ''
+    let l = join(filter([errors_l, warnings_l, infos_l, hints_l], 'v:val != ""'), ' ')
+    if !empty(l)
+      return ' ' . l . ' '
+    else
+      return ''
+    endif
   elseif g:spacevim_lint_engine ==# 'neomake'
     if !exists('g:loaded_neomake')
       return ''
@@ -736,8 +745,10 @@ function! SpaceVim#layers#core#statusline#def_colors() abort
   exe 'hi! SpaceVim_statusline_b ctermbg=' . t[1][2] . ' ctermfg=' . t[1][3] . ' guibg=' . t[1][1] . ' guifg=' . t[1][0]
   exe 'hi! SpaceVim_statusline_c ctermbg=' . t[2][2] . ' ctermfg=' . t[2][3] . ' guibg=' . t[2][1] . ' guifg=' . t[2][0]
   exe 'hi! SpaceVim_statusline_z ctermbg=' . t[3][1] . ' ctermfg=' . t[2][2] . ' guibg=' . t[3][0] . ' guifg=' . t[2][0]
-  exe 'hi! SpaceVim_statusline_error ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#fb4934 gui=bold'
-  exe 'hi! SpaceVim_statusline_warn ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#fabd2f gui=bold'
+  exe 'hi! SpaceVim_statusline_error ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#ffc0b9 gui=bold'
+  exe 'hi! SpaceVim_statusline_warn ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#fce094 gui=bold'
+  exe 'hi! SpaceVim_statusline_info ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#8cf8f7 gui=bold'
+  exe 'hi! SpaceVim_statusline_hint ctermbg=' . t[1][2] . ' ctermfg=Black guibg=' . t[1][1] . ' guifg=#a6dbff gui=bold'
   call s:HI.hi_separator('SpaceVim_statusline_a', 'SpaceVim_statusline_b')
   call s:HI.hi_separator('SpaceVim_statusline_a_bold', 'SpaceVim_statusline_b')
   call s:HI.hi_separator('SpaceVim_statusline_ia', 'SpaceVim_statusline_b')
