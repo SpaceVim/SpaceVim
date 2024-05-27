@@ -6,72 +6,219 @@
 " License: GPLv3
 "=============================================================================
 
-
 let s:VIM = SpaceVim#api#import('vim')
 
+if has('nvim-0.10.0')
+  "autocmds
+  function! SpaceVim#autocmds#VimEnter() abort
+    call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+    call s:apply_custom_space_keybindings()
+    call s:apply_custom_leader_keybindings()
+    if SpaceVim#layers#isLoaded('core#statusline')
+      set laststatus=2
+      call SpaceVim#layers#core#statusline#def_colors()
+      setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
+    endif
+    if SpaceVim#layers#isLoaded('core#tabline')
+      call SpaceVim#layers#core#tabline#def_colors()
+      set showtabline=2
+    endif
+    call SpaceVim#logger#info('run root changed callback on VimEnter!')
+    call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    if !empty(get(g:, '_spacevim_bootstrap_after', ''))
+      try
+        call call(g:_spacevim_bootstrap_after, [])
+        let g:_spacevim_bootstrap_after_success = 1
+      catch
+        call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
+        call SpaceVim#logger#error('       exception: ' . v:exception)
+        call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+        let g:_spacevim_bootstrap_after_success = 0
+      endtry
+    endif
 
-"autocmds
-function! SpaceVim#autocmds#init() abort
-  call SpaceVim#logger#debug('init SpaceVim_core autocmd group')
-  augroup SpaceVim_core
-    au!
-    autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
-          \   q :call <SID>close_quickfix()<cr>
-    autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-          \   bd|
-          \   q | endif
-    autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
-    autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
-    if g:spacevim_relativenumber
-      autocmd BufEnter,WinEnter * if &nu | set rnu   | endif
-      autocmd BufLeave,WinLeave * if &nu | set nornu | endif
+    if !get(g:, '_spacevim_bootstrap_before_success', 1)
+      echohl Error
+      echom 'bootstrap_before function failed to execute. Check `SPC h L` for errors.'
+      echohl None
     endif
-    if g:spacevim_enable_cursorline == 1
-      autocmd BufEnter,WinEnter,InsertLeave * call s:enable_cursorline()
-      autocmd BufLeave,WinLeave,InsertEnter * call s:disable_cursorline()
+    if !get(g:, '_spacevim_bootstrap_after_success', 1)
+      echohl Error
+      echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
+      echohl None
     endif
-    if g:spacevim_enable_cursorcolumn == 1
-      autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
-      autocmd BufLeave,WinLeave,InsertEnter * setl nocursorcolumn
+
+    if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
+      call SpaceVim#logger#info('loading local conf: .SpaceVim.d/init.vim')
+      try
+        exe 'source .SpaceVim.d/init.vim'
+      catch
+        call SpaceVim#logger#error('Error occurred while loading the local configuration')
+        call SpaceVim#logger#error('       exception: ' . v:exception)
+        call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+      endtry
+      call SpaceVim#logger#info('finished loading local conf')
     endif
-    autocmd BufLeave * call SpaceVim#plugins#history#savepos()
-    autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
-    autocmd BufWinLeave * let b:_winview = winsaveview()
-    autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
-    autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
-    autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
-    autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
-    autocmd Filetype qf setlocal nobuflisted
-    au StdinReadPost * call s:disable_welcome()
-    if !has('nvim-0.5.0')
-      autocmd InsertEnter * call s:fixindentline()
+  endfunction
+  function! SpaceVim#autocmds#init() abort
+    lua require('spacevim.autocmds').init()
+    augroup SpaceVim_core
+      au!
+      autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+            \   q :call <SID>close_quickfix()<cr>
+      autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+            \   bd|
+            \   q | endif
+      autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
+      autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
+      autocmd BufLeave * call SpaceVim#plugins#history#savepos()
+      autocmd BufWinLeave * let b:_winview = winsaveview()
+      autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
+      autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
+      au StdinReadPost * call s:disable_welcome()
+      if !has('nvim-0.5.0')
+        autocmd InsertEnter * call s:fixindentline()
+      endif
+      autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
+      if executable('synclient') && g:spacevim_auto_disable_touchpad
+        let s:touchpadoff = 0
+        autocmd InsertEnter * call s:disable_touchpad()
+        autocmd InsertLeave * call s:enable_touchpad()
+        autocmd FocusLost * call system('synclient touchpadoff=0')
+        autocmd FocusGained * call s:reload_touchpad_status()
+      endif
+      autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one,SpaceVim call s:fix_colorschem_in_SpaceVim()
+      autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
+      autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
+      autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
+      autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
+      if has('nvim')
+        autocmd VimEnter,FocusGained * call SpaceVim#plugins#history#readcache()
+        autocmd FocusLost,VimLeave * call SpaceVim#plugins#history#writecache()
+        autocmd BufReadPost *
+              \ if line("'\"") > 0 && line("'\"") <= line("$") |
+              \   call SpaceVim#plugins#history#jumppos() |
+              \ endif
+      endif
+    augroup END
+  endfunction
+else
+  "autocmds
+  function! SpaceVim#autocmds#VimEnter() abort
+    call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+    call s:apply_custom_space_keybindings()
+    call s:apply_custom_leader_keybindings()
+    if SpaceVim#layers#isLoaded('core#statusline')
+      set laststatus=2
+      call SpaceVim#layers#core#statusline#def_colors()
+      setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
     endif
-    autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
-    if executable('synclient') && g:spacevim_auto_disable_touchpad
-      let s:touchpadoff = 0
-      autocmd InsertEnter * call s:disable_touchpad()
-      autocmd InsertLeave * call s:enable_touchpad()
-      autocmd FocusLost * call system('synclient touchpadoff=0')
-      autocmd FocusGained * call s:reload_touchpad_status()
+    if SpaceVim#layers#isLoaded('core#tabline')
+      call SpaceVim#layers#core#tabline#def_colors()
+      set showtabline=2
     endif
-    autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
-    autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-    autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('StartifyEndOfBuffer')
-    autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one,SpaceVim call s:fix_colorschem_in_SpaceVim()
-    autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
-    autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
-    autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
-    autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
-    if has('nvim')
-      autocmd VimEnter,FocusGained * call SpaceVim#plugins#history#readcache()
-      autocmd FocusLost,VimLeave * call SpaceVim#plugins#history#writecache()
-      autocmd BufReadPost *
-            \ if line("'\"") > 0 && line("'\"") <= line("$") |
-            \   call SpaceVim#plugins#history#jumppos() |
-            \ endif
+    call SpaceVim#logger#info('run root changed callback on VimEnter!')
+    call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+    if !empty(get(g:, '_spacevim_bootstrap_after', ''))
+      try
+        call call(g:_spacevim_bootstrap_after, [])
+        let g:_spacevim_bootstrap_after_success = 1
+      catch
+        call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
+        call SpaceVim#logger#error('       exception: ' . v:exception)
+        call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+        let g:_spacevim_bootstrap_after_success = 0
+      endtry
     endif
-  augroup END
-endfunction
+
+    if !get(g:, '_spacevim_bootstrap_before_success', 1)
+      echohl Error
+      echom 'bootstrap_before function failed to execute. Check `SPC h L` for errors.'
+      echohl None
+    endif
+    if !get(g:, '_spacevim_bootstrap_after_success', 1)
+      echohl Error
+      echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
+      echohl None
+    endif
+
+    if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
+      call SpaceVim#logger#info('loading local conf: .SpaceVim.d/init.vim')
+      try
+        exe 'source .SpaceVim.d/init.vim'
+      catch
+        call SpaceVim#logger#error('Error occurred while loading the local configuration')
+        call SpaceVim#logger#error('       exception: ' . v:exception)
+        call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+      endtry
+      call SpaceVim#logger#info('finished loading local conf')
+    endif
+  endfunction
+  function! SpaceVim#autocmds#init() abort
+    call SpaceVim#logger#debug('init SpaceVim_core autocmd group')
+    augroup SpaceVim_core
+      au!
+      autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+            \   q :call <SID>close_quickfix()<cr>
+      autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+            \   bd|
+            \   q | endif
+      autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
+      autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
+      if g:spacevim_relativenumber
+        autocmd BufEnter,WinEnter * if &nu | set rnu   | endif
+        autocmd BufLeave,WinLeave * if &nu | set nornu | endif
+      endif
+      if g:spacevim_enable_cursorline == 1
+        autocmd BufEnter,WinEnter,InsertLeave * call s:enable_cursorline()
+        autocmd BufLeave,WinLeave,InsertEnter * call s:disable_cursorline()
+      endif
+      if g:spacevim_enable_cursorcolumn == 1
+        autocmd BufEnter,WinEnter,InsertLeave * setl cursorcolumn
+        autocmd BufLeave,WinLeave,InsertEnter * setl nocursorcolumn
+      endif
+      autocmd BufLeave * call SpaceVim#plugins#history#savepos()
+      autocmd BufNewFile,BufEnter * set cpoptions+=d " NOTE: ctags find the tags file from the current path instead of the path of currect file
+      autocmd BufWinLeave * let b:_winview = winsaveview()
+      autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
+      autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
+      autocmd BufNewFile,BufRead *.avs set syntax=avs " for avs syntax file.
+      autocmd FileType cs set comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,:///,://
+      autocmd Filetype qf setlocal nobuflisted
+      au StdinReadPost * call s:disable_welcome()
+      if !has('nvim-0.5.0')
+        autocmd InsertEnter * call s:fixindentline()
+      endif
+      autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
+      if executable('synclient') && g:spacevim_auto_disable_touchpad
+        let s:touchpadoff = 0
+        autocmd InsertEnter * call s:disable_touchpad()
+        autocmd InsertLeave * call s:enable_touchpad()
+        autocmd FocusLost * call system('synclient touchpadoff=0')
+        autocmd FocusGained * call s:reload_touchpad_status()
+      endif
+      autocmd BufWritePre * call SpaceVim#plugins#mkdir#CreateCurrent()
+      autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
+      autocmd ColorScheme * call SpaceVim#api#import('vim#highlight').hide_in_normal('StartifyEndOfBuffer')
+      autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one,SpaceVim call s:fix_colorschem_in_SpaceVim()
+      autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
+      autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
+      autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
+      autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
+      if has('nvim')
+        autocmd VimEnter,FocusGained * call SpaceVim#plugins#history#readcache()
+        autocmd FocusLost,VimLeave * call SpaceVim#plugins#history#writecache()
+        autocmd BufReadPost *
+              \ if line("'\"") > 0 && line("'\"") <= line("$") |
+              \   call SpaceVim#plugins#history#jumppos() |
+              \ endif
+      endif
+    augroup END
+  endfunction
+endif
+
+
+
 
 let g:_spacevim_cursorline_flag = -1
 function! s:enable_cursorline() abort
@@ -199,56 +346,6 @@ function! s:apply_custom_leader_keybindings() abort
   endfor
 endfunction
 
-function! SpaceVim#autocmds#VimEnter() abort
-  call SpaceVim#api#import('vim#highlight').hide_in_normal('EndOfBuffer')
-  call s:apply_custom_space_keybindings()
-  call s:apply_custom_leader_keybindings()
-  if SpaceVim#layers#isLoaded('core#statusline')
-    set laststatus=2
-    call SpaceVim#layers#core#statusline#def_colors()
-    setlocal statusline=%!SpaceVim#layers#core#statusline#get(1)
-  endif
-  if SpaceVim#layers#isLoaded('core#tabline')
-    call SpaceVim#layers#core#tabline#def_colors()
-    set showtabline=2
-  endif
-  call SpaceVim#logger#info('run root changed callback on VimEnter!')
-  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
-  if !empty(get(g:, '_spacevim_bootstrap_after', ''))
-    try
-      call call(g:_spacevim_bootstrap_after, [])
-      let g:_spacevim_bootstrap_after_success = 1
-    catch
-      call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
-      call SpaceVim#logger#error('       exception: ' . v:exception)
-      call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
-      let g:_spacevim_bootstrap_after_success = 0
-    endtry
-  endif
-
-  if !get(g:, '_spacevim_bootstrap_before_success', 1)
-    echohl Error
-    echom 'bootstrap_before function failed to execute. Check `SPC h L` for errors.'
-    echohl None
-  endif
-  if !get(g:, '_spacevim_bootstrap_after_success', 1)
-    echohl Error
-    echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
-    echohl None
-  endif
-
-  if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
-    call SpaceVim#logger#info('loading local conf: .SpaceVim.d/init.vim')
-    try
-      exe 'source .SpaceVim.d/init.vim'
-    catch
-      call SpaceVim#logger#error('Error occurred while loading the local configuration')
-      call SpaceVim#logger#error('       exception: ' . v:exception)
-      call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
-    endtry
-    call SpaceVim#logger#info('finished loading local conf')
-  endif
-endfunction
 
 function! s:disable_welcome() abort
   augroup SPwelcome
