@@ -37,10 +37,6 @@ SpaceVim 这一项目起源于 2016 年 12 月份，是由 @wsdjeg 的 [DotFiles
 
 ## 特别鸣谢
 
-感谢所有参与 SpaceVim 开发的用户：
-
-<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
-
 - [@Gabirel](https://github.com/Gabirel) 及其 [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [vimdoc](https://github.com/google/vimdoc)：帮助文档自动生成工具
 - SpaceVim 中涉及到的所有插件的作者
