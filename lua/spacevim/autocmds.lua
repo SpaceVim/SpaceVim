@@ -113,7 +113,6 @@ function M.init()
     callback = function(_)
       if vim.fn.winnr('$') == 1 and vim.o.buftype == 'quickfix' then
         vim.cmd('bd')
-      else
         vim.cmd('q')
       end
     end
