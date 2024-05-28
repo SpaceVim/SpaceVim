@@ -99,6 +99,14 @@ function M.init()
         })
     end,
   })
+  -- ensure every file does syntax highlighting (full)
+  create_autocmd({'BufEnter'}, {
+    pattern = {'*'},
+    group = spacevim_core,
+    callback = function(_)
+      vim.cmd('syntax sync fromstart')
+    end
+  })
 end
 
 return M

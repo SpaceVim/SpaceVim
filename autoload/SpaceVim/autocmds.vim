@@ -74,7 +74,6 @@ if has('nvim-0.10.0')
       autocmd BufLeave * call SpaceVim#plugins#history#savepos()
       autocmd BufWinLeave * let b:_winview = winsaveview()
       autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
-      autocmd BufEnter * :syntax sync fromstart " ensure every file does syntax highlighting (full)
       au StdinReadPost * call s:disable_welcome()
       if !has('nvim-0.5.0')
         autocmd InsertEnter * call s:fixindentline()
