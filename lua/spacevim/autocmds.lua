@@ -107,6 +107,17 @@ function M.init()
       vim.cmd('syntax sync fromstart')
     end
   })
+  create_autocmd({'BufEnter'}, {
+    pattern = {'*'},
+    group = spacevim_core,
+    callback = function(_)
+      if vim.fn.winnr('$') == 1 and vim.o.buftype == 'quickfix' then
+        vim.cmd('bd')
+      else
+        vim.cmd('q')
+      end
+    end
+  })
 end
 
 return M

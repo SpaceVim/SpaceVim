@@ -66,9 +66,6 @@ if has('nvim-0.10.0')
       au!
       autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
             \   q :call <SID>close_quickfix()<cr>
-      autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
-            \   bd|
-            \   q | endif
       autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
       autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
       autocmd BufLeave * call SpaceVim#plugins#history#savepos()
