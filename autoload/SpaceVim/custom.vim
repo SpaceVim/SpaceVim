@@ -159,6 +159,9 @@ function! s:apply(config, type) abort
         if value ==# 'defx' && !has('python3')
           call SpaceVim#logger#warn('defx requires +python3!')
           continue
+        elseif value ==# 'defx' && has('nvim') && !has('nvim-0.4.0')
+          call SpaceVim#logger#warn('defx requires nvim 0.4.0+!')
+          continue
         elseif value ==# 'neo-tree' && !has('nvim')
           call SpaceVim#logger#warn('neo-tree requires neovim')
           continue
