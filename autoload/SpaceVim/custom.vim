@@ -174,8 +174,10 @@ function! s:apply(config, type) abort
             call SpaceVim#logger#warn('deoplete requires +python3!')
             continue
           endif
-        elseif value ==# 'nvim-cmp' && !has('nvim')
-          call SpaceVim#logger#warn('nvim-cmp requires neovim')
+        elseif value ==# 'nvim-cmp' && !has('nvim-0.7.0')
+          " https://github.com/hrsh7th/nvim-cmp/issues/231
+          " nvim-cmp Breaking changes
+          call SpaceVim#logger#warn('nvim-cmp will only work on nvim v0.7.x or higher')
           continue
         endif
       elseif name ==# 'statusline_right_sections'
