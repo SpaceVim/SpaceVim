@@ -50,7 +50,7 @@ local function show_taskconfig(opts)
     end
     -- @todo the text maybe changed
     local background = 'no-background'
-    if entry.value.task.isBackground == 1 then
+    if entry.value.task.isBackground then
       background = 'background'
     end
     return displayer({
