@@ -39,6 +39,7 @@ You can only think about reading the part that is relevant to what you are going
 
 ## Contributing code
 
+The source code of spacevim is hosted at [git repository](../git/repos/SpaceVim/).
 Code and documentation contributions of any kind are welcome. 
 
 ### License

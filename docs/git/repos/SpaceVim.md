@@ -3,20 +3,17 @@ title: "Source code"
 description: "The source code of SpaceVim."
 ---
 
+# The source code of SpaceVim 
 
-- For old SpaceVim users, follow these steps:
-
-```
-cd ~/.SpaceVim
-git remote set-url origin https://spacevim.org/git/repos/SpaceVim/
-```
-
-- For new users, checkout the [quick start guide](../../../quick-start-guide/) to install SpaceVim.
-
-
-If you want to read the source code locally, just clone this repository:
+The source code of SpaceVim is hosted in an online repository and can be cloned locally to view the source code.
 
 ```
 git clone https://spacevim.org/git/repos/SpaceVim/
 ```
 
+Since the code was previously hosted on GitHub, some old users need to manually modify the remote repository address:
+
+```
+cd ~/.SpaceVim
+git remote set-url origin https://spacevim.org/git/repos/SpaceVim/
+```
