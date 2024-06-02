@@ -1706,7 +1706,7 @@ function! s:parser_argv() abort
       return [2, get(v:, 'argv', ['failed to get v:argv'])]
     endif
   else
-    call SpaceVim#logger#info(printf('argc is %s, argv is %s, line2byte is %s', string(argc()), string(argv()), string(line2byte())))
+    call SpaceVim#logger#info(printf('argc is %s, argv is %s, line2byte is %s', string(argc()), string(argv()), string(line2byte('$'))))
     if !argc() && line2byte('$') == -1
       return [0]
     elseif argv()[0] =~# '/$'
