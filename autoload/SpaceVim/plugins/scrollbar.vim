@@ -172,8 +172,10 @@ function! SpaceVim#plugins#scrollbar#show() abort
         \  'row' : row,
         \  'col' : float2nr(col),
         \  'focusable' : 0,
-        \  'zindex' : 10,
         \ }
+  if has('nvim-0.5.0')
+    let opts.zindex = 10
+  endif
   if s:WIN.is_float(s:scrollbar_winid)
     if bar_size !=# s:scrollbar_size
       let s:scrollbar_size = bar_size
