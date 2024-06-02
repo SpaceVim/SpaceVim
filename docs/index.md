@@ -51,10 +51,14 @@ More posts are available on the [blog](blog/) of SpaceVim.
   87
   ```
 
-- Which Vim and Neovim versions are tested with SpaceVim?
+- Which version of vim or neovim should be installed for SpaceVim?
+
+  The following versions have been tested:
 
   - vim: `7.4.1185`, `7.4.1689`, `8.0.0027`, `9.1.0196`
-  - neovim: `0.7.2`, `0.8.0`, `0.9.5`
+  - neovim: `v0.3.0`, `v0.4.3`, `v0.5.0`, `v0.6.0`, `0.7.2`, `0.8.0`, `0.9.5`
+
+  It is recommended to use neovim v0.9.5+
 
 For more general questions, please read the SpaceVim [FAQ](faq/).
 
