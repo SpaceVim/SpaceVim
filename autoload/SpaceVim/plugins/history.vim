@@ -9,6 +9,7 @@
 let s:FILE = SpaceVim#api#import('file')
 let s:JSON = SpaceVim#api#import('data#json')
 let s:LOG = SpaceVim#logger#derive('history')
+let s:BUF = SpaceVim#api#import('vim#buffer')
 let s:history_cache_path = s:FILE.unify_path(g:spacevim_data_dir, ':p') . 'SpaceVim/nvim_history.json'
 let s:filepos = {}
 
@@ -35,13 +36,13 @@ function! SpaceVim#plugins#history#jumppos() abort
 endfunction
 
 function! SpaceVim#plugins#history#savepos() abort
-  if empty(bufname()) || &buftype == 'nofile'
+  if empty(s:BUF.bufname()) || &buftype == 'nofile'
     return
   endif
-  call s:LOG.debug('save pos for:' . bufname())
+  call s:LOG.debug('save pos for:' . s:BUF.bufname())
   let [_, l, c, _] = getpos('.')
   call s:LOG.debug(printf('line %d, col %d', l, c))
-  if l != 0 && c != 0 && filereadable(bufname())
+  if l != 0 && c != 0 && filereadable(s:BUF.bufname())
     let s:filepos[expand('%:p')] = [l, c]
   endif
 endfunction

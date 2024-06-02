@@ -5,12 +5,13 @@ endif
 
 let s:FILE = SpaceVim#api#import('file')
 let s:NT = SpaceVim#api#import('notify')
+let s:BUF = SpaceVim#api#import('vim#buffer')
 
 
 let s:bookmarks = bookmarks#cache#read()
 
 function! s:skip_current_buf() abort
-  if empty(bufname())
+  if empty(s:BUF.bufname())
     return v:true
   elseif !empty(&buftype)
     return v:true
@@ -25,7 +26,7 @@ function! bookmarks#on_leave_buffer() abort
   let file = s:FILE.unify_path(expand('%'), ':p')
 
   if has_key(s:bookmarks, file)
-    let sign_lnum_map = bookmarks#sign#get_lnums(bufnr('%'))
+    let sign_lnum_map = bookmarks#sign#get_lnums(s:BUF.bufnr())
     let new_file_bms = {}
     for lnum in keys(s:bookmarks[file])
       let signid = s:bookmarks[file][lnum].signid
@@ -203,7 +204,7 @@ function! bookmarks#showall() abort
 endfunction
 
 function! bookmarks#on_enter_buffer() abort
-  if get(b:, 'bookmarks_init', v:false) || empty(bufname()) || !empty(&buftype)
+  if get(b:, 'bookmarks_init', v:false) || empty(s:BUF.bufname()) || !empty(&buftype)
     return
   endif
   let file = s:FILE.unify_path(expand('%'), ':p')

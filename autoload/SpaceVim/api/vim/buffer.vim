@@ -75,6 +75,19 @@ function! s:self.bufnr(...) abort
   endif
 endfunction
 
+" bufname needs atleast one argv before patch-8.1.1924 has('patch-8.1.1924')
+function! s:self.bufname(...) abort
+  if has('patch-8.1.1924')
+    return call('bufname', a:000)
+  else
+    if a:0 ==# 0
+      return bufname('%')
+    else
+    return call('bufname', a:000)
+    endif
+  endif
+endfunction
+
 
 function! s:self.bufadd(name) abort
   if exists('*bufadd')
