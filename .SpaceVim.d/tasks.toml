@@ -279,3 +279,22 @@
     column = 3
     #severity = 4
     message = 4
+[open-nvim-050]
+    command = "wt.exe"
+    args = ['new-tab', '-p', 'nvim-v0.5.0']
+    isBackground = true
+[open-nvim-050.options]
+    cwd = 'C:\Users\wsdjeg\.SpaceVim'
+[open-nvim-050.options.env]
+    VIM = 'D:\Neovim\v0.5.0'
+    VIMRUNTIME = 'D:\Neovim\v0.5.0\share\nvim\runtime'
+[open-nvim-030]
+    command = "wt.exe"
+    args = ['new-tab', '-p', 'nvim-v0.3.0']
+    isBackground = true
+    description = 'open neovim v0.3.0 in new terminal tab'
+[open-nvim-030.options]
+    cwd = 'C:\Users\wsdjeg\.SpaceVim'
+[open-nvim-030.options.env]
+    VIM = 'D:\Neovim\v0.3.0\share\nvim'
+    VIMRUNTIME = 'D:\Neovim\v0.3.0\share\nvim\runtime'
