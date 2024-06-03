@@ -19,12 +19,11 @@ local function mkdir(dir)
 end
 
 local function create_directory(dir)
-    local d = dir
-    if d ~= '^[a-z]\\+:/' then
+    if vim.regex('^[a-z]\\+:/'):match_str(dir) then
         return
     end
-    if sp.fn.isdirectory(d) == 0 then
-        mkdir(d)
+    if sp.fn.isdirectory(dir) == 0 then
+        mkdir(dir)
     end
 end
 
