@@ -469,7 +469,7 @@ end
 
 local cursor_highlight_info
 local function highlight_cursor()
-cursor_highlight_info = hl.group2dict('Cursor')
+  cursor_highlight_info = hl.group2dict('Cursor')
   local hlinfo = {
     name = 'SpaceVimGuideCursor',
     guibg = cursor_highlight_info.guibg,
@@ -545,7 +545,7 @@ local function updateStatusline()
     { sep .. ' ', 'LeaderGuiderSep2' },
     { guide_help_msg(false), 'LeaderGuiderFill' },
     { string.rep(' ', 999), 'LeaderGuiderFill' },
-  })
+  }, true)
 end
 
 local function setlocalopt(buf, win, opts)
@@ -567,12 +567,13 @@ local function winopen()
   if not vim.api.nvim_buf_is_valid(bufnr) then
     bufnr = buffer.create_buf(false, true)
   end
-  winid = vim.api.nvim_open_win(bufnr, true, {
+  winid = vim.api.nvim_open_win(bufnr, false, {
     relative = 'editor',
     width = vim.o.columns,
     height = 12,
     row = vim.o.lines - 14,
     col = 0,
+    hide = true,
   })
   guide_help_mode = false
   setlocalopt(bufnr, winid, {
@@ -653,8 +654,15 @@ local function handle_input(input)
 end
 
 local function page_down()
-  -- vim.api.nvim_feedkeys(Key.t('<C-c>'), 'n', false)
-  vim.api.nvim_feedkeys(Key.t('<C-d>'), 'x', false)
+  if vim.api.nvim_win_is_valid(winid) then
+    local cursor = vim.api.nvim_win_get_cursor(winid)[1]
+    local height = vim.api.nvim_win_get_config(winid).height
+    if cursor + height < vim.api.nvim_buf_line_count(bufnr) then
+      vim.api.nvim_win_set_cursor(winid, {cursor + height, 1})
+    else
+      vim.api.nvim_win_set_cursor(winid, {vim.api.nvim_buf_line_count(bufnr), 1})
+    end
+  end
   vim.cmd('redraw!')
   wait_for_input()
 end
@@ -670,8 +678,15 @@ local function page_undo()
 end
 
 local function page_up()
-  -- vim.api.nvim_feedkeys(Key.t('<C-c>'), 'n', false)
-  vim.api.nvim_feedkeys(Key.t('<C-u>'), 'x', false)
+  if vim.api.nvim_win_is_valid(winid) then
+    local cursor = vim.api.nvim_win_get_cursor(winid)[1]
+    local height = vim.api.nvim_win_get_config(winid).height
+    if cursor - height > 1 then
+      vim.api.nvim_win_set_cursor(winid, {cursor - height, 1})
+    else
+      vim.api.nvim_win_set_cursor(winid, {1, 1})
+    end
+  end
   vim.cmd('redraw!')
   wait_for_input()
 end
@@ -704,9 +719,17 @@ local function warn_not_defined(mpt)
   }, false, {})
 end
 
+local function show_win(_)
+  if vim.api.nvim_win_is_valid(winid) then
+    vim.api.nvim_win_set_config(winid, { hide = false })
+  end
+  SL.show()
+end
+
 wait_for_input = function()
   log.debug('wait for input:')
   local t = Key.t
+  vim.fn.timer_start(10, show_win)
   local inp = VIM.getchar()
   log.debug('inp is:' .. inp)
   if inp == t('<Esc>') then
