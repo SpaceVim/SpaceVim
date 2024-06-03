@@ -1,0 +1,41 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  unit_tests:
+    name: unit tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-12, windows-2022]
+        rev: [nightly, v0.7.2, v0.8.3, v0.9.0, v0.10.0]
+        include:
+          - os: ubuntu-22.04
+            install-rg: sudo apt-get update && sudo apt-get install -y ripgrep
+          - os: macos-12
+            install-rg: brew update && brew install ripgrep
+          - os: windows-2022
+            install-rg: choco install ripgrep
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+          version: ${{ matrix.rev }}
+
+      - name: Prepare
+        run: |
+          ${{ matrix.install-rg }}
+          rg --version
+
+          git clone --depth 1 https://github.com/nvim-lua/plenary.nvim ../plenary.nvim
+          git clone --depth 1 https://github.com/nvim-tree/nvim-web-devicons ../nvim-web-devicons
+
+      - name: Run tests
+        run: |
+          nvim --version
+          make test

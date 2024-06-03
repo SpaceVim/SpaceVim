@@ -42,4 +42,3 @@ defaults = {
   }
 }
 EOF
-
