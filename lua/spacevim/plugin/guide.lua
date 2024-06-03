@@ -539,7 +539,7 @@ local function updateStatusline()
     { 'Guide: ', 'LeaderGuiderPrompt' },
     { sep .. ' ', 'LeaderGuiderSep1' },
     {
-      vim.fn['SpaceVim#mapping#leader#getName'](prefix_key) .. table.concat(keys, '') .. gname,
+      M.getName(prefix_key) .. table.concat(keys, '') .. gname,
       'LeaderGuiderName',
     },
     { sep .. ' ', 'LeaderGuiderSep2' },
@@ -863,8 +863,20 @@ function M.parse_mappings()
   end
 end
 
-function M.getName(p)
-  return vim.fn['SpaceVim#mapping#leader#getName'](p)
+function M.getName(key)
+  if key == ' ' then
+    return '[SPC]'
+  elseif key == 'g' then
+    return '[g]'
+  elseif key == 'z' then
+    return '[z]'
+  elseif key == vim.g.spacevim_windows_leader then
+    return '[WIN]'
+  elseif key == '\\' then
+    return '<leader>'
+  else
+    return ''
+  end
 end
 
 return M
