@@ -66,36 +66,10 @@ if has('nvim-0.10.0')
       au!
       autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
             \   q :call <SID>close_quickfix()<cr>
-      autocmd QuitPre * call SpaceVim#plugins#windowsmanager#UpdateRestoreWinInfo()
-      autocmd WinEnter * call SpaceVim#plugins#windowsmanager#MarkBaseWin()
-      autocmd BufLeave * call SpaceVim#plugins#history#savepos()
-      autocmd BufWinLeave * let b:_winview = winsaveview()
-      autocmd BufWinEnter * if(exists('b:_winview')) | call winrestview(b:_winview) | endif
-      au StdinReadPost * call s:disable_welcome()
       if !has('nvim-0.5.0')
         autocmd InsertEnter * call s:fixindentline()
       endif
-      autocmd BufEnter,FileType * call SpaceVim#mapping#space#refrashLSPC()
-      if executable('synclient') && g:spacevim_auto_disable_touchpad
-        let s:touchpadoff = 0
-        autocmd InsertEnter * call s:disable_touchpad()
-        autocmd InsertLeave * call s:enable_touchpad()
-        autocmd FocusLost * call system('synclient touchpadoff=0')
-        autocmd FocusGained * call s:reload_touchpad_status()
-      endif
       autocmd ColorScheme gruvbox,jellybeans,nord,srcery,NeoSolarized,one,SpaceVim call s:fix_colorschem_in_SpaceVim()
-      autocmd VimEnter * call SpaceVim#autocmds#VimEnter()
-      autocmd BufEnter * let b:_spacevim_project_name = get(g:, '_spacevim_project_name', '')
-      autocmd SessionLoadPost * let g:_spacevim_session_loaded = 1
-      autocmd VimLeavePre * call SpaceVim#plugins#manager#terminal()
-      if has('nvim')
-        autocmd VimEnter,FocusGained * call SpaceVim#plugins#history#readcache()
-        autocmd FocusLost,VimLeave * call SpaceVim#plugins#history#writecache()
-        autocmd BufReadPost *
-              \ if line("'\"") > 0 && line("'\"") <= line("$") |
-              \   call SpaceVim#plugins#history#jumppos() |
-              \ endif
-      endif
     augroup END
   endfunction
 else
