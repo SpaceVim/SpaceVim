@@ -1,0 +1,35 @@
+let s:assert = themis#helper('assert')
+
+function! EchodocGetFuncText() abort
+  let [line, col, g:_func_name] = echodoc#util#get_func_text()
+  return ''
+endfunction
+
+function! Feed(keys) abort
+  let keys = substitute(a:keys, '\([\"]\|<[^[:space:]<>]\+>\)', '\\\1', 'g')
+  unlet! g:_func_name
+  execute 'execute "normal '.keys.'"'
+endfunction
+
+function! FeedScan(keys, ...) abort
+  call Feed(a:keys.'<right>')
+  call call(s:assert.equals, [g:_func_name] + a:000)
+endfunction
+
+function! s:setup() abort
+  tabonly!
+  only!
+  enew!
+  inoremap <right> <c-r>=EchodocGetFuncText()<cr>
+endfunction
+
+function! s:teardown() abort
+  unlet! g:_func_name
+  bdelete!
+  iunmap <right>
+endfunction
+
+command! Setup silent call s:setup()
+command! Teardown silent call s:teardown()
+
+" vim: set ft=vim ts=2 sw=2 tw=78 et :

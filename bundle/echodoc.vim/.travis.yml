@@ -1,0 +1,27 @@
+sudo: false
+
+before_script:
+    - (if ! test -d $HOME/vim-$VIM_VERSION/bin; then
+         git clone https://github.com/vim/vim $HOME/vim &&
+         cd $HOME/vim &&
+         git checkout v$VIM_VERSION &&
+         ./configure --prefix=$HOME/vim-$VIM_VERSION &&
+         make &&
+         make install;
+       fi)
+    - git clone https://github.com/thinca/vim-themis
+
+cache:
+  directories:
+    - $HOME/vim-$VIM_VERSION
+
+env:
+  - VIM_VERSION=8.2.0000
+  - VIM_VERSION=8.1.0000
+  - VIM_VERSION=8.0.0000
+  - VIM_VERSION=7.4
+
+script:
+    - export PATH=$HOME/vim-$VIM_VERSION/bin:$PATH
+    - vim  --version
+    - make test

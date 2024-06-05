@@ -1,0 +1,229 @@
+*echodoc.txt*	Print documentation in echo area
+
+Version: 2.0
+Author : Shougo <Shougo.Matsu@gmail.com>
+License: MIT license
+
+CONTENTS					*echodoc-contents*
+
+Introduction		|echodoc-introduction|
+Install			|echodoc-install|
+Interface		|echodoc-interface|
+  Variables		  |echodoc-variables|
+  Functions		  |echodoc-functions|
+Examples		|echodoc-examples|
+Compatibility		|echodoc-compatibility|
+
+==============================================================================
+INTRODUCTION					*echodoc-introduction*
+
+*echodoc* displays information in echo area from echodoc plugin.
+
+|echodoc| has the following properties which cannot be realized by ftplugin:
+	1. outputs messages from multiple plugins,
+	   (required that 'cmdheight' is high enough or 'noshowmode')
+	2. has a priority ranking in the search,
+	3. adds/deletes a plugin at any time,
+	4. highlights messages,
+	5. uses context filetype when "context_filetype" is installed, and
+	   https://github.com/Shougo/context_filetype.vim
+	6. uses multiple filetypes.
+
+Note: To use echodoc, you must increase 'cmdheight' value (2 or above),
+	or disable showmode with 'noshowmode' so you will be able to see
+	|echodoc|'s information clearly, without the "-- INSERT --" message
+	overwriting it.
+
+==============================================================================
+USAGE						*echodoc-usage*
+
+==============================================================================
+INSTALL						*echodoc-install*
+
+Note: echodoc requires |v:completed_item| feature.  It is added in Vim
+7.4.774.
+
+==============================================================================
+INTERFACE					*echodoc-interface*
+
+------------------------------------------------------------------------------
+VARIABLES 					*echodoc-variables*
+
+g:echodoc#enable_at_startup			*g:echodoc#enable_at_startup*
+		If the value of this variable is non-zero,
+		|echodoc| is automatically enabled for all sources at startup.
+		Note: If you want to enable echodoc buffer level, you need to
+		call |echodoc#enable()| and use |b:echodoc_enabled| instead.
+
+		Default: 0
+
+g:echodoc#events				*g:echodoc#events*
+		If the |autocmd-events| are fired, echodoc is enabled.
+
+		Default: ['CompleteDone', 'TextChangedP']
+
+					*g:echodoc#highlight_identifier*
+g:echodoc#highlight_identifier
+		The highlight of identifier.
+
+		Default: "Identifier"
+
+					*g:echodoc#highlight_arguments*
+g:echodoc#highlight_arguments
+		The highlight of current argument.
+
+		Default: "Special"
+
+						*g:echodoc#highlight_trailing*
+g:echodoc#highlight_trailing
+		The highlight of trailing.
+
+		Default: "Type"
+
+						*g:echodoc#max_line_guard*
+g:echodoc#max_line_guard
+		The maximux of line guard.
+		If you increase the value, echodoc analysis more backward
+		lines.
+
+		Note: If you increase the value, it slows your Vim.
+
+		Default: 5
+
+g:echodoc#type					*g:echodoc#type*
+		The documentation display type.
+		"echo":
+			It uses the command line |:echo|.
+		"signature":
+			It uses gonvim signature feature.
+			https://github.com/dzhou121/gonvim
+		"virtual":
+			It uses neovim virtual text feature.
+			the documentation will be placed after the buffer
+			text. |nvim_buf_set_extmark()|
+		"virtual_lines":
+			It uses neovim virtual lines feature.
+			the documentation will be placed above the line.
+			|nvim_buf_set_extmark()|
+			Note: It is experimental feature and requires neovim
+			0.6+.
+		"floating":
+			It uses neovim floating window feature.
+			the documentation will be placed above the cursor, as
+			a pop-up in the buffer. Has the advantage of being
+			easier to refer to.
+			(jedi-vim like "show_call_signatures")
+			|nvim_open_win()|
+		"popup":
+			It uses vim popup window feature.
+			Works the same as "floating".
+			|popup_create()|
+
+		Default: "echo"
+
+g:echodoc#floating_config			*g:echodoc#floating_config*
+		The configuration dictionary for the floating window.
+		This does matter only if you set |g:echodoc#type| as
+		"floating".
+		You can use any field that is supported by |nvim_open_win()|
+		as configuration, except "relative", "width", "height", "col",
+		and "row" (these are reserved by echodoc).
+
+		Default: {}
+
+b:echodoc_enabled					*b:echodoc_enabled*
+		If it is set to non-zero, echodoc is enabled in current
+		buffer.
+
+------------------------------------------------------------------------------
+FUNCTIONS 					*echodoc-functions*
+
+echodoc#enable()				*echodoc#enable()*
+		Enables |echodoc|.
+
+echodoc#disable()				*echodoc#disable()*
+		Disables |echodoc|.
+
+echodoc#is_enabled()				*echodoc#is_enabled()*
+		Gets weather |echodoc| plugin is enabled.  This function
+		returns Number 1 if |echodoc| is enabled, zero otherwise.
+
+echodoc#register({name}, {dict})		*echodoc#register()*
+		Registers the docs {dict} of the name {name}.
+		If the docs with the same name exists, it will be overwritten.
+		{dict} is a |Dictionary| which contains the followings:
+
+		"name"		String (Required)
+			A name of this docs {dict}.  The user can be given
+			any name.  This value and {name} must have the same
+			value.
+
+		"rank"		Number (Required)
+			The priority ranking in the search.  The smaller value
+			shows higher priority.
+
+		"filetypes"	Dictionary (Required)
+			This is a |Dictionary| where the key is a filetype
+			string and the value is anything.
+			|echodoc| uses the {dict} when the {dict} has an entry
+			where the key is the |filetype| of the current buffer.
+			If this is a empty, |echodoc| always uses the {dict}.
+
+		"search"	Function	(Required)
+			Search function.  This function takes a string as its
+			parameter and returns a list of dictionaries.  The
+			|Dictionary| must have an entry where the key is
+			"text" and the value is a String of a message.  When
+			the |Dictionary| has an entry with the key
+			"highlight", |echodoc| highlights the message.
+
+echodoc#unregister({name})		*echodoc#unregister()*
+		Unregisters the docs of the name {name}.
+
+echodoc#get({name})				 *echodoc#get()*
+		Get the echodoc dictionary for {name}.
+		Useful for exists check.
+
+==============================================================================
+EXAMPLES					*echodoc-examples*
+>
+Option 1:
+	" To use echodoc, you must increase 'cmdheight' value.
+	set cmdheight=2
+	let g:echodoc_enable_at_startup = 1
+
+Option 2:
+	" Or, you could disable showmode alltogether.
+	set noshowmode
+	let g:echodoc_enable_at_startup = 1
+
+Option 3:
+	" Or, you could use neovim's virtual virtual text feature.
+	let g:echodoc#enable_at_startup = 1
+	let g:echodoc#type = "virtual"
+
+Option 4:
+	" Or, you could use neovim's floating text feature.
+	let g:echodoc#enable_at_startup = 1
+	let g:echodoc#type = "floating"
+	" To use a custom highlight for the float window,
+	" change Pmenu to your highlight group
+	highlight link EchoDocFloat Pmenu
+
+Option 5:
+	" Or, you could use vim's popup window feature.
+	let g:echodoc#enable_at_startup = 1
+	let g:echodoc#type = "popup"
+	" To use a custom highlight for the popup window,
+	" change Pmenu to your highlight group
+	highlight link EchoDocPopup Pmenu
+>
+==============================================================================
+COMPATIBILITY					*echodoc-compatibility*
+
+2021.11.16
+
+* Change g:echodoc#events default value.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:

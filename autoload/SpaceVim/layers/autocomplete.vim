@@ -145,7 +145,7 @@ function! SpaceVim#layers#autocomplete#plugins() abort
     " both echodoc and CompleteParameter requires
     " vim patch-7.4.744
     " v:completed_item
-    call add(plugins, ['Shougo/echodoc.vim', {
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/echodoc.vim', {
           \ 'on_cmd' : ['EchoDocEnable', 'EchoDocDisable'],
           \ 'on_event' : 'CompleteDone',
           \ 'loadconf_before' : 1,
