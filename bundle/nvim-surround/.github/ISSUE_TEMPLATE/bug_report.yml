@@ -1,0 +1,83 @@
+name: Bug report
+description: Something broken? Here's where to report it!
+labels: [bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If this is a general question about the plugin or a point of confusion on a feature, please [open a new discussion post instead](https://github.com/kylechui/nvim-surround/discussions/new).
+
+  - type: checkboxes
+    attributes:
+      label: Checklist
+      options:
+        - label: Have you tried updating the plugin to the latest version?
+          required: true
+        - label: Have you checked the [Breaking Changes issue](https://github.com/kylechui/nvim-surround/issues/77)?
+          required: true
+        - label: Have you read through `:h nvim-surround` to see if there might be any relevant information there?
+
+  - type: textarea
+    attributes:
+      label: Neovim Version
+      description: |
+        Please give the output of the first line of `nvim -v`.
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes:
+      label: Plugin Version
+      description: |
+        Which version of `nvim-surround` are you using?
+      options:
+        - Tagged (Stable)
+        - Nightly (Beta)
+    validations:
+      required: true
+
+
+  - type: textarea
+    attributes:
+      label: Minimal Configuration
+      description: |
+        Give an example of a minimal configuration that produces the bug. It can be tested using `nvim -u minimal_config.lua`.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Sample Buffer
+      description: |
+        Give an example of a minimal sample buffer that generates the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Keystroke Sequence
+      description: |
+        Give the keystroke sequence that generates the bug, based on the example buffer.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: |
+        Give what the expected buffer contents should be after the keystroke sequence.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Actual behavior
+      description: |
+        Give what the actual buffer contents are after the keystroke sequence.
+
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: |
+        Leave any additional information that you think might be relevant, or give your best shot at determining where the bug is coming from!

@@ -1,0 +1,4 @@
+contact_links:
+  - name: Questions and discussions
+    url: https://github.com/kylechui/nvim-surround/discussions
+    about: Have a question? Want to show off your setup? Discuss here!
