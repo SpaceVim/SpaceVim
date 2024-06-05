@@ -1702,6 +1702,8 @@ function! s:parser_argv() abort
       return [1, getcwd()]
     elseif isdirectory(expand(v:argv[-1]))
       return [1, fnamemodify(expand(v:argv[-1]), ':p')]
+    elseif len(v:argv) == 3 && v:argv[-1] == 'VIM' && v:argv[-2] == '--servername'
+      return [0]
     else
       return [2, get(v:, 'argv', ['failed to get v:argv'])]
     endif
