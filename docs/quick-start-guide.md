@@ -35,6 +35,7 @@ If you are using a terminal emulator, you will need to set the font in the termi
 
 ### Linux and macOS
 
+{% include codeHeader.html %}
 ```bash
 curl -sLf https://spacevim.org/install.sh | bash
 ```
