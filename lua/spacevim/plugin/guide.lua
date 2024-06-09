@@ -567,14 +567,17 @@ local function winopen()
   if not vim.api.nvim_buf_is_valid(bufnr) then
     bufnr = buffer.create_buf(false, true)
   end
-  winid = vim.api.nvim_open_win(bufnr, false, {
+  local opt = {
     relative = 'editor',
     width = vim.o.columns,
     height = 12,
     row = vim.o.lines - 14,
     col = 0,
-    hide = true,
-  })
+  }
+  if vim.fn.has('nvim-0.10.0') == 1 then
+    opt.hide = true
+  end
+  winid = vim.api.nvim_open_win(bufnr, false, opt)
   guide_help_mode = false
   setlocalopt(bufnr, winid, {
     winhighlight = 'Normal:Pmenu,Search:',
@@ -729,7 +732,9 @@ end
 wait_for_input = function()
   log.debug('wait for input:')
   local t = Key.t
-  vim.fn.timer_start(10, show_win)
+  if vim.fn.has('nvim-0.10.0') == 1 then
+    vim.fn.timer_start(10, show_win)
+  end
   local inp = VIM.getchar()
   log.debug('inp is:' .. inp)
   if inp == t('<Esc>') then

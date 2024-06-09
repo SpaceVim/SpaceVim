@@ -9,7 +9,7 @@ function M.opened()
 end
 
 function M.show()
-  if vim.api.nvim_win_is_valid(M.__winid) then
+  if vim.api.nvim_win_is_valid(M.__winid) and vim.fn.has('nvim-0.10.0') == 1 then
     vim.api.nvim_win_set_config(M.__winid, { hide = false })
   end
 end
@@ -24,15 +24,18 @@ function M.open_float(sl, ...)
     M.__bufnr = vim.api.nvim_create_buf(false, true)
   end
   if M.__winid == nil or not M.opened() then
-    M.__winid = vim.api.nvim_open_win(M.__bufnr, false, {
+    local opt = {
       relative = 'editor',
       width = vim.o.columns,
       height = 1,
       -- highlight = 'SpaceVim_statusline_a_bold',
       row = vim.o.lines - 2,
       col = 0,
-      hide = hide,
-    })
+    }
+    if vim.fn.has('nvim-0.10.0') == 1 then
+      opt.hide = hide
+    end
+    M.__winid = vim.api.nvim_open_win(M.__bufnr, false, opt)
   end
   vim.fn.setwinvar(M.__winid, '&winhighlight', 'Normal:SpaceVim_statusline_a_bold')
   vim.fn.setbufvar(M.__bufnr, '&relativenumber', 0)
