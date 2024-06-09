@@ -5,6 +5,7 @@ description: "介绍如何使用 Spacevim 搭建 Scala 的 Vim/Neovim 开发环�
 permalink: /cn/:title/
 lang: zh
 type: article
+language: Scala
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Scala 开发环境

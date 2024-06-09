@@ -6,6 +6,7 @@ description: "A general guide for using SpaceVim as Go IDE, including layer conf
 type: article
 comments: true
 commentsID: "Use Vim as a Go IDE"
+language: Golang
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Go IDE

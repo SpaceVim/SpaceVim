@@ -6,6 +6,7 @@ description: "A general guide for using SpaceVim as Kotlin IDE, including layer 
 type: article
 comments: true
 commentsID: "Use Vim as a Kotlin IDE"
+language: Kotlin
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Kotlin IDE

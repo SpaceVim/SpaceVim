@@ -6,6 +6,7 @@ description: "介绍如何使用 Spacevim 搭建 swift 的 Vim/Neovim 开发环�
 permalink: /cn/:title/
 lang: zh
 type: article
+language: Swift
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 swift 开发环境

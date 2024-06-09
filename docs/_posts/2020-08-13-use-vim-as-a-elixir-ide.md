@@ -6,6 +6,7 @@ description: "A general guide for using SpaceVim as Elixir IDE, including layer 
 type: article
 comments: true
 commentsID: "Use Vim as a Elixir IDE"
+language: Elixir
 ---
 
 # [Blogs](../blog/) >> Use Vim as Elixir IDE

@@ -121,7 +121,7 @@ SpaceVim 的默认配置文件为 `~/.SpaceVim.d/init.toml`。下面为一简单
 <ul>
     {% for post in site.categories.tutorials_cn %}
             <li>
-               <a href="{{ post.url }}">{{ post.title }}</a>
+               <a href="{{ post.url }}">{{ post.language | default: post.title }}</a>
             </li>
     {% endfor %}
 </ul>

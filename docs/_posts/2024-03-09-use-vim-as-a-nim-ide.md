@@ -6,6 +6,7 @@ description: "介绍如何使用 SpaceVim 搭建 Nim 的 Vim/Neovim 开发环境
 permalink: /cn/:title/
 lang: zh
 type: article
+language: Nim
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Nim 开发环境

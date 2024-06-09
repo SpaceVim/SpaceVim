@@ -8,6 +8,7 @@ lang: zh
 type: article
 comments: true
 commentsID: "使用 Vim 搭建 Clojure 开发环境"
+language: Clojure
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Clojure 开发环境

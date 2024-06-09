@@ -6,6 +6,7 @@ type: article
 image: https://img.spacevim.org/197381840-821cc059-0aad-42fd-bc39-d5fa16a824f7.png
 comments: true
 commentsID: "Use Vim as a Python IDE"
+language: Python
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Python IDE

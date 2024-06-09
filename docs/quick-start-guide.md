@@ -132,7 +132,7 @@ A list of guides for programming language support:
 <ul>
     {% for post in site.categories.tutorials %}
             <li>
-               <a href="{{ post.url }}">{{ post.title }}</a>
+               <a href="{{ post.url }}">{{ post.language | default: post.title }}</a>
             </li>
     {% endfor %}
 </ul>

@@ -8,6 +8,7 @@ lang: zh
 type: article
 comments: true
 commentsID: "使用 Vim 搭建 Kotlin 开发环境"
+language: Kotlin
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Kotlin 开发环境

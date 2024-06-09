@@ -6,6 +6,7 @@ redirect_from: "/2017/02/11/use-vim-as-a-java-ide.html"
 type: article
 comments: true
 commentsID: "Use Vim as a Java IDE"
+language: Java
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Java IDE

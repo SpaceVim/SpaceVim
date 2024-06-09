@@ -8,6 +8,7 @@ lang: zh
 type: article
 comments: true
 commentsID: "使用 Vim 搭建 Go 开发环境"
+language: Golang
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Go 开发环境

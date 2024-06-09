@@ -6,6 +6,7 @@ description: "介绍如何使用 SpaceVim 搭建 Elixir 的 Vim/Neovim 开发环
 permalink: /cn/:title/
 lang: zh
 type: article
+language: Elixir
 ---
 
 # [Blogs](../blog/) >> 使用 Vim 搭建 Elixir 开发环境

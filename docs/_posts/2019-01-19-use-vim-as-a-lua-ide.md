@@ -6,6 +6,7 @@ description: "A general guide for using SpaceVim as Lua IDE, including layer con
 type: article
 comments: true
 commentsID: "Use Vim as a Lua IDE"
+language: Lua
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Lua IDE

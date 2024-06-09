@@ -6,6 +6,7 @@ description: "A general guide for using SpaceVim as Ruby IDE, including layer co
 type: article
 comments: true
 commentsID: "Use Vim as a Ruby IDE"
+language: Ruby
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Ruby IDE
@@ -18,6 +19,7 @@ Each of the following sections will be covered:
 
 - [Enable language layer](#enable-language-layer)
 - [Code completion](#code-completion)
+  - [Solargraph](#solargraph)
 - [Syntax linting](#syntax-linting)
 - [Jump to test file](#jump-to-test-file)
 - [running code](#running-code)

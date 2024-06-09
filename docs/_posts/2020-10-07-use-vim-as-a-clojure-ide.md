@@ -6,6 +6,7 @@ description: "A general guide for using SpaceVim as Clojure IDE, including layer
 type: article
 comments: true
 commentsID: "Use Vim as a Clojure IDE"
+language: Clojure
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Clojure IDE

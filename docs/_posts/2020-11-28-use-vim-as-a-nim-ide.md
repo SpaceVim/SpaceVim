@@ -6,6 +6,7 @@ description: "A general guide for using SpaceVim as Nim IDE, including layer con
 type: article
 comments: true
 commentsID: "Use Vim as a Nim IDE"
+language: Nim
 ---
 
 # [Blogs](../blog/) >> Use Vim as a Nim IDE
