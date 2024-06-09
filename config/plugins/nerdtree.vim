@@ -94,10 +94,13 @@ function! s:nerdtree_dot() abort
 endfunction
 
 function! s:nerdtree_enter() abort
-  let path = g:NERDTreeFileNode.GetSelected().path.str()
-  if isdirectory(path)
-    silent! exe 'NERDTree' g:NERDTreeFileNode.GetSelected().path.str()
-  else
-    call g:NERDTreeKeyMap.Invoke('o')
+  let node = g:NERDTreeFileNode.GetSelected()
+  if has_key(node, 'path')
+    let path = node.path.str()
+    if isdirectory(path)
+      silent! exe 'NERDTree' g:NERDTreeFileNode.GetSelected().path.str()
+    else
+      call g:NERDTreeKeyMap.Invoke('o')
+    endif
   endif
 endfunction
