@@ -316,7 +316,6 @@ function! s:apply_custom_leader_keybindings() abort
   endfor
 endfunction
 
-
 function! s:disable_welcome() abort
   augroup SPwelcome
     au!

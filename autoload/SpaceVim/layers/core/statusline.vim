@@ -21,12 +21,119 @@
 " - `major_mode_cache`: Enable/disable major mode cache, enabled by default.
 
 scriptencoding utf-8
-
 if exists('g:_spacevim_statusline_loaded')
   finish
 endif
 
 let g:_spacevim_statusline_loaded = 1
+
+
+if has('nvim-0.10.0')
+
+  " 核心逻辑移至 lua，兼容 VIML 函数接口
+
+  function! SpaceVim#layers#core#statusline#winnr(id) abort
+    return v:lua.require('spacevim.plugin.statusline').winnr(a:id)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#get(...) abort
+    if a:0 > 0
+      return v:lua.require('spacevim.plugin.statusline').get(a:1)
+    else
+      return v:lua.require('spacevim.plugin.statusline').get()
+    endif
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#init() abort
+    return v:lua.require('spacevim.plugin.statusline').init()
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#def_colors() abort
+    return v:lua.require('spacevim.plugin.statusline').def_colors()
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#register_mode(mode) abort
+    if has_key(a:mode, 'func') && type(a:mode.func) == 2
+      let mode = a:mode
+      let mode.func = string(a:mode.func)[10:-3]
+      return v:lua.require('spacevim.plugin.statusline').register_mode(mode)
+    else
+      return v:lua.require('spacevim.plugin.statusline').register_mode(a:mode)
+    endif
+
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#toggle_mode(name) abort
+    return v:lua.require('spacevim.plugin.statusline').toggle_mode(a:name)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#toggle_section(name) abort
+    return v:lua.require('spacevim.plugin.statusline').toggle_section(a:name)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#rsep() abort
+    return v:lua.require('spacevim.plugin.statusline').rsep()
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#set_variable(var) abort
+    return v:lua.require('spacevim.plugin.statusline').set_variable(a:var)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#config() abort
+    return v:lua.require('spacevim.plugin.statusline').config()
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#ctrlp(focus, byfname, regex, prev, item, next, marked) abort
+    return v:lua.require('spacevim.plugin.statusline').ctrlp(a:focus, a:byfname, a:regex, a:prev, a:item, a:next, a:marked)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#ctrlp_status(str) abort
+    return v:lua.require('spacevim.plugin.statusline').ctrlp_status(a:str)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#jump(i) abort
+    return v:lua.require('spacevim.plugin.statusline').jump(a:i)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#mode(mode) abort
+    return v:lua.require('spacevim.plugin.statusline').mode(a:mode)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#mode_text(mode) abort
+    return v:lua.require('spacevim.plugin.statusline').mode_text(a:mode)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#denite_status(argv) abort
+    return v:lua.require('spacevim.plugin.statusline').denite_status(a:argv)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#denite_mode() abort
+    return v:lua.require('spacevim.plugin.statusline').denite_mode()
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#unite_mode() abort
+    return v:lua.require('spacevim.plugin.statusline').unite_mode()
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#register_sections(name, func) abort
+    return v:lua.require('spacevim.plugin.statusline').register_sections(a:name, string(a:func)[10:-3])
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#check_section(name) abort
+    return v:lua.require('spacevim.plugin.statusline').check_section(a:name)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#remove_section(name) abort
+    return v:lua.require('spacevim.plugin.statusline').remove_section(a:name)
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#health() abort
+    return v:lua.require('spacevim.plugin.statusline').health()
+  endfunction
+
+  finish
+endif
+
 
 " APIs
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
@@ -414,7 +521,6 @@ function! s:filesize() abort
     return printf('%.1f', l:size/1024.0/1024.0/1024.0) . 'g '
   endif
 endfunction
-
 function! SpaceVim#layers#core#statusline#get(...) abort
   for nr in range(1, winnr('$'))
     call setwinvar(nr, 'winwidth', winwidth(nr))

@@ -52,4 +52,89 @@ function M.close_float()
   end
 end
 
+function M.check_width(len, sec, winwidth)
+  return len + M.len(sec) < winwidth
+  
+end
+
+function M.len(sec)
+  if not sec then return 0 end
+  local str = vim.fn.matchstr(sec, '%{.*}')
+  if vim.fn.empty(str) == 0 then
+    local pos = vim.fn.match(str, '}')
+    return vim.fn.len(sec) - vim.fn.len(str) + vim.fn.len(vim.fn.eval(string.sub(str, 3, pos))) + 4
+  else
+    return vim.fn.len(sec) + 4
+  end
+end
+
+function M.eval(sec)
+  return vim.fn.substitute(sec, '%{.*}', '', 'g')
+end
+
+function M.build(left_sections, right_sections, lsep, rsep, fname, tag, hi_a, hi_b, hi_c, hi_z, winwidth)
+  local l = '%#' .. hi_a .. '#' .. left_sections[1]
+  l = l .. '%#' .. hi_a .. '_' .. hi_b .. '#' .. lsep
+  local flag = true
+  local len = 0
+  for _, sec in ipairs(vim.tbl_filter(function(v)
+    return vim.fn.empty(v) == 0
+  end, vim.list_slice(left_sections, 2))) do
+    if M.check_width(len, sec, winwidth) then
+      if flag then
+        l = l .. '%#' .. hi_b .. '#' .. sec
+        l = l .. '%#' .. hi_b .. '_' .. hi_c .. '#' .. lsep
+      else
+        l = l .. '%#' .. hi_c .. '#' .. sec
+        l = l .. '%#' .. hi_c .. '_' .. hi_b .. '#' .. lsep
+      end
+      flag = not flag
+    end
+  end
+  l = string.sub(l, 1, #l - #lsep)
+  if #right_sections == 0 then
+    if flag then
+      return l .. '%#' .. hi_c .. '#'
+    else
+      return l .. '%#' .. hi_b .. '#'
+    end
+  end
+  if M.check_width(len, fname, winwidth) then
+    len = len +  M.len(fname)
+    if flag then
+      l = l .. '%#' .. hi_c .. '_' .. hi_z .. '#' .. lsep .. '%#' .. hi_z .. '#' .. fname .. '%='
+    else
+      l = l .. '%#' .. hi_b .. '_' .. hi_z .. '#' .. lsep .. '%#' .. hi_z .. '#' .. fname .. '%='
+    end
+  else
+    if flag then
+      l = l .. '%#' .. hi_c .. '_' .. hi_z .. '#' .. lsep .. '%='
+    else
+      l = l .. '%#' .. hi_b .. '_' .. hi_z .. '#' .. lsep .. '%='
+    end
+  end
+  if M.check_width(len, tag, winwidth) and vim.g.spacevim_enable_statusline_tag == 1 then
+    l = l .. '%#' .. hi_z .. '#' .. tag
+  end
+  l = l .. '%#' .. hi_b .. '_' .. hi_z .. '#' .. rsep
+  flag = true
+  for _, sec in ipairs(vim.tbl_filter(function(v)
+    return vim.fn.empty(v) == 0
+  end, right_sections)) do
+    if M.check_width(len, sec, winwidth) then
+      len = len + M.len(sec)
+      if flag then
+        l = l .. '%#' .. hi_b .. '#' .. sec
+        l = l .. '%#' .. hi_c .. '_' .. hi_b .. '#' .. rsep
+      else
+        l = l .. '%#' .. hi_c .. '#' .. sec
+        l = l .. '%#' .. hi_b .. '_' .. hi_c .. '#' .. rsep
+      end
+      flag = not flag
+    end
+  end
+  l = string.sub(l, 1, #l - #rsep)
+  return l
+end
+
 return M

@@ -47,4 +47,8 @@ function M.executable(bin)
   return vim.fn.executable(bin) == 1
 end
 
+function M.is_qf_win(winnr)
+  
+end
+
 return M
