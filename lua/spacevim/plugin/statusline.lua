@@ -283,10 +283,23 @@ local function check_mode()
 end
 
 local function current_tag()
-  return M._current_tag()
+  return '%{ v:lua.require("spacevim.plugin.statusline")._current_tag() }'
 end
 
-function M._current_tag() end
+function M._current_tag()
+
+  local tag = ''
+  pcall(function()
+    -- current tag should be show only after vimenter
+    -- @fixme this make sure tagbar has been loaded
+    -- because when first run tagbar, it needs long time.
+    -- and also there no syntax highlight when first time open file.
+    if vim.g._spacevim_after_vimenter == 1 and vim.g.spacevim_enable_statusline_tag == 1 and vim.g.loaded_tagbar == 1 then
+      tag = vim.fn['tagbar#currenttag']('%s ', '')
+    end
+  end)
+  return tag
+end
 
 local function active()
   local lsec = {}
@@ -324,7 +337,7 @@ local function active()
     end
   end
   local fname = buffer_name()
-  local tab = current_tag()
+  local tag = current_tag()
   local winwidth = vim.fn.winwidth(vim.fn.winnr())
   if vim.o.laststatus == 3 then
     winwidth = vim.o.columns
@@ -335,7 +348,7 @@ local function active()
     lsep,
     rsep,
     fname,
-    tab,
+    tag,
     'SpaceVim_statusline_a',
     'SpaceVim_statusline_b',
     'SpaceVim_statusline_c',

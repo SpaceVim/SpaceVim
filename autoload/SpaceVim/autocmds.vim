@@ -59,6 +59,7 @@ if has('nvim-0.10.0')
       endtry
       call SpaceVim#logger#info('finished loading local conf')
     endif
+    let g:_spacevim_after_vimenter = 1
   endfunction
   function! SpaceVim#autocmds#init() abort
     lua require('spacevim.autocmds').init()
