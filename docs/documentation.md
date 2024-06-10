@@ -817,6 +817,13 @@ of them will be listed on the tabline. Each item can be quickly accessed by usin
 | `<Leader> 9` | Jump to index 9 on tabline                      |
 | `g r`        | Switch to alternate tab (switch back and forth) |
 
+The following two key bindings require neovim v0.10.0+.
+
+| Key Bindings       | Descriptions                     |
+| ------------------ | -------------------------------- |
+| `Ctrl-Shift-Right` | move current buffer to the right |
+| `Ctrl-Shift-Left`  | move current buffer to the left  |
+
 **Note:** `SPC Tab` is the key binding for switching to alternate buffer.
 Read [Buffers and Files](#buffers-and-files) section for more info.
 

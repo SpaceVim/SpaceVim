@@ -740,7 +740,15 @@ call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_
 
 ### 标签栏
 
-如果只有一个 Tab, Buffers 将被罗列在标签栏上，每一个包含：序号、文件类型图标、文件名。如果有不止一个 Tab, 那么所有 Tab 将被罗列在标签栏上。标签栏上每一个 Tab 或者 Buffer 可通过快捷键 `<Leader> number` 进行快速访问，默认的 `<Leader>` 是 `\`。
+标签栏用于展示 Buffers（缓冲区）或者标签页（Tabs）。若当前只有一个标签页，则显示缓冲区列表，
+在标签栏的最右侧显示文字 Buffers，若打开超过一个标签页，则显示标签页列表，同时，
+标签栏的最右侧显示文字 Tabs。
+
+当显示缓冲区（Buffers）时，每一个包含序号、文件名、文件类型图标。
+
+当显示标签页（Tabs）时，每一个包含需要、标签页文件、文件类型图标，不同的是这里显示的文件名是每个标签页中聚焦的窗口内文件名。
+
+可通过快捷键 `<Leader> number` 进行快速跳转至对应的缓冲区或者标签页，默认的 `<Leader>` 键是 `\`。
 
 | 快捷键       | 功能描述                                |
 | ------------ | --------------------------------------- |
@@ -755,12 +763,19 @@ call SpaceVim#layers#core#statusline#register_sections('test', function('s:test_
 | `<Leader> 9` | 跳至标签栏序号 9                        |
 | `g r`        | 跳至前一个 Tab，常用于两个 Tab 来回切换 |
 
+若使用 Neovim 0.10.0+，则可以使用如下快捷键左右移动当前缓冲区（Buffer）。
+
+| 快捷键             | 功能描述               |
+| ------------------ | ---------------------- |
+| `Ctrl-Shift-Right` | 将当前 Buffer 向右移动 |
+| `Ctrl-Shift-Left`  | 将当前 Buffer 向左移动 |
+
 **注意:** 两个缓冲区来回切换的快捷键是 `SPC Tab`，
 可阅读[缓冲区管理](#缓冲区管理)部分内容，了解更多缓冲区相关的快捷键。
 
 标签栏上也支持鼠标操作，左键可以快速切换至该标签，中键删除该标签。该特性只支持 Neovim，并且需要 `has('tablineat')` 特性。
 
-**注意:** 这一特性仅限于 Neovim 并且 `has('tablineat')` 返回 `true`。
+**注意:** 这一特性仅限于 Neovim 并且 `echo has('tablineat')` 返回 1。
 
 | 快捷键           | 功能描述     |
 | ---------------- | ------------ |
