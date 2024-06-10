@@ -78,7 +78,7 @@ sleep 1
 
 if (!(Test-Path $HOME\.SpaceVim)) {
     echo "==> Trying to clone $app_name"
-    git clone $repo_url $repo_path
+    git clone --depth 1  $repo_url $repo_path
     echo "<== $app_name cloned"
 } else {
     echo "==> Trying to update $app_name"

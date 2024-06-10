@@ -82,7 +82,7 @@ echo ""
 
 if (!(Test-Path "$HOME\.SpaceVim")) {
   echo "==> 正在安装 $app_name"
-  git clone $repo_url $repo_path
+  git clone --depth 1  $repo_url $repo_path
 } else {
   echo "==> 正在更新 $app_name"
   Push-Location $repo_path
