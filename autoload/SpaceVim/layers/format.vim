@@ -16,7 +16,8 @@
 "
 " 1. `format_on_save`: disabled by default.
 " 2. `format_method`: set the format plugin, default plugin is `neoformat`.
-" You can also use `vim-codefmt` or `format.nvim`
+" You can also use `vim-codefmt` or `format.nvim`, `format.nvim` requires
+" neovim 0.9.0+.
 " 3. `silent_format`: Runs the formatter without any messages.
 " 4. `format_notify_width`: set the neoformat notify window width.
 " 5. `format_notify_timeout`: set the neoformat notify clear timeout. default
@@ -84,7 +85,11 @@ function! SpaceVim#layers#format#config() abort
 endfunction
 
 function! SpaceVim#layers#format#set_variable(var) abort
-  let s:format_method = get(a:var, 'format_method', s:format_method)
+  if has_key(a:var, 'format_method') && a:var.format_method ==# 'format.nvim' && !has('nvim-0.9.0')
+    call SpaceVim#logger#info('format.nvim requires neovim 0.9.0+')
+  else
+    let s:format_method = get(a:var, 'format_method', s:format_method)
+  endif
   let s:format_on_save = get(a:var, 'format_on_save', s:format_on_save)
   let s:silent_format = get(a:var, 'silent_format', s:silent_format)
   let s:format_notify_width = get(a:var, 'format_notify_width', s:format_notify_width)
