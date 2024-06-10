@@ -163,7 +163,16 @@ local function buffer_name()
   end
 end
 
-local function input_method() end
+local function input_method()
+  if vim.fn.executable('fcitx-remote') == 1 then
+    if vim.fn.system('fcitx-remote') == 1 then
+      return ' cn '
+    else
+      return ' en '
+    end
+  end
+  return ''
+end
 
 local function syntax_checking() end
 
@@ -287,14 +296,17 @@ local function current_tag()
 end
 
 function M._current_tag()
-
   local tag = ''
   pcall(function()
     -- current tag should be show only after vimenter
     -- @fixme this make sure tagbar has been loaded
     -- because when first run tagbar, it needs long time.
     -- and also there no syntax highlight when first time open file.
-    if vim.g._spacevim_after_vimenter == 1 and vim.g.spacevim_enable_statusline_tag == 1 and vim.g.loaded_tagbar == 1 then
+    if
+      vim.g._spacevim_after_vimenter == 1
+      and vim.g.spacevim_enable_statusline_tag == 1
+      and vim.g.loaded_tagbar == 1
+    then
       tag = vim.fn['tagbar#currenttag']('%s ', '')
     end
   end)
