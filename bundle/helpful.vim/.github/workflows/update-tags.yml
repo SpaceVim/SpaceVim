@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: update tags
       run: make update
     - name: get date
@@ -21,7 +21,7 @@ jobs:
       id: diff
       run: echo "::set-output name=diff::$(git diff --name-only data/)"
     - name: push
-      uses: actions-x/commit@v2
+      uses: actions-x/commit@v5
       with:
         name: Tag Update Bot
         files: data/tags doc/helpful-version.txt

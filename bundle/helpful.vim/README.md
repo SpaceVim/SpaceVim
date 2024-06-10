@@ -8,7 +8,7 @@ introduced or removed features.
 
 ## Usage
 
-The command `:HelpfulVersion` takes a Vim pattern to search for helptags and
+The command `:HelpfulVersion` takes a subject to search for helptags and
 display version information.
 
 Examples:
@@ -16,12 +16,6 @@ Examples:
 ```vim
 " Search for a function
 :HelpfulVersion matchaddpos()
-
-" Search for keys
-:HelpfulVersion <.*>
-
-" Case-insensitive search
-:HelpfulVersion f11\c
 ```
 
 

@@ -122,6 +122,9 @@ def repo_tags(path):
         tag = tag.split('/')[-1]
         if tag.startswith('untagged-'):
             continue
+        if tag == 'stable':
+            # NOTE: Ignore stable tag.  Because it is not useful.
+            continue
         tags.append((tag, ref, tag_date))
     tags.append(('dev', last, None))
     tags.append(('dev', 'HEAD', None))
