@@ -594,7 +594,7 @@ function M.def_colors()
     end)
 
     if not ok then
-      t = vim.fn['Vim#mapping#guide#theme#gruvbox#palette']()
+      t = vim.fn['SpaceVim#mapping#guide#theme#gruvbox#palette']()
     end
   end
   colors_template = t
