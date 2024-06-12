@@ -505,7 +505,24 @@ local special_statusline = {
   vimfiler = function()
     return simple_name('VimFiler')
   end,
-  qf = function() end, -- todo
+  qf = function()
+    local l = ''
+    local wininfo = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1]
+    if wininfo.quickfix == 1 and wininfo.loclist == 0 then
+      local title = vim.fn.getqflist({ title = 0 }).title
+      if title == ':setqflist()' then
+        title = ''
+      end
+      l = simple_name('QuickFix') .. ' ' .. title
+    elseif wininfo.loclist == 1 then
+      local title = vim.fn.getloclist(vim.fn.winnr(), { title = 0 }).title
+      if title == ':setloclist()' then
+        title = ''
+      end
+      l = simple_name('Location list') .. ' ' .. title
+    end
+    return l
+  end,
   defx = function()
     return simple_name('defx')
   end,
@@ -645,12 +662,10 @@ local special_statusline = {
     return simple_name('HelpDescribe')
   end,
   SpaceVimRunner = function()
-        return simple_name('Runner') .. ' %{SpaceVim#plugins#runner#status()}'
+    return simple_name('Runner') .. ' %{SpaceVim#plugins#runner#status()}'
   end,
   SpaceVimREPL = function()
-
-        return simple_name('REPL') .. ' %{SpaceVim#plugins#repl#status()}'
-
+    return simple_name('REPL') .. ' %{SpaceVim#plugins#repl#status()}'
   end,
   VimMailClient = function() end, -- todo
   SpaceVimQuickFix = function()
