@@ -6,6 +6,17 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section scrollbar, plugins-scrollbar
+" @parentsection plugins
+" The `scrollbar` plugin provides a scrollbar for current windows. There are
+" two versions in SpaceVim.
+"
+" 1. Old version is written in Vim script for vim and < nvim 0.9.0
+" 2. The new version is written in Lua, and require `has('nvim-0.9.0')`
+" 
+" This plugin is included in @section(layers-ui).
+
 if has('nvim-0.9.0')
   function! SpaceVim#plugins#scrollbar#usable() abort
     return luaeval('require("spacevim.plugin.scrollbar").usable()')

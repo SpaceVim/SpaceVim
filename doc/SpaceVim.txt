@@ -261,8 +261,9 @@ CONTENTS                                                   *SpaceVim-contents*
     2. autosave................................... |SpaceVim-plugins-autosave|
     3. iedit......................................... |SpaceVim-plugins-iedit|
     4. runner....................................... |SpaceVim-plugins-runner|
-    5. tab manager.............................. |SpaceVim-plugins-tabmanager|
-    6. todo manager............................ |SpaceVim-plugins-todomanager|
+    5. scrollbar................................. |SpaceVim-plugins-scrollbar|
+    6. tab manager.............................. |SpaceVim-plugins-tabmanager|
+    7. todo manager............................ |SpaceVim-plugins-todomanager|
 9. API......................................................... |SpaceVim-api|
     1. clock............................................. |SpaceVim-api-clock|
     2. cmdlinemenu................................. |SpaceVim-api-cmdlinemenu|
@@ -6530,6 +6531,17 @@ structure.
     "usestdin" : Bollean,
   }
 <
+
+==============================================================================
+SCROLLBAR                                         *SpaceVim-plugins-scrollbar*
+
+The `scrollbar` plugin provides a scrollbar for current windows. There are two
+versions in SpaceVim.
+
+  1. Old version is written in Vim script for vim and < nvim 0.9.0
+  2. The new version is written in Lua, and require `has('nvim-0.9.0')`
+
+This plugin is included in |SpaceVim-layers-ui|.
 
 ==============================================================================
 TAB MANAGER                                      *SpaceVim-plugins-tabmanager*
