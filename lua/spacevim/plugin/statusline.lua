@@ -366,18 +366,6 @@ local registed_sections = {
   ['search count'] = search_count,
 }
 
-local function check_mode()
-  if vim.fn.mode() == 'n' then
-    return 'n'
-  elseif vim.fn.mode() == 'i' then
-    return 'i'
-  elseif string.match(vim.fn.mode(), 'v') then
-    return 'v'
-  elseif string.match(vim.fn.mode(), 'R') then
-    return 'R'
-  end
-end
-
 local function current_tag()
   return '%{ v:lua.require("spacevim.plugin.statusline")._current_tag() }'
 end
@@ -957,7 +945,7 @@ function M.config()
     'toggle the statusline itself',
     1
   )
-  local function TagbarStatusline(in_tagbar, sortstr, fname, flags)
+  local function TagbarStatusline(_, _, fname, _)
     local name = ''
     if vim.fn.strwidth(fname) > vim.g.spacevim_sidebar_width - 15 then
       name = string.sub(fname, vim.g.spacevim_sidebar_width - 20) .. '..'
@@ -995,15 +983,17 @@ function M.config()
         ''
       )
     )
-    for k, v in pairs(conf) do
-      if v == 1 or v == true then
-        log.debug('cached major mode: ' .. k)
-        M.toggle_mode(k)
+    if type(conf) == 'table' then
+      for k, v in pairs(conf) do
+        if v == 1 or v == true then
+          log.debug('cached major mode: ' .. k)
+          M.toggle_mode(k)
+        end
       end
     end
   end
 end
-function M.ctrlp(focus, byfname, regex, prev, item, next, marked)
+function M.ctrlp(focus, byfname, _, prev, item, next, _)
   return statusline.build(
     { ' Ctrlp ', ' ' .. prev .. ' ', ' ' .. item .. ' ', ' ' .. next .. ' ' },
     { ' ' .. focus .. ' ', ' ' .. byfname .. ' ', ' ' .. vim.fn.getcwd() .. ' ' },

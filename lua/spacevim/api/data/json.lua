@@ -25,6 +25,7 @@ end
 
 
 if fn.exists('*json_decode') then
+    ---@return table | string
     function M.json_decode(json)
         if json == '' then
             return ''
