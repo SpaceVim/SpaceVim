@@ -599,7 +599,7 @@ local function on_backgroud_exit(id, code, single)
       start_time = 0,
       exit_code = 0,
     }
-  local end_time = vim.fn.reltime(status.start_time)
+  end_time = vim.fn.reltime(status.start_time)
   local problem_matcher = task_problem_matcher['task' .. id] or {}
   local output
   if problem_matcher.useStdout then

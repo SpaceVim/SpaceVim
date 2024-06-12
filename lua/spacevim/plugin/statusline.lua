@@ -498,6 +498,7 @@ local function simple_name(name)
     .. name
     .. ' %#SpaceVim_statusline_b_SpaceVim_statusline_c#'
     .. lsep
+    .. '%#SpaceVim_statusline_c#'
 end
 
 local special_statusline = {
@@ -643,8 +644,14 @@ local special_statusline = {
   HelpDescribe = function()
     return simple_name('HelpDescribe')
   end,
-  SpaceVimRunner = function() end, -- todo
-  SpaceVimREPL = function() end, -- todo
+  SpaceVimRunner = function()
+        return simple_name('Runner') .. ' %{SpaceVim#plugins#runner#status()}'
+  end,
+  SpaceVimREPL = function()
+
+        return simple_name('REPL') .. ' %{SpaceVim#plugins#repl#status()}'
+
+  end,
   VimMailClient = function() end, -- todo
   SpaceVimQuickFix = function()
     return simple_name('SpaceVimQuickFix')
