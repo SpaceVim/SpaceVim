@@ -174,7 +174,94 @@ local function input_method()
   return ''
 end
 
-local function syntax_checking() end
+local function syntax_checking()
+  if vim.fn['SpaceVim#lsp#buf_server_ready']() then
+    local counts = require('spacevim.lsp').lsp_diagnostic_count()
+    local errors = counts[1] or 0
+    local warnings = counts[2] or 0
+    local infos = counts[3] or 0
+    local hints = counts[4] or 0
+
+    local errors_l = ''
+    if errors > 0 then
+      errors_l = '%#SpaceVim_statusline_error#● ' .. errors
+    end
+    local warnings_l = ''
+    if warnings > 0 then
+      warnings_l = '%#SpaceVim_statusline_warn#● ' .. warnings
+    end
+    local infos_l = ''
+    if infos > 0 then
+      infos_l = '%#SpaceVim_statusline_info#● ' .. infos
+    end
+    local hints_l = ''
+    if hints > 0 then
+      hints_l = '%#SpaceVim_statusline_hint#● ' .. hints
+    end
+    local l = table.concat(
+      vim.tbl_filter(function(t)
+        return t ~= ''
+      end, { errors_l, warnings_l, infos_l, hints_l }),
+      ' '
+    )
+    if #l > 0 then
+      return ' ' .. l .. ' '
+    else
+      return ''
+    end
+  elseif vim.g.spacevim_lint_engine == 'neomake' then
+    if not vim.g.loaded_neomake then
+      return ''
+    end
+    local counts = vim.fn['neomake#statusline#LoclistCounts']()
+    local warnings = counts.W or 0
+    local errors = counts.E or 0
+    local l = ''
+
+    if warnings > 0 then
+      l = '%#SpaceVim_statusline_warn# ● ' .. warnings .. ' '
+    end
+    if errors > 0 then
+      l = l .. '%#SpaceVim_statusline_error#● ' .. errors
+    end
+    if l ~= '' then
+      return ' ' .. l .. ' '
+    else
+      return ''
+    end
+  elseif vim.g.spacevim_lint_engine == 'ale' then
+    if not vim.g.ale_enabled then
+      return ''
+    end
+
+    local counts = vim.fn['ale#statusline#Count'](vim.fn.bufnr(''))
+    local warnings = counts.warning + counts.style_warning
+    local errors = counts.error + counts.style_error
+    local l = ''
+
+    if warnings > 0 then
+      l = '%#SpaceVim_statusline_warn# ● ' .. warnings .. ' '
+    end
+    if errors > 0 then
+      l = l .. '%#SpaceVim_statusline_error#● ' .. errors
+    end
+    if l ~= '' then
+      return ' ' .. l .. ' '
+    else
+      return ''
+    end
+  else
+    if vim.fn.exists(':SyntasticCheck') == 0 then
+      return ''
+    end
+    local l = vim.fn.SyntasticStatuslineFlag()
+    if #l > 0 then
+      return l
+    else
+      return ''
+    end
+  end
+end
 
 local function search_status() end
 
@@ -637,14 +724,28 @@ function M.def_colors()
   })
   vim.api.nvim_set_hl(0, 'SpaceVim_statusline_error', {
     bold = true,
-    fg = '#fb4934',
+    fg = '#ffc0b9',
     bg = t[2][2],
     ctermfg = 'Black',
     ctermbg = t[2][3],
   })
   vim.api.nvim_set_hl(0, 'SpaceVim_statusline_warn', {
     bold = true,
-    fg = '#fabd2f',
+    fg = '#fce094',
+    bg = t[2][2],
+    ctermfg = 'Black',
+    ctermbg = t[2][3],
+  })
+  vim.api.nvim_set_hl(0, 'SpaceVim_statusline_info', {
+    bold = true,
+    fg = '#8cf8f7',
+    bg = t[2][2],
+    ctermfg = 'Black',
+    ctermbg = t[2][3],
+  })
+  vim.api.nvim_set_hl(0, 'SpaceVim_statusline_hint', {
+    bold = true,
+    fg = '#a6dbff',
     bg = t[2][2],
     ctermfg = 'Black',
     ctermbg = t[2][3],
