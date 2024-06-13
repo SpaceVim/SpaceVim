@@ -1,10 +1,8 @@
 local util = require 'lspconfig.util'
 
 local bin_name = 'pyright-langserver'
-local cmd = { bin_name, '--stdio' }
-
 if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
+  bin_name = bin_name .. '.cmd'
 end
 
 local root_files = {
@@ -26,7 +24,7 @@ end
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { bin_name, '--stdio' },
     filetypes = { 'python' },
     root_dir = util.root_pattern(unpack(root_files)),
     single_file_support = true,
@@ -47,6 +45,7 @@ return {
     },
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/microsoft/pyright/master/packages/vscode-pyright/package.json',
     description = [[
 https://github.com/microsoft/pyright
 

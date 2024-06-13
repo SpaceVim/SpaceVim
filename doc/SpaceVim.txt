@@ -257,13 +257,14 @@ CONTENTS                                                   *SpaceVim-contents*
     8. undo-tree.................................... |SpaceVim-usage-undotree|
     9. windows-and-tabs..................... |SpaceVim-usage-windows-and-tabs|
 8. Plugins................................................. |SpaceVim-plugins|
-    1. alternate................................. |SpaceVim-plugins-alternate|
-    2. autosave................................... |SpaceVim-plugins-autosave|
-    3. iedit......................................... |SpaceVim-plugins-iedit|
-    4. runner....................................... |SpaceVim-plugins-runner|
-    5. scrollbar................................. |SpaceVim-plugins-scrollbar|
-    6. tab manager.............................. |SpaceVim-plugins-tabmanager|
-    7. todo manager............................ |SpaceVim-plugins-todomanager|
+    1. Key Binding Guide..................... |SpaceVim-plugins-mapping-guide|
+    2. alternate................................. |SpaceVim-plugins-alternate|
+    3. autosave................................... |SpaceVim-plugins-autosave|
+    4. iedit......................................... |SpaceVim-plugins-iedit|
+    5. runner....................................... |SpaceVim-plugins-runner|
+    6. scrollbar................................. |SpaceVim-plugins-scrollbar|
+    7. tab manager.............................. |SpaceVim-plugins-tabmanager|
+    8. todo manager............................ |SpaceVim-plugins-todomanager|
 9. API......................................................... |SpaceVim-api|
     1. clock............................................. |SpaceVim-api-clock|
     2. cmdlinemenu................................. |SpaceVim-api-cmdlinemenu|
@@ -6426,6 +6427,14 @@ The following key bindings can be used to manager vim windows and tabs.
 PLUGINS                                                     *SpaceVim-plugins*
 
 This is a list of builtin plugins.
+
+==============================================================================
+KEY BINDING GUIDE                             *SpaceVim-plugins-mapping-guide*
+
+The key binding guide plugin is to display the description of the key binding.
+
+Lua version: require nvim-0.8.0
+Old Vim Script version: for vim and old nvim
 
 ==============================================================================
 ALTERNATE                                         *SpaceVim-plugins-alternate*

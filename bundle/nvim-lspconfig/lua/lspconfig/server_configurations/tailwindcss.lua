@@ -1,15 +1,10 @@
 local util = require 'lspconfig.util'
 
 local bin_name = 'tailwindcss-language-server'
-local cmd = { bin_name, '--stdio' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
-end
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { bin_name, '--stdio' },
     -- filetypes copied and adjusted from tailwindcss-intellisense
     filetypes = {
       -- html
@@ -18,10 +13,8 @@ return {
       'astro-markdown',
       'blade',
       'django-html',
-      'htmldjango',
       'edge',
       'eelixir', -- vim ft
-      'elixir',
       'ejs',
       'erb',
       'eruby', -- vim ft
@@ -33,7 +26,6 @@ return {
       -- 'HTML (Eex)',
       -- 'HTML (EEx)',
       'html-eex',
-      'heex',
       'jade',
       'leaf',
       'liquid',

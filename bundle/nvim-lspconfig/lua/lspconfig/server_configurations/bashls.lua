@@ -1,15 +1,8 @@
 local util = require 'lspconfig.util'
 
-local bin_name = 'bash-language-server'
-local cmd = { bin_name, 'start' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, 'start' }
-end
-
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { 'bash-language-server', 'start' },
     cmd_env = {
       -- Prevent recursive scanning which will cause issues when opening a file
       -- directly in the home directory (e.g. ~/foo.sh).
@@ -24,11 +17,6 @@ return {
   docs = {
     description = [[
 https://github.com/mads-hartmann/bash-language-server
-
-`bash-language-server` can be installed via `npm`:
-```sh
-npm i -g bash-language-server
-```
 
 Language server for bash, written using tree sitter in typescript.
 ]],

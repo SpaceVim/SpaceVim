@@ -3,11 +3,6 @@ local lsp = vim.lsp
 local api = vim.api
 
 local bin_name = 'elm-language-server'
-local cmd = { bin_name }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name }
-end
 
 local default_capabilities = lsp.protocol.make_client_capabilities()
 default_capabilities.offsetEncoding = { 'utf-8', 'utf-16' }
@@ -15,7 +10,7 @@ local elm_root_pattern = util.root_pattern 'elm.json'
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { bin_name },
     -- TODO(ashkan) if we comment this out, it will allow elmls to operate on elm.json. It seems like it could do that, but no other editor allows it right now.
     filetypes = { 'elm' },
     root_dir = function(fname)
@@ -25,10 +20,14 @@ return {
       end
     end,
     init_options = {
+      elmPath = 'elm',
+      elmFormatPath = 'elm-format',
+      elmTestPath = 'elm-test',
       elmAnalyseTrigger = 'change',
     },
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/elm-tooling/elm-language-client-vscode/master/package.json',
     description = [[
 https://github.com/elm-tooling/elm-language-server#installation
 

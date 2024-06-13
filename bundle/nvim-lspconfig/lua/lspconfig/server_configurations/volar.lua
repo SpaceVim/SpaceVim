@@ -12,7 +12,6 @@ local volar_init_options = {
     serverPath = '',
   },
   languageFeatures = {
-    implementation = true,
     -- not supported - https://github.com/neovim/neovim/pull/14122
     semanticTokens = false,
     references = true,
@@ -47,15 +46,9 @@ local volar_init_options = {
   },
 }
 
-local bin_name = 'vue-language-server'
-local cmd = { bin_name, '--stdio' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
-end
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { 'volar-server', '--stdio' },
     filetypes = { 'vue' },
     root_dir = util.root_pattern 'package.json',
     init_options = volar_init_options,
@@ -71,21 +64,19 @@ return {
   },
   docs = {
     description = [[
-https://github.com/johnsoncodehk/volar/tree/master/packages/vue-language-server
+https://github.com/johnsoncodehk/volar/tree/master/packages/server
 
 Volar language server for Vue
 
 Volar can be installed via npm:
 
 ```sh
-npm install -g @volar/vue-language-server
+npm install -g @volar/server
 ```
 
-Volar by default supports Vue 3 projects. Vue 2 projects need
-[additional configuration](https://github.com/johnsoncodehk/volar/blob/master/extensions/vscode-vue-language-features/README.md?plain=1#L28-L63).
+Volar by default supports Vue 3 projects. Vue 2 projects need [additional configuration](https://github.com/johnsoncodehk/volar/blob/master/extensions/vscode-vue-language-features/README.md?plain=1#L28-L63).
 
 **Take Over Mode**
-
 Volar can serve as a language server for both Vue and TypeScript via [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471).
 
 To enable Take Over Mode, override the default filetypes in `setup{}` as follows:
@@ -97,9 +88,7 @@ require'lspconfig'.volar.setup{
 ```
 
 **Overriding the default TypeScript Server used by Volar**
-
-The default config looks for TS in the local `node_modules`. This can lead to issues
-e.g. when working on a [monorepo](https://monorepo.tools/). The alternatives are:
+The default config looks for TS in the local node_modules. The alternatives are:
 
 - use a global TypeScript Server installation
 
@@ -108,40 +97,35 @@ require'lspconfig'.volar.setup{
   init_options = {
     typescript = {
       serverPath = '/path/to/.npm/lib/node_modules/typescript/lib/tsserverlib.js'
-      -- Alternative location if installed as root:
-      -- serverPath = '/usr/local/lib/node_modules/typescript/lib/tsserverlibrary.js'
     }
   }
 }
 ```
 
-- use a local server and fall back to a global TypeScript Server installation
+- use a global TypeScript Server installation if a local server is not found
 
 ```lua
 local util = require 'lspconfig.util'
-local function get_typescript_server_path(root_dir)
 
-  local global_ts = '/home/[yourusernamehere]/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js'
-  -- Alternative location if installed as root:
-  -- local global_ts = '/usr/local/lib/node_modules/typescript/lib/tsserverlibrary.js'
-  local found_ts = ''
-  local function check_dir(path)
-    found_ts =  util.path.join(path, 'node_modules', 'typescript', 'lib', 'tsserverlibrary.js')
-    if util.path.exists(found_ts) then
-      return path
-    end
-  end
-  if util.search_ancestors(root_dir, check_dir) then
-    return found_ts
+local function get_typescript_server_path(root_dir)
+  local project_root = util.find_node_modules_ancestor(root_dir)
+
+  local local_tsserverlib = project_root ~= nil and util.path.join(project_root, 'node_modules', 'typescript', 'lib', 'tsserverlibrary.js')
+  local global_tsserverlib = '/home/[yourusernamehere]/.npm/lib/node_modules/typescript/lib/tsserverlibrary.js'
+
+  if local_tsserverlib and util.path.exists(local_tsserverlib) then
+    return local_tsserverlib
   else
-    return global_ts
+    return global_tsserverlib
   end
 end
 
 require'lspconfig'.volar.setup{
-  on_new_config = function(new_config, new_root_dir)
-    new_config.init_options.typescript.serverPath = get_typescript_server_path(new_root_dir)
-  end,
+  config = {
+    on_new_config = function(new_config, new_root_dir)
+      new_config.init_options.typescript.serverPath = get_typescript_server_path(new_root_dir)
+    end,
+  }
 }
 ```
     ]],

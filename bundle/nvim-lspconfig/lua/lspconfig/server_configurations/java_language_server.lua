@@ -7,6 +7,7 @@ return {
     settings = {},
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/georgewfraser/java-language-server/master/package.json',
     description = [[
 https://github.com/georgewfraser/java-language-server
 

@@ -89,7 +89,9 @@ function! SpaceVim#layers#lsp#plugins() abort
             \ 'merged' : 0,
             \ }])
     endif
-  elseif s:use_nvim_lsp
+    " this is the laste commit support nvim-0.5.0
+    " https://github.com/neovim/nvim-lspconfig/tree/4569e14e59bed1d18a91db76fe3261628f60e3f0
+  elseif has('nvim-0.5.0')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-lspconfig', {'merged' : 0, 'loadconf' : 1}])
     if g:spacevim_autocomplete_method ==# 'deoplete'
       call add(plugins, [g:_spacevim_root_dir . 'bundle/deoplete-lsp', {'merged' : 0}])

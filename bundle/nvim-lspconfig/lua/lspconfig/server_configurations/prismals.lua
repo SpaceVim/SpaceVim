@@ -1,15 +1,13 @@
 local util = require 'lspconfig.util'
 
 local bin_name = 'prisma-language-server'
-local cmd = { bin_name, '--stdio' }
-
 if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
+  bin_name = bin_name .. '.cmd'
 end
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { bin_name, '--stdio' },
     filetypes = { 'prisma' },
     settings = {
       prisma = {
@@ -20,12 +18,9 @@ return {
   },
   docs = {
     description = [[
-Language Server for the Prisma JavaScript and TypeScript ORM
-
-`@prisma/language-server` can be installed via npm
-```sh
 npm install -g @prisma/language-server
-```
+
+'prismals, a language server for the prisma javascript and typescript orm'
 ]],
     default_config = {
       root_dir = [[root_pattern(".git", "package.json")]],

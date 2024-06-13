@@ -1,15 +1,10 @@
 local util = require 'lspconfig.util'
 
 local bin_name = 'vscode-css-language-server'
-local cmd = { bin_name, '--stdio' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
-end
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { bin_name, '--stdio' },
     filetypes = { 'css', 'scss', 'less' },
     root_dir = util.root_pattern('package.json', '.git'),
     single_file_support = true,

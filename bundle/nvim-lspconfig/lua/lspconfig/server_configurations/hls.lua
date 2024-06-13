@@ -4,13 +4,7 @@ return {
   default_config = {
     cmd = { 'haskell-language-server-wrapper', '--lsp' },
     filetypes = { 'haskell', 'lhaskell' },
-    root_dir = function(filepath)
-      return (
-        util.root_pattern('hie.yaml', 'stack.yaml', 'cabal.project')(filepath)
-        or util.root_pattern('*.cabal', 'package.yaml')(filepath)
-      )
-    end,
-    single_file_support = true,
+    root_dir = util.root_pattern('*.cabal', 'stack.yaml', 'cabal.project', 'package.yaml', 'hie.yaml'),
     settings = {
       haskell = {
         formattingProvider = 'ormolu',
@@ -39,17 +33,10 @@ return {
 https://github.com/haskell/haskell-language-server
 
 Haskell Language Server
-    ]],
+        ]],
 
     default_config = {
-      root_dir = [[
-function (filepath)
-  return (
-    util.root_pattern('hie.yaml', 'stack.yaml', 'cabal.project')(filepath)
-    or util.root_pattern('*.cabal', 'package.yaml')(filepath)
-  )
-end
-      ]],
+      root_dir = [[root_pattern("*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml")]],
     },
   },
 }

@@ -5,10 +5,10 @@ return {
     cmd = { 'golangci-lint-langserver' },
     filetypes = { 'go', 'gomod' },
     init_options = {
-      command = { 'golangci-lint', 'run', '--out-format', 'json' },
+      command = { 'golangci-lint', 'run', '--enable-all', '--disable', 'lll', '--out-format', 'json' },
     },
     root_dir = function(fname)
-      return util.root_pattern 'go.work'(fname) or util.root_pattern('go.mod', '.golangci.yaml', '.git')(fname)
+      return util.root_pattern 'go.work'(fname) or util.root_pattern('go.mod', '.git')(fname)
     end,
   },
   docs = {
@@ -28,7 +28,7 @@ go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
 
 ]],
     default_config = {
-      root_dir = [[root_pattern('go.work') or root_pattern('go.mod', '.golangci.yaml', '.git')]],
+      root_dir = [[root_pattern('go.mod', '.git')]],
     },
   },
 }

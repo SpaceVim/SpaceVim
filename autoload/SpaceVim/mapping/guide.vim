@@ -12,8 +12,16 @@ endif
 
 let s:save_cpo = &cpo
 set cpo&vim
+""
+" @section Key Binding Guide, plugins-mapping-guide
+" @parentsection plugins
+" The key binding guide plugin is to display the description of the key
+" binding.
+"
+" - Lua version: require nvim-0.8.0
+" - Old Vim Script version: for vim and old nvim
 
-if has('nvim-0.9.0')
+if has('nvim-0.8.0')
 
   function! SpaceVim#mapping#guide#parse_mappings() abort " {{{
     lua require("spacevim.plugin.guide").parse_mappings()

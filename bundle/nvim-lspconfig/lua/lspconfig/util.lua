@@ -3,6 +3,7 @@ local validate = vim.validate
 local api = vim.api
 local lsp = vim.lsp
 local uv = vim.loop
+local fn = vim.fn
 
 local M = {}
 
@@ -13,20 +14,30 @@ M.default_config = {
   init_options = vim.empty_dict(),
   handlers = {},
   autostart = true,
-  capabilities = lsp.protocol.make_client_capabilities(),
 }
 
 -- global on_setup hook
 M.on_setup = nil
 
-function M.bufname_valid(bufname)
-  if not bufname then
-    return false
+-- add compatibility shim for breaking signature change
+-- from https://github.com/mfussenegger/nvim-lsp-compl/
+-- TODO: remove after Neovim release
+function M.compat_handler(handler)
+  return function(...)
+    local config_or_client_id = select(4, ...)
+    local is_new = type(config_or_client_id) ~= 'number'
+    if is_new then
+      return handler(...)
+    else
+      local err = select(1, ...)
+      local method = select(2, ...)
+      local result = select(3, ...)
+      local client_id = select(4, ...)
+      local bufnr = select(5, ...)
+      local config = select(6, ...)
+      return handler(err, result, { method = method, client_id = client_id, bufnr = bufnr }, config)
+    end
   end
-  if bufname:match '^/' or bufname:match '^[a-zA-Z]:' or bufname:match '^zipfile://' or bufname:match '^tarfile:' then
-    return true
-  end
-  return false
 end
 
 function M.validate_bufnr(bufnr)
@@ -60,57 +71,43 @@ function M.add_hook_after(func, new_fn)
   end
 end
 
--- Maps lspconfig-style command options to nvim_create_user_command (i.e. |command-attributes|) option names.
-local opts_aliases = {
-  ['description'] = 'desc',
-}
-
----@param command_definition table<string | integer, any>
-function M._parse_user_command_options(command_definition)
-  ---@type table<string, string | boolean | number>
-  local opts = {}
-  for k, v in pairs(command_definition) do
-    if type(k) == 'string' then
-      local attribute = k.gsub(k, '^%-+', '')
-      opts[opts_aliases[attribute] or attribute] = v
-    elseif type(k) == 'number' and type(v) == 'string' and v:match '^%-' then
-      -- Splits strings like "-nargs=* -complete=customlist,v:lua.something" into { "-nargs=*", "-complete=customlist,v:lua.something" }
-      for _, command_attribute in ipairs(vim.split(v, '%s')) do
-        -- Splits attribute into a key-value pair, like "-nargs=*" to { "-nargs", "*" }
-        local attribute, value = unpack(vim.split(command_attribute, '=', { plain = true }))
-        attribute = attribute.gsub(attribute, '^%-+', '')
-        opts[opts_aliases[attribute] or attribute] = value or true
-      end
-    end
-  end
-  return opts
-end
-
 function M.create_module_commands(module_name, commands)
   for command_name, def in pairs(commands) do
-    local opts = M._parse_user_command_options(def)
-    api.nvim_create_user_command(command_name, function(info)
-      require('lspconfig')[module_name].commands[command_name][1](unpack(info.fargs))
-    end, opts)
+    local parts = { 'command!' }
+    -- Insert attributes.
+    for k, v in pairs(def) do
+      if type(k) == 'string' and type(v) == 'boolean' and v then
+        table.insert(parts, '-' .. k)
+      elseif type(k) == 'number' and type(v) == 'string' and v:match '^%-' then
+        table.insert(parts, v)
+      end
+    end
+    table.insert(parts, command_name)
+    -- The command definition.
+    table.insert(
+      parts,
+      string.format("lua require'lspconfig'[%q].commands[%q][1](<f-args>)", module_name, command_name)
+    )
+    api.nvim_command(table.concat(parts, ' '))
   end
+end
+
+function M.has_bins(...)
+  for i = 1, select('#', ...) do
+    if 0 == fn.executable((select(i, ...))) then
+      return false
+    end
+  end
+  return true
+end
+
+M.script_path = function()
+  local str = debug.getinfo(2, 'S').source:sub(2)
+  return str:match '(.*[/\\])'
 end
 
 -- Some path utilities
 M.path = (function()
-  local is_windows = uv.os_uname().version:match 'Windows'
-
-  local function escape_wildcards(path)
-    return path:gsub('([%[%]%?%*])', '\\%1')
-  end
-
-  local function sanitize(path)
-    if is_windows then
-      path = path:sub(1, 1):upper() .. path:sub(2)
-      path = path:gsub('\\', '/')
-    end
-    return path
-  end
-
   local function exists(filename)
     local stat = uv.fs_stat(filename)
     return stat and stat.type or false
@@ -124,10 +121,16 @@ M.path = (function()
     return exists(filename) == 'file'
   end
 
-  local function is_fs_root(path)
-    if is_windows then
+  local is_windows = uv.os_uname().version:match 'Windows'
+  local path_sep = is_windows and '\\' or '/'
+
+  local is_fs_root
+  if is_windows then
+    is_fs_root = function(path)
       return path:match '^%a:$'
-    else
+    end
+  else
+    is_fs_root = function(path)
       return path == '/'
     end
   end
@@ -140,25 +143,25 @@ M.path = (function()
     end
   end
 
-  local function dirname(path)
-    local strip_dir_pat = '/([^/]+)$'
-    local strip_sep_pat = '/$'
-    if not path or #path == 0 then
-      return
-    end
-    local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
-    if #result == 0 then
-      if is_windows then
-        return path:sub(1, 2):upper()
-      else
+  local dirname
+  do
+    local strip_dir_pat = path_sep .. '([^' .. path_sep .. ']+)$'
+    local strip_sep_pat = path_sep .. '$'
+    dirname = function(path)
+      if not path or #path == 0 then
+        return
+      end
+      local result = path:gsub(strip_sep_pat, ''):gsub(strip_dir_pat, '')
+      if #result == 0 then
         return '/'
       end
+      return result
     end
-    return result
   end
 
   local function path_join(...)
-    return table.concat(vim.tbl_flatten { ... }, '/')
+    local result = table.concat(vim.tbl_flatten { ... }, path_sep):gsub(path_sep .. '+', path_sep)
+    return result
   end
 
   -- Traverse the path calling cb along the way.
@@ -212,47 +215,44 @@ M.path = (function()
     return dir == root
   end
 
-  local path_separator = is_windows and ';' or ':'
-
   return {
-    escape_wildcards = escape_wildcards,
     is_dir = is_dir,
     is_file = is_file,
     is_absolute = is_absolute,
     exists = exists,
+    sep = path_sep,
     dirname = dirname,
     join = path_join,
-    sanitize = sanitize,
     traverse_parents = traverse_parents,
     iterate_parents = iterate_parents,
     is_descendant = is_descendant,
-    path_separator = path_separator,
   }
 end)()
 
 -- Returns a function(root_dir), which, when called with a root_dir it hasn't
 -- seen before, will call make_config(root_dir) and start a new client.
-function M.server_per_root_dir_manager(make_config)
+function M.server_per_root_dir_manager(_make_config)
   local clients = {}
   local single_file_clients = {}
   local manager = {}
 
-  function manager.add(root_dir, single_file)
+  function manager.add(root_dir, single_file_support)
     local client_id
-    -- This is technically unnecessary, as lspconfig's path utilities should be hermetic,
-    -- however users are free to return strings in custom root resolvers.
-    root_dir = M.path.sanitize(root_dir)
-    if single_file then
+    if single_file_support then
       client_id = single_file_clients[root_dir]
-    elseif root_dir and M.path.is_dir(root_dir) then
-      client_id = clients[root_dir]
     else
-      return
+      if not root_dir then
+        return
+      end
+      if not M.path.is_dir(root_dir) then
+        return
+      end
+      client_id = clients[root_dir]
     end
 
     -- Check if we have a client already or start and store it.
     if not client_id then
-      local new_config = make_config(root_dir)
+      local new_config = _make_config(root_dir)
       -- do nothing if the client is not enabled
       if new_config.enabled == false then
         return
@@ -281,7 +281,7 @@ function M.server_per_root_dir_manager(make_config)
       -- Sending rootDirectory and workspaceFolders as null is not explicitly
       -- codified in the spec. Certain servers crash if initialized with a NULL
       -- root directory.
-      if single_file then
+      if single_file_support then
         new_config.root_dir = nil
         new_config.workspace_folders = nil
       end
@@ -292,7 +292,7 @@ function M.server_per_root_dir_manager(make_config)
         return
       end
 
-      if single_file then
+      if single_file_support then
         single_file_clients[root_dir] = client_id
       else
         clients[root_dir] = client_id
@@ -301,10 +301,9 @@ function M.server_per_root_dir_manager(make_config)
     return client_id
   end
 
-  function manager.clients(single_file)
+  function manager.clients()
     local res = {}
-    local client_list = single_file and single_file_clients or clients
-    for _, id in pairs(client_list) do
+    for _, id in pairs(clients) do
       local client = lsp.get_client_by_id(id)
       if client then
         table.insert(res, client)
@@ -339,7 +338,7 @@ function M.root_pattern(...)
   local patterns = vim.tbl_flatten { ... }
   local function matcher(path)
     for _, pattern in ipairs(patterns) do
-      for _, p in ipairs(vim.fn.glob(M.path.join(M.path.escape_wildcards(path), pattern), true, true)) do
+      for _, p in ipairs(vim.fn.glob(M.path.join(path, pattern), true, true)) do
         if M.path.exists(p) then
           return path
         end
@@ -347,7 +346,6 @@ function M.root_pattern(...)
     end
   end
   return function(startpath)
-    startpath = M.strip_archive_subpath(startpath)
     return M.search_ancestors(startpath, matcher)
   end
 end
@@ -355,14 +353,6 @@ function M.find_git_ancestor(startpath)
   return M.search_ancestors(startpath, function(path)
     -- Support git directories and git files (worktrees)
     if M.path.is_dir(M.path.join(path, '.git')) or M.path.is_file(M.path.join(path, '.git')) then
-      return path
-    end
-  end)
-end
-function M.find_mercurial_ancestor(startpath)
-  return M.search_ancestors(startpath, function(path)
-    -- Support Mercurial directories
-    if M.path.is_dir(M.path.join(path, '.hg')) then
       return path
     end
   end)
@@ -413,44 +403,23 @@ function M.get_other_matching_providers(filetype)
   return other_matching_configs
 end
 
+function M.get_clients_from_cmd_args(arg)
+  local result = {}
+  for id in (arg or ''):gmatch '(%d+) %((%w+)%)' do
+    result[id] = vim.lsp.get_client_by_id(tonumber(id))
+  end
+  if vim.tbl_isempty(result) then
+    return vim.lsp.get_active_clients()
+  end
+  return vim.tbl_values(result)
+end
+
 function M.get_active_client_by_name(bufnr, servername)
   for _, client in pairs(vim.lsp.buf_get_clients(bufnr)) do
     if client.name == servername then
       return client
     end
   end
-end
-
-function M.get_managed_clients()
-  local configs = require 'lspconfig.configs'
-  local clients = {}
-  for _, config in pairs(configs) do
-    if config.manager then
-      vim.list_extend(clients, config.manager.clients())
-      vim.list_extend(clients, config.manager.clients(true))
-    end
-  end
-  return clients
-end
-
-function M.available_servers()
-  local servers = {}
-  local configs = require 'lspconfig.configs'
-  for server, config in pairs(configs) do
-    if config.manager ~= nil then
-      table.insert(servers, server)
-    end
-  end
-  return servers
-end
-
--- For zipfile: or tarfile: virtual paths, returns the path to the archive.
--- Other paths are returned unaltered.
-function M.strip_archive_subpath(path)
-  -- Matches regex from zip.vim / tar.vim
-  path = vim.fn.substitute(path, 'zipfile://\\(.\\{-}\\)::[^\\\\].*$', '\\1', '')
-  path = vim.fn.substitute(path, 'tarfile:\\(.\\{-}\\)::.*$', '\\1', '')
-  return path
 end
 
 return M

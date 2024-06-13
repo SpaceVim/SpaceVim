@@ -1,14 +1,8 @@
 local util = require 'lspconfig.util'
 
-local bin_name = 'psalm-language-server'
-
-if vim.fn.has 'win32' == 1 then
-  bin_name = bin_name .. '.bat'
-end
-
 return {
   default_config = {
-    cmd = { bin_name },
+    cmd = { 'psalm-language-server' },
     filetypes = { 'php' },
     root_dir = util.root_pattern('psalm.xml', 'psalm.xml.dist'),
   },

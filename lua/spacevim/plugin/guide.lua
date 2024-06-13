@@ -16,6 +16,8 @@ local buffer = require('spacevim.api').import('vim.buffer')
 local VIM = require('spacevim.api').import('vim')
 local SL = require('spacevim.api').import('vim.statusline')
 local hl = require('spacevim.api.vim.highlight')
+local vopt = require('spacevim.api.vim.option')
+
 
 -- all local values should be listed here:
 
@@ -548,20 +550,6 @@ local function updateStatusline()
   }, true)
 end
 
-local function setlocalopt(buf, win, opts)
-  for o, value in pairs(opts) do
-    local info = vim.api.nvim_get_option_info2(o, {})
-    if info.scope == 'win' then
-      vim.api.nvim_set_option_value(o, value, {
-        win = win,
-      })
-    elseif info.scope == 'buf' then
-      vim.api.nvim_set_option_value(o, value, {
-        buf = buf,
-      })
-    end
-  end
-end
 local function winopen()
   highlight_cursor()
   if not vim.api.nvim_buf_is_valid(bufnr) then
@@ -579,7 +567,7 @@ local function winopen()
   end
   winid = vim.api.nvim_open_win(bufnr, false, opt)
   guide_help_mode = false
-  setlocalopt(bufnr, winid, {
+  vopt.setlocalopt(bufnr, winid, {
     winhighlight = 'Normal:Pmenu,Search:',
     filetype = 'leaderGuide',
     number = false,

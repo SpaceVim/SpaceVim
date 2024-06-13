@@ -5,7 +5,6 @@ return {
     cmd = { 'flux-lsp' },
     filetypes = { 'flux' },
     root_dir = util.find_git_ancestor,
-    single_file_support = true,
   },
   docs = {
     description = [[

@@ -6,7 +6,7 @@
 -- License: GPLv3
 --=============================================================================
 if vim.fn.exists(":ZkNew") == 0 then
-    vim.api.nvim_create_user_command("ZkNew", ":lua require('zettelkasten').zknew({})", {})
+    vim.cmd([[command ZkNew :lua require('zettelkasten').zknew({})]])
 end
 
 if vim.fn.exists(":ZkBrowse") == 0 then

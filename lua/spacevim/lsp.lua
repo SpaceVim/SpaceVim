@@ -23,19 +23,22 @@ end
 
 function M.setup(enabled_clients, override_client_cmds) -- {{{
   local nvim_lsp = require('lspconfig')
-  local augroup = vim.api.nvim_create_augroup('spacevim_lsp', { clear = true })
-  vim.api.nvim_create_autocmd('LspAttach', {
-    group = augroup,
-    callback = function(args)
-      vim.api.nvim_buf_set_var(args.buf, 'lsp_server_ready', true)
-    end,
-  })
-  vim.api.nvim_create_autocmd('LspDetach', {
-    group = augroup,
-    callback = function(args)
-      vim.api.nvim_buf_set_var(args.buf, 'lsp_server_ready', false)
-    end,
-  })
+  -- LspAttach and LspDetach event require nvim-0.8.0
+  if vim.fn.has('nvim-0.8.0') == 1 then
+    local augroup = vim.api.nvim_create_augroup('spacevim_lsp', { clear = true })
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = augroup,
+      callback = function(args)
+        vim.api.nvim_buf_set_var(args.buf, 'lsp_server_ready', true)
+      end,
+    })
+    vim.api.nvim_create_autocmd('LspDetach', {
+      group = augroup,
+      callback = function(args)
+        vim.api.nvim_buf_set_var(args.buf, 'lsp_server_ready', false)
+      end,
+    })
+  end
 
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer

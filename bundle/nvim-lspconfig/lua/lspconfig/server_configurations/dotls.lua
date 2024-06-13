@@ -1,15 +1,8 @@
 local util = require 'lspconfig.util'
 
-local bin_name = 'dot-language-server'
-local cmd = { bin_name, '--stdio' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
-end
-
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { 'dot-language-server', '--stdio' },
     filetypes = { 'dot' },
     root_dir = util.find_git_ancestor,
     single_file_support = true,

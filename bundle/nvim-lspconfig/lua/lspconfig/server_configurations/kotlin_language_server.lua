@@ -31,6 +31,7 @@ return {
     cmd = { bin_name },
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/fwcd/vscode-kotlin/master/package.json',
     description = [[
     A kotlin language server which was developed for internal usage and
     released afterwards. Maintaining is not done by the original author,

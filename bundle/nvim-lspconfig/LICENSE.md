@@ -1,8 +1,8 @@
 Copyright Neovim contributors. All rights reserved.
 
-nvim-lspconfig is licensed under the terms of the Apache 2.0 license.
+nvim-lsp is licensed under the terms of the Apache 2.0 license.
 
-nvim-lspconfig's license follows:
+nvim-lsp's license follows:
 
 ====
                                  Apache License

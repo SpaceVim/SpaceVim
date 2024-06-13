@@ -12,6 +12,7 @@ return {
     root_dir = util.root_pattern('Makefile', '.git', '*.gpr', '*.adc'),
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/AdaCore/ada_language_server/master/integration/vscode/ada/package.json',
     description = [[
 https://github.com/AdaCore/ada_language_server
 

@@ -6,7 +6,6 @@ local language_id_of = {
   ocamlinterface = 'ocaml.interface',
   ocamllex = 'ocaml.ocamllex',
   reason = 'reason',
-  dune = 'dune',
 }
 
 local get_language_id = function(_, ftype)
@@ -16,8 +15,8 @@ end
 return {
   default_config = {
     cmd = { 'ocamllsp' },
-    filetypes = { 'ocaml', 'ocaml.menhir', 'ocaml.interface', 'ocaml.ocamllex', 'reason', 'dune' },
-    root_dir = util.root_pattern('*.opam', 'esy.json', 'package.json', '.git', 'dune-project', 'dune-workspace'),
+    filetypes = { 'ocaml', 'ocaml.menhir', 'ocaml.interface', 'ocaml.ocamllex', 'reason' },
+    root_dir = util.root_pattern('*.opam', 'esy.json', 'package.json', '.git'),
     get_language_id = get_language_id,
   },
   docs = {
@@ -28,11 +27,12 @@ https://github.com/ocaml/ocaml-lsp
 
 To install the lsp server in a particular opam switch:
 ```sh
+opam pin add ocaml-lsp-server https://github.com/ocaml/ocaml-lsp.git
 opam install ocaml-lsp-server
 ```
     ]],
     default_config = {
-      root_dir = [[root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace")]],
+      root_dir = [[root_pattern("*.opam", "esy.json", "package.json", ".git")]],
     },
   },
 }

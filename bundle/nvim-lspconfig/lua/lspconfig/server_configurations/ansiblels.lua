@@ -1,15 +1,8 @@
 local util = require 'lspconfig.util'
 
-local bin_name = 'ansible-language-server'
-local cmd = { bin_name, '--stdio' }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
-end
-
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { 'ansible-language-server', '--stdio' },
     settings = {
       ansible = {
         python = {
@@ -27,7 +20,7 @@ return {
         },
       },
     },
-    filetypes = { 'yaml.ansible' },
+    filetypes = { 'yaml', 'yaml.ansible' },
     root_dir = util.root_pattern('ansible.cfg', '.ansible-lint'),
     single_file_support = true,
   },
@@ -37,10 +30,9 @@ https://github.com/ansible/ansible-language-server
 
 Language server for the ansible configuration management tool.
 
-`ansible-language-server` can be installed via `npm`:
-
+`ansible-language-server` can be installed via `yarn`:
 ```sh
-npm install -g @ansible/ansible-language-server
+yarn global add ansible-language-server
 ```
 ]],
   },

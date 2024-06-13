@@ -1,20 +1,18 @@
 local util = require 'lspconfig.util'
 
 local bin_name = 'vim-language-server'
-local cmd = { bin_name, '--stdio' }
-
 if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, '--stdio' }
+  bin_name = bin_name .. '.cmd'
 end
 
 return {
   default_config = {
-    cmd = cmd,
+    cmd = { bin_name, '--stdio' },
     filetypes = { 'vim' },
-    root_dir = util.find_git_ancestor,
-    single_file_support = true,
+    root_dir = function(fname)
+      return util.find_git_ancestor(fname) or vim.fn.getcwd()
+    end,
     init_options = {
-      isNeovim = true,
       iskeyword = '@,48-57,_,192-255,-#',
       vimruntime = '',
       runtimepath = '',

@@ -10,11 +10,10 @@ return {
     single_file_support = true,
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/pragmagic/vscode-nim/master/package.json',
     description = [[
 https://github.com/PMunch/nimlsp
-
 `nimlsp` can be installed via the `nimble` package manager:
-
 ```sh
 nimble install nimlsp
 ```

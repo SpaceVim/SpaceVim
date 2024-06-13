@@ -6,7 +6,6 @@ return {
     settings = {
       perl = {
         perlcritic = { enabled = false },
-        syntax = { enabled = true },
       },
     },
     filetypes = { 'perl' },
@@ -14,6 +13,7 @@ return {
     single_file_support = true,
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/FractalBoy/perl-language-server/master/client/package.json',
     description = [[
 https://github.com/FractalBoy/perl-language-server
 https://metacpan.org/pod/PLS

@@ -15,6 +15,7 @@ return {
     single_file_support = true,
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/puppetlabs/puppet-vscode/main/package.json',
     description = [[
 LSP server for Puppet.
 

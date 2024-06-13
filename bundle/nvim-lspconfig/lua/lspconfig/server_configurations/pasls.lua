@@ -4,7 +4,7 @@ return {
   default_config = {
     cmd = { 'pasls' },
     filetypes = { 'pascal' },
-    root_dir = util.root_pattern('*.lpi', '*.lpk', '.git'),
+    root_dir = util.find_git_ancestor,
     single_file_support = true,
   },
   docs = {

@@ -11,29 +11,21 @@ end
 
 local default_probe_dir = get_probe_dir(vim.fn.getcwd())
 
-local bin_name = 'ngserver'
-local args = {
-  '--stdio',
-  '--tsProbeLocations',
-  default_probe_dir,
-  '--ngProbeLocations',
-  default_probe_dir,
-}
-
-local cmd = { bin_name, unpack(args) }
-
-if vim.fn.has 'win32' == 1 then
-  cmd = { 'cmd.exe', '/C', bin_name, unpack(args) }
-end
-
 return {
   default_config = {
-    cmd = cmd,
+    cmd = {
+      'ngserver',
+      '--stdio',
+      '--tsProbeLocations',
+      default_probe_dir,
+      '--ngProbeLocations',
+      default_probe_dir,
+    },
     filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx' },
-    -- Check for angular.json since that is the root of the project.
+    -- Check for angular.json or .git first since that is the root of the project.
     -- Don't check for tsconfig.json or package.json since there are multiple of these
     -- in an angular monorepo setup.
-    root_dir = util.root_pattern 'angular.json',
+    root_dir = util.root_pattern('angular.json', '.git'),
   },
   on_new_config = function(new_config, new_root_dir)
     local new_probe_dir = get_probe_dir(new_root_dir)
@@ -69,7 +61,7 @@ require'lspconfig'.angularls.setup{
 ```
     ]],
     default_config = {
-      root_dir = [[root_pattern("angular.json")]],
+      root_dir = [[root_pattern("angular.json", ".git")]],
     },
   },
 }

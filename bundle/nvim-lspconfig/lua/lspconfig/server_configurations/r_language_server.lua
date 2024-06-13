@@ -10,6 +10,7 @@ return {
     log_level = vim.lsp.protocol.MessageType.Warning,
   },
   docs = {
+    package_json = 'https://raw.githubusercontent.com/REditorSupport/vscode-r-lsp/master/package.json',
     description = [[
 [languageserver](https://github.com/REditorSupport/languageserver) is an
 implementation of the Microsoft's Language Server Protocol for the R
