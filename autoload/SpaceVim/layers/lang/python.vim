@@ -282,6 +282,9 @@ endfunction
 
 function! s:Shebang_to_cmd(line) abort
   let executable = matchstr(a:line, '#!\s*\zs[^ ]*')
+  if empty(executable)
+    return []
+  endif
   let argvs = split(matchstr(a:line, '#!\s*[^ ]\+\s*\zs.*'))
   return [executable] + argvs
 endfunction
@@ -289,7 +292,14 @@ endfunction
 func! s:getexe() abort
   let line = getline(1)
   if line =~# '^#!'
-    return s:Shebang_to_cmd(line)
+    let cmd = s:Shebang_to_cmd(line)
+    if empty(cmd)
+      call SpaceVim#logger#debug('failed to parse shebang')
+    elseif !executable(cmd[0])
+      call SpaceVim#logger#debug('shebang is not executable')
+    else
+      return cmd
+    endif
   endif
   return [s:python_interpreter]
 endf
