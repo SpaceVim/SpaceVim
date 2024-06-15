@@ -161,14 +161,6 @@ function M.fticon(path)
     end
 end
 
-function M.read(path)
-  if fn.filereadable(path) then
-    return fn.readfile(path, '')
-  else
-    return ''
-  end
-end
-
 function M.write(msg, fname)
     local flags
     if fn.filereadable(fname) == 1 then
@@ -198,7 +190,7 @@ function M.read(fname)
 end
 
 function M.unify_path(_path, ...)
-  local mod = select('1', ...)
+  local mod = select(1, ...)
   if mod == nil then
       mod = ':p'
   end
@@ -221,12 +213,13 @@ end
 function M.findfile(what, where, ...)
   -- let old_suffixesadd = &suffixesadd
   -- let &suffixesadd = ''
-  local count = select('1', ...)
+  local count = select(1, ...)
   if count == nil then
       count = 0
   end
 
   local file = ''
+  local path = ''
 
   if fn.filereadable(where) == 1 and  fn.isdirectory(where) == 0 then
     path = fn.fnamemodify(where, ':h')
@@ -249,7 +242,7 @@ end
 function M.finddir(what, where, ...)
   -- let old_suffixesadd = &suffixesadd
   -- let &suffixesadd = ''
-  local count = select('1', ...)
+  local count = select(1, ...)
   if count == nil then
       count = 0
   end
