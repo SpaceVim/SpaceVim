@@ -11,7 +11,7 @@ scriptencoding utf-8
 " @section Introduction, intro
 " @stylized spacevim
 " @library
-" @order intro options config functions layers usage plugins api dev faq changelog
+" @order intro options config functions layers usage plugins api dev community faq roadmap changelog
 " SpaceVim is a bundle of custom settings and plugins with a modular
 " configuration for Vim. It was inspired by Spacemacs.
 "
@@ -2253,10 +2253,69 @@ endfunction
 " <
 
 ""
+" @section Community, community
+"
+" @subsection News
+" 
+" The news about spacevim will be post on twitter, feel free to follow them:
+" 
+" https://x.com/SpaceVim
+" 
+" @subsection Asking for help
+" 
+" If you have any questions about using SpaceVim, check out the following context first, which may contain the answers:
+" 
+" @section(faq): Some of the most frequently asked questions are answered there.
+" @section(usage): It is the general documentation of SpaceVim.
+" 
+" @subsection Feedback
+" 
+" If you run into a bug, or want a new feature, please use the mail list:
+" 
+" send email to spacevim@googlegroups.com
+" 
+" To subscribe the maillist, send anything to：spacevim+subscribe@googlegroups.com
+" 
+" @subsection Chatroom
+" 
+" - Matrix room: #spacevim:matrix.org
+"
+" @subsection Forum
+"
+" - Reddit: https://www.reddit.com/r/SpaceVim/
+"
+" @subsection Others
+"
+" The messages from matrix also bridged to telegram, discord and slack. Please
+" checkout the community page for more info:
+"
+" https://spacevim.org/community/
+
+""
+" @section Roadmap, roadmap
+" The roadmap defines the project direction and priorities. If you have any
+" suggestions , please checkout @section(community).
+" 
+" @subsection To-Do List
+" 
+" - [x] rewrite statusline plugin with lua
+" - [x] rewrite tabline plugin with lua
+" - [ ] merge website context into :h SpaceVim
+" 
+" @subsection Completed
+" 
+" All completed functions can be found in @section(changelog)
+
+
+""
 " @section Changelog, changelog
 " Following HEAD: changes in master branch since last release v2.2.0
 "
 " https://spacevim.org/following-head/
+"
+" 2024-03-24: v2.3.0
+"
+" https://spacevim.org/SpaceVim-release-v2.3.0/
 "
 " 2023-07-05: v2.2.0
 "
@@ -2349,6 +2408,5 @@ endfunction
 " 2017-01-26: v0.1.0
 "
 " https://spacevim.org/SpaceVim-release-v0.1.0/
-"
 
 " vim:set et sw=2 cc=80:

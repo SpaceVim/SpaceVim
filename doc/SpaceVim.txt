@@ -291,8 +291,10 @@ CONTENTS                                                   *SpaceVim-contents*
     1. License......................................... |SpaceVim-dev-license|
     2. commit-style-guide................... |SpaceVim-dev-commit-style-guide|
     3. merge requese............................. |SpaceVim-dev-merge-request|
-11. FAQ........................................................ |SpaceVim-faq|
-12. Changelog............................................ |SpaceVim-changelog|
+11. Community............................................ |SpaceVim-community|
+12. FAQ........................................................ |SpaceVim-faq|
+13. Roadmap................................................ |SpaceVim-roadmap|
+14. Changelog............................................ |SpaceVim-changelog|
 
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
@@ -7226,6 +7228,48 @@ etc. And keep the important and isolated steps in different commits.
 Those PRs are merged and explicitly not fast-forwarded.
 
 ==============================================================================
+COMMUNITY                                                 *SpaceVim-community*
+
+
+NEWS
+
+The news about spacevim will be post on twitter, feel free to follow them:
+
+https://x.com/SpaceVim
+
+ASKING FOR HELP
+
+If you have any questions about using SpaceVim, check out the following
+context first, which may contain the answers:
+
+|SpaceVim-faq|: Some of the most frequently asked questions are answered
+there. |SpaceVim-usage|: It is the general documentation of SpaceVim.
+
+FEEDBACK
+
+If you run into a bug, or want a new feature, please use the mail list:
+
+send email to spacevim@googlegroups.com
+
+To subscribe the maillist, send anything
+to：spacevim+subscribe@googlegroups.com
+
+CHATROOM
+
+Matrix room: #spacevim:matrix.org
+
+FORUM
+
+Reddit: https://www.reddit.com/r/SpaceVim/
+
+OTHERS
+
+The messages from matrix also bridged to telegram, discord and slack. Please
+checkout the community page for more info:
+
+https://spacevim.org/community/
+
+==============================================================================
 FAQ                                                             *SpaceVim-faq*
 
 This is a list of the frequently asked questions about SpaceVim.
@@ -7294,11 +7338,31 @@ it may cause errors.
 <
 
 ==============================================================================
+ROADMAP                                                     *SpaceVim-roadmap*
+
+The roadmap defines the project direction and priorities. If you have any
+suggestions , please checkout |SpaceVim-community|.
+
+TO-DO LIST
+
+[x] rewrite statusline plugin with lua
+[x] rewrite tabline plugin with lua
+[ ] merge website context into :h SpaceVim
+
+COMPLETED
+
+All completed functions can be found in |SpaceVim-changelog|
+
+==============================================================================
 CHANGELOG                                                 *SpaceVim-changelog*
 
 Following HEAD: changes in master branch since last release v2.2.0
 
 https://spacevim.org/following-head/
+
+2024-03-24: v2.3.0
+
+https://spacevim.org/SpaceVim-release-v2.3.0/
 
 2023-07-05: v2.2.0
 
@@ -7391,7 +7455,6 @@ https://spacevim.org/SpaceVim-release-v0.2.0/
 2017-01-26: v0.1.0
 
 https://spacevim.org/SpaceVim-release-v0.1.0/
-
 
 
 vim:tw=78:ts=8:ft=help:norl:

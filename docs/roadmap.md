@@ -8,7 +8,7 @@ description: "The roadmap and milestones define the project direction and priori
 The roadmap defines the project direction and priorities.
 If you have any suggestions , please checkout feedback section on [community](../community/) page.
 
-## Milestones
+## To-Do List
 
 - `v2.4.0`: Due by 2024-12-01
   - [x] rewrite statusline plugin with lua
