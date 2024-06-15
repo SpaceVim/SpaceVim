@@ -317,7 +317,6 @@ local function calc_layout()
 
   ret.n_items = vim.fn.len(smap)
   local length = {}
-  log.debug('smap is:' .. vim.inspect(smap))
   for k, _ in pairs(smap) do
     table.insert(length, vim.fn.strdisplaywidth(get_displaystring(k)))
   end
