@@ -11,7 +11,7 @@ lang: zh
 ## 后续版本
 
 - `v2.4.0`
-  - [ ] 使用 lua 重写状态栏插件
+  - [x] 使用 lua 重写状态栏插件
   - [x] 使用 lua 重写 tabline
   - [ ] 将网站内容合并至 `:h SpaceVim`
 
