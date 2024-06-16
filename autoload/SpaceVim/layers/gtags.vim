@@ -45,7 +45,11 @@ let g:gtags_open_list = 2
 
 function! SpaceVim#layers#gtags#plugins() abort
   return [
-        \ [g:_spacevim_root_dir . 'bundle/gtags.vim', { 'merged' : 0}]
+        \ [g:_spacevim_root_dir . 'bundle/gtags.vim',
+        \ { 'merged' : 0,
+        \ 'on_cmd' : ['Gtags', 'GtagsGenerate'],
+        \ 'on_func' : ['gtags#update', 'ctags#update'],
+        \ }]
         \ ]
 endfunction
 
