@@ -325,7 +325,9 @@ AUTOCOMPLETE_METHOD                     *SpaceVim-options-autocomplete_method*
 
 Set the autocomplete engine of spacevim, the default logic is:
 >
-  if has('python3')
+  if has('nvim-0.9.0')
+    let g:spacevim_autocomplete_method = 'nvim-cmp'
+  elseif has('python3')
     let g:spacevim_autocomplete_method = 'deoplete'
   elseif has('lua')
     let g:spacevim_autocomplete_method = 'neocomplete'
@@ -1154,7 +1156,9 @@ enable it:
                                               *g:spacevim_autocomplete_method*
 Set the autocomplete engine of spacevim, the default logic is:
 >
-  if has('python3')
+  if has('nvim-0.9.0')
+    let g:spacevim_autocomplete_method = 'nvim-cmp'
+  elseif has('python3')
     let g:spacevim_autocomplete_method = 'deoplete'
   elseif has('lua')
     let g:spacevim_autocomplete_method = 'neocomplete'

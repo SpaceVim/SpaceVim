@@ -62,6 +62,7 @@ SpaceVim 选项 `snippet_engine` 设置为 `ultisnips`，将使用 [UltiSnips](h
   - `deoplete`
   - `asyncomplete`
   - `completor`
+  - `nvim-cmp`
 
 设置示例：
 

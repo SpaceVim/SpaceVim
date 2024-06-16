@@ -27,6 +27,7 @@ This layer provides auto-completion in SpaceVim.
 
 The following completion engines are supported:
 
+- nvim-cmp - neovim >= 0.9.0
 - [neocomplete](https://github.com/Shougo/neocomplete.vim) - vim with `+lua`
 - [neocomplcache](https://github.com/Shougo/neocomplcache.vim) - vim without `+lua`
 - [deoplete](https://github.com/Shougo/deoplete.nvim) - neovim with `+python3`
@@ -60,6 +61,7 @@ But you can choose the completion engine to be used with the following variable:
   - `deoplete`
   - `asyncomplete`
   - `completor`
+  - `nvim-cmp`
 
 here is an example:
 

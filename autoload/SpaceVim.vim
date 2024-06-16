@@ -362,7 +362,9 @@ let g:spacevim_leader_guide_theme = 'leaderguide'
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if (has('python3') 
+if has('nvim-0.9.0')
+  let g:spacevim_autocomplete_method = 'nvim-cmp'
+elseif (has('python3') 
       \ && (SpaceVim#util#haspy3lib('neovim')
       \ || SpaceVim#util#haspy3lib('pynvim'))) &&
       \ (has('nvim') || (has('patch-8.0.0027')))
@@ -372,7 +374,9 @@ if (has('python3')
   " @parentsection options
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
-  "   if has('python3')
+  "   if has('nvim-0.9.0')
+  "     let g:spacevim_autocomplete_method = 'nvim-cmp'
+  "   elseif has('python3')
   "     let g:spacevim_autocomplete_method = 'deoplete'
   "   elseif has('lua')
   "     let g:spacevim_autocomplete_method = 'neocomplete'
@@ -392,7 +396,9 @@ if (has('python3')
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
-  "   if has('python3')
+  "   if has('nvim-0.9.0')
+  "     let g:spacevim_autocomplete_method = 'nvim-cmp'
+  "   elseif has('python3')
   "     let g:spacevim_autocomplete_method = 'deoplete'
   "   elseif has('lua')
   "     let g:spacevim_autocomplete_method = 'neocomplete'
