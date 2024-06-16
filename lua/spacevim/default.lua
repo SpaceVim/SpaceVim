@@ -8,12 +8,7 @@
 
 local M = {}
 
-local SYSTEM = require('spacevim.api').import('system')
 local logger = require('spacevim.logger')
-local guifont = ''
-local function set_font(font)
-  vim.o.guifont = font
-end
 
 function M.options()
   logger.info('init default vim options')
