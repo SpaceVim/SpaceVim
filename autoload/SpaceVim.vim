@@ -12,9 +12,23 @@ scriptencoding utf-8
 " @stylized spacevim
 " @library
 " @order intro options config functions layers usage plugins api dev community faq roadmap changelog
-" SpaceVim is a bundle of custom settings and plugins with a modular
-" configuration for Vim. It was inspired by Spacemacs.
-"
+" SpaceVim is a modular configuration of Vim and Neovim.
+" It's inspired by spacemacs. It manages collections of plugins in layers,
+" which help to collect related packages together to provide features.
+" This approach helps keep the configuration organized and reduces
+" overhead for the user by keeping them from having to think about
+" what packages to install.
+
+""
+" @section Highlighted Features, features
+" @parentsection intro
+" 1. Modularization: Plugins are organized in @section(layers).
+" 2. Compatible API: A series of @section(api) for Vim/Neovim.
+" 3. Great documentation: Everything is documented in `:h SpaceVim`.
+" 4. Better experience: Most of the core plugins have been rewritten using Lua.
+" 5. Beautiful UI: The interface has been carefully designed.
+" 6. Mnemonic key bindings: Key bindings are organized using mnemonic prefixes.
+" 7. Lower the risk of RSI: Heavily using the `<Space>` key instead of modifiers.
 
 ""
 " @section Options, options

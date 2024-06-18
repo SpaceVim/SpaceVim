@@ -6,6 +6,15 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section Runtime Log, runtime-log
+" @parentsection dev
+" The runtime log of SpaceVim can be obtained via the key binding `SPC h L`.
+" To get the debug information about the current SpaceVim environment,
+" Use the command `:SPDebugInfo!`. This command will open a new buffer where default information will be shown.
+" You can also use `SPC h I` to open a buffer with SpaceVim's issue template.
+
+
 if has('nvim-0.5.0')
   ""
   " write message to SpaceVim runtime log with `info` level.

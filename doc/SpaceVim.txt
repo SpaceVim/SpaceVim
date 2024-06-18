@@ -17,6 +17,7 @@ wsdjeg                                                   *spacevim* *SpaceVim*
 ==============================================================================
 CONTENTS                                                   *SpaceVim-contents*
 1. Introduction.............................................. |SpaceVim-intro|
+    1. Highlighted Features............................... |SpaceVim-features|
 2. Options................................................. |SpaceVim-options|
     1. autocomplete_method............. |SpaceVim-options-autocomplete_method|
     2. autocomplete_parens............. |SpaceVim-options-autocomplete_parens|
@@ -289,8 +290,9 @@ CONTENTS                                                   *SpaceVim-contents*
     21. vim#window.................................. |SpaceVim-api-vim-window|
 10. Development................................................ |SpaceVim-dev|
     1. License......................................... |SpaceVim-dev-license|
-    2. commit-style-guide................... |SpaceVim-dev-commit-style-guide|
-    3. merge requese............................. |SpaceVim-dev-merge-request|
+    2. Runtime Log..................................... |SpaceVim-runtime-log|
+    3. commit-style-guide................... |SpaceVim-dev-commit-style-guide|
+    4. merge requese............................. |SpaceVim-dev-merge-request|
 11. Community............................................ |SpaceVim-community|
 12. FAQ........................................................ |SpaceVim-faq|
 13. Roadmap................................................ |SpaceVim-roadmap|
@@ -299,9 +301,25 @@ CONTENTS                                                   *SpaceVim-contents*
 ==============================================================================
 INTRODUCTION                                                  *SpaceVim-intro*
 
-SpaceVim is a bundle of custom settings and plugins with a modular
-configuration for Vim. It was inspired by Spacemacs.
+SpaceVim is a modular configuration of Vim and Neovim. It's inspired by
+spacemacs. It manages collections of plugins in layers, which help to collect
+related packages together to provide features. This approach helps keep the
+configuration organized and reduces overhead for the user by keeping them from
+having to think about what packages to install.
 
+==============================================================================
+HIGHLIGHTED FEATURES                                       *SpaceVim-features*
+
+  1. Modularization: Plugins are organized in |SpaceVim-layers|.
+  2. Compatible API: A series of |SpaceVim-api| for Vim/Neovim.
+  3. Great documentation: Everything is documented in `:h SpaceVim`.
+  4. Better experience: Most of the core plugins have been rewritten using
+    Lua.
+  5. Beautiful UI: The interface has been carefully designed.
+  6. Mnemonic key bindings: Key bindings are organized using mnemonic
+    prefixes.
+  7. Lower the risk of RSI: Heavily using the `<Space>` key instead of
+    modifiers.
 
 ==============================================================================
 OPTIONS                                                     *SpaceVim-options*
@@ -7096,6 +7114,15 @@ The license is GPLv3 for all the parts of SpaceVim. This includes:
 For files not belonging to SpaceVim like bundle packages, refer to the header
 file. Those files should not have an empty header, we may not accept code
 without a proper header file.
+
+==============================================================================
+RUNTIME LOG                                             *SpaceVim-runtime-log*
+
+The runtime log of SpaceVim can be obtained via the key binding `SPC h L`. To
+get the debug information about the current SpaceVim environment, Use the
+command `:SPDebugInfo!`. This command will open a new buffer where default
+information will be shown. You can also use `SPC h I` to open a buffer with
+SpaceVim's issue template.
 
 ==============================================================================
 COMMIT-STYLE-GUIDE                           *SpaceVim-dev-commit-style-guide*
