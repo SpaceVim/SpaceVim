@@ -1013,8 +1013,9 @@ can be used in command line mode:
 
 ### Mappings guide
 
-A guide buffer is displayed each time the prefix key is pressed in normal mode. It lists the available key bindings and their short descriptions.
-The prefix can be `[SPC]`, `[WIN]` and `<Leader>`.
+The mapping guide windows will be opened each time the prefix key is pressed
+in normal/visual mode. It will list all available key bindings and the short
+descriptions. The prefix can be `[SPC]`, `[WIN]` or `<Leader>`.
 
 The prefixes are mapped to the following keys by default:
 

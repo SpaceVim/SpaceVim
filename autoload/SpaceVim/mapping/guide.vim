@@ -13,13 +13,85 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 ""
-" @section Key Binding Guide, plugins-mapping-guide
+" @section Mapping Guide, plugins-mapping-guide
 " @parentsection plugins
-" The key binding guide plugin is to display the description of the key
-" binding.
+" The mapping guide windows will be opened each time the prefix key is pressed
+" in normal/visual mode. It will list all available key bindings and the short
+" descriptions. The prefix can be `[SPC]`, `[WIN]` or `<Leader>`.
+" 
+" The prefixes are mapped to the following key bindings by default:
+" >
+"   Prefix    | Custom options and default values | Descriptions
+"   ---------------------------------------------------------------------
+"   [SPC]`    | NONE / `<Space>`                  | default mapping prefix
+"   [WIN]`    | `windows_leader` / `s`            | window mapping prefix
+"   <Leader>` | default vim leader                | default leader prefix
+" <
 "
-" - Lua version: require nvim-0.8.0
-" - Old Vim Script version: for vim and old nvim
+" The default value of `<Leader>` is `\`, if you want to change this key,
+" you need to use the bootstrap function. For example, to use `,`
+" as the `<Leader>` key:
+" >
+"   function! myspacevim#before() abort
+"     let g:mapleader = ','
+"   endfunction
+" <
+" 
+" NOTE: When modifying the variable `g:mapleader` in a function.
+" you can not omit the variable's scope. Because the default scope
+" of a variable in function is `l:`. It is different from what you
+" see in vim help |mapleader|.
+" 
+" By default the guide buffer will be displayed 1000ms after the keys being pressed.
+" You can change the delay by adding vim option `'timeoutlen'` to your bootstrap function.
+" 
+" For example, after pressing `<Space>` in normal mode, you will see all the
+" key bindings start with `SPC` in mapping guide windows.
+" you can type `b` for all the buffer mappings, `p` for project mappings, etc.
+" 
+" After pressing `Ctrl-h` in guide buffer, you will get paging and help info in the statusline.
+" >
+"   | Keys | Descriptions                  |
+"   | ---- | ----------------------------- |
+"   | `u`  | undo pressing                 |
+"   | `n`  | next page of guide buffer     |
+"   | `p`  | previous page of guide buffer |
+" <
+" Use `SpaceVim#custom#SPC()` to define custom SPC mappings. For example:
+" >
+"   call SpaceVim#custom#SPC('nnoremap',
+"     \ ['f', 't'],
+"     \ 'echom "hello world"', 'test custom SPC', 1)
+" <
+" 
+" The first parameter sets the type of shortcut key,
+" which can be `nnoremap` or `nmap`, the second parameter is a list of keys,
+" and the third parameter is an ex command or key binding,
+" depending on whether the last parameter is true.
+" The fourth parameter is a short description of this custom key binding.
+" 
+" @subsection Fuzzy find key bindings
+" 
+" It is possible to search for specific key bindings by pressing `?`
+" in the root of the guide buffer.
+" 
+" To narrow the list down, just insert the mapping keys or descriptions of
+" what mappings you want, the fuzzy finder will get the mappings.
+"
+" Then use `<Tab>` or `<Up>` and `<Down>` to select the mapping,
+" press `<Enter>` to execute that command.
+" 
+" @subsection Mapping guide theme
+" 
+" The default mapping guide theme is `leaderguide`,
+" which is same as vim-leaderguide(https://github.com/hecal3/vim-leader-guide),
+" there is another available theme called `whichkey`.
+" To set the mapping guide theme, use following snippet:
+" >
+"   [options]
+"     # the value can be `leaderguide` or `whichkey`
+"     leader_guide_theme = 'whichkey'
+" <
 
 if has('nvim-0.8.0')
 
