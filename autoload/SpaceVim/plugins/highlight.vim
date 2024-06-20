@@ -6,6 +6,46 @@
 " License: GPLv3
 "=============================================================================
 
+""
+" @section Symbol highlighter, plugins-symbol-highlighter
+" @parentsection plugins
+" SpaceVim supports highlighting current symbol on demand and add a transient
+" state to easily navigate and rename these symbols.
+" 
+" It is also possible to change the range of the navigation on the fly, the
+" available ranges are:
+" 
+" 1. buffer: the whole buffer
+" 2. function: in current function
+" 3. visible area: in current visible area of the buffer
+" 
+" The default key binding to Highlight the symbol under the cursor is `SPC s h`.
+" 
+" Navigation between the highlighted symbols can be done with the commands:
+" >
+"   Key Bindings | Descriptions
+"   ------------ | -------------------------------------------
+"   *            | highlight current symbol and jump forwards
+"   #            | highlight current symbol and jump backwards
+"   SPC s e      | start iedit mode on current symbol
+"   SPC s h      | highlight current symbol within default range
+"   SPC s H      | highlight last symbol within default range
+" <
+" In highlight symbol transient state, the following key bindings can be used:
+" >
+"   Key Bindings  | Descriptions
+"   ------------- | -----------------------------------
+"   e             | start iedit mode
+"   n             | go to next occurrence
+"   N / p         | go to previous occurrence
+"   b             | search occurrence in all buffers
+"   /             | search occurrence in whole project
+"   <Tab>         | toggle highlight current occurrence
+"   r             | change range
+"   R             | go to home occurrence
+"   Any other key | leave the navigation transient state
+" <
+
 " TODO: {{{
 " e: iedit
 " d/D: next previous definition

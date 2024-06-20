@@ -2512,39 +2512,39 @@ Key bindings within repl buffer:
 
 ### Highlight current symbol
 
-SpaceVim supports highlighting of the current symbol on demand and add a transient state to easily navigate and rename these symbols.
+SpaceVim supports highlighting current symbol on demand and add a transient
+state to easily navigate and rename these symbols.
 
-It is also possible to change the range of the navigation on the fly to:
+It is also possible to change the range of the navigation on the fly, the
+available ranges are:
 
-- buffer
-- function
-- visible area
+1. buffer: the whole buffer
+2. function: in current function
+3. visible area: in current visible area of the buffer
 
-To Highlight the current symbol under the cursor press `SPC s h`.
+The default key binding to Highlight the symbol under the cursor is `SPC s h`.
 
-Navigation between the highlighted symbols can be done with the commands:
+| Key Bindings | Descriptions                                  |
+| ------------ | --------------------------------------------- |
+| `*`          | highlight current symbol and jump forwards    |
+| `#`          | highlight current symbol and jump backwards   |
+| `SPC s e`    | start iedit mode on current symbol            |
+| `SPC s h`    | highlight current symbol within default range |
+| `SPC s H`    | highlight last symbol within default range    |
 
-| Key Bindings | Descriptions                                                                 |
-| ------------ | ---------------------------------------------------------------------------- |
-| `*`          | initiate navigation transient state on current symbol and jump forwards      |
-| `#`          | initiate navigation transient state on current symbol and jump backwards     |
-| `SPC s e`    | edit all occurrences of the current symbol                                   |
-| `SPC s h`    | highlight the current symbol and all its occurrence within the current range |
-| `SPC s H`    | go to the last searched occurrence of the last highlighted symbol            |
+In highlight symbol transient state, the following key bindings can be used:
 
-In highlight symbol transient state:
-
-| Key Bindings  | Descriptions                                                  |
-| ------------- | ------------------------------------------------------------- |
-| `e`           | edit occurrences (`*`)                                        |
-| `n`           | go to next occurrence                                         |
-| `N` / `p`     | go to previous occurrence                                     |
-| `b`           | search occurrence in all buffers                              |
-| `/`           | search occurrence in whole project                            |
-| `<Tab>`       | toggle highlight current occurrence                           |
-| `r`           | change range (function, display area, whole buffer)           |
-| `R`           | go to home occurrence (reset position to starting occurrence) |
-| Any other key | leave the navigation transient state                          |
+| Key Bindings  | Descriptions                         |
+| ------------- | ------------------------------------ |
+| `e`           | start iedit mode                     |
+| `n`           | go to next occurrence                |
+| `N` / `p`     | go to previous occurrence            |
+| `b`           | search occurrence in all buffers     |
+| `/`           | search occurrence in whole project   |
+| `<Tab>`       | toggle highlight current occurrence  |
+| `r`           | change range                         |
+| `R`           | go to home occurrence                |
+| Any other key | leave the navigation transient state |
 
 ### Error handling
 

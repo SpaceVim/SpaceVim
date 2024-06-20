@@ -259,13 +259,14 @@ CONTENTS                                                   *SpaceVim-contents*
     9. windows-and-tabs..................... |SpaceVim-usage-windows-and-tabs|
 8. Plugins................................................. |SpaceVim-plugins|
     1. Mapping Guide......................... |SpaceVim-plugins-mapping-guide|
-    2. alternate................................. |SpaceVim-plugins-alternate|
-    3. autosave................................... |SpaceVim-plugins-autosave|
-    4. iedit......................................... |SpaceVim-plugins-iedit|
-    5. runner....................................... |SpaceVim-plugins-runner|
-    6. scrollbar................................. |SpaceVim-plugins-scrollbar|
-    7. tab manager.............................. |SpaceVim-plugins-tabmanager|
-    8. todo manager............................ |SpaceVim-plugins-todomanager|
+    2. Symbol highlighter............... |SpaceVim-plugins-symbol-highlighter|
+    3. alternate................................. |SpaceVim-plugins-alternate|
+    4. autosave................................... |SpaceVim-plugins-autosave|
+    5. iedit......................................... |SpaceVim-plugins-iedit|
+    6. runner....................................... |SpaceVim-plugins-runner|
+    7. scrollbar................................. |SpaceVim-plugins-scrollbar|
+    8. tab manager.............................. |SpaceVim-plugins-tabmanager|
+    9. todo manager............................ |SpaceVim-plugins-todomanager|
 9. API......................................................... |SpaceVim-api|
     1. clock............................................. |SpaceVim-api-clock|
     2. cmdlinemenu................................. |SpaceVim-api-cmdlinemenu|
@@ -6598,6 +6599,46 @@ following snippet:
   [options]
     # the value can be `leaderguide` or `whichkey`
     leader_guide_theme = 'whichkey'
+<
+
+==============================================================================
+SYMBOL HIGHLIGHTER                       *SpaceVim-plugins-symbol-highlighter*
+
+SpaceVim supports highlighting current symbol on demand and add a transient
+state to easily navigate and rename these symbols.
+
+It is also possible to change the range of the navigation on the fly, the
+available ranges are:
+
+  1. buffer: the whole buffer
+  2. function: in current function
+  3. visible area: in current visible area of the buffer
+
+The default key binding to Highlight the symbol under the cursor is `SPC s h`.
+
+Navigation between the highlighted symbols can be done with the commands:
+>
+  Key Bindings | Descriptions
+  ------------ | -------------------------------------------
+  *            | highlight current symbol and jump forwards
+  #            | highlight current symbol and jump backwards
+  SPC s e      | start iedit mode on current symbol
+  SPC s h      | highlight current symbol within default range
+  SPC s H      | highlight last symbol within default range
+<
+In highlight symbol transient state, the following key bindings can be used:
+>
+  Key Bindings  | Descriptions
+  ------------- | -----------------------------------
+  e             | start iedit mode
+  n             | go to next occurrence
+  N / p         | go to previous occurrence
+  b             | search occurrence in all buffers
+  /             | search occurrence in whole project
+  <Tab>         | toggle highlight current occurrence
+  r             | change range
+  R             | go to home occurrence
+  Any other key | leave the navigation transient state
 <
 
 ==============================================================================
