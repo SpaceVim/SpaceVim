@@ -11,6 +11,7 @@ description: "This layer adds extensive support for git"
 - [Install](#install)
 - [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
+- [Omnifunc of commit message](#omnifunc-of-commit-message)
 
 <!-- vim-markdown-toc -->
 
@@ -56,3 +57,11 @@ if you want to use `fugitive` instead:
 | `SPC g h a` | stage current hunk     |
 | `SPC g h r` | undo cursor hunk       |
 | `SPC g h v` | preview cursor hunk    |
+
+## Omnifunc of commit message
+
+This layer also provides omnifunc of commit message. The key binding is `ctrl-x_ctrl-o` in insert mode.
+
+1. complete commit title prefix, `fix:`, `doc:` etc.
+2. complete github issue list
+3. complete co-author info

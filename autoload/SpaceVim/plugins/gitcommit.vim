@@ -6,6 +6,7 @@
 " License: GPLv3
 "=============================================================================
 
+let s:list = SpaceVim#api#import('data#list')
 
 let s:pr_kind = g:spacevim_gitcommit_pr_icon
 let s:issue_kind = g:spacevim_gitcommit_issue_icon
@@ -62,19 +63,56 @@ let s:commit_types = [
       \ ]
 
 
+" https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors
+" https://stackoverflow.com/questions/58525836/git-magic-keywords-in-commit-messages-signed-off-by-co-authored-by-fixes
+" https://www.reddit.com/r/git/comments/13d565i/git_trailers_what_are_they_for/
+" https://alchemists.io/articles/git_trailers
+" https://git-scm.com/docs/git-interpret-trailers
+" https://gitlab.com/gitlab-org/gitlab-foss/-/issues/31640
+" https://archive.kernel.org/oldwiki/git.wiki.kernel.org/index.php/CommitMessageConventions.html
+let s:git_trailers = [
+      \ {
+      \   'word' : 'Co-Authored-By:',
+      \   'menu' : 'multiple commit author'
+      \ },
+      \ ]
+
+function! s:find_last_branch() abort
+  let reflog = systemlist('git reflog')
+  for log in reflog
+    " e059b76ca HEAD@{15}: checkout: moving from doc-help to master
+    if log =~# 'HEAD@{\d\+}: checkout: '
+      return matchstr(log, 'HEAD@{\d\+}: checkout: moving from \zs\S*')
+    endif
+  endfor
+  return ''
+endfunction
+
+function! s:generate_co_author() abort
+  let last_branch = s:find_last_branch()
+  call SpaceVim#logger#info('last branch:' . last_branch)
+  return s:list.uniq(systemlist('git log -n 5 --format="%aN <%aE>" ' . last_branch))
+endfunction
+
 function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
   if a:findstart
     let s:complete_ol = 0
     let s:complete_type = 0
+    let s:complete_trailers = 0
+    let s:complete_co_author = 0
     let line = getline('.')
     let start = col('.') - 1
-    while start > 0 && line[start - 1] !=# ' ' && line[start - 1] !=# '#'
+    while start > 0 && line[start - 1] !=# ' ' && line[start - 1] !=# '#' && line[start - 1] !=# ':'
       let start -= 1
     endwhile
     if line[start - 1] ==# '#'
       let s:complete_ol = 1
     elseif line('.') ==# 1 && start ==# 0
       let s:complete_type = 1
+    elseif line('.') !=# 1 && start ==# 0
+      let s:complete_trailers = 1
+    elseif getline('.') =~# '^Co-Authored-By:' && start >= 14
+      let s:complete_co_author = 1
     endif
     return start
   else
@@ -82,6 +120,10 @@ function! SpaceVim#plugins#gitcommit#complete(findstart, base) abort
       return s:complete_pr(a:base)
     elseif s:complete_type == 1
       return s:complete('types')
+    elseif s:complete_trailers == 1
+      return s:complete('trailers')
+    elseif s:complete_co_author == 1
+      return s:complete('co-author')
     endif
     let res = []
     for m in s:cache_commits()
@@ -101,6 +143,10 @@ endfunction
 function! s:complete(what) abort
   if a:what ==# 'types'
     return s:commit_types
+  elseif a:what ==# 'trailers'
+    return s:git_trailers
+  elseif a:what ==# 'co-author'
+    return s:generate_co_author()
   else
     return []
   endif

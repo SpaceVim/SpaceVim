@@ -47,6 +47,11 @@
 "   SPC g h r     undo cursor hunk
 "   SPC g h v     preview cursor hunk
 " <
+" @subsection commit omni function
+" This layer also provides an omnifunc for git commit messages. It supports:
+" 1. complete commit title, `fix:`, `doc:` etc.
+" 2. complete github issue list
+" 3. complete co-author info
 
 
 if exists('s:git_plugin')
