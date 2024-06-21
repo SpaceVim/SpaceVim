@@ -2068,16 +2068,108 @@ endfunction
 ""
 " @section buffers-and-files, usage-buffers-and-files
 " @parentsection usage
+" All buffer related key bindings are start with `SPC b`, and all files
+" related key bindings are start with `SPC f`.
 " @subsection Buffers manipulation key bindings
-" All buffers key bindings are start with `b` prefix:
+" 
+" Buffer manipulation commands (start with `b`):
 " >
-"   Key Bindings	Descriptions
-"   SPC <Tab>	    switch to alternate buffer in the current window (switch back and forth)
-"   SPC b .	      buffer transient state
-"   SPC b b	      switch to a buffer (via denite/unite)
-"   SPC b d	      kill the current buffer (does not delete the visited file)
-"   SPC u SPC b d	kill the current buffer and window (does not delete the visited file) (TODO)
-"   SPC b D	      kill a visible buffer using vim-choosewin
+"   Key Bindings       | Descriptions
+"   -------------------| ------------------------------------------------
+"   SPC <Tab>          | switch to alternate buffer in the current window
+"   SPC b .            | buffer transient state
+"   SPC b b            | switch to a buffer (need fuzzy finder layer)
+"   SPC b d            | kill the current buffer
+"   SPC b D            | kill a visible buffer using vim-choosewin
+"   SPC b Ctrl-d       | kill other buffers
+"   SPC b Ctrl-Shift-d | kill buffers using a regular expression
+"   SPC b e            | erase the content of the buffer (ask for confirmation)
+"   SPC b n            | switch to next buffer avoiding special buffers
+"   SPC b m            | open Messages buffer
+"   SPC b o            | kill all saved buffers and windows
+"   SPC b p            | switch to previous buffer avoiding special buffers
+"   SPC b P            | copy clipboard and replace buffer
+"   SPC b R            | revert the current buffer (reload from disk)
+"   SPC b s            | switch to the scratch buffer (create it if needed)
+"   SPC b w            | toggle read-only (writable state)
+"   SPC b Y            | copy whole buffer to clipboard
+" <
+" 
+" @subsection Create a new empty buffer
+"
+" The following key bindings can be used to create new buffer.
+" >
+"   Key Bindings | Descriptions
+"   ------------ | -----------------------------------------------------
+"   SPC b N h    | create new empty buffer in a new window on the left
+"   SPC b N j    | create new empty buffer in a new window at the bottom
+"   SPC b N k    | create new empty buffer in a new window above
+"   SPC b N l    | create new empty buffer in a new window below
+"   SPC b N n    | create new empty buffer in current window
+" <
+" @subsection Special Buffers
+" 
+" Buffers created by plugins are not normal files, and they will not be listed
+" on tabline. And also will not be listed by `SPC b b` key binding in fuzzy finder
+" layer.
+" 
+" @subsection File manipulation key bindings
+" 
+" Files manipulation commands (start with `f`):
+" >
+"   Key Bindings | Descriptions
+"   ------------ | ---------------------------------------------------------
+"    SPC f /     | Find files with find or fd command
+"    SPC f b     | go to file bookmarks
+"    SPC f C d   | convert file from unix to dos encoding
+"    SPC f C u   | convert file from dos to unix encoding
+"    SPC f D     | delete a file and the associated buffer with confirmation
+"    SPC f W     | save a file with elevated privileges (sudo layer)
+"    SPC f f     | fuzzy find files in buffer directory
+"    SPC f F     | fuzzy find cursor file in buffer directory
+"    SPC f o     | Find current file in file tree
+"    SPC f R     | rename the current file
+"    SPC f s     | save a file
+"    SPC f a     | save as new file name
+"    SPC f S     | save all files
+"    SPC f r     | open a recent file
+"    SPC f t     | toggle file tree side bar
+"    SPC f T     | show file tree side bar
+"    SPC f d     | toggle disk manager in Windows OS
+"    SPC f y     | show and copy current file absolute path in the cmdline
+"    SPC f Y     | show and copy remote url of current file
+" <
+" NOTE: If you are using Windows, you need to install
+" findutils(https://www.gnu.org/software/findutils/) or
+" fd(https://github.com/sharkdp/fd).
+" If you are using scoop(https://github.com/lukesampson/scoop) to install
+" packages, commands in `C:\WINDOWS\system32` will override the User `PATH`,
+" so you need to put the scoop binary path before `C:\WINDOWS\system32` in `PATH`.
+" 
+" After pressing `SPC f /`, the find window will be opened.
+" It is going to run `find` or `fd` command asynchronously.
+" By default, `find` is the default tool, you can use `ctrl-e` to switch tools.
+" 
+" To change the default file searching tool, you can use
+" `file_searching_tools` in the `[options]` section.
+" It is `[]` by default.
+" >
+"   [options]
+"     file_searching_tools = ['find', 'find -not -iwholename "*.git*" ']
+" <
+" 
+" The first item is the name of the tool, the second one is the default searching command.
+" 
+" @subsection Vim and SpaceVim files
+" 
+" Convenient key bindings are located under the prefix `SPC f v` to quickly
+" navigate between Vim and SpaceVim specific files.
+" >
+"   Key Bindings | Descriptions
+"   ------------ | ------------------------------------------------
+"    SPC f v v   | display and copy SpaceVim version
+"    SPC f v d   | open SpaceVim custom configuration file
+"    SPC f v s   | list all loaded vim scripts, like  :scriptnames
 " <
 
 

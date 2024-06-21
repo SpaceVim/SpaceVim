@@ -1458,9 +1458,7 @@ Buffer manipulation commands (start with `b`):
 | `SPC b .`            | buffer transient state                                                         |
 | `SPC b b`            | switch to a buffer (via denite/unite)                                          |
 | `SPC b d`            | kill the current buffer (does not delete the visited file)                     |
-| `SPC u SPC b d`      | kill the current buffer and window (does not delete the visited file) (TODO)   |
 | `SPC b D`            | kill a visible buffer using vim-choosewin                                      |
-| `SPC u SPC b D`      | kill a visible buffer and its window using ace-window(TODO)                    |
 | `SPC b Ctrl-d`       | kill other buffers                                                             |
 | `SPC b Ctrl-Shift-d` | kill buffers using a regular expression                                        |
 | `SPC b e`            | erase the content of the buffer (ask for confirmation)                         |
@@ -1473,7 +1471,6 @@ Buffer manipulation commands (start with `b`):
 | `SPC b s`            | switch to the _scratch_ buffer (create it if needed)                           |
 | `SPC b w`            | toggle read-only (writable state)                                              |
 | `SPC b Y`            | copy whole buffer to clipboard (useful when copying to a browser)              |
-| `z f`                | Make current function or comments visible in buffer as much as possible (TODO) |
 
 #### Create a new empty buffer
 
