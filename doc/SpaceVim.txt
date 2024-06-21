@@ -248,15 +248,16 @@ CONTENTS                                                   *SpaceVim-contents*
     147. unite........................................ |SpaceVim-layers-unite|
     148. xmake........................................ |SpaceVim-layers-xmake|
 7. Usage..................................................... |SpaceVim-usage|
-    1. alternate file......................... |SpaceVim-usage-alternate-file|
-    2. buffers-and-files................... |SpaceVim-usage-buffers-and-files|
-    3. command-line-mode................... |SpaceVim-usage-command-line-mode|
-    4. custom_plugins......................... |SpaceVim-usage-custom_plugins|
-    5. repl............................................. |SpaceVim-usage-repl|
-    6. search-and-replace................. |SpaceVim-usage-search-and-replace|
-    7. tasks........................................... |SpaceVim-usage-tasks|
-    8. undo-tree.................................... |SpaceVim-usage-undotree|
-    9. windows-and-tabs..................... |SpaceVim-usage-windows-and-tabs|
+    1. Error handling......................... |SpaceVim-usage-error-handling|
+    2. alternate file......................... |SpaceVim-usage-alternate-file|
+    3. buffers-and-files................... |SpaceVim-usage-buffers-and-files|
+    4. command-line-mode................... |SpaceVim-usage-command-line-mode|
+    5. custom_plugins......................... |SpaceVim-usage-custom_plugins|
+    6. repl............................................. |SpaceVim-usage-repl|
+    7. search-and-replace................. |SpaceVim-usage-search-and-replace|
+    8. tasks........................................... |SpaceVim-usage-tasks|
+    9. undo-tree.................................... |SpaceVim-usage-undotree|
+    10. windows-and-tabs.................... |SpaceVim-usage-windows-and-tabs|
 8. Plugins................................................. |SpaceVim-plugins|
     1. Mapping Guide......................... |SpaceVim-plugins-mapping-guide|
     2. Symbol highlighter............... |SpaceVim-plugins-symbol-highlighter|
@@ -6139,6 +6140,51 @@ USAGE                                                         *SpaceVim-usage*
 
   General guide for using SpaceVim. Including layer configuration, bootstrap
 function.
+
+==============================================================================
+ERROR HANDLING                                 *SpaceVim-usage-error-handling*
+
+The |SpaceVim-layers-checkers| and |SpaceVim-layers-lsp| provide error
+handling features. The checkers layer uses
+neomake(https://github.com/neomake/neomake) by default. The syntax checking is
+only performed at save time by default.
+
+Error management mappings (start with e):
+>
+  Mappings  | Descriptions
+  --------- | --------------------------------------------------
+   SPC t s  | toggle syntax checker
+   SPC e c  | clear all errors
+   SPC e h  | describe a syntax checker
+   SPC e l  | toggle the display of the list of errors/warnings
+   SPC e n  | go to the next error
+   SPC e p  | go to the previous error
+   SPC e v  | verify syntax checker setup
+   SPC e .  | error transient state
+<
+The next/previous error mappings and the error transient state can be used to
+browse errors from syntax checkers as well as errors from location list
+buffers, and indeed anything that supports Vim's location list. This includes
+for example search results that have been saved to a location list buffer.
+
+Custom sign symbol:
+>
+  Symbol | Descriptions | Custom options
+  ------ | ------------ | ----------------
+   ✖     | Error        |  error_symbol
+   ➤     | warning      |  warning_symbol
+   ⓘ     | Info         |  info_symbol
+<
+QUICKFIX LIST NAVIGATION
+
+>
+  Mappings       | Descriptions
+  -------------- | --------------------------------------
+   <Leader> q l  | Open quickfix list window
+   <Leader> q c  | clear quickfix list
+   <Leader> q n  | jump to next item in quickfix list
+   <Leader> q p  | jump to previous item in quickfix list
+<
 
 ==============================================================================
 ALTERNATE FILE                                 *SpaceVim-usage-alternate-file*

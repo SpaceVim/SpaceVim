@@ -2356,6 +2356,52 @@ endfunction
 " `autoload/SpaceVim/layers/lang/java.vim`,
 " you can use `:A doc` switch to `docs/layers/lang/java.md`
 
+
+""
+" @section Error handling, usage-error-handling
+" @parentsection usage
+" The @section(layers-checkers) and @section(layers-lsp) provide error
+" handling features. The checkers layer uses
+" neomake(https://github.com/neomake/neomake) by default.
+" The syntax checking is only performed at save time by default.
+" 
+" Error management mappings (start with e):
+" >
+"   Mappings  | Descriptions
+"   --------- | --------------------------------------------------
+"    SPC t s  | toggle syntax checker
+"    SPC e c  | clear all errors
+"    SPC e h  | describe a syntax checker
+"    SPC e l  | toggle the display of the list of errors/warnings
+"    SPC e n  | go to the next error
+"    SPC e p  | go to the previous error
+"    SPC e v  | verify syntax checker setup 
+"    SPC e .  | error transient state
+" <
+" The next/previous error mappings and the error transient state can be used
+" to browse errors from syntax checkers as well as errors from location list
+" buffers, and indeed anything that supports Vim's location list. This
+" includes for example search results that have been saved to a location
+" list buffer.
+" 
+" Custom sign symbol:
+" >
+"   Symbol | Descriptions | Custom options
+"   ------ | ------------ | ----------------
+"    ✖     | Error        |  error_symbol
+"    ➤     | warning      |  warning_symbol
+"    ⓘ     | Info         |  info_symbol
+" <
+" @subsection quickfix list navigation
+" >
+"   Mappings       | Descriptions
+"   -------------- | --------------------------------------
+"    <Leader> q l  | Open quickfix list window
+"    <Leader> q c  | clear quickfix list
+"    <Leader> q n  | jump to next item in quickfix list
+"    <Leader> q p  | jump to previous item in quickfix list
+" <
+
 ""
 " @section FAQ, faq
 " This is a list of the frequently asked questions about SpaceVim.
