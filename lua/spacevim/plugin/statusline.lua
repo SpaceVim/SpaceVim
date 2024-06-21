@@ -543,7 +543,6 @@ local special_statusline = {
     return simple_name('NeoTree')
   end,
   Fuzzy = function() end, -- todo
-  SpaceVimFindArgv = function() end, -- todo
   ['git-commit'] = function()
     return simple_name('Git commit')
   end,
@@ -593,6 +592,9 @@ local special_statusline = {
   end,
   SpaceVimLayerManager = function()
     return simple_name('LayerManager')
+  end,
+  SpaceVimFindArgv = function()
+    return simple_name('Find')
   end,
   SpaceVimGitLogPopup = function()
     return simple_name('Git log popup')
