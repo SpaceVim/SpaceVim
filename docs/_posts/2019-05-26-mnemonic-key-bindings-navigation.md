@@ -44,7 +44,7 @@ commentsID: "快捷键助记导航"
 | `[Window]` | `g:spacevim_windows_leader` / `s`                     | 默认窗口快捷键前缀 |
 | `<leader>` | `mapleader` / `\` | 默认的 Vim 或者 Neovim 快捷键前缀 |
 
-默认情况下，快捷键导航窗口将在按键停顿 1000ms 后自动打开，这一世间是根据 Vim 选项`'timeoutlen'` 来设定的。
+默认情况下，快捷键导航窗口将在按键停顿 1000ms 后自动打开，这一时间是根据 Vim 选项`'timeoutlen'` 来设定的。
 
 例如，在 Normal 模式下，按下空格键，将可以看到：
 
