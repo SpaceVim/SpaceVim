@@ -249,15 +249,16 @@ CONTENTS                                                   *SpaceVim-contents*
     148. xmake........................................ |SpaceVim-layers-xmake|
 7. Usage..................................................... |SpaceVim-usage|
     1. Error handling......................... |SpaceVim-usage-error-handling|
-    2. alternate file......................... |SpaceVim-usage-alternate-file|
-    3. buffers-and-files................... |SpaceVim-usage-buffers-and-files|
-    4. command-line-mode................... |SpaceVim-usage-command-line-mode|
-    5. custom_plugins......................... |SpaceVim-usage-custom_plugins|
-    6. repl............................................. |SpaceVim-usage-repl|
-    7. search-and-replace................. |SpaceVim-usage-search-and-replace|
-    8. tasks........................................... |SpaceVim-usage-tasks|
-    9. undo-tree.................................... |SpaceVim-usage-undotree|
-    10. windows-and-tabs.................... |SpaceVim-usage-windows-and-tabs|
+    2. Toggle UI................................... |SpaceVim-usage-toggle-ui|
+    3. alternate file......................... |SpaceVim-usage-alternate-file|
+    4. buffers-and-files................... |SpaceVim-usage-buffers-and-files|
+    5. command-line-mode................... |SpaceVim-usage-command-line-mode|
+    6. custom_plugins......................... |SpaceVim-usage-custom_plugins|
+    7. repl............................................. |SpaceVim-usage-repl|
+    8. search-and-replace................. |SpaceVim-usage-search-and-replace|
+    9. tasks........................................... |SpaceVim-usage-tasks|
+    10. undo-tree................................... |SpaceVim-usage-undotree|
+    11. windows-and-tabs.................... |SpaceVim-usage-windows-and-tabs|
 8. Plugins................................................. |SpaceVim-plugins|
     1. Mapping Guide......................... |SpaceVim-plugins-mapping-guide|
     2. Symbol highlighter............... |SpaceVim-plugins-symbol-highlighter|
@@ -6187,6 +6188,34 @@ QUICKFIX LIST NAVIGATION
 <
 
 ==============================================================================
+TOGGLE UI                                           *SpaceVim-usage-toggle-ui*
+
+Some UI indicators can be toggled on and off (toggles start with t and T):
+>
+  Key Bindings      | Descriptions
+  ----------------- | -----------------------------------------
+   SPC t 8          | highlight characters past the 80th column
+   SPC t a          | toggle autocomplete
+   SPC t f          | display the fill column
+   SPC t h h        | toggle highlight of the current line
+   SPC t h i        | toggle highlight indentation levels
+   SPC t h c        | toggle highlight current column
+   SPC t h s        | toggle syntax highlighting
+   SPC t i          | toggle indentation guide at point
+   SPC t n          | toggle line numbers
+   SPC t b          | toggle background
+   SPC t c          | toggle conceal
+   SPC t p          | toggle paste mode
+   SPC t P          | toggle auto parens mode
+   SPC t t          | open tabs manager
+   SPC T ~          | display ~ in the fringe on empty lines
+   SPC T F  /  F11  | toggle frame fullscreen
+   SPC T f          | toggle display of the fringe
+   SPC T m          | toggle menu bar
+   SPC T t          | toggle tool bar
+<
+
+==============================================================================
 ALTERNATE FILE                                 *SpaceVim-usage-alternate-file*
 
 SpaceVim provides a built-in alternate file manager, the command is `:A`.
@@ -6626,28 +6655,97 @@ Key bindings within undo tree windows:
 ==============================================================================
 WINDOWS-AND-TABS                             *SpaceVim-usage-windows-and-tabs*
 
-WINDOWS RELATED KEY BINDINGS
 Window manager key bindings can only be used in normal mode. The default
-leader `[WIN]` is `s`, you can change it via `windows_leader` option:
+leader `[WIN]` is `s`, you can change it via `windows_leader` in the
+`[options]` section:
 >
   [options]
     windows_leader = "s"
 <
-The following key bindings can be used to manager vim windows and tabs.
+
 >
-    Key Bindings | Descriptions
-    ------------ | --------------------------------------------------
-    q            | Smart buffer close
-    WIN v        | :split
-    WIN V        | Split with previous buffer
-    WIN g        | :vsplit
-    WIN G        | Vertically split with previous buffer
-    WIN t        | Open new tab (:tabnew)
-    WIN o        | Close other windows (:only)
-    WIN x        | Remove buffer, leave blank window
-    WIN q        | Remove current buffer
-    WIN Q        | Close current buffer (:close)
-    Shift-Tab    | Switch to alternate window (switch back and forth)
+  Key Bindings | Descriptions
+  ------------ | --------------------------------------------------
+   q           | Smart buffer close
+   WIN v       | :split
+   WIN V       | Split with previous buffer
+   WIN g       | :vsplit
+   WIN G       | Vertically split with previous buffer
+   WIN t       | Open new tab (:tabnew)
+   WIN o       | Close other windows (:only)
+   WIN x       | Remove buffer, leave blank window
+   WIN q       | Remove current buffer
+   WIN Q       | Close current buffer (:close)
+   Shift-Tab   | Switch to alternate window (switch back and forth)
+<
+SpaceVim has mapped normal `q` (record a macro) as smart buffer close, and
+record a macro (vim's `q`) has been mapped to `<Leader> q r`, if you want to
+disable this feature, you can use `vimcompatible` mode.
+
+GENERAL EDITOR WINDOWS
+
+>
+  Key Bindings | Descriptions
+  ------------ | --------------------------------
+   <F2>        | Toggle tagbar
+   <F3>        | Toggle Vimfiler
+   Ctrl-Down   | Move to split below ( Ctrl-w j )
+   Ctrl-Up     | Move to upper split ( Ctrl-w k )
+   Ctrl-Left   | Move to left split ( Ctrl-w h )
+   Ctrl-Right  | Move to right split ( Ctrl-w l )
+<
+WINDOW MANIPULATION KEY BINDINGS
+
+Every window has a number displayed at the start of the statusline and can be
+quickly accessed using `SPC number`.
+>
+  Key Bindings | Descriptions
+  ------------ | ---------------------
+   SPC 1       | go to window number 1
+   SPC 2       | go to window number 2
+   SPC 3       | go to window number 3
+   SPC 4       | go to window number 4
+   SPC 5       | go to window number 5
+   SPC 6       | go to window number 6
+   SPC 7       | go to window number 7
+   SPC 8       | go to window number 8
+   SPC 9       | go to window number 9
+<
+Windows manipulation commands (start with `w`):
+>
+  Key Bindings          | Descriptions
+  --------------------- | --------------------------------------------------
+   SPC w .              | windows transient state
+   SPC w <Tab>          | switch to alternate window in the current frame
+   SPC w =              | balance split windows
+   SPC w c              | Distraction-free reading current window
+   SPC w C              | Distraction-free reading other windows
+   SPC w d              | delete a window
+   SPC w D              | delete another window using vim-choosewin
+   SPC w f              | toggle follow mode
+   SPC w F              | create new tab
+   SPC w h              | move to window on the left
+   SPC w H              | move window to the left
+   SPC w j              | move to window below
+   SPC w J              | move window to the bottom
+   SPC w k              | move to window above
+   SPC w K              | move window to the top
+   SPC w l              | move to window on the right
+   SPC w L              | move window to the right
+   SPC w m              | maximize/minimize a window
+   SPC w M              | swap windows using vim-choosewin
+   SPC w o              | cycle and focus between tabs
+   SPC w r              | rotate windows forward
+   SPC w R              | rotate windows backward
+   SPC w s  /  SPC w -  | horizontal split
+   SPC w S              | horizontal split and focus new window
+   SPC w u              | undo window layout
+   SPC w U              | redo window layout
+   SPC w v  /  SPC w /  | vertical split
+   SPC w V              | vertical split and focus new window
+   SPC w w              | cycle and focus between windows
+   SPC w W              | select window using vim-choosewin
+   SPC w x              | exchange current window with next one
 <
 
 ==============================================================================

@@ -1985,34 +1985,6 @@ endfunction
 " <
 
 ""
-" @section windows-and-tabs, usage-windows-and-tabs
-" @parentsection usage
-" @subsection Windows related key bindings
-" Window manager key bindings can only be used in normal mode.
-" The default leader `[WIN]` is `s`, you can change it via `windows_leader`
-" option:
-" >
-"   [options]
-"     windows_leader = "s"
-" <
-" The following key bindings can be used to manager vim windows and tabs.
-" >
-"     Key Bindings | Descriptions
-"     ------------ | --------------------------------------------------
-"     q            | Smart buffer close
-"     WIN v        | :split
-"     WIN V        | Split with previous buffer
-"     WIN g        | :vsplit
-"     WIN G        | Vertically split with previous buffer
-"     WIN t        | Open new tab (:tabnew)
-"     WIN o        | Close other windows (:only)
-"     WIN x        | Remove buffer, leave blank window
-"     WIN q        | Remove current buffer
-"     WIN Q        | Close current buffer (:close)
-"     Shift-Tab    | Switch to alternate window (switch back and forth)
-" <
-
-""
 " @section search-and-replace, usage-search-and-replace
 " @parentsection usage
 " This section document how to find and replace text in SpaceVim.
@@ -2356,6 +2328,33 @@ endfunction
 " `autoload/SpaceVim/layers/lang/java.vim`,
 " you can use `:A doc` switch to `docs/layers/lang/java.md`
 
+""
+" @section Toggle UI, usage-toggle-ui
+" @parentsection usage
+" Some UI indicators can be toggled on and off (toggles start with t and T):
+" >
+"   Key Bindings      | Descriptions
+"   ----------------- | -----------------------------------------
+"    SPC t 8          | highlight characters past the 80th column
+"    SPC t a          | toggle autocomplete 
+"    SPC t f          | display the fill column 
+"    SPC t h h        | toggle highlight of the current line
+"    SPC t h i        | toggle highlight indentation levels
+"    SPC t h c        | toggle highlight current column
+"    SPC t h s        | toggle syntax highlighting
+"    SPC t i          | toggle indentation guide at point
+"    SPC t n          | toggle line numbers
+"    SPC t b          | toggle background
+"    SPC t c          | toggle conceal
+"    SPC t p          | toggle paste mode
+"    SPC t P          | toggle auto parens mode
+"    SPC t t          | open tabs manager
+"    SPC T ~          | display ~ in the fringe on empty lines
+"    SPC T F  /  F11  | toggle frame fullscreen
+"    SPC T f          | toggle display of the fringe
+"    SPC T m          | toggle menu bar
+"    SPC T t          | toggle tool bar
+" <
 
 ""
 " @section Error handling, usage-error-handling
