@@ -14,13 +14,13 @@ scriptencoding utf-8
 " and it provides filetree, comment key bindings etc.
 "
 " @subsection options
-" - `filetree_show_hidden`: option for showing hidden file in filetree,
+" 1. `filetree_show_hidden`: option for showing hidden file in filetree,
 "   disabled by default.
-" - `enable_smooth_scrolling`: enable/disabled smooth scrolling key bindings,
+" 2. `enable_smooth_scrolling`: enable/disabled smooth scrolling key bindings,
 "   enabled by default.
-" - `enable_filetree_gitstatus`: enable/disable git status column in filetree.
-" - `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
-" - `enable_netrw`: enable/disable netrw, disabled by default.
+" 3. `enable_filetree_gitstatus`: enable/disable git status column in filetree.
+" 4. `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
+" 5. `enable_netrw`: enable/disable netrw, disabled by default.
 "
 " NOTE: the `enable_vimfiler_gitstatus` and `enable_filetree_gitstatus` option
 " has been deprecated. Use layer option instead.
@@ -33,6 +33,122 @@ scriptencoding utf-8
 if exists('s:string_hi')
   finish
 endif
+
+""
+" @section File Tree, usage-file-tree
+" @parentsection usage
+" The default filetree is `nerdtree`, and the default key binding is `<F3>`.
+" SpaceVim also provides `SPC f t` and `SPC f T` to open the file tree.
+" 
+" The option @section(options-filemanager) can be used to change file
+" manager plugin. For example:
+" >
+"   [options]
+"     # file manager plugins supported in SpaceVim:
+"     # - nerdtree (default)
+"     # - vimfiler: you need to build the vimproc.vim in bundle/vimproc.vim directory
+"     # - defx: requires +py3 feature
+"     # - neo-tree: require neovim 0.7.0
+"     filemanager = "nerdtree"
+" <
+" 
+" VCS integration is also supported, there will be a column status,
+" this feature may make filetree slow, so it is not enabled by default.
+" To enable this feature, add the layer option `enable_filetree_gitstatus = true`
+" to core layer.
+" >
+"   [[layers]]
+"     name = 'core'
+"     enable_filetree_gitstatus = true
+" <
+" 
+" There is also an option to configure whether open filetree when startup.
+" This is enabled by defaul, To disable this feature, you can set the
+" @section(options-enable_vimfiler_welcome) to false:
+" >
+"   [options]
+"     enable_vimfiler_welcome = false
+" <
+" 
+" There is also an option to configure the side of the file tree,
+" by default it is right. To move the file tree to the left,
+" you can use the option: @section(options-filetree_direction).
+" >
+"   [options]
+"     filetree_direction = "left"
+" <
+" 
+" @subsection File tree navigation
+" 
+" Navigation is centered on the `hjkl` keys with the hope of providing
+" a fast navigation experience like in vifm(https://github.com/vifm):
+" >
+"   Key Bindings          | Descriptions
+"   --------------------- | -------------------------------------------------
+"    <F3>                 | Toggle file explorer
+"    SPC f t              | Toggle file explorer
+"    SPC f T              | Show file explorer
+" <
+" Key bindings in filetree windows:
+" >
+"    <Left>  /  h         | go to parent node and collapse expanded directory
+"    <Down>  /  j         | select next file or directory
+"    <Up>  /  k           | select previous file or directory
+"    <Right>  /  l        | open selected file or expand directory
+"    <Enter>              | open file or switch to directory
+"    N                    | Create new file under cursor
+"    r                    | Rename the file under cursor
+"    d                    | Delete the file under cursor
+"    K                    | Create new directory under cursor
+"    y y                  | Copy file full path to system clipboard
+"    y Y                  | Copy file to system clipboard
+"    P                    | Paste file to the position under the cursor
+"    .                    | Toggle hidden files
+"    s v                  | Split edit
+"    s g                  | Vertical split edit
+"    p                    | Preview
+"    i                    | Switch to directory history
+"    v                    | Quick look
+"    g x                  | Execute with vimfiler associated
+"    '                    | Toggle mark current line
+"    V                    | Clear all marks
+"    >                    | increase filetree screenwidth
+"    <                    | decrease filetree screenwidth
+"    <Home>               | Jump to first line
+"    <End>                | Jump to last line
+"    Ctrl-h               | Switch to project root directory
+"    Ctrl-r               | Redraw
+" <
+" 
+" @subsection Open file with file tree.
+" 
+" If only one file buffer is opened, a file is opened in the active window,
+" otherwise we need to use vim-choosewin to select a window to open the file.
+" >
+"   Key Bindings    | Descriptions
+"   --------------- | ----------------------------------------
+"    l  /  <Enter>  | open file in one window
+"    s g            | open file in a vertically split window
+"    s v            | open file in a horizontally split window
+" <
+" @subsection Override filetree key bindings
+" 
+" If you want to override the default key bindings in filetree windows.
+" You can use User autocmd in bootstrap function. for examples:
+" >
+"   function! myspacevim#before() abort
+"       autocmd User NerdTreeInit
+"           \ nnoremap <silent><buffer> <CR> :<C-u>call
+"           \ g:NERDTreeKeyMap.Invoke('o')<CR>
+"   endfunction
+" <
+" 
+" Here is all the autocmd for filetree:
+" 
+" - nerdtree: `User NerdTreeInit`
+" - defx: `User DefxInit`
+" - vimfiler: `User VimfilerInit`
+
 
 let s:enable_smooth_scrolling = 1
 let s:enable_netrw = 0
