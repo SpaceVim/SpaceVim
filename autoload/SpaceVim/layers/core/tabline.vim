@@ -22,10 +22,63 @@
 " enabled by default.
 "
 " @subsection Key bindings
+"
+" The following two key bindings require neovim v0.10.0+.
 " >
-"   Key binding          Description
-"   Ctrl-Shift-Right     Move current tabpage to the right
-"   Ctrl-Shift-Left      Move current tabpage to the left
+"   Key binding       |    Description
+"   ----------------- | -----------------------------------------------
+"   Ctrl-Shift-Right  |   Move current tabpage to the right
+"   Ctrl-Shift-Left   |   Move current tabpage to the left
+" <
+" @subsection Use Tabline
+" 
+" Buffers will be listed on the tabline if there is only one tab, each item contains
+" the index, buffer name and the filetype icon. If there is more than one tab, all
+" of them will be listed on the tabline. Each item can be quickly accessed by using
+" `<Leader> number`. Default `<Leader>` is `\`.
+" >
+"   Key Bindings | Descriptions
+"   ------------ | -----------------------------------------------
+"    <Leader> 1  | Jump to index 1 on tabline
+"    <Leader> 2  | Jump to index 2 on tabline
+"    <Leader> 3  | Jump to index 3 on tabline
+"    <Leader> 4  | Jump to index 4 on tabline
+"    <Leader> 5  | Jump to index 5 on tabline
+"    <Leader> 6  | Jump to index 6 on tabline
+"    <Leader> 7  | Jump to index 7 on tabline
+"    <Leader> 8  | Jump to index 8 on tabline
+"    <Leader> 9  | Jump to index 9 on tabline
+"    g r         | Switch to alternate tab (switch back and forth)
+" <
+" NOTE: `SPC Tab` is the key binding for switching to alternate buffer.
+" Read [Buffers and Files](#buffers-and-files) section for more info.
+" 
+" SpaceVim tabline also supports mouse click, the left mouse button will switch to the buffer,
+" while the middle mouse button will delete the buffer.
+" 
+" NOTE: This feature is only supported in Neovim with `has('tablineat')`.
+" >
+"   Key Bindings     | Descriptions
+"   ---------------- | --------------------
+"   <Mouse-left>     | Switch to the buffer
+"   <Mouse-middle>   | Delete the buffer
+" <
+" @subsection Tab manager
+" 
+" You can also use `SPC t t` to open the tab manager window.
+" 
+" Key bindings within the tab manager window:
+" >
+"   Key Bindings      | Descriptions
+"   ----------------- | -----------------------------------------
+"    o                | Close or expand tab windows.
+"    r                | Rename the tab under the cursor.
+"    n                | Create new named tab below the cursor tab
+"    N                | Create new tab below the cursor tab
+"    x                | Delete the tab
+"    Ctrl-Shift-Up    | Move tab backward
+"    Ctrl-Shift-Down  | Move tab forward
+"    <Enter>          | Switch to the window under the cursor.
 " <
 
 scriptencoding utf-8
