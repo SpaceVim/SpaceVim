@@ -46,11 +46,11 @@ endfunction
 function! SpaceVim#layers#telescope#plugins() abort
   let plugins = []
   if  has('nvim-0.10.0')
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim-0.1.8', {'merged' : 0, 'loadconf' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim-0.1.8', {'merged' : 0, 'loadconf' : 1, 'on_cmd' : ['Telescope']}])
   elseif  has('nvim-0.7.2')
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim-0.1.5', {'merged' : 0, 'loadconf' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim-0.1.5', {'merged' : 0, 'loadconf' : 1, 'on_cmd' : ['Telescope']}])
   elseif has('nvim-0.7.0')
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim-0.1.2', {'merged' : 0, 'loadconf' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope.nvim-0.1.2', {'merged' : 0, 'loadconf' : 1, 'on_cmd' : ['Telescope']}])
   endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/plenary.nvim', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/telescope-menu', {'merged' : 0}])
