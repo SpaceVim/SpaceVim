@@ -39,6 +39,10 @@ endif
 "   ---------------------------------------------------
 "   vimls     vim-language-server
 " <
+" @subsection User autocmd
+"
+" 1. SpaceVimLspSetup: This User autocmd will be triggered after lsp setup
+" function.
 
 let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 let s:FILE = SpaceVim#api#import('file')
@@ -64,6 +68,7 @@ function! SpaceVim#layers#lsp#setup() abort
         \ require("spacevim").eval("s:enabled_clients"),
         \ require("spacevim").eval("s:override_client_cmds")
         \ )
+  doautocmd User SpaceVimLspSetup
 endfunction
 
 function! SpaceVim#layers#lsp#plugins() abort

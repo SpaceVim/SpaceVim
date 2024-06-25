@@ -5876,6 +5876,10 @@ The default LSP servers are:
   ---------------------------------------------------
   vimls     vim-language-server
 <
+USER AUTOCMD
+
+  1. SpaceVimLspSetup: This User autocmd will be triggered after lsp setup
+function.
 
 ==============================================================================
 LEADERF                                              *SpaceVim-layers-leaderf*
