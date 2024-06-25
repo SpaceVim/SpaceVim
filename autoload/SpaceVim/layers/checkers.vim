@@ -54,7 +54,12 @@ function! SpaceVim#layers#checkers#plugins() abort
   endif
 
   if g:spacevim_lint_engine ==# 'neomake'
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/neomake', {
+          \ 'merged' : 0,
+          \ 'loadconf' : 1,
+          \ 'on_cmd' : ['Neomake'],
+          \ 'on_func' : ['neomake#GetCurrentErrorMsg', 'neomake#statusline#LoclistCounts'],
+          \ 'loadconf_before' : 1}])
   elseif g:spacevim_lint_engine ==# 'ale'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/ale', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   elseif g:spacevim_lint_engine ==# 'syntastic'
