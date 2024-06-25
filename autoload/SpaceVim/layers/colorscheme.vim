@@ -41,6 +41,10 @@
 "
 " SpaceVim is not gonna fix them since these should be in charge of each author.
 
+if exists('s:JSON')
+  finish
+endif
+
 let s:JSON = SpaceVim#api#import('data#json')
 
 function! SpaceVim#layers#colorscheme#plugins() abort
@@ -168,6 +172,12 @@ function! SpaceVim#layers#colorscheme#health() abort
   call SpaceVim#layers#colorscheme#plugins()
   call SpaceVim#layers#colorscheme#config()
   return 1
+endfunction
+
+function! SpaceVim#layers#colorscheme#loadable() abort
+
+  return 1
+
 endfunction
 
 " function() wrapper

@@ -58,6 +58,7 @@ function! s:getLayerPlugins(layer) abort
   try
     let p = SpaceVim#layers#{a:layer}#plugins()
   catch /^Vim\%((\a\+)\)\=:E117/
+    call SpaceVim#logger#info(a:layer . ' layer do not implement plugins function')
   endtry
   return p
 endfunction
@@ -67,6 +68,7 @@ function! s:loadLayerConfig(layer) abort
   try
     call SpaceVim#layers#{a:layer}#config()
   catch /^Vim\%((\a\+)\)\=:E117/
+    call SpaceVim#logger#info(a:layer . ' layer do not implement config function')
   endtry
 
 endfunction

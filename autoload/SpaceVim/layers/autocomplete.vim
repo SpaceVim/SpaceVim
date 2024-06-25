@@ -313,5 +313,9 @@ endfunction
 function! s:restore_sequence_delay() abort
   let &timeoutlen = s:timeoutlen
 endfunction
+function! SpaceVim#layers#autocomplete#loadable() abort
 
+  return 1
+
+endfunction
 " vim:set et sw=2 cc=80:

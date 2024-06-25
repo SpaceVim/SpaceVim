@@ -524,3 +524,9 @@ function! SpaceVim#layers#lang#c#health() abort
   call SpaceVim#layers#lang#c#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#lang#c#loadable() abort
+
+  return 1
+
+endfunction

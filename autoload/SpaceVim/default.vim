@@ -146,7 +146,7 @@ endfunction
 "}}}
 
 function! SpaceVim#default#layers() abort
-  call SpaceVim#logger#debug('init default layer list.')
+  call SpaceVim#logger#info('init default layer list.')
   call SpaceVim#layers#load('autocomplete')
   call SpaceVim#layers#load('checkers')
   call SpaceVim#layers#load('format')
@@ -156,10 +156,11 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#layers#load('core#banner')
   call SpaceVim#layers#load('core#statusline')
   call SpaceVim#layers#load('core#tabline')
+  call SpaceVim#logger#info('layer list init done')
 endfunction
 
 function! SpaceVim#default#keyBindings() abort
-  call SpaceVim#logger#debug('init default key bindings.')
+  call SpaceVim#logger#info('init default key bindings.')
   xnoremap <silent> <Leader>y :<C-u>call clipboard#yank()<cr>
   nnoremap <expr> <Leader>p clipboard#paste('p')
   nnoremap <expr> <Leader>P clipboard#paste('P')
@@ -271,7 +272,7 @@ function! SpaceVim#default#keyBindings() abort
   nnoremap <silent><M-5> :<C-u>call <SID>tobur(5)<CR>
   nnoremap <silent><M-Right> :<C-U>call <SID>tobur("next")<CR>
   nnoremap <silent><M-Left> :<C-U>call <SID>tobur("prev")<CR>
-
+  call SpaceVim#logger#info('default key binding init done')
 endfunction
 
 fu! s:tobur(num) abort

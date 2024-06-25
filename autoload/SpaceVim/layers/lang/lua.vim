@@ -174,3 +174,9 @@ function! SpaceVim#layers#lang#lua#health() abort
   call SpaceVim#layers#lang#lua#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#lang#lua#loadable() abort
+
+  return 1
+
+endfunction

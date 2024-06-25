@@ -106,6 +106,24 @@ function! SpaceVim#layers#tools#mpv#health() abort
   return 1
 endfunction
 
+function! SpaceVim#layers#tools#mpv#loadable() abort
+
+  return 1
+
+endfunction
+
+function! SpaceVim#layers#tools#mpv#plugins() abort
+
+  return []
+
+endfunction
+
+function! SpaceVim#layers#tools#mpv#get_options() abort
+
+  return ['musics_directory', 'mpv_interpreter']
+
+endfunction
+
 let s:playId = 0
 fu! s:handler(id, data, event) abort
   if a:event ==# 'exit'

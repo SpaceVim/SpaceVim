@@ -89,6 +89,91 @@ endif
 
 let g:_spacevim_tabline_loaded = 1
 
+let s:enable_default_mappings = 1
+
+if has('nvim-0.9.0')
+  function! SpaceVim#layers#core#tabline#get() abort
+    return v:lua.require('spacevim.plugin.tabline').get()
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#config() abort
+    lua require('spacevim.plugin.tabline').enable()
+    set tabline=%!v:lua.require('spacevim.plugin.tabline').get()
+    augroup SpaceVim_tabline
+      autocmd!
+      autocmd ColorScheme * lua require('spacevim.plugin.tabline').def_colors()
+    augroup END
+    if s:enable_default_mappings
+      nnoremap <silent> <C-S-Left> <cmd>lua require('spacevim.plugin.tabline').move_to_previous()<CR>
+      nnoremap <silent> <C-S-Right> <cmd>lua require('spacevim.plugin.tabline').move_to_next()<CR>
+    endif
+    let shift_keys = {
+          \  '1': '!',
+          \  '2': '@',
+          \  '3': '#',
+          \  '4': '$',
+          \  '5': '%',
+          \  '6': '^',
+          \  '7': '&',
+          \  '8': '*',
+          \  '9': '(',
+          \  '0': ')'
+          \}
+
+    for i in range(1, 20)
+      let key = i % 10
+
+      if i > 10
+        let key = shift_keys[string(key)]
+      endif
+
+      exe "call SpaceVim#mapping#def('nmap <silent>', '<leader>" . key
+            \ . "', ':call SpaceVim#layers#core#tabline#jump("
+            \ . i . ")<cr>', 'Switch to airline tab " . i
+            \ . "', '', 'tabline index " . i . "')"
+    endfor
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#jump(id, ...) abort
+    call SpaceVim#logger#info(a:id)
+    call SpaceVim#logger#info(string(a:000))
+    lua require('spacevim.plugin.tabline').jump(vim.api.nvim_eval('a:id'))
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#def_colors() abort
+    call v:lua.require('spacevim.plugin.tabline').def_colors()
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#health() abort
+    call SpaceVim#layers#core#tabline#config()
+    return 1
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#loadable() abort
+
+    return 1
+
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#plugins() abort
+
+    return []
+
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#set_variable(var) abort
+    let s:enable_default_mappings = get(a:var, 'enable_default_mappings', s:enable_default_mappings)
+  endfunction
+
+  function! SpaceVim#layers#core#tabline#get_options() abort
+
+    return ['enable_default_mappings']
+
+  endfunction
+  finish
+endif
+
+
 " loadding APIs {{{
 let s:MESSLETTERS = SpaceVim#api#import('messletters')
 let s:FILE = SpaceVim#api#import('file')
@@ -122,7 +207,6 @@ let [s:lsep , s:rsep] = ['', '']
 
 let [s:ilsep , s:irsep] = ['', '']
 
-let s:enable_default_mappings = 1
 
 function! s:get_no_empty(a, b) abort
   if empty(a:a)
@@ -566,18 +650,6 @@ function! SpaceVim#layers#core#tabline#get() abort
 endfunction
 
 function! SpaceVim#layers#core#tabline#config() abort
-  if has('nvim-0.9.5')
-    lua require('spacevim.plugin.tabline').enable()
-    set tabline=%!v:lua.require('spacevim.plugin.tabline').get()
-    augroup SpaceVim_tabline
-      autocmd!
-      autocmd ColorScheme * lua require('spacevim.plugin.tabline').def_colors()
-    augroup END
-    if s:enable_default_mappings
-      nnoremap <silent> <C-S-Left> <cmd>lua require('spacevim.plugin.tabline').move_to_previous()<CR>
-      nnoremap <silent> <C-S-Right> <cmd>lua require('spacevim.plugin.tabline').move_to_next()<CR>
-    endif
-  else
     let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
     let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_iseparator, s:separators['arrow'])
     set tabline=%!SpaceVim#layers#core#tabline#get()
@@ -591,7 +663,6 @@ function! SpaceVim#layers#core#tabline#config() abort
       nnoremap <silent> <C-S-Right> :call <SID>move_tabpage(1)<CR>
     endif
 
-  endif
   let shift_keys = {
         \  '1': '!',
         \  '2': '@',
@@ -622,10 +693,6 @@ endfunction
 function! SpaceVim#layers#core#tabline#jump(id, ...) abort
   call SpaceVim#logger#info(a:id)
   call SpaceVim#logger#info(string(a:000))
-  if has('nvim-0.9.5')
-    lua require('spacevim.plugin.tabline').jump(vim.api.nvim_eval('a:id'))
-    return
-  endif
   if len(s:shown_items) >= a:id
     let item = s:shown_items[a:id - 1]
     let mouse = get(a:000, 1, '')
@@ -681,6 +748,18 @@ endfunction
 function! SpaceVim#layers#core#tabline#health() abort
   call SpaceVim#layers#core#tabline#config()
   return 1
+endfunction
+
+function! SpaceVim#layers#core#tabline#loadable() abort
+
+  return 1
+
+endfunction
+
+function! SpaceVim#layers#core#tabline#plugins() abort
+
+  return []
+
 endfunction
 
 function! SpaceVim#layers#core#tabline#set_variable(var) abort

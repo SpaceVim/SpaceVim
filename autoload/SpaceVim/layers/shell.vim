@@ -304,3 +304,9 @@ function! SpaceVim#layers#shell#health() abort
   call SpaceVim#layers#shell#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#shell#loadable() abort
+
+  return 1
+
+endfunction

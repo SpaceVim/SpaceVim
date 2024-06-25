@@ -344,3 +344,8 @@ function! SpaceVim#layers#lang#python#health() abort
   call SpaceVim#layers#lang#python#config()
   return 1
 endfunction
+function! SpaceVim#layers#lang#python#loadable() abort
+
+  return 1
+
+endfunction

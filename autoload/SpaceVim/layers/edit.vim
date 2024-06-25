@@ -1069,3 +1069,9 @@ endfunction
 function! SpaceVim#layers#edit#add_ft_head_tamplate(ft, tamp) abort
   call extend(s:ft_head_tp, {a:ft : a:tamp})
 endfunction
+
+function! SpaceVim#layers#edit#loadable() abort
+
+  return 1
+
+endfunction

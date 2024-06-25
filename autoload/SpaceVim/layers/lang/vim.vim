@@ -218,3 +218,9 @@ function! SpaceVim#layers#lang#vim#health() abort
   call SpaceVim#layers#lang#vim#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#lang#vim#loadable() abort
+
+  return 1
+
+endfunction

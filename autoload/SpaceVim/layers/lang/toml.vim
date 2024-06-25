@@ -33,3 +33,15 @@ function! SpaceVim#layers#lang#toml#health() abort
   call SpaceVim#layers#lang#toml#plugins()
   return 1
 endfunction
+
+function! SpaceVim#layers#lang#toml#loadable() abort
+
+  return 1
+
+endfunction
+
+function! SpaceVim#layers#lang#toml#set_variable(var) abort
+
+  
+
+endfunction

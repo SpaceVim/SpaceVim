@@ -194,4 +194,10 @@ function! SpaceVim#layers#git#health() abort
 
 endfunction
 
+function! SpaceVim#layers#git#loadable() abort
+
+  return 1
+
+endfunction
+
 " vim:set et sw=2 cc=80:

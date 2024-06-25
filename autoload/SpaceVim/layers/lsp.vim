@@ -52,6 +52,12 @@ function! SpaceVim#layers#lsp#health() abort
   return 1
 endfunction
 
+function! SpaceVim#layers#lsp#loadable() abort
+
+  return 1
+
+endfunction
+
 
 function! SpaceVim#layers#lsp#setup() abort
   lua require("spacevim.lsp").setup(

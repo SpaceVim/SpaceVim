@@ -1223,4 +1223,10 @@ function! s:close_current_tab() abort
   endif
 endfunction
 
+function! SpaceVim#layers#core#loadable() abort
+
+  return 1
+
+endfunction
+
 " vim:set et sw=2 cc=80:

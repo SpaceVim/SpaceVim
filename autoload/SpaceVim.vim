@@ -1744,7 +1744,7 @@ function! s:parser_argv() abort
     " if use embed nvim
     " for exmaple: neovim-qt
     " or only run vim/neovim without argvs
-    if len(v:argv) == 1
+    if len(v:argv) == 1 || (len(v:argv) == 2 && index(v:argv, '--embed') == 1)
       return [0]
     elseif index(v:argv, '--embed') !=# -1 
       if  v:argv[-1] =~# '/$'

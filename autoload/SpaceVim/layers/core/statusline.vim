@@ -131,6 +131,18 @@ if has('nvim-0.10.0')
     return v:lua.require('spacevim.plugin.statusline').health()
   endfunction
 
+  function! SpaceVim#layers#core#statusline#loadable() abort
+
+    return 1
+
+  endfunction
+
+  function! SpaceVim#layers#core#statusline#plugins() abort
+
+    return []
+
+  endfunction
+
   finish
 endif
 

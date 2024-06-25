@@ -393,3 +393,9 @@ function! SpaceVim#layers#lang#java#health() abort
   call SpaceVim#layers#lang#java#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#lang#java#loadable() abort
+
+  return 1
+
+endfunction

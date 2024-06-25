@@ -92,3 +92,9 @@ function! SpaceVim#layers#lang#sh#health() abort
   call SpaceVim#layers#lang#sh#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#lang#sh#loadable() abort
+
+  return 1
+
+endfunction

@@ -225,3 +225,9 @@ function! SpaceVim#layers#lang#markdown#health() abort
   call SpaceVim#layers#lang#markdown#config()
   return 1
 endfunction
+
+function! SpaceVim#layers#lang#markdown#loadable() abort
+
+  return 1
+
+endfunction

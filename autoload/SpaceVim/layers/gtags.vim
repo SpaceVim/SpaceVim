@@ -114,6 +114,12 @@ function! SpaceVim#layers#gtags#health() abort
   return 1
 endfunction
 
+function! SpaceVim#layers#gtags#loadable() abort
+
+  return 1
+
+endfunction
+
 function! SpaceVim#layers#gtags#get_options() abort
 
   return ['gtagslabel', 'ctags_bin']

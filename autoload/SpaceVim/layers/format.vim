@@ -134,3 +134,9 @@ function! s:format() abort
     endif
   endif
 endfunction
+
+function! SpaceVim#layers#format#loadable() abort
+
+  return 1
+
+endfunction

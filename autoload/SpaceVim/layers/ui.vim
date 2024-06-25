@@ -721,3 +721,9 @@ function! s:reduce_font() abort
   let &guifont = substitute(&guifont, ':h\d\+', ':h' . font_size, '')
   sleep 100m
 endfunction
+
+function! SpaceVim#layers#ui#loadable() abort
+
+  return 1
+
+endfunction

@@ -64,6 +64,12 @@ function! SpaceVim#layers#checkers#plugins() abort
   return plugins
 endfunction
 
+function! SpaceVim#layers#checkers#loadable() abort
+
+  return 1
+
+endfunction
+
 function! SpaceVim#layers#checkers#set_variable(var) abort
 
   let s:show_cursor_error = get(a:var, 'show_cursor_error', 1)

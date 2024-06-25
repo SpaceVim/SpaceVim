@@ -387,3 +387,15 @@ function! SpaceVim#layers#telescope#health() abort
   return 1
 
 endfunction
+
+function! SpaceVim#layers#telescope#set_variable(var) abort
+
+  
+
+endfunction
+
+function! SpaceVim#layers#telescope#get_options() abort
+
+  return []
+
+endfunction
