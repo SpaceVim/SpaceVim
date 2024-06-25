@@ -174,7 +174,7 @@ function! SpaceVim#layers#core#plugins() abort
   endif
   if has('timers') && has('float')
     " vim-smoothie needs +timers and +float
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-smoothie',  {'merged': 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-smoothie',  {'merged': 0, 'on_event' : 'BufReadPost'}])
   endif
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdtree', { 'merged' : 0,
@@ -209,18 +209,30 @@ function! SpaceVim#layers#core#plugins() abort
   endif
 
   if !g:spacevim_vimcompatible
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/clever-f.vim', {'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/clever-f.vim', {'merged' : 0, 'on_map': '<Plug>(clever-f-'}])
+    nmap f <Plug>(clever-f-f)
+    xmap f <Plug>(clever-f-f)
+    omap f <Plug>(clever-f-f)
+    nmap F <Plug>(clever-f-F)
+    xmap F <Plug>(clever-f-F)
+    omap F <Plug>(clever-f-F)
+    nmap t <Plug>(clever-f-t)
+    xmap t <Plug>(clever-f-t)
+    omap t <Plug>(clever-f-t)
+    nmap T <Plug>(clever-f-T)
+    xmap T <Plug>(clever-f-T)
+    omap T <Plug>(clever-f-T)
   endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
 
   if exists('*matchaddpos')
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-matchup', {'merged' : 0}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-matchup', {'merged' : 0, 'on_event' : 'BufReadPost'}])
   endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/gruvbox', {'loadconf' : 1, 'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-clipboard', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-if-lua-compat', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/open-browser.vim', {
-        \ 'merged' : 0, 'loadconf' : 1,
+        \ 'merged' : 0, 'loadconf' : 1, 'on_cmd' : 'OpenBrowser',
         \}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
