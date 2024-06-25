@@ -101,7 +101,7 @@ function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
         \ [g:_spacevim_root_dir . 'bundle/vim-emoji'],
-        \ [g:_spacevim_root_dir . 'bundle/vim-grammarous', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-grammarous', {'merged' : 0, 'on_cmd' : ['GrammarousCheck', 'GrammarousReset']}],
         \ [g:_spacevim_root_dir . 'bundle/vim-expand-region', { 'loadconf' : 1}],
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-user'],
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-indent'],
@@ -111,7 +111,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
         \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
-        \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0, 'on_cmd' : ['Tabularize']}],
         \ ['andrewradev/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
   if has('nvim-0.8.0')
