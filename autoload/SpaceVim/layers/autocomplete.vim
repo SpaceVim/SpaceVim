@@ -92,28 +92,32 @@ function! SpaceVim#layers#autocomplete#plugins() abort
     " use bundle nvim-cmp
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-cmp', {
           \ 'merged' : 0,
-          \ 'loadconf' : 1,
+          \ 'loadconf' : 1, 'on_event' : ['InsertEnter'],
           \ }])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-buffer', {
           \ 'merged' : 0,
+          \ 'on_event' : ['InsertEnter'],
           \ }])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-path', {
           \ 'merged' : 0,
+          \ 'on_event' : ['InsertEnter'],
           \ }])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-cmdline', {
           \ 'merged' : 0,
+          \ 'on_event' : ['InsertEnter'],
           \ }])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/lspkind-nvim', {
           \ 'merged' : 0,
-          \ 'loadconf' : 1,
+          \ 'loadconf' : 1, 'on_event' : ['InsertEnter'],
           \ }])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-dictionary', {
           \ 'merged' : 0,
-          \ 'loadconf' : 1,
+          \ 'loadconf' : 1, 'on_event' : ['InsertEnter'],
           \ }])
     if g:spacevim_snippet_engine ==# 'neosnippet'
       call add(plugins, [g:_spacevim_root_dir . 'bundle/cmp-neosnippet', {
             \ 'merged' : 0,
+            \ 'on_event' : ['InsertEnter'],
             \ }])
     endif
   elseif g:spacevim_autocomplete_method ==# 'asyncomplete'
