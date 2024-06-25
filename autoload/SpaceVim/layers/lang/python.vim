@@ -126,11 +126,11 @@ function! SpaceVim#layers#lang#python#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-pythonsense', 
         \ { 'on_ft' : 'python'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/coveragepy.vim', 
-        \ { 'merged' : 0}])
+        \ { 'merged' : 0, 'on_ft' : 'python'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/python-imports.vim', 
-        \ { 'merged' : 0}])
+        \ { 'merged' : 0, 'on_ft' : 'python'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-virtualenv', 
-        \ { 'merged' : 0}])
+        \ { 'merged' : 0, 'on_ft' : 'python'}])
   return plugins
 endfunction
 

@@ -93,7 +93,7 @@ function! s:git_branch() abort
       endif
     catch
     endtry
-  elseif exists('g:loaded_git')
+  else
       let prefix = g:spacevim_statusline_unicode ? '' : ''
       return printf('%%{git#branch#current("%s")}', prefix)
   endif
