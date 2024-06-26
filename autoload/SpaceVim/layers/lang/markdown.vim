@@ -71,7 +71,10 @@ function! SpaceVim#layers#lang#markdown#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-markdown',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['joker1007/vim-markdown-quote-syntax',{ 'on_ft' : 'markdown'}])
-  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-markdown-toc', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-markdown-toc', {
+        \ 'merged' : 0,
+        \ 'on_cmd' :
+        \ ['GenTocGFM', 'GenTocGitLab', 'GenTocMarked', 'GenTocModeline', 'GenTocRedcarpet']}])
   call add(plugins, ['iamcco/mathjax-support-for-mkdp',{ 'on_ft' : 'markdown'}])
   call add(plugins, ['lvht/tagbar-markdown',{'merged' : 0}])
   " check node package managers to ensure building of 2 plugins below
