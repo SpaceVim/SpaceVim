@@ -770,8 +770,11 @@ default command. for example:
 ==============================================================================
 FILEMANAGER                                     *SpaceVim-options-filemanager*
 
-The default file manager of SpaceVim. Default is 'nerdtree'. you can also use
-defx or vimfiler
+The default file manager of SpaceVim. Default is 'nerdtree'. you can also use:
+  1. defx
+  2. vimfiler
+  3. neo-tree
+4: nvim-tree
 
 ==============================================================================
 FILETREE_DIRECTION                       *SpaceVim-options-filetree_direction*
