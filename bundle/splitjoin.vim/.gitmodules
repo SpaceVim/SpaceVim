@@ -1,0 +1,18 @@
+[submodule "spec/support/rust.vim"]
+	path = spec/support/rust.vim
+	url = https://github.com/rust-lang/rust.vim
+[submodule "spec/support/vim-javascript"]
+	path = spec/support/vim-javascript
+	url = https://github.com/pangloss/vim-javascript
+[submodule "spec/support/tabular"]
+	path = spec/support/tabular
+	url = https://github.com/godlygeek/tabular
+[submodule "spec/support/vim-elm-syntax"]
+	path = spec/support/vim-elm-syntax
+	url = https://github.com/andys8/vim-elm-syntax
+[submodule "spec/support/vim-elixir"]
+	path = spec/support/vim-elixir
+	url = https://github.com/elixir-editors/vim-elixir
+[submodule "spec/support/R-Vim-runtime"]
+	path = spec/support/R-Vim-runtime
+	url = https://github.com/jalvesaq/R-Vim-runtime

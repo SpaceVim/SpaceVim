@@ -1,0 +1,20 @@
+# Originally forked from: https://github.com/google/mirror-branch-action
+# Current repo: https://github.com/AndrewRadev/mirror-branch-action
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  mirror_job:
+    runs-on: ubuntu-latest
+    name: Mirror main branch to master branch
+    steps:
+    - name: Mirror action step
+      id: mirror
+      uses: AndrewRadev/mirror-branch-action@main
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        source: 'main'
+        dest: 'master'
