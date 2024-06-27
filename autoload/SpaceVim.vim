@@ -2402,6 +2402,258 @@ endfunction
 " <
 
 ""
+" @section Editing, usage-editing
+" @parentsection usage
+"
+" @subsection Moving text
+" >
+"   Key               | Action
+"   ----------------- | -----------------------------
+"    >  /  Tab        | Indent to right and re-select
+"    <  /  Shift-Tab  | Indent to left and re-select
+"    Ctrl-Shift-Up    | move lines up
+"    Ctrl-Shift-Down  | move lines down
+" <
+" @subsection Code indentation
+" 
+" The default indentation of code is 2, which is controlled by the option
+" @section(options-default_indent).
+" If you prefer to use 4 as code indentation. Just add the following snippet
+" to the `[options]` section in the SpaceVim's configuration file:
+" >
+"   [options]
+"     default_indent = 4
+" <
+" The `default_indent` option will be applied to vim's `&tabstop`,
+" `&softtabstop` and `&shiftwidth` options. By default, when the user inserts
+" a `<Tab>`, it will be expanded to spaces. This feature can be disabled by
+" `expand_tab` option the `[options]` section:
+" >
+"   [options]
+"     default_indent = 4
+"     expand_tab = true
+" <
+" @subsection Text manipulation commands
+" 
+" Text related commands (start with `x`):
+" >
+"   Key Bindings     | Descriptions
+"   ---------------- | -------------------------------------------------------
+"    SPC x a #       | align region at #
+"    SPC x a %       | align region at %
+"    SPC x a &       | align region at &
+"    SPC x a (       | align region at (
+"    SPC x a )       | align region at )
+"    SPC x a [       | align region at [
+"    SPC x a ]       | align region at ]
+"    SPC x a {       | align region at {
+"    SPC x a }       | align region at }
+"    SPC x a ,       | align region at ,
+"    SPC x a .       | align region at . (for numeric tables)
+"    SPC x a :       | align region at :
+"    SPC x a ;       | align region at ;
+"    SPC x a =       | align region at =
+"    SPC x a ¦       | align region at ¦
+"    SPC x a <Bar>   | align region at \|
+"    SPC x a SPC     | align region at [SPC]
+"    SPC x a r       | align region at user-specified regexp
+"    SPC x a o       | align region at operators  +-*/  etc
+"    SPC x c         | count the number of chars/words/lines in the region
+"    SPC x d w       | delete trailing whitespace
+"    SPC x d SPC     | Delete all spaces and tabs around point
+"    SPC x g t       | translate current word using Google Translate
+"    SPC x i c       | change symbol style to  lowerCamelCase
+"    SPC x i C       | change symbol style to  UpperCamelCase
+"    SPC x i i       | cycle symbol naming styles (i to keep cycling)
+"    SPC x i -       | change symbol style to  kebab-case
+"    SPC x i k       | change symbol style to  kebab-case
+"    SPC x i _       | change symbol style to  under_score
+"    SPC x i u       | change symbol style to  under_score
+"    SPC x i U       | change symbol style to  UP_CASE
+"    SPC x j c       | set the justification to center
+"    SPC x j l       | set the justification to left
+"    SPC x j r       | set the justification to right
+"    SPC x J         | move down a line of text (enter transient state)
+"    SPC x K         | move up a line of text (enter transient state)
+"    SPC x l d       | duplicate a line or region
+"    SPC x l r       | reverse lines
+"    SPC x l s       | sort lines (ignorecase)
+"    SPC x l S       | sort lines (case-senstive)
+"    SPC x l u       | uniquify lines (ignorecase)
+"    SPC x l U       | uniquify lines (case-senstive)
+"    SPC x t c       | swap (transpose) the current character with previous one
+"    SPC x t C       | swap (transpose) the current character with next one
+"    SPC x t w       | swap (transpose) the current word with previous one
+"    SPC x t W       | swap (transpose) the current word with next one
+"    SPC x t l       | swap (transpose) the current line with previous one
+"    SPC x t L       | swap (transpose) the current line with next one
+"    SPC x u         | lowercase text
+"    SPC x U         | uppercase text
+"    SPC x ~         | toggle case text
+"    SPC x w c       | count the words in the select region
+" <
+" @subsection Text insertion commands
+" 
+" Text insertion commands (start with `i`):
+" >
+"   Key bindings | Descriptions
+"   ------------ | ---------------------------------------------------------------------
+"    SPC i l l   | insert lorem-ipsum list
+"    SPC i l p   | insert lorem-ipsum paragraph
+"    SPC i l s   | insert lorem-ipsum sentence
+"    SPC i p 1   | insert simple password
+"    SPC i p 2   | insert stronger password
+"    SPC i p 3   | insert password for paranoids
+"    SPC i p p   | insert a phonetically easy password
+"    SPC i p n   | insert a numerical password
+"    SPC i u     | Search for Unicode characters and insert them into the active buffer.
+"    SPC i U 1   | insert UUIDv1 (use universal argument to insert with CID format)
+"    SPC i U 4   | insert UUIDv4 (use universal argument to insert with CID format)
+"    SPC i U U   | insert UUIDv4 (use universal argument to insert with CID format)
+" >
+" NOTE: You can specify the number of password characters using a prefix
+" argument (i.e. `10 SPC i p 1` will generate a 10 character simple password).
+" 
+" @subsection Expand regions of text
+" 
+" Key bindings available in visual mode:
+" >
+"   Key bindings | Descriptions
+"   ------------ | -------------------------------------------------
+"    v           | expand visual selection of text to larger region
+"    V           | shrink visual selection of text to smaller region
+" <
+" @subsection Increase/Decrease numbers
+" >
+"   Key Bindings | Descriptions
+"   ------------ | ------------------------------------------------
+"    SPC n +     | increase the number and initiate transient state
+"    SPC n -     | decrease the number and initiate transient state
+" <
+" In transient state:
+" >
+"   Key Bindings  | Descriptions
+"   ------------- | -------------------------------------------
+"    +            | increase the number under the cursor by one
+"    -            | decrease the number under the cursor by one
+"   Any other key | leave the transient state
+" <
+" Tip: You can set the step (1 by default) by using a prefix argument
+" (i.e. `10 SPC n +` will add 10 to the number under the cursor).
+" 
+" @subsection Copy and paste
+" 
+" If `has('unnamedplus')`, the register used by `<Leader> y` is `+`,
+" otherwise it is `*`. Read `:h registers` for more info about other registers.
+" >
+"   Key          | Descriptions
+"   ------------ | --------------------------------------------
+"    <Leader> y  | Copy selected text to system clipboard
+"    <Leader> p  | Paste text from system clipboard after here
+"    <Leader> P  | Paste text from system clipboard before here
+"    <Leader> Y  | Copy selected text to pastebin
+" <
+" To change the command of clipboard, you need to use bootstrap after function:
+" >
+"   " for example, to use tmux clipboard:
+"   function! myspacevim#after() abort
+"     call clipboard#set('tmux load-buffer -', 'tmux save-buffer -')
+"   endfunction
+" <
+" 
+" within the runtime log (`SPC h L`), the clipboard command will be displayed:
+" 
+" >
+"   [ clipboard ] [11:00:35] [670.246] [ Info  ] yank_cmd is:'tmux load-buffer -'
+"   [ clipboard ] [11:00:35] [670.246] [ Info  ] paste_cmd is:'tmux save-buffer -'
+" >
+" 
+" The `<Leader> Y` key binding will copy selected text to a pastebin server.
+" It requires `curl` in your `$PATH`. The default command is:
+" >
+"   curl -s -F "content=<-" http://dpaste.com/api/v2/
+" <
+" This command will read stdin and copy it to dpaste server. It is same as:
+" >
+"   echo "selected text" | curl -s -F "content=<-" http://dpaste.com/api/v2/
+" <
+" 
+" @subsection Commenting
+" 
+" Comments are handled by nerdcommenter, it’s bound to the following keys.
+" >
+"   Key Bindings | Descriptions
+"   ------------ | -------------------------------------------------------
+"    SPC ;       | comment operator
+"    SPC c a     | switch to the alternative set of delimiters
+"    SPC c h     | hide/show comments
+"    SPC c l     | toggle line comments
+"    SPC c L     | comment lines
+"    SPC c u     | uncomment lines
+"    SPC c p     | toggle paragraph comments
+"    SPC c P     | comment paragraphs
+"    SPC c s     | comment with pretty layout
+"    SPC c t     | toggle comment on line
+"    SPC c T     | comment the line under the cursor
+"    SPC c y     | toggle comment and yank
+"    SPC c Y     | yank and comment
+"    SPC c $     | comment current line from cursor to the end of the line
+" <
+" Tip: `SPC ;` will start operator mode, in this mode, you can use a motion 
+" command to comment lines. For example, `SPC ; 4 j` will comment the current
+" line and the following 4 lines.
+" 
+" @subsection Undo tree
+" 
+" Undo tree visualizes the undo history and makes it easier to browse
+" and switch between different undo branches. The default key binding is `F7`.
+" If `+python` or `+python3` is enabled, mundo will be loaded,
+" otherwise undotree will be loaded.
+" 
+" Key bindings within undo tree windows:
+" >
+"   key bindings    | description
+"   --------------- | -------------------
+"    G              | move bottom
+"    J              | move older write
+"    K              | move newer write
+"    N              | previous match
+"    P              | play to
+"    <2-LeftMouse>  | mouse click
+"    /              | search
+"    <CR>           | preview
+"    d              | diff
+"    <down>         | move older
+"    <up>           | move newer
+"    i              | toggle inline
+"    j              | move older
+"    k              | move newer
+"    n              | next match
+"    o              | preview
+"    p              | diff current buffer
+"    q              | quit
+"    r              | diff
+"    gg             | move top
+"    ?              | toggle help
+" <
+" @subsection Multi-Encodings
+" 
+" SpaceVim uses utf-8 as the default encoding. There are four options for this:
+" 
+" 1. fileencodings (fencs): ucs-bom,utf-8,default,latin1
+" 2. fileencoding (fenc): utf-8
+" 3. encoding (enc): utf-8
+" 4. termencoding (tenc): utf-8 (only supported in Vim)
+" 
+" To fix a messy display: `SPC e a` is the mapping to auto detect the file
+" encoding. After detecting the file encoding, you can run the command below
+" to fix it:
+" >
+"   set enc=utf-8
+"   write
+" <
+
+""
 " @section FAQ, faq
 " This is a list of the frequently asked questions about SpaceVim.
 "

@@ -193,11 +193,11 @@ function! SpaceVim#layers#telescope#config() abort
 endfunction
 
 function! s:get_help_with_cursor_symbol() abort
-  call v:lua.require('telescope.builtin').help_tags({ 'default_text' : expand('<cword>')}) 
+  exe 'Telescope help_tags default_text=' . expand('<cword>')
 endfunction
 
 function! s:get_help(word) abort
-  call v:lua.require('telescope.builtin').help_tags({ 'default_text' : a:word}) 
+  exe 'Telescope help_tags default_text=' . a:word
 endfunction
 
 function! s:get_menu(menu, input) abort
