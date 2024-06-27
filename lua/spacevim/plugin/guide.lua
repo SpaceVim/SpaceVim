@@ -636,7 +636,7 @@ local function handle_input(input)
 
     --- redraw!
 
-    local ok, _ = pcall(vim.fn.execute, input[1])
+    local ok, _ = pcall(vim.fn.execute, input[1], '')
     if not ok then
       print(vim.v.exception)
     end
