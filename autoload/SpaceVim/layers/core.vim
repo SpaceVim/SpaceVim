@@ -202,6 +202,7 @@ function! SpaceVim#layers#core#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-sftp',{'merged' : 0}])
   elseif g:spacevim_filemanager ==# 'nvim-tree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-tree.lua',{'merged' : 0, 'loadconf' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-web-devicons',{'merged' : 0, 'loadconf' : 1}])
   elseif g:spacevim_filemanager ==# 'neo-tree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/neo-tree.nvim',{'merged' : 0, 'loadconf' : 1}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nui.nvim',{'merged' : 0}])
