@@ -9,22 +9,169 @@
 ""
 " @section autocomplete, layers-autocomplete
 " @parentsection layers
-" @subsection code completion
-" SpaceVim uses neocomplete as the default completion engine if vim has lua
-" support. If there is no lua support, neocomplcache will be used for the
-" completion engine. SpaceVim uses deoplete as the default completion engine
-" for neovim. Deoplete requires neovim to be compiled with python support. For
-" more information on python support, please read neovim's |provider-python|.
+" This layer provides auto-completion in SpaceVim. This layer is enabled by
+" default. To disable this layer, add following snippet to your configuration
+" file:
+" >
+"   [[layers]]
+"     name = "autocomplete"
+"     enable = false
+" <
+" 
+" The following completion engines are supported:
+" 
+" 1. nvim-cmp - neovim >= 0.9.0
+" 2. neocomplete - vim with `+lua`
+" 3. neocomplcache - vim without `+lua`
+" 4. deoplete - neovim with `+python3`
+" 5. coc - vim >= 8.1 or neovim >= 0.3.1
+" 6. YouCompleteMe - disabled by default, to enable ycm, see
+" @section(options-enable_ycm)
+" 7. Completor - vim8 with `+python` or `+python3`
+" 8. asyncomplete - vim8 or neovim with `timers`
+" 
+" Snippets are supported via neosnippet(https://github.com/Shougo/neosnippet.vim).
+" 
+" @subsection Completion engine
+" 
+" By default, SpaceVim will choose the completion engine automatically based
+" on your vim version. But you can choose the completion engine to be used
+" with the following variable:
+" 
+" - `autocomplete_method`: the possible values are:
+" - `ycm`: for YouCompleteMe
+" - `neocomplcache`
+" - `coc`: coc.nvim which also provides language server protocol feature
+" - `deoplete`
+" - `asyncomplete`
+" - `completor`
+" - `nvim-cmp`
+" 
+" here is an example:
+" >
+"   [options]
+"     autocomplete_method = "deoplete"
+" <
+" 
+" @subsection Snippets engine
+" 
+" The default snippets engine is `neosnippet`, the also can be changed to `ultisnips`:
+" >
+"   [options]
+"     snippet_engine = "ultisnips"
+" <
+" 
+" The following snippets repos have been added by default:
+" 
+" - Shougo/neosnippet-snippets: neosnippet's default snippets.
+" - honza/vim-snippets: extra snippets
+" 
+" If the `snippet_engine` is `neosnippet`, the following directories will be used:
+" 
+" - `~/.SpaceVim/snippets/`: SpaceVim runtime snippets.
+" - `~/.SpaceVim.d/snippets/`: custom global snippets.
+" - `./.SpaceVim.d/snippets/`: custom local snippets (project's snippets)
+" 
+" You can provide additional directories by setting the
+" variable `g:neosnippet#snippets_directory` which can take a string
+" in case of a single path or a list of paths.
+" 
+" If the `snippet_engine` is `ultisnips`, the following directories will be used:
+" 
+" - `~/.SpaceVim/UltiSnips/`: SpaceVim runtime snippets.
+" - `~/.SpaceVim.d/UltiSnips/`: custom global snippets.
+" - `./.SpaceVim.d/UltiSnips/`: custom local snippets (project's snippets)
+" 
+" @subsection Complete parens
+" 
+" By default, the parens will be completed automatically, to disabled this feature:
+" >
+"   [options]
+"     autocomplete_parens = false
+" <
+" 
+" @subsection Layer options
 "
-" SpaceVim includes YouCompleteMe, but it is disabled by default. To enable
-" ycm, see |g:spacevim_enable_ycm|.
+" You can customize the user experience of autocompletion with the following
+" layer options:
+" 
+" `auto_completion_return_key_behavior`: set the action to perform when the
+" <Enter> key is pressed. the possible values are:
+"    1. `complete` completes with the current selection
+"    2. `smart` completes with current selection and expand snippet or argvs
+"    3. `nil`
+" By default it is `complete`.
 "
-" @subsection snippet
-" SpaceVim use neosnippet as the default snippet engine. The default snippets
-" are provided by `Shougo/neosnippet-snippets`. For more information, please read
-" |neosnippet|. Neosnippet support custom snippets, and the default snippets
-" directory is `~/.SpaceVim/snippets/`. If `g:spacevim_force_global_config = 1`,
-" SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
+" `auto_completion_tab_key_behavior`: set the action to perform when the
+" <Tab> key is pressed, the possible values are:
+"    1. `smart` cycle candidates, expand snippets, jump parameters
+"    2. `complete` completes with the current selection
+"    3. `cycle` completes the common prefix and cycle between candidates
+"    4. `nil` insert a carriage return
+" By default it is `complete`.
+" 
+" `auto_completion_delay`: a number to delay the completion after input in
+" milliseconds, by default it is 50 ms.
+" 
+" `auto_completion_complete_with_key_sequence`: a string of two characters
+" denoting a key sequence that will perform a `complete` action if the
+" sequence as been entered quickly enough. If its value is `nil` then the
+" feature is disabled.
+"
+" NOTE: This option should not has same value as `escape_key_binding`
+"
+" `auto_completion_complete_with_key_sequence_delay`: the number of
+" seconds to wait for the autocompletion key sequence to be entered.
+" The default value is 1 seconds. This option is used for vim's
+" `timeoutlen` option in insert mode.
+" 
+" The default configuration of the layer is:
+" >
+"   [[layers]]
+"     name = "autocomplete"
+"     auto_completion_return_key_behavior = "nil"
+"     auto_completion_tab_key_behavior = "smart"
+"     auto_completion_delay = 200
+"     auto_completion_complete_with_key_sequence = "nil"
+"     auto_completion_complete_with_key_sequence_delay = 0.1
+" <
+" 
+" `jk` is a good candidate for `auto_completion_complete_with_key_sequence` if you don’t use it already.
+" 
+" @subsection Show snippets in auto-completion popup
+" 
+" By default, snippets are shown in the auto-completion popup.
+" To disable this feature, set the variable `auto_completion_enable_snippets_in_popup` to false.
+" >
+"   [[layers]]
+"     name = "autocomplete"
+"     auto_completion_enable_snippets_in_popup = false
+" <
+" 
+" @subsection Key bindings
+" 
+" code completion:
+" >
+"   Key bindings | Description
+"   ------------ | -----------------------------------------------
+"    Ctrl-n      | select next candidate
+"    Ctrl-p      | select previous candidate
+"    <Tab>       | based on  auto_completion_tab_key_behavior 
+"    Shift-Tab   | select previous candidate
+"    <Return>    | based on  auto_completion_return_key_behavior 
+" <
+" snippets:
+" >
+"    Key Binding   | Description
+"   -------------- | ----------------------------------------
+"    M-/           | Expand a snippet
+"    SPC i s       | List all current snippets for inserting
+"    <Leader> f s  | Fuzzy find snippets
+" <
+" NOTE: `SPC i s` requires that at least one fuzzy search layer be loaded.
+" If the `snippet_engine` is `neosnippet`. The fuzzy finder layer can be
+" `leaderf`, `denite` or `unite`. For `ultisnips`, you can use `leaderf`
+" or `unite` layer.
 
 
 if exists('s:return_key_behavior')
