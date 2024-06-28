@@ -1275,8 +1275,9 @@ function vim.fn.rpcnotify(channel, event, args, ...) end
 -- ```vim
 --   :let result = rpcrequest(rpc_chan, "func", 1, 2, 3)
 -- ```
---- @param args? any[]
+--- @param args? any
 --- @param ...? any
+--- @return any
 function vim.fn.rpcrequest(channel, method, args, ...) end
 
 -- Deprecated. Replace  

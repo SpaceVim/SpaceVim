@@ -121,7 +121,7 @@ function m.run(argv)
     '-c',
     'color.status=always',
     '-C',
-    vim.fn.expand(vim.fn.getcwd(), ':p'),
+    vim.fn.fnamemodify(vim.fn.getcwd(), ':p'),
     'rebase',
   }
   for _, v in ipairs(argv) do
