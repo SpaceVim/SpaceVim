@@ -33,6 +33,7 @@ local highlight = require('spacevim.api.vim.highlight')
 local file = require('spacevim.api.file')
 
 local messletters = require('spacevim.api.messletters')
+local WIN = require('spacevim.api.vim.window')
 
 local shown_items = {}
 
@@ -524,6 +525,30 @@ function M.def_colors()
   highlight.hi_separator('SpaceVim_tabline_m', 'SpaceVim_tabline_a')
 end
 
+local function is_best_win(winid)
+  local bufnr = vim.api.nvim_win_get_buf(winid)
+  local ft = vim.bo[bufnr].filetype
+  if ft == 'defx' or ft == 'nerdtree' or ft == 'tagbar' then
+    return false
+  end
+
+  return true
+end
+
+local function open_in_best_win(bufnr)
+  if is_best_win(vim.api.nvim_get_current_win()) then
+    vim.api.nvim_set_current_buf(bufnr)
+    return
+  end
+  for winnr = 1, vim.fn.winnr('$') do
+    local winid = vim.fn.win_getid(winnr)
+    if is_best_win(winid) and not WIN.is_float(winid) then
+      vim.api.nvim_set_current_win(winid)
+      vim.api.nvim_set_current_buf(bufnr)
+    end
+  end
+end
+
 function M.jump(id)
   if id == 'next' then
     if vim.fn.tabpagenr('$') > 1 then
@@ -569,7 +594,7 @@ function M.jump(id)
     if vim.fn.tabpagenr('$') > 1 then
       vim.cmd('tabnext' .. id)
     else
-      vim.api.nvim_set_current_buf(shown_items[id].bufnr)
+      open_in_best_win(shown_items[id].bufnr)
     end
   end
 end
