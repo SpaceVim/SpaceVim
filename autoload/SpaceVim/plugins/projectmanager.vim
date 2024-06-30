@@ -364,6 +364,7 @@ else
     if bufname('%') =~# '\[denite\]'
           \ || bufname('%') ==# 'denite-filter'
           \ || bufname('%') ==# '\[defx\]'
+          \ || &autochdir == 1
       return
     endif
     if join(g:spacevim_project_rooter_patterns, ':') !=# join(s:spacevim_project_rooter_patterns, ':')

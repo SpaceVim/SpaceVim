@@ -420,6 +420,7 @@ function M.current_root()
     or bufname:match('^git://') -- this is for git.vim
     or vim.fn.empty(bufname) == 1
     or bufname:match('^neo%-tree') -- this is for neo-tree.nvim
+    or vim.o.autochdir
   then
     return fn.getcwd()
   end
