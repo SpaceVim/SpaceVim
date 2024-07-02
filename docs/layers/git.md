@@ -58,6 +58,14 @@ if you want to use `fugitive` instead:
 | `SPC g h r` | undo cursor hunk       |
 | `SPC g h v` | preview cursor hunk    |
 
+**Key bindings in Git branch manager:**
+
+| Key Binding | Description        |
+| ----------- | ------------------ |
+| `v`         | view log of branch |
+| `Enter`     | checkout branch    |
+| `dd`        | delete branch      |
+
 ## Omnifunc of commit message
 
 This layer also provides omnifunc of commit message. The key binding is `ctrl-x_ctrl-o` in insert mode.
