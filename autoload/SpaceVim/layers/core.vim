@@ -224,7 +224,7 @@ function! SpaceVim#layers#core#plugins() abort
     xmap T <Plug>(clever-f-T)
     omap T <Plug>(clever-f-T)
   endif
-  call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdcommenter', { 'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdcommenter', { 'loadconf' : 1, 'merged' : 0, 'on_map' : ['<Plug>NERDCommenter', '<Plug>Commenter']}])
 
   if exists('*matchaddpos')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-matchup', {'merged' : 0, 'on_event' : 'BufReadPost'}])

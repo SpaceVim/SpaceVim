@@ -39,13 +39,14 @@ function! SpaceVim#layers#github#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-github-dashboard', {
         \ 'merged' : 0,
         \ 'if' : has('ruby'),
+        \ 'on_cmd' : ['GHActivity', 'GHDashboard'],
         \ }],
         \ ['tyru/open-browser-github.vim',  {
         \ 'depends': 'open-browser.vim',
         \ 'on_cmd': ['OpenGithubFile', 'OpenGithubIssue', 'OpenGithubPullReq'],
         \ }],
         \ [g:_spacevim_root_dir . 'bundle/github.vim', {'merged' : 0}],
-        \ ['lambdalisue/vim-gista', {'merged' : 0}],
+        \ ['lambdalisue/vim-gista', {'merged' : 0, 'on_cmd' : ['Gista']}],
         \ ]
 endfunction
 
