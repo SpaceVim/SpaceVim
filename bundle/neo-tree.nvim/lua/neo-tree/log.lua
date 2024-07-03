@@ -7,6 +7,9 @@
 -- under the terms of the MIT license. See LICENSE for details.
 
 local vim = vim
+
+local _, spacevim_notify = pcall(require, 'spacevim.api.notify')
+
 -- User configuration section
 local default_config = {
   -- Name of the plugin. Prepended to log messages
@@ -47,11 +50,8 @@ local notify = function(message, level_config)
   if type(vim.notify) == "table" then
     -- probably using nvim-notify
     vim.notify(message, level_config.level, { title = "Neo-tree" })
-  elseif vim.fn.exists("*SpaceVim#api#notify#get") == 1 then
-    local saved_v = vim.g._spacevim_temp_msg
-    vim.g._spacevim_temp_msg = message
-    vim.api.nvim_eval('SpaceVim#api#notify#get().notify(g:_spacevim_temp_msg, "None")')
-    vim.g._spacevim_temp_msg = saved_v
+  elseif spacevim_notify then
+    spacevim_notify.notify(message)
   else
     local nameupper = level_config.name:upper()
     local console_string = string.format("[Neo-tree %s] %s", nameupper, message)
