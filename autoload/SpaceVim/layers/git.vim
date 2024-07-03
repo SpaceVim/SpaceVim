@@ -74,7 +74,7 @@ function! SpaceVim#layers#git#plugins() abort
   elseif s:git_plugin ==# 'gita'
     call add(plugins, ['lambdalisue/vim-gita', { 'on_cmd' : 'Gita'}])
   else
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/git.vim', { 'merged' : 0, 'on_event' : 'Git', 'on_func' : 'git#branch#current'}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/git.vim', { 'merged' : 0, 'on_cmd' : ['Git'], 'on_func' : 'git#branch#current'}])
   endif
   return plugins
 endfunction
