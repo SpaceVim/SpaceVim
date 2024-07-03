@@ -57,7 +57,7 @@ These plugins are changed based on a specific version of origin plugin.
 
 #### `core` layer
 
-- `neo-tree`: based on [neo-tree@e3b4ef0f](https://github.com/nvim-neo-tree/neo-tree.nvim/tree/e3b4ef0fc05b0c99526ffb941abe23ef4fdc8e4e)
+- [SpaceVim/neo-tree](https://github.com/SpaceVim/neo-tree.nvim)
 - `clever-f.vim`: based on [clever-f.vim@fd370f2](https://github.com/rhysd/clever-f.vim/tree/fd370f27cca93918184a8043220cef1aa440a1fd)
 
 #### `edit` layer
