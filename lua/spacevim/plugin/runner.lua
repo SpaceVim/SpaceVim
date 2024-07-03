@@ -600,6 +600,7 @@ local function on_backgroud_exit(id, code, single)
       exit_code = 0,
     }
   end_time = vim.fn.reltime(status.start_time)
+  status.is_running = false
   local problem_matcher = task_problem_matcher['task' .. id] or {}
   local output
   if problem_matcher.useStdout then
@@ -622,14 +623,6 @@ end
 local function run_backgroud(cmd, ...)
   local running_nr = 0
   local running_done = 0
-  for _, v in pairs(task_status) do
-    if v.is_running then
-      running_nr = running_nr + 1
-    else
-      running_done = running_done + 1
-    end
-  end
-  nt.notify(string.format('tasks: %s running, %s done', running_nr, running_done))
   local opts = select(1, ...) or {}
   start_time = vim.fn.reltime()
   local problemMatcher = select(2, ...) or {}
@@ -650,6 +643,14 @@ local function run_backgroud(cmd, ...)
       exit_code = 0,
     },
   })
+  for _, v in pairs(task_status) do
+    if v.is_running then
+      running_nr = running_nr + 1
+    else
+      running_done = running_done + 1
+    end
+  end
+  nt.notify(string.format('tasks: %s running, %s done', running_nr, running_done))
 end
 
 function M.run_task(task)
