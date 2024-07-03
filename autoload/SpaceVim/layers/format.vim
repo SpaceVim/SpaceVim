@@ -68,11 +68,11 @@ endfunction
 function! SpaceVim#layers#format#config() abort
 
   if s:format_method ==# 'neoformat'
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Neoformat', 'format-code', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], ":Neoformat\<Cr>", 'format-code', 0, 1)
   elseif s:format_method ==# 'codefmt'
     call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'FormatCode', 'format-code', 1)
   elseif s:format_method ==# 'format.nvim'
-    call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], 'Format', 'format-code', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['b', 'f'], ":Format\<Cr>", 'format-code', 0, 1)
   endif
   augroup spacevim_layer_format
     autocmd!
