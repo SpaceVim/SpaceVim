@@ -63,7 +63,12 @@ call SpaceVim#begin()
 
 call SpaceVim#custom#load()
 
-call SpaceVim#default#keyBindings()
+if has('timers')
+  call timer_start(300, 'SpaceVim#default#keyBindings') 
+else
+  call SpaceVim#default#keyBindings()
+endif
+
 
 call SpaceVim#end()
 

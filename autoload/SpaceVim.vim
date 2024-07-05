@@ -210,6 +210,14 @@ let g:spacevim_default_indent          = 2
 let g:spacevim_expand_tab              = 1
 
 ""
+" @section if_ruby, options-if_ruby
+" @parentsection options
+" Neovim if_ruby provider is too slow, If you are sure that your nvim does not
+" support ruby, set this option to false. default is true.
+
+let g:spacevim_if_ruby = 1
+
+""
 " @section enable_list_mode, options-enable_list_mode
 " @parentsection options
 " Enable/Disable list mode, by default it is disabled.
@@ -1629,7 +1637,8 @@ endif
 command! -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <args>)
 command! -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
-function! SpaceVim#end() abort
+function! s:lazy_end(...) abort
+  
   if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = ''
@@ -1691,11 +1700,6 @@ function! SpaceVim#end() abort
   if !empty(g:spacevim_language)
     silent exec 'lan ' . g:spacevim_language
   endif
-
-  if SpaceVim#layers#isLoaded('core#statusline')
-    call SpaceVim#layers#core#statusline#init()
-  endif
-
   " tab options:
   set smarttab
   let &expandtab = g:spacevim_expand_tab
@@ -1728,13 +1732,49 @@ function! SpaceVim#end() abort
     vnoremap <silent> <leader> :<c-u>LeaderGuideVisual get(g:, 'mapleader', '\')<CR>
   endif
   let g:leaderGuide_max_size = 15
-  call SpaceVim#plugins#load()
-
   exe 'set wildignore+=' . g:spacevim_wildignore
   " shell
   if has('filterpipe')
     set noshelltemp
   endif
+
+endfunction
+
+function! SpaceVim#end() abort
+  let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
+  let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
+  let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
+  let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
+  let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
+  let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
+  let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
+  let g:_spacevim_mappings_space.f = {'name' : '+Files'}
+  let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
+  let g:_spacevim_mappings_space.m = {'name' : '+Major-mode'}
+  let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
+  let g:_spacevim_mappings_space.p = {'name' : '+Projects/Packages'}
+  let g:_spacevim_mappings_space.h = {'name' : '+Help'}
+  let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
+  let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
+  let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+  let g:_spacevim_mappings_space.s = {'name' : '+Searching/Symbol'}
+  let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
+  let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
+  let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
+  let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
+  let &tabline = ' '
+  if has('timers')
+    call timer_start(300, function('s:lazy_end'))
+  else
+    call s:lazy_end()
+  endif
+
+  if SpaceVim#layers#isLoaded('core#statusline')
+    call SpaceVim#layers#core#statusline#init()
+  endif
+
+  call SpaceVim#plugins#load()
+
   if g:spacevim_enable_guicolors == 1
     if !has('nvim') && has('patch-7.4.1770')
       let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -1983,6 +2023,15 @@ function! SpaceVim#welcome() abort
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
+        if has('timers')
+          call timer_start(500, function('s:open_filetree'))
+        else
+          call s:open_filetree()
+        endif
+  endif
+endfunction
+
+function! s:open_filetree(...) abort
     if exists(':VimFiler') == 2
       VimFiler
       wincmd p
@@ -2006,7 +2055,7 @@ function! SpaceVim#welcome() abort
     elseif exists(':Neotree') == 2
       NeoTreeShow
     endif
-  endif
+  
 endfunction
 
 ""

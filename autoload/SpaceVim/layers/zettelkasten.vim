@@ -10,7 +10,7 @@ function! SpaceVim#layers#zettelkasten#plugins() abort
   let plugins = []
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-zettelkasten',
         \ {
-          \ 'merged' : 0,
+          \ 'merged' : 0, 'on_cmd' : ['ZkNew', 'ZkBrowse', 'ZkListTemplete'], 'loadconf' : 1,
           \ }])
   return plugins
 endfunction
@@ -29,7 +29,7 @@ endfunction
 function! SpaceVim#layers#zettelkasten#config() abort
   let g:_spacevim_mappings_space.m.z = {'name' : '+zettelkasten'}
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 'n'], 'ZkNew', 'create-new-zettel-note', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 't'], 'Telescope zettelkasten_template', 'zettel-template', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 't'], 'ZkListTemplete', 'zettel-template', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['m', 'z', 'b'], 'ZkBrowse', 'open-zettelkasten-browse', 1)
 endfunction
 

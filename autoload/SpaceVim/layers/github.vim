@@ -38,7 +38,7 @@ function! SpaceVim#layers#github#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/github-issues.vim', {'merged' : 0, 'if' : has('python')}],
         \ [g:_spacevim_root_dir . 'bundle/vim-github-dashboard', {
         \ 'merged' : 0,
-        \ 'if' : has('ruby'),
+        \ 'if' : g:spacevim_if_ruby && has('ruby'),
         \ 'on_cmd' : ['GHActivity', 'GHDashboard'],
         \ }],
         \ ['tyru/open-browser-github.vim',  {
@@ -82,7 +82,7 @@ function! SpaceVim#layers#github#config() abort
   endif
   "" }}}
 
-  if has('ruby')
+  if g:spacevim_if_ruby && has('ruby')
     " vim-github-dashboard requires if_ruby
     let g:github_dashboard = {
           \ 'username': g:spacevim_github_username,

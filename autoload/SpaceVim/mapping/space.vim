@@ -14,25 +14,6 @@ let s:file = expand('<sfile>:~')
 let s:funcbeginline =  expand('<slnum>') + 1
 function! SpaceVim#mapping#space#init() abort
   call SpaceVim#logger#debug('init SPC key bindings')
-  let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
-  let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
-  let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
-  let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
-  let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
-  let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
-  let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
-  let g:_spacevim_mappings_space.f = {'name' : '+Files'}
-  let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
-  let g:_spacevim_mappings_space.m = {'name' : '+Major-mode'}
-  let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
-  let g:_spacevim_mappings_space.p = {'name' : '+Projects/Packages'}
-  let g:_spacevim_mappings_space.h = {'name' : '+Help'}
-  let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
-  let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
-  let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  let g:_spacevim_mappings_space.s = {'name' : '+Searching/Symbol'}
-  let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
-  let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
   if s:has_map_to_spc()
     return
   endif
@@ -371,8 +352,6 @@ function! SpaceVim#mapping#space#init() abort
           \ ]
           \ , 1)
 
-  let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
-  let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
   if g:spacevim_relativenumber
     nnoremap <silent> [SPC]tn  :<C-u>setlocal nonumber! norelativenumber!<CR>
     let g:_spacevim_mappings_space.t.n = ['setlocal nonumber! norelativenumber!', 'toggle-line-number']

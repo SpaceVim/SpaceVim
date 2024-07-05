@@ -140,6 +140,9 @@ function! SpaceVim#default#options() abort
   " Do not wrap lone lines
   set nowrap
 
+  " disable all bell
+  set belloff=all
+
   set foldtext=SpaceVim#default#Customfoldtext()
 
 endfunction
@@ -159,7 +162,7 @@ function! SpaceVim#default#layers() abort
   call SpaceVim#logger#info('layer list init done')
 endfunction
 
-function! SpaceVim#default#keyBindings() abort
+function! SpaceVim#default#keyBindings(...) abort
   call SpaceVim#logger#info('init default key bindings.')
   xnoremap <silent> <Leader>y :<C-u>call clipboard#yank()<cr>
   nnoremap <expr> <Leader>p clipboard#paste('p')

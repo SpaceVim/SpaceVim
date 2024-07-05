@@ -196,12 +196,12 @@ function! SpaceVim#layers#core#plugins() abort
           \ }])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vimproc.vim', {'build' : [(executable('gmake') ? 'gmake' : 'make')]}])
   elseif g:spacevim_filemanager ==# 'defx'
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/defx.nvim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : 'Defx'}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/defx.nvim',{'merged' : 0, 'loadconf' : 1, 'on_cmd' : 'Defx'}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-git',{'merged' : 0, 'loadconf' : 1}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-icons',{'merged' : 0}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/defx-sftp',{'merged' : 0}])
   elseif g:spacevim_filemanager ==# 'nvim-tree'
-    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-tree.lua',{'merged' : 0, 'loadconf' : 1}])
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-tree.lua',{'merged' : 0, 'loadconf' : 1, 'on_cmd' : ['NvimTreeOpen', 'NvimTree', 'NvimTreeToggle', 'NvimTreeFindFile']}])
     call add(plugins, [g:_spacevim_root_dir . 'bundle/nvim-web-devicons',{'merged' : 0, 'loadconf' : 1}])
   elseif g:spacevim_filemanager ==# 'neo-tree'
     call add(plugins, [g:_spacevim_root_dir . 'bundle/neo-tree.nvim',{'merged' : 0, 'loadconf' : 1}])
@@ -252,6 +252,12 @@ function! SpaceVim#layers#core#config() abort
 
   if g:spacevim_filemanager ==# 'nerdtree'
     noremap <silent> <F3> :NERDTreeToggle<CR>
+  elseif g:spacevim_filemanager ==# 'defx'
+    nnoremap <silent> <F3> :Defx<Cr>
+  elseif g:spacevim_filemanager ==# 'nvim-tree'
+    nnoremap <silent> <F3> <cmd>NvimTreeToggle<CR>
+  elseif g:spacevim_filemanager ==# 'neo-tree'
+    nnoremap <silent> <F3> <cmd>NeoTreeFocusToggle<CR>
   endif
   let g:matchup_matchparen_status_offscreen = 0
   let g:smoothie_no_default_mappings = !s:enable_smooth_scrolling

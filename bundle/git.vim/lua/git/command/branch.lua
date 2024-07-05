@@ -39,7 +39,7 @@ local function update_branch_name(pwd, ...)
   if
     force
     or vim.fn.get(vim.fn.get(branch_info, pwd, {}), 'last_update_done', 0)
-      >= vim.fn.localtime() - 1
+      <= vim.fn.localtime() - 1
   then
     local jobid = job.start(cmd, {
       on_stdout = on_stdout_show_branch,

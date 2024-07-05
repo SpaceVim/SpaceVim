@@ -1,5 +1,4 @@
 let s:WIN = SpaceVim#api#import('vim#window')
-nnoremap <silent> <F3> <cmd>NvimTreeToggle<CR>
 " we can not use this option to disable default key bindings
 " let g:nvim_tree_disable_default_keybindings = 1
 augroup vfinit

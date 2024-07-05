@@ -165,6 +165,9 @@ function! s:apply(config, type) abort
         elseif value ==# 'neo-tree' && !has('nvim')
           call SpaceVim#logger#warn('neo-tree requires neovim')
           continue
+        elseif value ==# 'nvim-tree' && !has('nvim')
+          call SpaceVim#logger#warn('nvim-tree requires neovim')
+          continue
         endif
         " keep backward compatibility
       elseif name ==# 'autocomplete_method'

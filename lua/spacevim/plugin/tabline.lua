@@ -320,6 +320,13 @@ function M.enable()
   isep = iseps[1]
   right_sep = seps[1]
   left_sep = seps[2]
+  for bufnr = 1, vim.fn.bufnr('$') do
+      if
+        vim.api.nvim_buf_is_valid(bufnr) and vim.api.nvim_buf_get_option(bufnr, 'buflisted')
+      then
+        table.insert(visiable_bufs, bufnr)
+      end
+  end
   local tabline_augroup = vim.api.nvim_create_augroup('spacevim_tabline', { clear = true })
   vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost' }, {
     callback = vim.schedule_wrap(function(event)

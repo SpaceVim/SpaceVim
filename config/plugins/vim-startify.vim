@@ -60,6 +60,10 @@ augroup END
 if !exists('g:startify_custom_header')
   call s:update_logo()
 endif
+
+if !has_key(g:_spacevim_mappings_space, 'a')
+  let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
+endif
 call SpaceVim#mapping#space#def('nnoremap', ['a','s'], 'call SpaceVim#plugins#history#savepos() | Startify | doautocmd WinEnter', 'fancy start screen',1)
 
 if g:spacevim_enable_tabline_ft_icon || get(g:, 'spacevim_enable_tabline_filetype_icon', 0)

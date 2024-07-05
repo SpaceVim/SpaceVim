@@ -41,8 +41,12 @@ function! s:load_plugins() abort
         call SpaceVim#plugins#add(plugin[0], {'overwrite' : 1})
       endif
     endfor
-    call s:loadLayerConfig(layer)
   endfor
+  if has('timers')
+    call timer_start(500, function('s:layer_config_timer'), {'repeat' : 1})
+  else
+    call s:layer_config_timer(0)
+  endif
   unlet g:_spacevim_plugin_layer
   for plugin in g:spacevim_custom_plugins
     if len(plugin) == 2
@@ -63,6 +67,12 @@ function! s:getLayerPlugins(layer) abort
   return p
 endfunction
 
+function! s:layer_config_timer(t) abort
+  for layer in SpaceVim#layers#get()
+    call s:loadLayerConfig(layer)
+  endfor
+endfunction
+
 function! s:loadLayerConfig(layer) abort
   call SpaceVim#logger#debug('load ' . a:layer . ' layer config.')
   try
@@ -70,7 +80,6 @@ function! s:loadLayerConfig(layer) abort
   catch /^Vim\%((\a\+)\)\=:E117/
     call SpaceVim#logger#info(a:layer . ' layer do not implement config function')
   endtry
-
 endfunction
 
 let s:plugins_argv = ['-update', '-openurl']
