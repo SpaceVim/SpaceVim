@@ -252,8 +252,12 @@ endfunction
 
 let s:plugins = []
 
-fu! s:parser(args) abort
-  return a:args
+fu! s:parser(repo, args) abort
+  let p = a:args
+  if a:repo =~# g:_spacevim_root_dir . 'bundle/'
+    let p.type = 'none'
+  endif
+  return p
 endf
 let g:_spacevim_plugins = []
 function! SpaceVim#plugins#add(repo,...) abort
@@ -263,7 +267,7 @@ function! SpaceVim#plugins#add(repo,...) abort
     let g:spacevim_plugin_name = split(a:repo, '/')[-1]
   elseif g:spacevim_plugin_manager ==# 'dein'
     if len(a:000) > 0
-      call dein#add(a:repo,s:parser(a:000[0]))
+      call dein#add(a:repo,s:parser(a:repo, a:000[0]))
     else
       call dein#add(a:repo)
     endif

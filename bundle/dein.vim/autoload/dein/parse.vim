@@ -52,11 +52,18 @@ function! dein#parse#_add(repo, options, overwrite) abort
 endfunction
 function! dein#parse#_init(repo, options) abort
   let repo = dein#util#_expand(a:repo)
-  let plugin = has_key(a:options, 'type') ?
-        \ dein#util#_get_type(a:options.type).init(repo, a:options) :
-        \ s:git.init(repo, a:options)
-  if empty(plugin)
-    let plugin = s:check_type(repo, a:options)
+  let plugin = {}
+  if has_key(a:options, 'type') && a:options.type ==# 'none'
+    let plugin.type = 'none'
+    let plugin.local = 1
+    let plugin.path = isdirectory(a:repo) ? a:repo : ''
+  else
+    let plugin = has_key(a:options, 'type') ?
+          \ dein#util#_get_type(a:options.type).init(repo, a:options) :
+          \ s:git.init(repo, a:options)
+    if empty(plugin)
+      let plugin = s:check_type(repo, a:options)
+    endif
   endif
   call extend(plugin, a:options)
   if !empty(g:dein#default_options)
