@@ -119,7 +119,7 @@ function! SpaceVim#layers#lang#python#plugins() abort
     call add(plugins, [g:_spacevim_root_dir . 'bundle/jedi-vim', { 'on_ft' : 'python',
           \ 'if' : has('python') || has('python3')}])
   endif
-  call add(plugins, ['heavenshell/vim-pydocstring',
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-pydocstring',
         \ { 'on_cmd' : 'Pydocstring'}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-python-pep8-indent', 
         \ { 'on_ft' : 'python'}])

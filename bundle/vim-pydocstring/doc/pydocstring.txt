@@ -1,0 +1,213 @@
+*pydocstring.txt*	Generate Python docstring to your Python code.
+
+Version: 2.5.0
+Author: Shinya Ohynagi <sohyanagi@gmail.com>
+Repository: http://github.com/heavenshell/vim-pydocstring/
+License: BSD, see LICENSE for more details.
+
+==============================================================================
+CONTENTS					*pydocstring-vim-contents*
+
+Introduction		|pydocstring-introduction|
+Install			|pydocstring-install|
+Tutorial		|pydocstring-tutorial|
+Template		|pydocstring-template|
+Variables		|pydocstring-variables|
+
+==============================================================================
+INTRODUCTION					*pydocstring-vim-introduction*
+
+|Pydocstring| is a generater of Python docstring.
+
+ * Insert one-line docstring.
+ * Insert multi-line docstring.
+
+This plugin is heavily inspired by phpdoc.vim and sonictemplate.vim.
+- phpdoc.vim
+  http://www.vim.org/scripts/script.php?script_id=1355
+- sonictemplate.vim
+  https://github.com/mattn/sonictemplate-vim
+
+==============================================================================
+INSTALL						*pydocstring-vim-install*
+
+Install the distributed files into Vim runtime directory which is usually
+~/.vim/, or $HOME/vimfiles on Windows.
+
+If you install pathogen that provided from Tim Pope, you should extract the
+file into 'bundle' directory.
+
+Pydocstring v2 is support only Vim8 and depends on `doq`.
+
+Install `doq` first.
+>
+  $ make install
+>
+If you want install `doq` manually, you can install from `PyPi`.
+>
+  $ python3 -m venv ./venv
+  $ ./venv/bin/pip3 install doq
+<
+Than set installed `doq` path to |g:pydocstring_doq_path|.
+
+Activated venv needs to be deactivated before insatll doq.
+
+==============================================================================
+TUTORIAL					*pydocstring-vim-tutorial*
+
+1. def keyword.
+  Define function to your code.
+>
+  def foo(arg1, arg2):
+      pass
+<
+  Set cursor on `def` line and type following.
+>
+  :Pydocstring
+<
+  Then docstring put under `def` line.
+>
+  def foo(arg1, arg2):
+      """foo.
+
+      :param arg1:
+      :param arg2:
+      """
+      pass
+<
+
+2. class keyword.
+  Define class to your code.
+>
+  class Foo(object):
+      def foo(self):
+          pass
+
+      def arg1(self, arg1):
+          pass
+<
+  Set cursor on `class` line and type following.
+>
+  :Pydocstring
+<
+  Then one-line docstring put under `class` line.
+>
+  class Foo(object):
+      """Foo."""
+
+      def foo(self):
+          pass
+
+      def bar(self, arg1):
+          pass
+<
+  Set cursor on `def foo` line and type following.
+>
+  :Pydocstring
+<
+  Then one-line docstring put under `def foo` line.
+>
+  class Foo(object):
+      """Foo."""
+
+      def foo(self):
+          """foo."""
+          pass
+
+      def bar(self, arg1):
+          pass
+<
+  Set cursor on `def bar` line and type following.
+>
+  :Pydocstring
+<
+  Then one-line docstring put under `def bar` line.
+>
+  class Foo(object):
+      """Foo."""
+
+      def foo(self):
+          """foo."""
+          pass
+
+      def bar(self, arg1):
+        """bar.
+
+        :param arg1:
+        """
+        pass
+<
+3. Visual select format
+>
+  class Foo(object):
+      def foo(self):
+          pass
+
+      def bar(self, arg1):
+        pass
+<
+  Visual select `v3j` and type following
+>
+  :'<,'>Pydocstring
+<
+
+  Then docstrings put under `class Foo(object):` and `def bar` line.
+>
+  class Foo(object):
+      """Foo."""
+
+      def foo(self):
+          """foo."""
+          pass
+
+4. Format current buffer
+
+  type following
+>
+  :PydocstringFormat
+<
+  Then docstrings will put under class, def keywords.
+
+==============================================================================
+TEMPLATE					*pydocstring-vim-template*
+
+If you don't like default docstring, You can modify docstring template.
+>
+  let g:pydocstring_templates_path = '/path/to/your/template/directory'
+<
+You can create custom template.
+See `tests/templates' for example.
+
+==============================================================================
+VARIABLES					*pydocstring-vim-variables*
+
+pydocstring_formatter				*g:pydocstring_formatter*
+		Formatter option.
+		'sphinx', 'google', 'numpy'
+		Default value is 'sphinx'
+
+g:pydocstring_templates_path			*g:pydocstring_templates_path*
+		Path to your own template file.
+		Refer template/pydocstring/ about the default value.
+
+g:pydocstring_doq_path				*g:pydocstring_doq_path*
+		Path to doq command.
+		Default value is 'lib/doq'
+
+g:pydocstring_enable_mapping			*g:pydocstring_enable_mapping*
+		Disable this option to prevent pydocstring from creating any
+		key mapping to the `:Pydocstring` command.
+		Note: this value is overridden if you explicitly create a
+		mapping in your vimrc, such as if you do:
+
+    nmap <silent> <C-m> <Plug>(pydocstring)
+
+		Default value is '1'
+
+g:pydocstring_ignore_init			*g:pydocstring_ignore_init*
+		Ignore to generate __init__ method docstring.
+		This option only available at `:PydocstringFormat`
+		Default value is '0'
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
