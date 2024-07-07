@@ -227,6 +227,15 @@ let g:spacevim_if_ruby = 1
 let g:spacevim_enable_list_mode        = 0
 
 ""
+" @section lazy_conf_timeout, options-lazy_conf_timeout
+" @parentsection options
+" set the waiting time of lazy loading config in milliseconds. This will be
+" applied to load layer config, and lazy plugin, and end function of SpaceVim.
+" default is 300 ms.
+
+let g:spacevim_lazy_conf_timeout = 200
+
+""
 " @section relativenumber, options-relativenumber
 " @parentsection options
 " Enable/Disable relativenumber, by default it is enabled.
@@ -1764,7 +1773,7 @@ function! SpaceVim#end() abort
   let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
   let &tabline = ' '
   if has('timers')
-    call timer_start(300, function('s:lazy_end'))
+    call timer_start(g:spacevim_lazy_conf_timeout, function('s:lazy_end'))
   else
     call s:lazy_end()
   endif

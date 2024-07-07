@@ -64,7 +64,7 @@ call SpaceVim#begin()
 call SpaceVim#custom#load()
 
 if has('timers')
-  call timer_start(300, 'SpaceVim#default#keyBindings') 
+  call timer_start(g:spacevim_lazy_conf_timeout, 'SpaceVim#default#keyBindings') 
 else
   call SpaceVim#default#keyBindings()
 endif
