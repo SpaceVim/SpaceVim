@@ -168,6 +168,8 @@ call s:install_manager()
 
 
 function! SpaceVim#plugins#begin(path) abort
+let g:unite_source_menu_menus =
+      \ get(g:,'unite_source_menu_menus',{})
   let g:unite_source_menu_menus.AddedPlugins =
         \ {'description':
         \ 'All the Added plugins'
