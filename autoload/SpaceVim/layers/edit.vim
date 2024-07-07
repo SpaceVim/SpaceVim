@@ -100,7 +100,7 @@ endfunction
 function! SpaceVim#layers#edit#plugins() abort
   let plugins = [
         \ [g:_spacevim_root_dir . 'bundle/vim-repeat'],
-        \ [g:_spacevim_root_dir . 'bundle/vim-emoji'],
+        \ [g:_spacevim_root_dir . 'bundle/vim-emoji', {'on_event' : 'BufReadPost'}],
         \ [g:_spacevim_root_dir . 'bundle/vim-grammarous', {'merged' : 0, 'on_cmd' : ['GrammarousCheck', 'GrammarousReset']}],
         \ [g:_spacevim_root_dir . 'bundle/vim-expand-region', { 'loadconf' : 1}],
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-user'],

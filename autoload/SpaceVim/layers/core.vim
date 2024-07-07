@@ -227,6 +227,7 @@ function! SpaceVim#layers#core#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/nerdcommenter', { 'loadconf' : 1, 'merged' : 0, 'on_map' : ['<Plug>NERDCommenter', '<Plug>Commenter']}])
 
   if exists('*matchaddpos')
+    let g:loaded_matchit = 1
     call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-matchup', {'merged' : 0, 'on_event' : 'BufReadPost'}])
   endif
   call add(plugins, [g:_spacevim_root_dir . 'bundle/gruvbox', {'loadconf' : 1, 'merged' : 0}])

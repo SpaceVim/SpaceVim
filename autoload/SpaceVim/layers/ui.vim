@@ -79,9 +79,9 @@ let s:NVIM_VERSION = SpaceVim#api#import('neovim#version')
 
 function! SpaceVim#layers#ui#plugins() abort
   let plugins = [
-        \ [g:_spacevim_root_dir . 'bundle/vim-cursorword', {'merged' : 0}],
+        \ [g:_spacevim_root_dir . 'bundle/vim-cursorword', {'merged' : 0, 'on_event' : ['CursorMoved', 'CursorMovedI']}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar',
-        \ {'loadconf' : 1, 'merged' : 0}],
+        \ {'loadconf' : 1, 'merged' : 0, 'on_cmd' : ['TagbarToggle', 'Tagbar']}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-makefile.vim',
         \ {'merged': 0}],
         \ [g:_spacevim_root_dir . 'bundle/tagbar-proto.vim', {'merged': 0}],
@@ -101,7 +101,7 @@ function! SpaceVim#layers#ui#plugins() abort
   if (has('nvim-0.5.0') && s:NVIM_VERSION.is_release_version())
         \ || has('nvim-0.6.0')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/indent-blankline.nvim',
-          \ { 'merged' : 0}])
+          \ { 'merged' : 0, 'on_event' : ['BufReadPost']}])
   else
     call add(plugins, [g:_spacevim_root_dir . 'bundle/indentLine',
           \ { 'merged' : 0}])
