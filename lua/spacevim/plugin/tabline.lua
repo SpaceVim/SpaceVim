@@ -328,7 +328,7 @@ function M.enable()
       end
   end
   local tabline_augroup = vim.api.nvim_create_augroup('spacevim_tabline', { clear = true })
-  vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost', 'BufNew' }, {
+  vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost', 'BufAdd' }, {
     callback = vim.schedule_wrap(function(event)
       if
         vim.api.nvim_buf_is_valid(event.buf)
