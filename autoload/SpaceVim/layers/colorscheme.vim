@@ -56,13 +56,13 @@ function! SpaceVim#layers#colorscheme#plugins() abort
         \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
         \ ['arcticicestudio/nord-vim', { 'merged' : 0 }],
         \ ['icymind/NeoSolarized', { 'merged' : 0 }],
-        \ ['w0ng/vim-hybrid', { 'merged' : 0 }],
         \ ['SpaceVim/vim-material', { 'merged' : 0}],
         \ ['srcery-colors/srcery-vim', { 'merged' : 0}],
         \ [ 'drewtempelmeyer/palenight.vim', {'merged': 0 }],
         \ ]
   call add(plugins, [g:_spacevim_root_dir . 'bundle/dracula', {'merged' : 0}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-one', {'merged' : 0}])
+  call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-hybrid', {'merged' : 0}])
   "
   " TODO:
   " \ ['mhartington/oceanic-next', { 'merged' : 0 }],
