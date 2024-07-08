@@ -31,4 +31,4 @@ jobs:
           context: .
           file: docker/Dockerfile
           push: true
-          tags: spacevim/spacevim:latest
+          tags: wsdjeg2/spacevim:latest
