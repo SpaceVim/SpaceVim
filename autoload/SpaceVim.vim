@@ -1749,7 +1749,6 @@ function! s:lazy_end(...) abort
 
 endfunction
 
-function! SpaceVim#end() abort
   let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
   let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
   let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
@@ -1771,6 +1770,8 @@ function! SpaceVim#end() abort
   let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
   let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
   let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
+
+function! SpaceVim#end() abort
   let &tabline = ' '
   if has('timers')
     call timer_start(g:spacevim_lazy_conf_timeout, function('s:lazy_end'))
