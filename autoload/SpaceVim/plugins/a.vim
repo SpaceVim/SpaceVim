@@ -108,7 +108,13 @@ else
   " saving cache
 
   function! s:cache() abort
-    silent call writefile([s:JSON.json_encode(s:project_config)], s:FILE.unify_path(s:cache_path, ':p'))
+    try
+      let rst = writefile([s:JSON.json_encode(s:project_config)], s:FILE.unify_path(s:cache_path, ':p'))
+      if rst !=# 0
+        call s:LOGGER.info('failed to write cache')
+      endif
+    catch
+    endtry
   endfunction
 
   function! s:load_cache() abort
