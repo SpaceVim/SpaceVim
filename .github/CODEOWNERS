@@ -1,0 +1,22 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @wsdjeg will be requested for review when someone opens a
+# pull request.
+# Just watching this repo, disable duplicate message
+# *       @wsdjeg
+
+# lang#julia layer
+autoload/SpaceVim/layers/lang/julia.vim      @jingpengw
+docs/layers/lang/julia.md                    @jingpengw
+docs/cn/layers/lang/julia.md                 @jingpengw
+
+# lang#javascript layer
+autoload/SpaceVim/layers/lang/javascript.vim @zhujinxuan @S1ngS1ng @chemzqm
+docs/layers/lang/javascript.md               @zhujinxuan @S1ngS1ng @chemzqm
+docs/cn/layers/lang/javascript.md            @zhujinxuan @S1ngS1ng @chemzqm
+
+
+# lang#erlang layer
+autoload/SpaceVim/layers/lang/erlang.vim      @suzuiyuegjy
+docs/layers/lang/erlang.md                    @suzuiyuegjy
+docs/cn/layers/lang/erlang.md                 @suzuiyuegjy

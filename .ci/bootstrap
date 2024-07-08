@@ -1,0 +1,5 @@
+#!/bin/sh
+# usage: script/bootstrap
+#
+
+cd docs && bundle install
