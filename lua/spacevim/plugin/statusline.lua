@@ -1248,7 +1248,11 @@ function M.remove_section(name)
   vim.g.spacevim_statusline_right = right
   vim.opt_local.statusline = M.get(1)
 end
-function M.health() end
+function M.health()
+
+  return true
+
+end
 function M.init()
   local group = vim.api.nvim_create_augroup('spacevim_statusline', { clear = true })
   vim.api.nvim_create_autocmd({ 'BufWinEnter', 'WinEnter', 'FileType', 'BufWritePost' }, {
