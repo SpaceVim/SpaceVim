@@ -102,7 +102,13 @@ else
   let s:project_cache_path = s:FILE.unify_path(g:spacevim_data_dir, ':p') . 'SpaceVim/projects.json'
 
   function! s:cache() abort
-    call writefile([s:JSON.json_encode(s:project_paths)], s:FILE.unify_path(s:project_cache_path, ':p'))
+    try
+      let rst = writefile([s:JSON.json_encode(s:project_paths)], s:FILE.unify_path(s:project_cache_path, ':p'))
+      if rst !=# 0
+        call s:LOGGER.info('failed to write cache')
+      endif
+    catch
+    endtry
   endfunction
 
   function! s:load_cache() abort
