@@ -1,0 +1,23 @@
+comment: off
+codecov:
+  branch: master
+coverage:
+  status:
+    patch:
+      default: false
+    project:
+      default: false  # disable the default status that measures entire project
+      api:  # declare a new status context "api"
+        target: 1%  # we always want 35% coverage here
+        paths:
+          - "autoload/SpaceVim/api/"  # only include coverage in "autoload/SpaceVim/api/" folder
+      plugins:  # declare a new status context "api"
+        target: 15%  # we always want 35% coverage here
+        paths:
+          - "autoload/SpaceVim/plugins/"  # only include coverage in "autoload/SpaceVim/api/" folder
+      all:  # declare a new status context "all"
+        target: 90%  # we always want 35% coverage here
+        paths:
+          - "!tests/"  # remove all files in "tests/"
+          - "!bundle/"  # remove all files in "tests/"
+
