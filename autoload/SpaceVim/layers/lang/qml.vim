@@ -21,3 +21,9 @@ function! SpaceVim#layers#lang#qml#plugins() abort
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-qml', {'merged' : 0}])
   return plugins
 endfunction
+
+function! SpaceVim#layers#lang#qml#health() abort
+
+  return 1
+
+endfunction
