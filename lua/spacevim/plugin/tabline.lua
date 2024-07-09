@@ -328,7 +328,7 @@ function M.enable()
       end
   end
   local tabline_augroup = vim.api.nvim_create_augroup('spacevim_tabline', { clear = true })
-  vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufReadPost', 'BufAdd' }, {
+  vim.api.nvim_create_autocmd({ 'BufAdd' }, {
     callback = vim.schedule_wrap(function(event)
       if
         vim.api.nvim_buf_is_valid(event.buf)
@@ -336,7 +336,12 @@ function M.enable()
         and index(visiable_bufs, event.buf) == -1
         and index(left_hide_bufs, event.buf) == -1
       then
-        table.insert(right_hide_bufs, event.buf)
+        if event.buf == vim.api.nvim_get_current_buf() then
+          table.insert(visiable_bufs, event.buf)
+        else
+          table.insert(right_hide_bufs, event.buf)
+        end
+        vim.cmd('redrawtabline')
       end
     end),
     group = tabline_augroup,
