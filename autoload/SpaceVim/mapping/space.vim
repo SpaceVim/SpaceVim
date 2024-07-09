@@ -676,13 +676,13 @@ function! SpaceVim#mapping#space#init() abort
           \ ]
           \ , 1)
   if has('nvim-0.7.0')
-    call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'lua require("spacevim.plugin.todo").list()', 'open-todo-manager', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['a', 'o'], 'lua require("spacevim.plugin.todo").list()', 'open-todo-manager', 1)
   else
-    call SpaceVim#custom#SPC('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['a', 'o'], 'call SpaceVim#plugins#todo#list()', 'open-todo-manager', 1)
   endif
 
   if has('nvim-0.9.5')
-    call SpaceVim#custom#SPC('nnoremap', ['a', 'r'], 'lua require("spacevim.plugin.record-key").toggle()', 'toggle-record-keyboard', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['a', 'r'], 'lua require("spacevim.plugin.record-key").toggle()', 'toggle-record-keyboard', 1)
   endif
 endfunction
 
