@@ -1647,7 +1647,7 @@ command! -nargs=1 LeaderGuide call SpaceVim#mapping#guide#start_by_prefix('0', <
 command! -range -nargs=1 LeaderGuideVisual call SpaceVim#mapping#guide#start_by_prefix('1', <args>)
 
 function! s:lazy_end(...) abort
-  
+
   if g:spacevim_vimcompatible
     let g:spacevim_windows_leader = ''
     let g:spacevim_windows_smartclose = ''
@@ -1749,27 +1749,28 @@ function! s:lazy_end(...) abort
 
 endfunction
 
-  let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
-  let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
-  let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
-  let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
-  let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
-  let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
-  let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
-  let g:_spacevim_mappings_space.f = {'name' : '+Files'}
-  let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
-  let g:_spacevim_mappings_space.m = {'name' : '+Major-mode'}
-  let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
-  let g:_spacevim_mappings_space.p = {'name' : '+Projects/Packages'}
-  let g:_spacevim_mappings_space.h = {'name' : '+Help'}
-  let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
-  let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
-  let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
-  let g:_spacevim_mappings_space.s = {'name' : '+Searching/Symbol'}
-  let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
-  let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
-  let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
-  let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
+let g:_spacevim_mappings_prefixs['[SPC]'] = {'name' : '+SPC prefix'}
+let g:_spacevim_mappings_space.t = {'name' : '+Toggles'}
+let g:_spacevim_mappings_space.t.h = {'name' : '+Toggles highlight'}
+let g:_spacevim_mappings_space.t.m = {'name' : '+modeline'}
+let g:_spacevim_mappings_space.T = {'name' : '+UI toggles/themes'}
+let g:_spacevim_mappings_space.a = {'name' : '+Applications'}
+let g:_spacevim_mappings_space.b = {'name' : '+Buffers'}
+let g:_spacevim_mappings_space.f = {'name' : '+Files'}
+let g:_spacevim_mappings_space.j = {'name' : '+Jump/Join/Split'}
+let g:_spacevim_mappings_space.m = {'name' : '+Major-mode'}
+let g:_spacevim_mappings_space.w = {'name' : '+Windows'}
+let g:_spacevim_mappings_space.p = {'name' : '+Projects/Packages'}
+let g:_spacevim_mappings_space.h = {'name' : '+Help'}
+let g:_spacevim_mappings_space.n = {'name' : '+Narrow/Numbers'}
+let g:_spacevim_mappings_space.q = {'name' : '+Quit'}
+let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
+let g:_spacevim_mappings_space.s = {'name' : '+Searching/Symbol'}
+let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
+let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
+let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
+let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
+let g:_spacevim_mappings_space.f.v = {'name' : '+Vim/SpaceVim'}
 
 function! SpaceVim#end() abort
   let &tabline = ' '
@@ -2033,39 +2034,39 @@ function! SpaceVim#welcome() abort
   endif
   if g:spacevim_enable_vimfiler_welcome
         \ && get(g:, '_spacevim_checking_flag', 0) == 0
-        if has('timers')
-          call timer_start(500, function('s:open_filetree'))
-        else
-          call s:open_filetree()
-        endif
+    if has('timers')
+      call timer_start(500, function('s:open_filetree'))
+    else
+      call s:open_filetree()
+    endif
   endif
 endfunction
 
 function! s:open_filetree(...) abort
-    if exists(':VimFiler') == 2
-      VimFiler
-      wincmd p
-    elseif exists(':Defx') == 2
-      Defx
-      wincmd p
-    elseif exists(':NERDTree') == 2
-      NERDTree
-      wincmd p
-    elseif exists(':NvimTreeOpen') == 2
-      try
-        " @fixme there are some errors
-        NvimTreeOpen
-      catch
+  if exists(':VimFiler') == 2
+    VimFiler
+    wincmd p
+  elseif exists(':Defx') == 2
+    Defx
+    wincmd p
+  elseif exists(':NERDTree') == 2
+    NERDTree
+    wincmd p
+  elseif exists(':NvimTreeOpen') == 2
+    try
+      " @fixme there are some errors
+      NvimTreeOpen
+    catch
 
-      endtry
-      " the statusline of nvimtree is not udpated when open nvim tree in
-      " welcome function
-      doautocmd WinEnter
-      wincmd p
-    elseif exists(':Neotree') == 2
-      NeoTreeShow
-    endif
-  
+    endtry
+    " the statusline of nvimtree is not udpated when open nvim tree in
+    " welcome function
+    doautocmd WinEnter
+    wincmd p
+  elseif exists(':Neotree') == 2
+    NeoTreeShow
+  endif
+
 endfunction
 
 ""
