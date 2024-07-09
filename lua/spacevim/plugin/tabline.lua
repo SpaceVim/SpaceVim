@@ -29,6 +29,7 @@ local right_sep
 local left_sep
 
 local highlight = require('spacevim.api.vim.highlight')
+local VIM = require('spacevim.api.vim')
 
 local file = require('spacevim.api.file')
 
@@ -300,17 +301,43 @@ function M.move_to_next()
 end
 
 function M.close_current_buffer()
+  if index({ 'defx', 'startify' }, vim.o.filetype) ~= -1 then
+    return
+  end
+
   local bufnr = vim.api.nvim_get_current_buf()
 
   local idx = index(visiable_bufs, bufnr)
 
   local f = ''
   if vim.api.nvim_buf_get_option(bufnr, 'modified') then
+    vim.api.nvim_echo(
+      { { 'save changes to "' .. vim.fn.bufname(bufnr) .. '"?  Yes/No/Cancel', 'WarningMsg' } },
+      false,
+      {}
+    )
+    local rs = VIM.getchar()
+    vim.cmd.redraw()
+    if rs == 'y' then
+      vim.cmd.write()
+    elseif rs == 'n' then
+      f = '!'
+      vim.api.nvim_echo({ { 'discarded', 'None' } }, false, {})
+    else
+      vim.api.nvim_echo({ { 'canceled!', 'None' } }, false, {})
+      return
+    end
   end
 
   if idx > 0 then
     vim.cmd('b' .. visiable_bufs[idx])
-    vim.cmd('bd ' .. bufnr)
+    vim.cmd('bd' .. f .. ' ' .. bufnr)
+  elseif idx == 0 and #visiable_bufs > 1 then
+    vim.cmd('b' .. visiable_bufs[1])
+    vim.cmd('bd' .. f .. ' ' .. bufnr)
+  elseif idx == 0 and #visiable_bufs == 1 then
+    vim.cmd('Startify')
+    vim.cmd('bd' .. f .. ' ' .. bufnr)
   end
 end
 
@@ -321,11 +348,9 @@ function M.enable()
   right_sep = seps[1]
   left_sep = seps[2]
   for bufnr = 1, vim.fn.bufnr('$') do
-      if
-        vim.api.nvim_buf_is_valid(bufnr) and vim.api.nvim_buf_get_option(bufnr, 'buflisted')
-      then
-        table.insert(visiable_bufs, bufnr)
-      end
+    if vim.api.nvim_buf_is_valid(bufnr) and vim.api.nvim_buf_get_option(bufnr, 'buflisted') then
+      table.insert(visiable_bufs, bufnr)
+    end
   end
   local tabline_augroup = vim.api.nvim_create_augroup('spacevim_tabline', { clear = true })
   vim.api.nvim_create_autocmd({ 'BufAdd' }, {
