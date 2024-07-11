@@ -31,6 +31,34 @@ call SpaceVim#dev#followHEAD#update('cn')
 <!-- SpaceVim follow HEAD start -->
 ## 新特性
 
+- feat(cpicker): add tools#cpicker layer
+- feat(core): add logevent plugin
+- feat(github): add ci files
+- feat(github): enable github action
+- perf(core): add opt for lazy load config
+- perf(tabline): use BufAdd instead of BufNew
+- perf(lazy): lazy load plugins
+- perf(dein): skip type checking
+- perf(layer): lazy load layer config
+- perf(neo-tree): use lua notify
+- perf(plugins): lazy load plugins
+- perf(git): add key binding `v` to view log
+- feat(qml): add `lang#qml` layer
+- perf(buf): open buf in best win
+- perf(nvimtree): use nvim-web-devicons
+- perf(markdown): lazy load toc plugin
+- perf(core): lazy load core plugins
+- perf(edit): lazy load grammarous and tabular
+- perf(checkers): lazy load neomake
+- feat(autocmd): add SpaceVimLspSetup autocmd
+- perf(start): lazy load plugins
+- perf(cmp): lazy load nvim-cmp
+- perf(telescope): lazy load telescope
+- perf(co-author): complete co-author info
+- perf(gtags): make gtags and ctags lazy loaded
+- perf(default): remove unused var & functions
+- perf(neovim): use nvim-cmp & skip checking python
+- perf(guide): remove debug info
 - perf(statusline): support quickfix & loclist
 - perf(install): clone repo with --depth 1
 - perf(stl): add input_method function
@@ -90,6 +118,23 @@ call SpaceVim#dev#followHEAD#update('cn')
 
 ## 问题修复
 
+- fix(mapping): fix SPC a r/o
+- fix(mapping): fix SPC b d key binding
+- fix(tabline): update tabline on buflisted changed
+- fix(custom): fix unknown key
+- fix(mirror): remove `-f` opt
+- fix(tabline): handle `BufNew` event
+- fix(menu): fix unite menu
+- fix(tasks): fix task status
+- fix(format): format code in visual mode
+- fix(git): fix git lazy command
+- fix(projectmanager): skip when &autochdir is true
+- fix(lsp): fix lua lsp WarningMsg
+- fix(guide): fix prompt of flygrep
+- fix(markdown): lazy load toc plugin on_ft
+- fix(layer): fix all unknown functions
+- fix(notify): fix unknown functions
+- fix(find): fix find statusline
 - fix(file): fix file api
 - fix(python): add debug info for Shebang_to_cmd
 - fix(compatible): fix nvim-0.5.0 support
@@ -142,6 +187,25 @@ call SpaceVim#dev#followHEAD#update('cn')
 
 ## 文档更新
 
+- docs(readme): update readme
+- docs(bundle-plugins): add neo-tree link
+- docs(autocomplete): update doc
+- docs(opt): update doc of filemanager
+- docs(help): update and rollback
+- docs(help): update doc for editing
+- docs(about): remove support email
+- docs(help): update doc for tabline
+- docs(help): update doc for filetree
+- docs(typo): fix typo in post
+- docs(help): add windows and ui doc
+- docs(error): update doc for error handling
+- docs(help): update buffer/file doc
+- docs(highlighter): add doc for SPC s h
+- docs(help): update help SpaceVim-options
+- docs(guide): update help doc for mapping guide
+- docs(help): update doc
+- docs(help): add `:h SpaceVim-roadmap/community`
+- docs(website): update following head and roadmap
 - docs(scrollbar): add doc
 - docs(tabline): add doc for ctrl-shift-letf/right
 - docs(nerdtree): update doc for `ctrl-h`
@@ -164,9 +228,15 @@ call SpaceVim#dev#followHEAD#update('cn')
 
 ## 测试
 
+- test(vader): fix vader test
 
 ## 其他
 
+- build(docker): use new docker repo
+- build(makefile): update makefile
+- chore(colorscheme): use bundle vim-hybrid
+- chore(pydocstring): use bundle pydocstring
+- chore(bundle): use bundle splitjoin
 - chore(bundle): update helpful.vim
 - revert(html): remove copy button
 - refactor(format): refactor on_exit function

@@ -58,7 +58,9 @@ Some layers are enabled by default. The following example shows how to disable `
     enable = false
 ```
 
-<!-- Update layer list: call SpaceVim#dev#layers#update()  -->
+<!-- Update layer list:
+call SpaceVim#dev#layers#update()
+-->
 
 <!-- SpaceVim layer list start -->
 
@@ -203,6 +205,7 @@ Some layers are enabled by default. The following example shows how to disable `
 | [telescope](telescope/)                               | This layer provides a heavily customized telescope centric workflow                                                                                                 |
 | [test](test/)                                         | This layer allows to run tests directly in SpaceVim                                                                                                                 |
 | [tmux](tmux/)                                         | This layers adds extensive support for tmux                                                                                                                         |
+| [tools#cpicker](tools/cpicker/)                       | This layer provides color picker for SpaceVim                                                                                                                       |
 | [tools#dash](tools/dash/)                             | This layer provides Dash integration for SpaceVim                                                                                                                   |
 | [tools#mpv](tools/mpv/)                               | This layer provides mpv integration for SpaceVim                                                                                                                    |
 | [tools#zeal](tools/zeal/)                             | This layer provides Zeal integration for SpaceVim                                                                                                                   |

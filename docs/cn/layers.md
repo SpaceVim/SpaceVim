@@ -63,7 +63,9 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
     enable = false
 ```
 
-<!-- 更新模块列表： call SpaceVim#dev#layers#updateCn() -->
+<!-- 更新模块列表：
+call SpaceVim#dev#layers#updateCn()
+-->
 
 <!-- SpaceVim layer cn list start -->
 
@@ -130,7 +132,7 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [lang#hy](lang/hy/)                                   | 这一模块为 hy 开发提供支持，包括交互式编程、一键运行等特性。                                                                        |
 | [lang#idris](lang/idris/)                             | 这一模块为 idris 开发提供支持，包括交互式编程、一键运行等特性。                                                                     |
 | [lang#io](lang/io/)                                   | 这一模块为 io 开发提供支持，包括交互式编程、一键运行等特性。                                                                        |
-| [lang#ipynb](lang/ipynb/)                             | 该模块为 SpaceVim 添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                      |
+| [lang#ipynb](lang/ipynb/)                             | 该模块为SpaceVim添加了 Jupyter Notebook 支持，包括语法高亮、代码折叠等特点。                                                        |
 | [lang#j](lang/j/)                                     | 这一模块为 j 开发提供支持，包括交互式编程和语法高亮。                                                                               |
 | [lang#janet](lang/janet/)                             | 这一模块为 janet 开发提供支持，包括交互式编程、一键运行等特性。                                                                     |
 | [lang#java](lang/java/)                               | 这一模块为 Java 开发提供支持，包括代码补全、语法检查、代码格式化等特性。                                                            |
@@ -192,13 +194,15 @@ Vim 插件以及相关配置。而 SpaceVim 是以模块的方式来组织和管
 | [sudo](sudo/)                                         | 这一模块为 SpaceVim 提供了以管理员身份读写文件的功能。                                                                              |
 | [test](test/)                                         | 这一模块为 SpaceVim 提供了一个测试框架，支持快速运行多种语言的单元测试。                                                            |
 | [tmux](tmux/)                                         | 这一模块为 SpaceVim 提供了一些在 Vim 内操作 tmux 的功能，使得在 tmux 窗口之间跳转更加便捷。                                         |
+| [tools#cpicker](tools/cpicker/)                       | 这一模块为 SpaceVim 提供了调色板功能，可以快速调配颜色。                                                                            |
 | [tools#dash](tools/dash/)                             | 这一模块为 SpaceVim 提供了 Dash 支持，可快速查找光标位置的单词。                                                                    |
-| [tools#mpv](tools/mpv/)                               | 这一模块为 SpaceVim 提供了 mpv 支持，可快速查找光标位置的单词。                                                                     |
+| [tools#mpv](tools/mpv/)                               | 这一模块为 SpaceVim 提供了mpv支持，可快速查找光标位置的单词。                                                                       |
 | [tools](tools/)                                       | 这一模块为 SpaceVim 提供了多种常用工具，包括日历、计算器等多种工具类插件，并针对 Vim8 以及 Neovim 提供了更好的插件选择。            |
 | [treesitter](treesitter/)                             | 这一模块为 SpaceVim 提供了一些在 Vim 内操作 treesitter 的功能                                                                       |
 | [ui](ui/)                                             | 这一模块为 SpaceVim 提供了 IDE-like 的界面，包括状态栏、文件树、语法树等等特性。                                                    |
 | [unite](unite/)                                       | 这一模块为 SpaceVim 提供以 Unite 为核心的模糊查找机制，支持模糊搜索文件、历史纪录、函数列表等。                                     |
 | [VersionControl](VersionControl/)                     | 这一模块为 SpaceVim 提供了通用的代码版本控制支持，该模块支持 Git、Mercurial、Bazaar、SVN 等等多种后台工具。                         |
+| [xmake](xmake/)                                       | 这一模块为 SpaceVim 提供了一些在 Vim 内操作 xmake 的功能。                                                                          |
 
 <!-- SpaceVim layer cn list end -->
 
