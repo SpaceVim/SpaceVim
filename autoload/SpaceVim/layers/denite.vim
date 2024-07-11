@@ -35,7 +35,6 @@ let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#denite#config() abort
 
-  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'u'], 'Denite unicode', 'search-and-insert-unicode', 1)
   if g:spacevim_snippet_engine ==# 'neosnippet'
     call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Denite neosnippet', 'insert snippets', 1)

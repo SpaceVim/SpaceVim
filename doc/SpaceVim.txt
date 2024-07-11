@@ -243,14 +243,15 @@ CONTENTS                                                   *SpaceVim-contents*
     139. telescope................................ |SpaceVim-layers-telescope|
     140. test.......................................... |SpaceVim-layers-test|
     141. tmux.......................................... |SpaceVim-layers-tmux|
-    142. tools#dash.............................. |SpaceVim-layers-tools-dash|
-    143. tools#mpv................................ |SpaceVim-layers-tools-mpv|
-    144. tools#screensaver................ |SpaceVim-layers-tools-screensaver|
-    145. tools#zeal.............................. |SpaceVim-layers-tools-zeal|
-    146. treesitter.............................. |SpaceVim-layers-treesitter|
-    147. ui.............................................. |SpaceVim-layers-ui|
-    148. unite........................................ |SpaceVim-layers-unite|
-    149. xmake........................................ |SpaceVim-layers-xmake|
+    142. tools#cpicker........................ |SpaceVim-layers-tools-cpicker|
+    143. tools#dash.............................. |SpaceVim-layers-tools-dash|
+    144. tools#mpv................................ |SpaceVim-layers-tools-mpv|
+    145. tools#screensaver................ |SpaceVim-layers-tools-screensaver|
+    146. tools#zeal.............................. |SpaceVim-layers-tools-zeal|
+    147. treesitter.............................. |SpaceVim-layers-treesitter|
+    148. ui.............................................. |SpaceVim-layers-ui|
+    149. unite........................................ |SpaceVim-layers-unite|
+    150. xmake........................................ |SpaceVim-layers-xmake|
 7. Usage..................................................... |SpaceVim-usage|
     1. Editing....................................... |SpaceVim-usage-editing|
     2. Error handling......................... |SpaceVim-usage-error-handling|
@@ -6288,6 +6289,25 @@ MAPPINGS
   <C-j>     normal      Switch to vim/tmux pane in down direction
   <C-k>     normal      Switch to vim/tmux pane in up direction
   <C-l>     normal      Switch to vim/tmux pane in right direction
+<
+
+==============================================================================
+TOOLS#CPICKER                                  *SpaceVim-layers-tools-cpicker*
+
+The `tools#cpicker` layer provides a color picker. this layer is disabled by
+default, to enable this layer, add following snippet to your SpaceVim
+configuration file.
+>
+  [[layers]]
+    name = 'tools#cpicker'
+<
+
+KEY BINDINGS
+
+>
+  Key             Function
+  ---------------------------------------------
+  SPC i p c       open color picker
 <
 
 ==============================================================================

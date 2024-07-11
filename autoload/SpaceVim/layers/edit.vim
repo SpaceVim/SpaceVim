@@ -321,10 +321,6 @@ function! SpaceVim#layers#edit#config() abort
   call SpaceVim#mapping#space#def('nmap', ['x', 'g', 'n'], '<Plug>(grammarous-move-to-next-error)', 'move-cursor-to-next-error', 0, 1)
   call SpaceVim#mapping#space#def('nmap', ['x', 'g', 'p'], '<Plug>(grammarous-move-to-previous-error)', 'move-cursor-to-previous-error', 0, 1)
 
-  let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
-  let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
-  let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords'}
-  let g:_spacevim_mappings_space.i.U = {'name' : '+UUID'}
   call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 1], 'call call('
         \ . string(s:_function('s:insert_simple_password')) . ', [])',
         \ 'insert-simple-password', 1)

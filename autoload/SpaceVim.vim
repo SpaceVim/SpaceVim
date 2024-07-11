@@ -1771,6 +1771,11 @@ let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
 let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
 let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
 let g:_spacevim_mappings_space.f.v = {'name' : '+Vim/SpaceVim'}
+let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+let g:_spacevim_mappings_space.i = {'name' : '+Insertion'}
+let g:_spacevim_mappings_space.i.l = {'name' : '+Lorem-ipsum'}
+let g:_spacevim_mappings_space.i.p = {'name' : '+Passwords/Picker'}
+let g:_spacevim_mappings_space.i.U = {'name' : '+UUID'}
 
 function! SpaceVim#end() abort
   let &tabline = ' '
