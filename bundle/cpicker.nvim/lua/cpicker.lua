@@ -13,6 +13,7 @@ local bufnr
 
 local hi = require('spacevim.api.vim.highlight')
 local color = require('spacevim.api.color')
+local notify = require('spacevim.api.notify')
 
 local red = 0 -- [0, 255]
 local green = 0 -- [0, 255]
@@ -130,7 +131,7 @@ local function reduce_hsl_l()
   red, green, blue = color.hsl2rgb(hue, saturation, lightness)
 end
 
-local function buf_text()
+local function update_buf_text()
   local rst = {}
   local r_bar = generate_bar(red, '+')
   local g_bar = generate_bar(green, '+')
@@ -216,21 +217,40 @@ local function buf_text()
     guibg = color_hi,
     guifg = color_hi,
   })
-  return rst
+
+  vim.api.nvim_set_option_value('modifiable', true, {
+    buf = bufnr,
+  })
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, rst)
+  vim.api.nvim_set_option_value('modifiable', false, {
+    buf = bufnr,
+  })
+end
+
+-- https://zenn.dev/kawarimidoll/articles/a8ac50a17477bd
+
+local function copy_color()
+  local from, to  = vim
+    .regex([[#[0123456789ABCDEF]\+\|rgb(\d\+,\s\d\+,\s\d\+)\|hsl(\d\+,\s\d\+%,\s\d\+%)]])
+    :match_str(vim.fn.getline('.'))
+  if from then
+    vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to + 1))
+    notify.notify('copyed:' .. string.sub(vim.fn.getline('.'), from, to + 1))
+  end
 end
 
 local function increase()
   if increase_keys[vim.fn.line('.')] then
     increase_keys[vim.fn.line('.')]()
   end
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, buf_text())
+  update_buf_text()
 end
 
 local function reduce()
   if reduce_keys[vim.fn.line('.')] then
     reduce_keys[vim.fn.line('.')]()
   end
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, buf_text())
+  update_buf_text()
 end
 
 M.picker = function(formats)
@@ -266,6 +286,9 @@ M.picker = function(formats)
         vim.api.nvim_win_close(winid, true)
       end,
     })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Cr>', '', {
+      callback = copy_color,
+    })
   end
   if not winid or not vim.api.nvim_win_is_valid(winid) then
     winid = vim.api.nvim_open_win(bufnr, true, {
@@ -277,13 +300,16 @@ M.picker = function(formats)
       col = 1,
     })
   end
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, buf_text())
   vim.api.nvim_set_option_value('number', false, {
     win = winid,
   })
   vim.api.nvim_set_option_value('winhighlight', 'NormalFloat:Normal,FloatBorder:WinSeparator', {
     win = winid,
   })
+  vim.api.nvim_set_option_value('modifiable', false, {
+    buf = bufnr,
+  })
+  update_buf_text()
 end
 
 return M
