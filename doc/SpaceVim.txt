@@ -6310,6 +6310,17 @@ KEY BINDINGS
   SPC i p c       open color picker
 <
 
+Key bindings in cpicker:
+>
+  Key             Function
+  ---------------------------------------------
+  <Enter>         copy color
+  j/<Down>        move cursor down
+  k/<Up>          move cursor up
+  h/<Left>        reduce
+  l/<Right>       increase
+<
+
 ==============================================================================
 TOOLS#DASH                                        *SpaceVim-layers-tools-dash*
 

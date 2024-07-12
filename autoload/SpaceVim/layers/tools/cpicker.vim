@@ -23,6 +23,17 @@
 "   ---------------------------------------------
 "   SPC i p c       open color picker
 " <
+"
+" Key bindings in cpicker:
+" >
+"   Key             Function
+"   ---------------------------------------------
+"   <Enter>         copy color
+"   j/<Down>        move cursor down
+"   k/<Up>          move cursor up
+"   h/<Left>        reduce
+"   l/<Right>       increase
+" <
 
 function! SpaceVim#layers#tools#cpicker#plugins() abort
 
