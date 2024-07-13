@@ -12,7 +12,7 @@ local M = {}
 local color = require('spacevim.api.color')
 
 function M.generate_bar(n, char, m)
-  return string.rep(char, math.floor(24 * n / (m or 255)))
+  return string.rep(char, math.floor(24 * n / (m or 1)))
 end
 
 function M.get_hex_code(t, code)

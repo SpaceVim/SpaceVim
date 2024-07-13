@@ -10,9 +10,9 @@ local M = {}
 local color = require('spacevim.api.color')
 local util = require('cpicker.util')
 
-local red = 0 -- [0, 255]
-local green = 0 -- [0, 255]
-local blue = 0 -- [0, 255]
+local red = 0 -- [0, 1]
+local green = 0 -- [0, 1]
+local blue = 0 -- [0, 1]
 
 local function on_change_argv()
   return 'rgb', { red, green, blue }
@@ -23,9 +23,18 @@ function M.buf_text()
   local r_bar = util.generate_bar(red, '+')
   local g_bar = util.generate_bar(green, '+')
   local b_bar = util.generate_bar(blue, '+')
-  table.insert(rst, 'RGB:  R:    ' .. string.format('%4s', red) .. ' ' .. r_bar)
-  table.insert(rst, '      G:    ' .. string.format('%4s', green) .. ' ' .. g_bar)
-  table.insert(rst, '      B:    ' .. string.format('%4s', blue) .. ' ' .. b_bar)
+  table.insert(
+    rst,
+    'RGB:  R:    ' .. string.format('%4s', math.floor(red * 255 + 0.5)) .. ' ' .. r_bar
+  )
+  table.insert(
+    rst,
+    '      G:    ' .. string.format('%4s', math.floor(green * 255 + 0.5)) .. ' ' .. g_bar
+  )
+  table.insert(
+    rst,
+    '      B:    ' .. string.format('%4s', math.floor(blue * 255 + 0.5)) .. ' ' .. b_bar
+  )
   return rst
 end
 
@@ -33,42 +42,48 @@ function M.color_code()
   return '   =========' .. '  ' .. color.rgb2hex(red, green, blue)
 end
 
-local function increase_rgb_red()
-  if red < 255 then
-    red = red + 1
+local function increase(c)
+  if c <= 1 - 1 / 255 then
+    c = c + 1 / 255
+  elseif c < 1 then
+    c = 1
   end
+  return c
+end
+
+local function reduce(c)
+  if c >= 1 / 255 then
+    c = c - 1 / 255
+  elseif c > 0 then
+    c = 0
+  end
+  return c
+end
+
+local function increase_rgb_red()
+  red = increase(red)
   return on_change_argv()
 end
 local function reduce_rgb_red()
-  if red > 0 then
-    red = red - 1
-  end
+  red = reduce(red)
   return on_change_argv()
 end
 local function increase_rgb_green()
-  if green < 255 then
-    green = green + 1
-  end
+  green = increase(green)
   return on_change_argv()
 end
 local function reduce_rgb_green()
-  if green > 0 then
-    green = green - 1
-  end
+  green = reduce(green)
   return on_change_argv()
 end
 
 local function increase_rgb_blue()
-  if blue < 255 then
-    blue = blue + 1
-  end
+  blue = increase(blue)
   return on_change_argv()
 end
 
 local function reduce_rgb_blue()
-  if blue > 0 then
-    blue = blue - 1
-  end
+  blue = reduce(blue)
   return on_change_argv()
 end
 function M.increase_reduce_functions()

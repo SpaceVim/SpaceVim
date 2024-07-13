@@ -9,7 +9,9 @@ description: "This layer provides color picker for SpaceVim"
 
 - [Description](#description)
 - [Install](#install)
+- [Layer options](#layer-options)
 - [Key bindings](#key-bindings)
+- [Commands](#commands)
 
 <!-- vim-markdown-toc -->
 
@@ -26,8 +28,20 @@ To use this configuration layer, add it to your `~/.SpaceVim.d/init.toml`.
 name = "tools#cpicker"
 ```
 
+## Layer options
+
+1. default_spaces: set the default color spaces, the default value is `['rgb', 'hsl']`. Available spaces: rgb, hsl, hsv, cmyk.
+
 ## Key bindings
 
 | Key Binding | Description       |
 | ----------- | ----------------- |
 | `SPC i p c` | open color picker |
+
+## Commands
+
+Instead of using key Binding, this layer also provides a Neovim command `:Cpicker` which can be used in cmdline. For example:
+
+```
+:Cpicker rgb cmyk
+```

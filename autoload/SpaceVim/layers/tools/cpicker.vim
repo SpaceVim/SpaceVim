@@ -17,6 +17,9 @@
 "     name = 'tools#cpicker'
 " <
 "
+" @subsection layer options
+" 1. default_spaces: set the default color spaces, the default value is `['rgb', 'hsl']`
+"
 " @subsection Key bindings
 " >
 "   Key             Function
@@ -34,6 +37,13 @@
 "   h/<Left>        reduce
 "   l/<Right>       increase
 " <
+" @subsection commands
+" Instead of using key Binding, this layer also provides a Neovim command `:Cpicker` which can be used in cmdline. For example:
+" >
+"   :Cpicker rgb cmyk
+" <
+
+let s:default_spaces = ['rgb', 'hsl']
 
 function! SpaceVim#layers#tools#cpicker#plugins() abort
 
@@ -45,13 +55,13 @@ endfunction
 
 function! SpaceVim#layers#tools#cpicker#config() abort
 
-  call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'c'], 'Cpicker all',
+  call SpaceVim#mapping#space#def('nnoremap', ['i', 'p', 'c'], 'Cpicker ' . join(s:default_spaces, ' '),
         \ 'insert-color-with-picker', 1)
 
 endfunction
 
 function! SpaceVim#layers#tools#cpicker#set_variable(var) abort
-  let g:cpicker_default_format = get(a:var, 'default_format', 'hex')
+  let s:default_spaces = get(a:var, 'default_spaces', s:default_spaces)
 endfunction
 
 function! SpaceVim#layers#tools#cpicker#loadeable() abort

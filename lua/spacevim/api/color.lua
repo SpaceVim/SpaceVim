@@ -11,9 +11,6 @@ local color = {}
 -- 参考： https://blog.csdn.net/Sunshine_in_Moon/article/details/45131285
 
 color.rgb2hsl = function(r, g, b)
-  r = r / 255
-  g = g / 255
-  b = b / 255
   local max = math.max(r, g, b)
   local min = math.min(r, g, b)
   local h, s, l
@@ -39,7 +36,7 @@ color.rgb2hsl = function(r, g, b)
     s = (max - min) / (2 - 2 * l)
   end
 
-  return math.floor(h), s, l
+  return h, s, l
 end
 
 -- https://stackoverflow.com/questions/68317097/how-to-properly-convert-hsl-colors-to-rgb-colors-in-lua
@@ -78,16 +75,35 @@ color.hsl2rgb = function(h, s, l)
     b = hue2rgb(p, q, h - 1 / 3)
   end
 
-  return math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5)
+  return r, g, b
+end
+
+-- https://www.rapidtables.com/convert/color/rgb-to-cmyk.html
+
+color.rgb2cmyk = function(r, g, b)
+  local c, m, y, k
+  k = 1 - math.max(r, g, b)
+  if k ~= 1 then
+  c = (1 - r - k) / (1 - k)
+  m = (1 - g - k) / (1 - k)
+  y = (1 - b - k) / (1 - k)
+  else
+    c, m, y = 0, 0, 0
+  end
+  return c, m, y, k
+end
+
+color.cmyk2rgb = function(c, m, y, k)
+  local r, g, b
+  r = (1 - c) * (1 - k)
+  g = (1 - m) * (1 - k)
+  b = (1 - y) * (1 - k)
+  return r, g, b
 end
 
 -- https://www.rapidtables.com/convert/color/rgb-to-hsv.html
 
 color.rgb2hsv = function(r, g, b)
-  r = r / 255
-  g = g / 255
-  b = b / 255
-
   local cmax = math.max(r, g, b)
   local cmin = math.min(r, g, b)
   local d = cmax - cmin
@@ -112,7 +128,7 @@ color.rgb2hsv = function(r, g, b)
 
   v = cmax
 
-  return math.floor(h), s, v
+  return h, s, v
 end
 
 -- https://www.rapidtables.com/convert/color/hsv-to-rgb.html
@@ -136,13 +152,26 @@ color.hsv2rgb = function(h, s, v)
     r, g, b = c, 0, x
   end
   r, g, b = (r + m), (g + m), (b + m)
-  return math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5)
+  return r, g, b
 end
 color.hsv2hsl = function(h, s, v)
   return color.rgb2hsl(color.hsv2rgb(h, s, v))
 end
 color.hsl2hsv = function(h, s, l)
   return color.rgb2hsv(color.hsl2rgb(h, s, l))
+end
+color.hsl2cmyk = function (h, s, l)
+  return color.rgb2cmyk(color.hsl2rgb(h, s, l))
+end
+color.hsv2cmyk = function (h, s, v)
+  return color.rgb2cmyk(color.hsv2rgb(h, s, v))
+end
+color.cmyk2hsv = function(c, m, y, k)
+  return color.rgb2hsv(color.cmyk2rgb(c, m, y, k))
+end
+
+color.cmyk2hsl = function(c, m, y, k)
+  return color.rgb2hsl(color.cmyk2rgb(c, m, y, k))
 end
 
 local function decimalToHex(decimal)
@@ -162,9 +191,9 @@ local function decimalToHex(decimal)
   end
 end
 color.rgb2hex = function(r, g, b)
-  r = decimalToHex(r)
-  g = decimalToHex(g)
-  b = decimalToHex(b)
+  r = decimalToHex(math.floor(r * 255 + 0.5))
+  g = decimalToHex(math.floor(g * 255 + 0.5))
+  b = decimalToHex(math.floor(b * 255 + 0.5))
   return '#' .. r .. g .. b
 end
 color.hsv2hex = function(h, s, v)
@@ -172,6 +201,9 @@ color.hsv2hex = function(h, s, v)
 end
 color.hsl2hex = function(h, s, l)
   return color.rgb2hex(color.hsl2rgb(h, s, l))
+end
+color.cmyk2hex = function(c, y, m, k)
+  return color.rgb2hex(color.cmyk2rgb(c, y, m, k))
 end
 
 return color

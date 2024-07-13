@@ -6302,6 +6302,10 @@ configuration file.
     name = 'tools#cpicker'
 <
 
+LAYER OPTIONS
+  1. default_spaces: set the default color spaces, the default value is
+    `['rgb', 'hsl']`
+
 KEY BINDINGS
 
 >
@@ -6319,6 +6323,12 @@ Key bindings in cpicker:
   k/<Up>          move cursor up
   h/<Left>        reduce
   l/<Right>       increase
+<
+COMMANDS
+Instead of using key Binding, this layer also provides a Neovim command
+`:Cpicker` which can be used in cmdline. For example:
+>
+  :Cpicker rgb cmyk
 <
 
 ==============================================================================

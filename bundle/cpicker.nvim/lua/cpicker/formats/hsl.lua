@@ -21,8 +21,8 @@ end
 function M.buf_text()
   local rst = {}
   local h_bar = util.generate_bar(hue, '+', 360)
-  local s_bar = util.generate_bar(saturation, '+', 1)
-  local l_bar = util.generate_bar(lightness, '+', 1)
+  local s_bar = util.generate_bar(saturation, '+')
+  local l_bar = util.generate_bar(lightness, '+')
   table.insert(rst, 'HSL:  H:    ' .. string.format('%4s', math.floor(hue + 0.5)) .. ' ' .. h_bar)
   table.insert(
     rst,
@@ -46,8 +46,10 @@ function M.color_code()
 end
 
 local function increase_hsl_h()
-  if hue < 360 then
+  if hue <= 359 then
     hue = hue + 1
+  elseif hue < 360 then
+    hue = 360
   end
   return on_change_argv()
 end
