@@ -78,7 +78,7 @@ color.hsl2rgb = function(h, s, l)
     b = hue2rgb(p, q, h - 1 / 3)
   end
 
-  return math.floor(r * 255), math.floor(g * 255), math.floor(b * 255)
+  return math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5)
 end
 
 -- https://www.rapidtables.com/convert/color/rgb-to-hsv.html
@@ -136,7 +136,7 @@ color.hsv2rgb = function(h, s, v)
     r, g, b = c, 0, x
   end
   r, g, b = (r + m), (g + m), (b + m)
-  return math.floor(r * 255), math.floor(g * 255), math.floor(b * 255)
+  return math.floor(r * 255 + 0.5), math.floor(g * 255 + 0.5), math.floor(b * 255 + 0.5)
 end
 color.hsv2hsl = function(h, s, v)
   return color.rgb2hsl(color.hsv2rgb(h, s, v))
