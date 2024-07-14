@@ -92,7 +92,7 @@ local function copy_color()
     :match_str(vim.fn.getline('.'))
   if from then
     vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to + 1))
-    notify.notify('copyed:' .. string.sub(vim.fn.getline('.'), from, to + 1))
+    notify.notify('copied:' .. string.sub(vim.fn.getline('.'), from, to + 1))
   end
 end
 
