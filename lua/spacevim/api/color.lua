@@ -225,7 +225,6 @@ color.hwb2hsl = function(h, w, b)
 end
 
 color.hwb2hsv = function(h, w, b)
-
   return color.rgb2hsv(color.hwb2rgb(h, w, b))
 end
 
@@ -254,6 +253,14 @@ color.rgb2hex = function(r, g, b)
   g = decimalToHex(math.floor(g * 255 + 0.5))
   b = decimalToHex(math.floor(b * 255 + 0.5))
   return '#' .. r .. g .. b
+end
+color.hex2rgb = function(hex)
+  -- make sure hex is '#[0123456789ABCDEF]\+'
+  local r, g, b
+  r = tonumber(string.sub(hex, 2, 3), 16)
+  g = tonumber(string.sub(hex, 4, 5), 16)
+  b = tonumber(string.sub(hex, 6, 7), 16)
+  return r / 255, g / 255, b / 255
 end
 color.hsv2hex = function(h, s, v)
   return color.rgb2hex(color.hsv2rgb(h, s, v))

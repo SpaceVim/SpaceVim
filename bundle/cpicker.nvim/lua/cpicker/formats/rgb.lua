@@ -14,6 +14,8 @@ local red = 0 -- [0, 1]
 local green = 0 -- [0, 1]
 local blue = 0 -- [0, 1]
 
+M.color_code_regex = [[\s#[0123456789ABCDEF]\+]]
+
 local function on_change_argv()
   return 'rgb', { red, green, blue }
 end

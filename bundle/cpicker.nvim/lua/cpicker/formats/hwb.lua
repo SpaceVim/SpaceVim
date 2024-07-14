@@ -14,6 +14,8 @@ local hue = 0 -- [0, 360]
 local whiteness = 0 -- [0, 100%]
 local blackness = 0 -- [0, 100%]
 
+M.color_code_regex = [[\shwb(\d\+,\s\d\+%,\s\d\+%)]]
+
 local function on_change_argv()
   return 'hwb', { hue, whiteness, blackness }
 end

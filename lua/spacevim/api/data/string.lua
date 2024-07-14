@@ -17,21 +17,18 @@ end
 
 function M.fill(str, length, ...)
     local v = ''
+    local rightmost
     if string.len(str) <= length then
         v = str
     else
-        local rightmost= 0
+        rightmost= 0
         while string.len(string.sub(str, 0, rightmost)) < length do
             rightmost = rightmost + 1
         end
 
     end
     v = string.sub(str, 0, rightmost)
-    local argvs = ...
-    local char = ' '
-    if argvs ~= nil then
-        char = argvs[1] or char
-    end
+    local char = select(1, ...) or ' '
     return v .. string.rep(char, length - string.len(v))
 end
 

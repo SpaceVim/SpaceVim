@@ -14,6 +14,8 @@ local hue = 0 -- [0, 360]
 local saturation = 0 -- [0, 100%]
 local lightness = 0 -- [0, 100%]
 
+M.color_code_regex = [[\shsl(\d\+,\s\d\+%,\s\d\+%)]]
+
 local function on_change_argv()
   return 'hsl', { hue, saturation, lightness }
 end

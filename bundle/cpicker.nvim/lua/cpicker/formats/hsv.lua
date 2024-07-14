@@ -14,6 +14,8 @@ local hue = 0
 local saturation = 0
 local value = 0
 
+M.color_code_regex = [[\shsv(\d\+,\s\d\+%,\s\d\+%)]]
+
 local function on_change_argv()
   return 'hsv', {hue, saturation, value}
 end

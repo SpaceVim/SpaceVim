@@ -35,23 +35,35 @@ local function update_buf_text()
     end
   end
   table.insert(rst, '')
+  local color_code_regex = {}
   for _, format in ipairs(enabled_formats) do
     local ok, f = pcall(require, 'cpicker.formats.' .. format)
     if ok then
-      table.insert(rst, f.color_code())
+      table.insert(rst, f.color_code() .. string.rep(' ', 20))
+      table.insert(color_code_regex, {#f.color_code(), f.color_code_regex})
     end
   end
+  util.update_color_code_syntax(color_code_regex)
   local normal_bg = hi.group2dict('Normal').guibg
-  hi.hi({
-    name = 'SpaceVimPickerCode',
-    guifg = color_hi,
-    guibg = normal_bg,
-  })
-  hi.hi({
-    name = 'SpaceVimPickerNoText',
-    guifg = normal_bg,
-    guibg = normal_bg,
-  })
+  local normal_fg = hi.group2dict('Normal').guifg
+  if
+    math.abs(util.get_hsl_l(normal_bg) - util.get_hsl_l(color_hi))
+    > math.abs(util.get_hsl_l(color_hi) - util.get_hsl_l(normal_fg))
+  then
+    hi.hi({
+      name = 'SpaceVimPickerCode',
+      guifg = color_hi,
+      guibg = normal_bg,
+      bold = 1,
+    })
+  else
+    hi.hi({
+      name = 'SpaceVimPickerCode',
+      guifg = color_hi,
+      guibg = normal_fg,
+      bold = 1,
+    })
+  end
   hi.hi({
     name = 'SpaceVimPickerBackground',
     guibg = color_hi,
@@ -66,7 +78,7 @@ local function update_buf_text()
     buf = bufnr,
   })
   vim.api.nvim_win_set_config(winid, {
-    height = #rst + 1
+    height = #rst + 1,
   })
 end
 
@@ -74,7 +86,9 @@ end
 
 local function copy_color()
   local from, to = vim
-    .regex([[#[0123456789ABCDEF]\+\|rgb(\d\+,\s\d\+,\s\d\+)\|hsl(\d\+,\s\d\+%,\s\d\+%)\|hsv(\d\+,\s\d\+%,\s\d\+%)\|cmyk(\d\+%,\s\d\+%,\s\d\+%,\s\d\+%)\|hwb(\d\+,\s\d\+%,\s\d\+%)]])
+    .regex(
+      [[#[0123456789ABCDEF]\+\|rgb(\d\+,\s\d\+,\s\d\+)\|hsl(\d\+,\s\d\+%,\s\d\+%)\|hsv(\d\+,\s\d\+%,\s\d\+%)\|cmyk(\d\+%,\s\d\+%,\s\d\+%,\s\d\+%)\|hwb(\d\+,\s\d\+%,\s\d\+%)]]
+    )
     :match_str(vim.fn.getline('.'))
   if from then
     vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to + 1))
@@ -149,7 +163,7 @@ M.picker = function(formats)
     winid = vim.api.nvim_open_win(bufnr, true, {
       relative = 'cursor',
       border = 'single',
-      width = 40,
+      width = 44,
       height = 10,
       row = 1,
       col = 1,

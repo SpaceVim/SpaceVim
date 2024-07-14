@@ -15,6 +15,8 @@ local magenta = 0
 local yellow = 0
 local black = 0
 
+M.color_code_regex = [[\scmyk(\d\+%,\s\d\+%,\s\d\+%,\s\d\+%)]]
+
 local function on_change_argv()
   return 'cmyk', { cyan, magenta, yellow, black }
 end

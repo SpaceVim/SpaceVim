@@ -6,7 +6,6 @@
 -- License: GPLv3
 --=============================================================================
 
-
 local M = {}
 
 local color = require('spacevim.api.color')
@@ -17,6 +16,22 @@ end
 
 function M.get_hex_code(t, code)
   return color[t .. '2hex'](unpack(code))
+end
+
+function M.get_hsl_l(hex)
+  local _, _, l = color.rgb2hsl(color.hex2rgb(hex))
+  return l
+end
+function M.update_color_code_syntax(r)
+  local max = 0
+  local regexes = {}
+  for _, v in ipairs(r) do
+    max = math.max(max, v[1])
+  end
+  regexes = vim.tbl_map(function(val)
+    return val[2] .. string.rep('\\s', max - val[1])
+  end, r)
+  vim.cmd('syn match SpaceVimPickerCode /' .. table.concat(regexes, '\\|') .. '/')
 end
 
 return M
