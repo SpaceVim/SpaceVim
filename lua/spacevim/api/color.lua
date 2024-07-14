@@ -84,9 +84,9 @@ color.rgb2cmyk = function(r, g, b)
   local c, m, y, k
   k = 1 - math.max(r, g, b)
   if k ~= 1 then
-  c = (1 - r - k) / (1 - k)
-  m = (1 - g - k) / (1 - k)
-  y = (1 - b - k) / (1 - k)
+    c = (1 - r - k) / (1 - k)
+    m = (1 - g - k) / (1 - k)
+    y = (1 - b - k) / (1 - k)
   else
     c, m, y = 0, 0, 0
   end
@@ -160,10 +160,10 @@ end
 color.hsl2hsv = function(h, s, l)
   return color.rgb2hsv(color.hsl2rgb(h, s, l))
 end
-color.hsl2cmyk = function (h, s, l)
+color.hsl2cmyk = function(h, s, l)
   return color.rgb2cmyk(color.hsl2rgb(h, s, l))
 end
-color.hsv2cmyk = function (h, s, v)
+color.hsv2cmyk = function(h, s, v)
   return color.rgb2cmyk(color.hsv2rgb(h, s, v))
 end
 color.cmyk2hsv = function(c, m, y, k)
@@ -172,6 +172,65 @@ end
 
 color.cmyk2hsl = function(c, m, y, k)
   return color.rgb2hsl(color.cmyk2rgb(c, m, y, k))
+end
+
+color.hwb2rgb = function(h, w, b)
+  if w + b >= 1 then
+    local gray = w / (w + b)
+    return gray, gray, gray
+  end
+  local r, g, b = color.hsl2rgb(h, 1, 0.5)
+  r = r * (1 - w - b) + w
+  if r > 1 then
+    r = 1
+  elseif r < 0 then
+    r = 0
+  end
+  g = g * (1 - w - b) + w
+  if g > 1 then
+    g = 1
+  elseif g < 0 then
+    g = 0
+  end
+  b = b * (1 - w - b) + w
+  if b > 1 then
+    b = 1
+  elseif b < 0 then
+    b = 0
+  end
+  return r, g, b
+end
+
+color.rgb2hwb = function(r, g, b)
+  local h = color.rgb2hsl(r, g, b)
+  local w = math.min(r, g, b)
+  b = 1 - math.max(r, g, b)
+  return h, w, b
+end
+
+color.hsv2hwb = function(h, s, v)
+  return color.rgb2hwb(color.hsv2rgb(h, s, v))
+end
+
+color.hsl2hwb = function(h, s, l)
+  return color.rgb2hwb(color.hsl2rgb(h, s, l))
+end
+
+color.cmyk2hwb = function(c, m, y, k)
+  return color.rgb2hwb(color.cmyk2rgb(c, m, y, k))
+end
+
+color.hwb2hsl = function(h, w, b)
+  return color.rgb2hwb(color.hwb2rgb(h, w, b))
+end
+
+color.hwb2hsv = function(h, w, b)
+
+  return color.rgb2hsv(color.hwb2rgb(h, w, b))
+end
+
+color.hwb2cmyk = function(h, w, b)
+  return color.rgb2cmyk(color.hwb2rgb(h, w, b))
 end
 
 local function decimalToHex(decimal)
@@ -204,6 +263,10 @@ color.hsl2hex = function(h, s, l)
 end
 color.cmyk2hex = function(c, y, m, k)
   return color.rgb2hex(color.cmyk2rgb(c, y, m, k))
+end
+
+color.hwb2hex = function(h, w, b)
+  return color.rgb2hex(color.hwb2rgb(h, w, b))
 end
 
 return color

@@ -74,7 +74,7 @@ end
 
 local function copy_color()
   local from, to = vim
-    .regex([[#[0123456789ABCDEF]\+\|rgb(\d\+,\s\d\+,\s\d\+)\|hsl(\d\+,\s\d\+%,\s\d\+%)\|hsv(\d\+,\s\d\+%,\s\d\+%)\|cmyk(\d\+%,\s\d\+%,\s\d\+%,\s\d\+%)]])
+    .regex([[#[0123456789ABCDEF]\+\|rgb(\d\+,\s\d\+,\s\d\+)\|hsl(\d\+,\s\d\+%,\s\d\+%)\|hsv(\d\+,\s\d\+%,\s\d\+%)\|cmyk(\d\+%,\s\d\+%,\s\d\+%,\s\d\+%)\|hwb(\d\+,\s\d\+%,\s\d\+%)]])
     :match_str(vim.fn.getline('.'))
   if from then
     vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to + 1))
