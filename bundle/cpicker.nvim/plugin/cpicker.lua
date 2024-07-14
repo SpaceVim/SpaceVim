@@ -14,4 +14,9 @@ if vim.api.nvim_create_user_command then
     require('cpicker').picker(opt.fargs)
 
   end, { nargs = '*', complete = complete })
+  vim.api.nvim_create_user_command('CpickerCursorForeground', function(opt)
+    require('cpicker.util').set_default_color(opt.fargs)
+    require('cpicker').picker(opt.fargs)
+
+  end, { nargs = '*', complete = complete })
 end

@@ -98,6 +98,7 @@ end
 
 function M.on_change(f, code)
   if f == 'rgb' then
+    red, green, blue = unpack(code)
     return
   end
   red, green, blue = color[f .. '2rgb'](unpack(code))

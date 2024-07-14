@@ -120,6 +120,7 @@ end
 
 function M.on_change(f, code)
   if f == 'cmyk' then
+    cyan, magenta, yellow, black = unpack(code)
     return
   end
   cyan, magenta, yellow, black = color[f .. '2cmyk'](unpack(code))

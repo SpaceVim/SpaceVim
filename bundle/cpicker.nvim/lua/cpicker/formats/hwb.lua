@@ -105,6 +105,7 @@ end
 
 function M.on_change(f, code)
   if f == 'hwb' then
+    hue, whiteness, blackness = unpack(code)
     return
   end
   hue, whiteness, blackness = color[f .. '2hwb'](unpack(code))

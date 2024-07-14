@@ -34,4 +34,48 @@ function M.update_color_code_syntax(r)
   vim.cmd('syn match SpaceVimPickerCode /' .. table.concat(regexes, '\\|') .. '/')
 end
 
+local function get_color(name)
+  local c = vim.api.nvim_get_hl(0, { name = name })
+
+  if c.link then
+    return get_color(c.link)
+  else
+    return c
+  end
+end
+
+function M.set_default_color(formats)
+  if #formats == 0 then
+    formats = { 'rgb', 'hsl' }
+  else
+    formats = formats
+  end
+  local inspect = vim.inspect_pos()
+  local hex
+  if #inspect.treesitter > 0 then
+    local fg =
+      vim.api.nvim_get_hl(0, { name = inspect.treesitter[#inspect.treesitter].hl_group_link }).fg
+    if fg then
+      hex = string.format('#%06X', fg)
+    end
+  else
+    local name = vim.fn.synIDattr(vim.fn.synID(vim.fn.line('.'), vim.fn.col('.'), 1), 'name', 'gui')
+    local fg = get_color(name).fg
+    if fg then
+      hex = string.format('#%06X', fg)
+    end
+  end
+
+  if hex then
+    require('cpicker').set_default_color(hex)
+    local r, g, b = color.hex2rgb(hex)
+    for _, format in ipairs(formats) do
+      local ok, f = pcall(require, 'cpicker.formats.' .. format)
+      if ok then
+        f.on_change('rgb', { r, g, b })
+      end
+    end
+  end
+end
+
 return M

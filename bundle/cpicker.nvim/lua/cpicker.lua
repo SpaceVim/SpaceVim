@@ -125,7 +125,11 @@ local function reduce()
 end
 
 M.picker = function(formats)
-  enabled_formats = formats
+  if #formats == 0 then
+    enabled_formats = {'rgb', 'hsl'}
+  else
+    enabled_formats = formats
+  end
   log.info(vim.inspect(enabled_formats))
   if not bufnr or not vim.api.nvim_win_is_valid(bufnr) then
     bufnr = vim.api.nvim_create_buf(false, false)
@@ -179,6 +183,10 @@ M.picker = function(formats)
     buf = bufnr,
   })
   update_buf_text()
+end
+
+M.set_default_color = function(hex)
+  color_hi = hex
 end
 
 return M

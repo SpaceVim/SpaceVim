@@ -105,6 +105,7 @@ end
 
 function M.on_change(f, code)
   if f == 'hsl' then
+    hue, saturation, lightness = unpack(code)
     return
   end
   hue, saturation, lightness = color[f .. '2hsl'](unpack(code))
