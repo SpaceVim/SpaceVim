@@ -67,12 +67,6 @@ function M.set_default_color(formats)
       end
     end
   elseif #inspect.treesitter > 0 then
-    local fg =
-      vim.api.nvim_get_hl(0, { name = inspect.treesitter[#inspect.treesitter].hl_group_link }).fg
-    if fg then
-      hex = string.format('#%06X', fg)
-    end
-
     for i = #inspect.treesitter, 1, -1 do
       local fg = vim.api.nvim_get_hl(0, { name = inspect.treesitter[i].hl_group_link }).fg
       if fg then
