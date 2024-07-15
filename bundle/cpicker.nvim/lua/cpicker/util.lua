@@ -52,11 +52,33 @@ function M.set_default_color(formats)
   end
   local inspect = vim.inspect_pos()
   local hex
-  if #inspect.treesitter > 0 then
+  if #inspect.semantic_tokens > 0 then
+    local token, priority = {}, 0
+    for _, semantic_token in ipairs(inspect.semantic_tokens) do
+      if semantic_token.opts.priority > priority then
+        priority = semantic_token.opts.priority
+        token = semantic_token
+      end
+    end
+    if token then
+      local fg = vim.api.nvim_get_hl(0, { name = token.opts.hl_group_link }).fg
+      if fg then
+        hex = string.format('#%06X', fg)
+      end
+    end
+  elseif #inspect.treesitter > 0 then
     local fg =
       vim.api.nvim_get_hl(0, { name = inspect.treesitter[#inspect.treesitter].hl_group_link }).fg
     if fg then
       hex = string.format('#%06X', fg)
+    end
+
+    for i = #inspect.treesitter, 1, -1 do
+      local fg = vim.api.nvim_get_hl(0, { name = inspect.treesitter[i].hl_group_link }).fg
+      if fg then
+        hex = string.format('#%06X', fg)
+        break
+      end
     end
   else
     local name = vim.fn.synIDattr(vim.fn.synID(vim.fn.line('.'), vim.fn.col('.'), 1), 'name', 'gui')
