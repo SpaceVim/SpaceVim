@@ -48,7 +48,7 @@ let s:default_spaces = ['rgb', 'hsl']
 function! SpaceVim#layers#tools#cpicker#plugins() abort
 
   return [
-        \ [g:_spacevim_root_dir . 'bundle/cpicker.nvim', {'merged' : 0, 'loadconf' : 1, 'on_cmd' : ['Cpicker', 'CpickerCursorForeground']}],
+        \ [g:_spacevim_root_dir . 'bundle/cpicker.nvim', {'merged' : 0, 'loadconf' : 1, 'on_cmd' : ['Cpicker', 'CpickerCursorForeground', 'CpickerColorMix']}],
         \ ]
 
 endfunction
