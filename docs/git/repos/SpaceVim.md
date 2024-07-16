@@ -3,7 +3,7 @@ title: "Git Repository"
 description: "The source code of SpaceVim."
 ---
 
-# [Development](../) >> Git Repository
+# [Development](../../../development/) >> Git Repository
 
 The source code of SpaceVim is hosted in an online repository and can be cloned locally to view the source code.
 
