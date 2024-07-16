@@ -18,6 +18,6 @@ if vim.api.nvim_create_user_command then
     require('cpicker').picker(opt.fargs)
   end, { nargs = '*', complete = complete })
   vim.api.nvim_create_user_command('CpickerColorMix', function(opt)
-    require('cpicker').color_mix(unpack(opt.fargs))
+    require('cpicker.mix').color_mix(unpack(opt.fargs))
   end, { nargs = '*', complete = complete })
 end

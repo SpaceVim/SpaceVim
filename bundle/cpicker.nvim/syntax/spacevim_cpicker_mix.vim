@@ -11,9 +11,13 @@ syn match SpaceVimPickerMixColor1 /#[0123456789ABCDEF]\+\s\+P1/ contains=SpaceVi
 syn match SpaceVimPickerMixColor2 /#[0123456789ABCDEF]\+\s\+P2/ contains=SpaceVimPickerMixColor2P
 syn match SpaceVimPickerMixColor3 /=\+\s/
 syn match SpaceVimPickerMixColor3Background /\s=\+\s/
-syn match SpaceVimPickerMixColor3Code /\scolor-mix.....................................\|\s#......\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s/
+syn match SpaceVimPickerMixColor3Code /\scolor-mix...............................................\|\s#......\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s\s/
+syn match SpaceVimPickerMixMethodFlag /[<>]/ contained
+syn match SpaceVimPickerMixMethod /[<>].\+[<>]/ contains=SpaceVimPickerMixMethodFlag
 
 highlight SpaceVimPickerMixProcessBar ctermfg=Gray ctermbg=Gray guifg=Gray guibg=Gray
+highlight link SpaceVimPickerMixMethodFlag EndOfBuffer
+highlight SpaceVimPickerMixMethod ctermfg=Black ctermbg=Gray guifg=Black guibg=Gray
 highlight link SpaceVimPickerMixColor1P Normal
 highlight link SpaceVimPickerMixColor2P Normal
 
