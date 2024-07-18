@@ -176,29 +176,21 @@ end
 
 color.hwb2rgb = function(h, w, b)
   if w + b >= 1 then
-    local gray = w / (w + b)
-    return gray, gray, gray
+    local grey = w / (w + b)
+    return grey, grey, grey
   end
-  local r, g, b = color.hsl2rgb(h, 1, 0.5)
-  r = r * (1 - w - b) + w
-  if r > 1 then
-    r = 1
-  elseif r < 0 then
-    r = 0
+  local R, G, B = color.hsl2rgb(h, 1, 0.5)
+  local function f(c)
+    c = c * (1 - w - b) + w
+    if c > 1 then
+      return 1
+    elseif c <= 0 then
+      return 0
+    else
+      return c
+    end
   end
-  g = g * (1 - w - b) + w
-  if g > 1 then
-    g = 1
-  elseif g < 0 then
-    g = 0
-  end
-  b = b * (1 - w - b) + w
-  if b > 1 then
-    b = 1
-  elseif b < 0 then
-    b = 0
-  end
-  return r, g, b
+  return f(R), f(G), f(B)
 end
 
 color.rgb2hwb = function(r, g, b)
@@ -221,7 +213,7 @@ color.cmyk2hwb = function(c, m, y, k)
 end
 
 color.hwb2hsl = function(h, w, b)
-  return color.rgb2hwb(color.hwb2rgb(h, w, b))
+  return color.rgb2hsl(color.hwb2rgb(h, w, b))
 end
 
 color.hwb2hsv = function(h, w, b)

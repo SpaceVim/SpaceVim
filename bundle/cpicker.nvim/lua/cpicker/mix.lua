@@ -6,7 +6,8 @@ local color_mix_color2
 local color_mix_color3
 local color_mix_p1 = 0.5
 local color_mix_p2 = 0.5
-local available_methods = { 'srgb', 'hsl' }
+-- https://developer.mozilla.org/en-US/docs/Web/CSS/color-interpolation-method
+local available_methods = { 'srgb', 'hsl', 'hwb' }
 local available_hue_methods = { 'shorter', 'longer', 'increasing', 'decreasing' }
 local method = 'srgb'
 local hue_interpolation_method = 'shorter'
@@ -61,9 +62,16 @@ local function update_color_mix_buftext()
       p2 = color_mix_p2 / (color_mix_p1 + color_mix_p2)
     end
     r3, g3, b3 = r1 * p1 + r2 * p2, g1 * p1 + g2 * p2, b1 * p1 + b2 * p2
-  elseif method == 'hsl' then
-    local h1, s1, l1 = color.rgb2hsl(color.hex2rgb(color_mix_color1))
-    local h2, s2, l2 = color.rgb2hsl(color.hex2rgb(color_mix_color2))
+  elseif method == 'hsl' or method == 'hwb' then
+    local h1, s1, l1, w1, b1
+    local h2, s2, l2, w2, b2
+    if method == 'hsl' then
+      h1, s1, l1 = color.rgb2hsl(color.hex2rgb(color_mix_color1))
+      h2, s2, l2 = color.rgb2hsl(color.hex2rgb(color_mix_color2))
+    elseif method == 'hwb' then
+      h1, w1, b1 = color.rgb2hwb(color.hex2rgb(color_mix_color1))
+      h2, w2, b2 = color.rgb2hwb(color.hex2rgb(color_mix_color2))
+    end
     local h3
     local p1, p2
     if color_mix_p1 == 0 and color_mix_p2 == 0 then
@@ -117,8 +125,13 @@ local function update_color_mix_buftext()
     if h3 >= 360 then
       h3 = h3 - 360
     end
-    r3, g3, b3 = color.hsl2rgb(h3, s1 * p1 + s2 * p2, l1 * p1 + l2 * p2)
+    if method == 'hsl' then
+      r3, g3, b3 = color.hsl2rgb(h3, s1 * p1 + s2 * p2, l1 * p1 + l2 * p2)
+    elseif method == 'hwb' then
+      r3, g3, b3 = color.hwb2rgb(h3, w1 * p1 + w2 * p2, b1 * p1 + b2 * p2)
+    end
   end
+  -- 验证结果 https://products.aspose.app/svg/zh/color-mixer
   color_mix_color3 = color.rgb2hex(r3, g3, b3)
   local normal_bg = hi.group2dict('Normal').guibg
   local normal_fg = hi.group2dict('Normal').guifg
@@ -171,7 +184,9 @@ local function update_color_mix_buftext()
   table.insert(rst, ' ')
   table.insert(
     rst,
-    '    =======  ' .. color_mix_color3 .. '                                                                          '
+    '    =======  '
+      .. color_mix_color3
+      .. '                                                                          '
   )
   table.insert(
     rst,
@@ -287,9 +302,8 @@ local function reduce_p()
 end
 
 local function copy_color_mix()
-  local from, to = vim
-    .regex([[#[0123456789ABCDEF]\+\|color-mix([^)]*)]])
-    :match_str(vim.fn.getline('.'))
+  local from, to =
+    vim.regex([[#[0123456789ABCDEF]\+\|color-mix([^)]*)]]):match_str(vim.fn.getline('.'))
   if from then
     vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to + 1))
     notify.notify('copied:' .. string.sub(vim.fn.getline('.'), from, to + 1))
