@@ -22,6 +22,37 @@ function M.get_hsl_l(hex)
   local _, _, l = color.rgb2hsl(color.hex2rgb(hex))
   return l
 end
+
+function M.increase(v, step, min, max)
+  step = step or 100
+  min = min or 0
+  max = max or 1
+  local sep = (max - min) / step
+  v = (math.floor(v / sep + 0.5) + 1) * sep
+  if v >= max then
+    return max
+  elseif v <= min then
+    return min
+  else
+    return v
+  end
+end
+
+function M.reduce(v, step, min, max)
+  step = step or 100
+  min = min or 0
+  max = max or 1
+  local sep = (max - min) / step
+  v = (math.floor(v / sep + 0.5) - 1) * sep
+  if v >= max then
+    return max
+  elseif v <= min then
+    return min
+  else
+    return v
+  end
+end
+
 function M.update_color_code_syntax(r)
   local max = 0
   local regexes = {}

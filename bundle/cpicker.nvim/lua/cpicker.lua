@@ -133,7 +133,9 @@ M.picker = function(formats)
     vim.api.nvim_set_option_value('buftype', 'nofile', {
       buf = bufnr,
     })
-    vim.api.nvim_set_option_value('filetype', 'spacevim_cpicker', {
+    -- use set syntax instead of filetype
+    -- if using filetype, when open cpicker first time the SpaceVimPickerCode syntax is cleared
+    vim.api.nvim_set_option_value('syntax', 'spacevim_cpicker', {
       buf = bufnr,
     })
     vim.api.nvim_set_option_value('bufhidden', 'wipe', {

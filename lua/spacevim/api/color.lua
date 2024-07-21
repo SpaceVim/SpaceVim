@@ -384,6 +384,40 @@ function color.xyz2linear(x, y, z)
   return product(xyz2linear, { x, y, z })
 end
 
+function color.rgb2xyz(r, g, b)
+  return color.linear2xyz(color.rgb2linear(r, g, b))
+end
+function color.xyz2rgb(x, y, z)
+  return color.linear2rgb(color.xyz2linear(x, y, z))
+end
+function color.xyz2hex(x, y, z)
+  return color.rgb2hex(color.xyz2rgb(x, y, z))
+end
+function color.xyz2hsv(x, y, z)
+  return color.rgb2hsv(color.xyz2rgb(x, y, z))
+end
+function color.hsv2xyz(h, s, v)
+  return color.rgb2xyz(color.hsv2rgb(h, s, v))
+end
+function color.xyz2hsl(x, y, z)
+  return color.rgb2hsl(color.xyz2rgb(x, y, z))
+end
+function color.hsl2xyz(h, s, l)
+  return color.rgb2xyz(color.hsl2rgb(h, s, l))
+end
+function color.xyz2cmyk(x, y, z)
+  return color.rgb2cmyk(color.xyz2rgb(x, y, z))
+end
+function color.cmyk2xyz(c, m, y, k)
+  return color.rgb2xyz(color.cmyk2rgb(c, m, y, k))
+end
+function color.xyz2hwb(x, y, z)
+  return color.rgb2hwb(color.xyz2rgb(x, y, z))
+end
+function color.hwb2xyz(h, w, b)
+  return color.rgb2xyz(color.hwb2rgb(h, w, b))
+end
+
 --------------------------------------------------------------------------------
 -- Lab color space
 --------------------------------------------------------------------------------
