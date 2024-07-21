@@ -432,6 +432,19 @@ function color.rgb2lab(r, g, b)
   return color.xyz2lab(color.linear2xyz(color.rgb2linear(r, g, b)))
 end
 
+function color.hsl2lab(h, s, l)
+  return color.rgb2lab(color.hsl2rgb(h, s, l))
+end
+function color.cmyk2lab(c, m, y, k)
+  return color.rgb2lab(color.cmyk2rgb(c, m, y, k))
+end
+function color.hsv2lab(h, s, v)
+  return color.rgb2lab(color.hsv2rgb(h, s, v))
+end
+function color.hwb2lab(h, w, b)
+  return color.rgb2lab(color.hwb2rgb(h, w, b))
+end
+
 function color.lab2rgb(l, a, b)
   return color.linear2rgb(color.xyz2linear(color.lab2xyz(l, a, b)))
 end
