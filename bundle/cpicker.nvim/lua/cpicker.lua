@@ -88,8 +88,8 @@ end
 local function copy_color()
   local from, to = vim.regex(table.concat(vim.tbl_map(function(t) return t[2] end, color_code_regex), '\\|')):match_str(vim.fn.getline('.'))
   if from then
-    vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to + 1))
-    notify.notify('copied:' .. string.sub(vim.fn.getline('.'), from, to + 1))
+    vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to))
+    notify.notify('copied:' .. string.sub(vim.fn.getline('.'), from, to))
   end
 end
 
