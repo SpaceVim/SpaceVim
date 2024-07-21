@@ -27,10 +27,10 @@ function M.buf_text()
   local m_bar = util.generate_bar(magenta, '+')
   local y_bar = util.generate_bar(yellow, '+')
   local k_bar = util.generate_bar(black, '+')
-  table.insert(rst, 'CMYK: C:    ' .. string.format('%4s', math.floor(cyan * 100 + 0.5)) .. ' ' .. c_bar)
-  table.insert(rst, '      M:    ' .. string.format('%4s', math.floor(magenta * 100 + 0.5)) .. ' ' .. m_bar)
-  table.insert(rst, '      Y:    ' .. string.format('%4s', math.floor(yellow * 100 + 0.5)) .. ' ' .. y_bar)
-  table.insert(rst, '      K:    ' .. string.format('%4s', math.floor(black * 100 + 0.5)) .. ' ' .. k_bar)
+  table.insert(rst, 'CMYK:   C:    ' .. string.format('%4s', math.floor(cyan * 100 + 0.5)) .. ' ' .. c_bar)
+  table.insert(rst, '        M:    ' .. string.format('%4s', math.floor(magenta * 100 + 0.5)) .. ' ' .. m_bar)
+  table.insert(rst, '        Y:    ' .. string.format('%4s', math.floor(yellow * 100 + 0.5)) .. ' ' .. y_bar)
+  table.insert(rst, '        K:    ' .. string.format('%4s', math.floor(black * 100 + 0.5)) .. ' ' .. k_bar)
   return rst
 end
 

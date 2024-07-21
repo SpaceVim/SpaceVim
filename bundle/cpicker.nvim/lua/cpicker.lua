@@ -20,6 +20,7 @@ local util = require('cpicker.util')
 local enabled_formats = {}
 local increase_keys = {}
 local reduce_keys = {}
+local color_code_regex = {}
 
 local function update_buf_text()
   local rst = {}
@@ -35,7 +36,7 @@ local function update_buf_text()
     end
   end
   table.insert(rst, '')
-  local color_code_regex = {}
+  color_code_regex = {}
   for _, format in ipairs(enabled_formats) do
     local ok, f = pcall(require, 'cpicker.formats.' .. format)
     if ok then
@@ -85,11 +86,7 @@ end
 -- https://zenn.dev/kawarimidoll/articles/a8ac50a17477bd
 
 local function copy_color()
-  local from, to = vim
-    .regex(
-      [[#[0123456789ABCDEF]\+\|rgb(\d\+,\s\d\+,\s\d\+)\|hsl(\d\+,\s\d\+%,\s\d\+%)\|hsv(\d\+,\s\d\+%,\s\d\+%)\|cmyk(\d\+%,\s\d\+%,\s\d\+%,\s\d\+%)\|hwb(\d\+,\s\d\+%,\s\d\+%)]]
-    )
-    :match_str(vim.fn.getline('.'))
+  local from, to = vim.regex(table.concat(vim.tbl_map(function(t) return t[2] end, color_code_regex), '\\|')):match_str(vim.fn.getline('.'))
   if from then
     vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to + 1))
     notify.notify('copied:' .. string.sub(vim.fn.getline('.'), from, to + 1))

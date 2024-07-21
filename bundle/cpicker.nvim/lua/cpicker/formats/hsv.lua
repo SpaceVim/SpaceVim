@@ -26,14 +26,14 @@ function M.buf_text()
   local h_bar = util.generate_bar(hue, '+', 360)
   local s_bar = util.generate_bar(saturation, '+')
   local l_bar = util.generate_bar(value, '+')
-  table.insert(rst, 'HSV:  H:    ' .. string.format('%4s', math.floor(hue + 0.5)) .. ' ' .. h_bar)
+  table.insert(rst, 'HSV:    H:    ' .. string.format('%4s', math.floor(hue + 0.5)) .. ' ' .. h_bar)
   table.insert(
     rst,
-    '      S:    ' .. string.format('%3s', math.floor(saturation * 100 + 0.5)) .. '% ' .. s_bar
+    '        S:    ' .. string.format('%3s', math.floor(saturation * 100 + 0.5)) .. '% ' .. s_bar
   )
   table.insert(
     rst,
-    '      V:    ' .. string.format('%3s', math.floor(value * 100 + 0.5)) .. '% ' .. l_bar
+    '        V:    ' .. string.format('%3s', math.floor(value * 100 + 0.5)) .. '% ' .. l_bar
   )
   return rst
 end

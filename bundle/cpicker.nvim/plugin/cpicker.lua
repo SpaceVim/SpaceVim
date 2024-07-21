@@ -8,7 +8,7 @@
 
 if vim.api.nvim_create_user_command then
   local function complete()
-    return { 'rgb', 'hsl', 'hsv', 'cmyk', 'hwb' }
+    return { 'rgb', 'hsl', 'hsv', 'cmyk', 'hwb', 'linear', 'lab' }
   end
   vim.api.nvim_create_user_command('Cpicker', function(opt)
     require('cpicker').picker(opt.fargs)

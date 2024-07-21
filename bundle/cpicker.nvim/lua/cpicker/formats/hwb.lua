@@ -25,14 +25,14 @@ function M.buf_text()
   local h_bar = util.generate_bar(hue, '+', 360)
   local w_bar = util.generate_bar(whiteness, '+')
   local b_bar = util.generate_bar(blackness, '+')
-  table.insert(rst, 'HWB:  H:    ' .. string.format('%4s', math.floor(hue + 0.5)) .. ' ' .. h_bar)
+  table.insert(rst, 'HWB:    H:    ' .. string.format('%4s', math.floor(hue + 0.5)) .. ' ' .. h_bar)
   table.insert(
     rst,
-    '      W:    ' .. string.format('%3s', math.floor(whiteness * 100 + 0.5)) .. '% ' .. w_bar
+    '        W:    ' .. string.format('%3s', math.floor(whiteness * 100 + 0.5)) .. '% ' .. w_bar
   )
   table.insert(
     rst,
-    '      B:    ' .. string.format('%3s', math.floor(blackness * 100 + 0.5)) .. '% ' .. b_bar
+    '        B:    ' .. string.format('%3s', math.floor(blackness * 100 + 0.5)) .. '% ' .. b_bar
   )
   return rst
 end
