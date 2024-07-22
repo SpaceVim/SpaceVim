@@ -568,7 +568,17 @@ local special_statusline = {
     return simple_name('Gista')
   end,
   terminal = function() end, -- todo
-  vimchat = function() end, -- todo
+  vimchat = function()
+
+    return '%#SpaceVim_statusline_ia#' .. winnr(1) .. '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' .. lsep
+          .. '%#SpaceVim_statusline_b# Chat %#SpaceVim_statusline_b_SpaceVim_statusline_c#' .. lsep
+          .. '%#SpaceVim_statusline_c# '
+          .. '%{chat#windows#status().protocol}' .. ' %#SpaceVim_statusline_c_SpaceVim_statusline_b#' .. lsep
+          .. '%#SpaceVim_statusline_b# '
+          .. '%{chat#windows#status().channel}' .. ' %#SpaceVim_statusline_b_SpaceVim_statusline_c#' .. lsep
+          .. '%#SpaceVim_statusline_c# '
+          .. '%{chat#windows#status().usercount}'
+  end, -- todo
   calender = function()
     return simple_name('Calendar')
   end,
