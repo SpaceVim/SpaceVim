@@ -141,6 +141,12 @@ M.picker = function(formats)
     vim.api.nvim_set_option_value('bufhidden', 'wipe', {
       buf = bufnr,
     })
+    vim.api.nvim_set_option_value('wrap', false, {
+      buf = bufnr,
+    })
+    vim.api.nvim_set_option_value('number', false, {
+      buf = bufnr,
+    })
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'l', '', {
       callback = increase,
     })
