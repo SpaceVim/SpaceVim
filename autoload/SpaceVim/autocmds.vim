@@ -26,26 +26,22 @@ if has('nvim-0.10.0')
     call SpaceVim#logger#info('run root changed callback on VimEnter!')
     call SpaceVim#plugins#projectmanager#RootchandgeCallback()
     if !empty(get(g:, '_spacevim_bootstrap_after', ''))
-      try
-        call call(g:_spacevim_bootstrap_after, [])
-        let g:_spacevim_bootstrap_after_success = 1
-      catch
-        call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
-        call SpaceVim#logger#error('       exception: ' . v:exception)
-        call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
-        let g:_spacevim_bootstrap_after_success = 0
-      endtry
-    endif
-
-    if !get(g:, '_spacevim_bootstrap_before_success', 1)
-      echohl Error
-      echom 'bootstrap_before function failed to execute. Check `SPC h L` for errors.'
-      echohl None
-    endif
-    if !get(g:, '_spacevim_bootstrap_after_success', 1)
-      echohl Error
-      echom 'bootstrap_after function failed to execute. Check `SPC h L` for errors.'
-      echohl None
+      function! s:bootstrap_after(...) abort
+        try
+          call call(g:_spacevim_bootstrap_after, [])
+          let g:_spacevim_bootstrap_after_success = 1
+        catch
+          call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
+          call SpaceVim#logger#error('       exception: ' . v:exception)
+          call SpaceVim#logger#error('       throwpoint: ' . v:throwpoint)
+          let g:_spacevim_bootstrap_after_success = 0
+        endtry
+      endfunction
+      if has('timers')
+        call timer_start(g:spacevim_lazy_conf_timeout, function('s:bootstrap_after'))
+      else
+        call s:bootstrap_after()
+      endif
     endif
 
     if !filereadable('.SpaceVim.d/init.toml') && filereadable('.SpaceVim.d/init.vim')
