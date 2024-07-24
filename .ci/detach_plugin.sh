@@ -134,6 +134,51 @@ main () {
             rm -rf detach/$1
             exit 0
             ;;
+        cpicker.nvim)
+            git clone https://github.com/wsdjeg/cpicker.nvim.git detach/$1
+            cd detach/$1
+            _checkdir syntax
+            _detact_bundle cpicker.nvim syntax/spacevim_cpicker.vim
+            _detact_bundle cpicker.nvim syntax/spacevim_cpicker_mix.vim
+            _detact_bundle cpicker.nvim README.md
+            _checkdir plugin
+            _detact_bundle cpicker.nvim plugin/cpicker.lua
+            _checkdir lua/cpicker/formats
+            _detact_bundle cpicker.nvim lua/cpicker.lua
+            _detact_bundle cpicker.nvim lua/cpicker/util.lua
+            _detact_bundle cpicker.nvim lua/cpicker/mix.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/cmyk.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/hsl.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/hsv.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/hwb.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/lab.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/linear.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/rgb.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/xyz.lua
+            _checkdir lua/spacevim/api
+            _detact lua/spacevim/api/color.lua
+            _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/password.lua
+            _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/data
+            _detact autoload/SpaceVim/api/notify.vim
+            _detact autoload/SpaceVim/api/data/string.vim
+            _detact autoload/SpaceVim/api/data/number.vim
+            _detact autoload/SpaceVim/api/vim/buffer.vim
+            _detact autoload/SpaceVim/api/vim/floatting.vim
+            _checkdir autoload/SpaceVim/api/neovim
+            _detact autoload/SpaceVim/api/neovim/floatting.vim
+            _detact LICENSE
+            git add .
+            git config user.email "eric@wsdjeg.net"
+            git config user.name  "Eric Wong"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
+            git remote add wsdjeg_cpicker https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/cpicker.nvim.git
+            git push wsdjeg_cpicker master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         iedit)
             git clone https://github.com/wsdjeg/iedit.vim.git detach/$1
             cd detach/$1
