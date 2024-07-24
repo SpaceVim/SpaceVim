@@ -3,9 +3,9 @@ wsdjeg                                                     *SourceCounter.vim*
 
 ==============================================================================
 CONTENTS                                          *SourceCounter.vim-contents*
-  1. Introduction....................................|SourceCounter.vim-intro|
-  2. Configuration..................................|SourceCounter.vim-config|
-  3. Commands.....................................|SourceCounter.vim-commands|
+1. Introduction..................................... |SourceCounter.vim-intro|
+2. Configuration................................... |SourceCounter.vim-config|
+3. Commands...................................... |SourceCounter.vim-commands|
 
 ==============================================================================
 INTRODUCTION                                         *SourceCounter.vim-intro*
