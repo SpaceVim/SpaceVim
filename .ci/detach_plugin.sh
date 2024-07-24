@@ -179,6 +179,39 @@ main () {
             rm -rf detach/$1
             exit 0
             ;;
+        SourceCounter.vim)
+            git clone https://github.com/wsdjeg/SourceCounter.vim.git detach/$1
+            cd detach/$1
+            _checkdir plugin
+            _detact_bundle SourceCounter.vim plugin/SourceCounter.vim
+            _checkdir autoload
+            _detact_bundle SourceCounter.vim autoload/SourceCounter.vim
+            _checkdir doc
+            _detact_bundle SourceCounter.vim doc/SourceCounter.vim.txt
+            _detact_bundle SourceCounter.vim README.md
+            _detact_bundle SourceCounter.vim addon-info.json
+            _detact LICENSE
+            _checkdir pic
+            _detact_bundle SourceCounter.vim pic/screen.png
+            _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/data
+            _detact autoload/SpaceVim/api/notify.vim
+            _detact autoload/SpaceVim/api/data/string.vim
+            _detact autoload/SpaceVim/api/data/number.vim
+            _detact autoload/SpaceVim/api/vim/buffer.vim
+            _detact autoload/SpaceVim/api/vim/floatting.vim
+            _checkdir autoload/SpaceVim/api/neovim
+            _detact autoload/SpaceVim/api/neovim/floatting.vim
+            git add .
+            git config user.email "eric@wsdjeg.net"
+            git config user.name  "Eric Wong"
+            git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
+            git remote add wsdjeg_sourcecounter https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/cpicker.nvim.git
+            git push wsdjeg_sourcecounter master 
+            cd -
+            rm -rf detach/$1
+            exit 0
+            ;;
         iedit)
             git clone https://github.com/wsdjeg/iedit.vim.git detach/$1
             cd detach/$1

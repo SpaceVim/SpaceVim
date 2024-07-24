@@ -1,4 +1,3 @@
-let s:JOB = SpaceVim#api#import('job')
 let s:NOTI = SpaceVim#api#import('notify')
 
 scriptencoding utf-8
