@@ -206,7 +206,7 @@ main () {
             git config user.email "eric@wsdjeg.net"
             git config user.name  "Eric Wong"
             git commit -m "Auto Update based on https://github.com/SpaceVim/SpaceVim/commit/${GITHUB_SHA}"
-            git remote add wsdjeg_sourcecounter https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/cpicker.nvim.git
+            git remote add wsdjeg_sourcecounter https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/SourceCounter.vim.git
             git push wsdjeg_sourcecounter master 
             cd -
             rm -rf detach/$1
