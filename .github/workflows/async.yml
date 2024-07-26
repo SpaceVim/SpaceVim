@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        detachPlugin: ["flygrep", "dein-ui", "vim-todo", "iedit", "scrollbar.vim", "vim-chat", "vim-cheat", "xmake.vim", "github.vim", "JavaUnit.vim", "git.vim", "cpicker.nvim", "SourceCounter.vim"]
+        detachPlugin: ["FlyGrep.vim", "dein-ui.vim", "vim-todo", "iedit.vim", "scrollbar.vim", "vim-chat", "vim-cheat", "xmake.vim", "GitHub.vim", "JavaUnit.vim", "git.vim", "cpicker.nvim", "SourceCounter.vim"]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -15,4 +15,5 @@ jobs:
     - name: Detach ${{ matrix.detachPlugin }}
       env:
         BOTSECRET: ${{ secrets.BOTSECRET_GITHUB }}
+        SpaceVim_COMMIT_MSG: ${{ github.event.commits[0].message }}
       run: .ci/detach_plugin.sh ${{ matrix.detachPlugin }}
