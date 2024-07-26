@@ -325,6 +325,47 @@ EOT
             _detact_bundle git.vim syntax/git-reflog.vim
             _checkdir test
             _detact_bundle git.vim test/vimrc
+            _checkdir lua/spacevim/api
+            _detact lua/spacevim/api/job.lua
+            _detact lua/spacevim/api/logger.lua
+            _detact lua/spacevim/api.lua
+            _detact lua/spacevim/logger.lua
+            _detact lua/spacevim.lua
+            _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/password.lua
+            _checkdir lua/git/command
+            _checkdir lua/git/ui
+            _detact_bundle git.vim lua/git/init.lua
+            _detact_bundle git.vim lua/git/log.lua
+            _detact_bundle git.vim lua/git/command/add.lua
+            _detach_bundle git.vim lua/git/command/add.lua
+            _detach_bundle git.vim lua/git/command/blame.lua
+            _detach_bundle git.vim lua/git/command/branch.lua
+            _detach_bundle git.vim lua/git/command/checkout.lua
+            _detach_bundle git.vim lua/git/command/cherry-pick.lua
+            _detach_bundle git.vim lua/git/command/clean.lua
+            _detach_bundle git.vim lua/git/command/commit.lua
+            _detach_bundle git.vim lua/git/command/config.lua
+            _detach_bundle git.vim lua/git/command/diff.lua
+            _detach_bundle git.vim lua/git/command/fetch.lua
+            _detach_bundle git.vim lua/git/command/grep.lua
+            _detach_bundle git.vim lua/git/command/log.lua
+            _detach_bundle git.vim lua/git/command/merge.lua
+            _detach_bundle git.vim lua/git/command/mv.lua
+            _detach_bundle git.vim lua/git/command/pull.lua
+            _detach_bundle git.vim lua/git/command/push.lua
+            _detach_bundle git.vim lua/git/command/rebase.lua
+            _detach_bundle git.vim lua/git/command/reflog.lua
+            _detach_bundle git.vim lua/git/command/remote.lua
+            _detach_bundle git.vim lua/git/command/reset.lua
+            _detach_bundle git.vim lua/git/command/rm.lua
+            _detach_bundle git.vim lua/git/command/shortlog.lua
+            _detach_bundle git.vim lua/git/command/stash.lua
+            _detach_bundle git.vim lua/git/command/status.lua
+            _detach_bundle git.vim lua/git/command/tag.lua
+            _detach_bundle git.vim lua/git/command/update-index.lua
+            _detach_bundle git.vim lua/git/ui/branch.lua
+            _detach_bundle git.vim lua/git/ui/remote.lua
             ;;
         vim-cheat)
             git clone https://github.com/wsdjeg/vim-cheat.git detach/$1
