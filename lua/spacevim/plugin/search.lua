@@ -16,7 +16,7 @@ search_tools.a = {}
 search_tools.a.command = 'ag'
 search_tools.a.default_opts =
 {
-    '-i', '--nocolor', '--filename', '--noheading', '--column', '--hidden', '--ignore',
+    '-i', '--nocolor', '--filename', '--noheading', '--column', '--ignore',
     '.hg', '--ignore', '.svn', '--ignore', '.git', '--ignore', '.bzr',
 }
 search_tools.a.recursive_opt = {}
@@ -25,6 +25,7 @@ search_tools.a.fixed_string_opt = {'-F'}
 search_tools.a.default_fopts = {'--nonumber'}
 search_tools.a.smart_case = {'-S'}
 search_tools.a.ignore_case = {'-i'}
+search_tools.a.hidden_opt = {'--hidden'}
 
 search_tools.t = {}
 search_tools.t.command = 'pt'
@@ -49,7 +50,7 @@ search_tools.h.ignore_case = {}
 search_tools.r = {}
 search_tools.r.command = 'rg'
 search_tools.r.default_opts = {
-    '--hidden', '--no-heading', '--color=never', '--with-filename', '--line-number', '--column',
+    '--no-heading', '--color=never', '--with-filename', '--line-number', '--column',
     '-g', '!.git'
 }
 search_tools.r.recursive_opt = {}
@@ -58,6 +59,7 @@ search_tools.r.fixed_string_opt = {'-F'}
 search_tools.r.default_fopts = {'-N'}
 search_tools.r.smart_case = {'-S'}
 search_tools.r.ignore_case = {'-i'}
+search_tools.r.hidden_opt = {'--hidden'}
 
 search_tools.k = {}
 search_tools.k.command = 'ack'
@@ -106,6 +108,7 @@ search_tools.i.ignore_case = {'/I'}
 --- @return table fixed_string_opt fixed string option of searching tool
 --- @return table ignore_case ignore case option
 --- @return table smart_case smart case option
+--- @return table hidden_opt opt to show hidden files
 function M.default_tool()
     if search_tools.default_exe == nil then
         for _, t in ipairs(vim.g.spacevim_search_tools or {'rg', 'ag', 'pt', 'ack', 'grep'}) do
@@ -118,11 +121,12 @@ function M.default_tool()
                 search_tools.fixed_string_opt = search_tools[key]['fixed_string_opt']
                 search_tools.ignore_case = search_tools[key]['ignore_case']
                 search_tools.smart_case = search_tools[key]['smart_case']
+                search_tools.hidden_opt = search_tools[key]['hidden_opt']
                 break
             end
         end
         if search_tools.default_exe == nil then
-            return '', {}, {}, {}, {}, {}, {}
+            return '', {}, {}, {}, {}, {}, {}, {}
         end
     end
     return search_tools.default_exe,
@@ -131,7 +135,8 @@ function M.default_tool()
     search_tools.expr_opt,
     search_tools.fixed_string_opt,
     search_tools.ignore_case,
-    search_tools.smart_case
+    search_tools.smart_case,
+    search_tools.hidden_opt
 
 end
 

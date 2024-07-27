@@ -6,6 +6,49 @@
 " License: GPLv3
 "=============================================================================
 
+
+""
+" @section flygrep, plugins-flygrep
+" @parentsection plugins
+" `flygrep` means `grep on the fly`, it will update the result as you type.
+" Of course, it is running asynchronously. Before using this feature,
+" you need to install a searching tool. flygrep supports those tools:
+" `ag`, `rg`, `ack`, `pt` and `grep`, Choose one you like.
+"
+" checkout @section(usage-search-and-replace) for more info to use flygrep in
+" SpaceVim.
+"
+" @subsection Key bindings In flygrep window
+"
+" After opening flygrep window, those key bindings can be used:
+" >
+"    Key Bindings        | Descriptions
+"    ------------------- | ----------------------------------
+"    Tab  / Ctrl-j       | move cursor to next item
+"    Shift-Tab  / Ctrl-K | move cursor to previous item
+"    ScrollWheelDown     | move cursor to next item
+"    ScrollWheelUp       | move cursor to previous item
+"    Enter               | open file at the cursor line
+"    Ctrl-t              | open item in new tab
+"    LeftMouse           | move cursor to mouse position
+"    2-LeftMouse         | open file at the mouse position
+"    Ctrl-f              | start filter mode
+"    Ctrl-v              | open item in vertical split window
+"    Ctrl-s              | open item in split window
+"    Ctrl-q              | apply all items into quickfix
+"    Ctrl-e              | toggle fix-string mode
+"    Ctrl-h              | toggle display hidden files
+"    Ctrl-r              | read from register, need insert register name
+"    Left / Right        | move cursor to left or right
+"    BackSpace           | remove last character
+"    Ctrl-w              | remove the Word before the cursor
+"    Ctrl-u              | remove the Line before the cursor
+"    Ctrl-k              | remove the Line after the cursor
+"    Ctrl-a / Home       | Go to the beginning of the line
+"    End                 | Go to the end of the line
+" <
+
+
 " Loading SpaceVim api {{{
 scriptencoding utf-8
 if has('nvim-0.7.0')

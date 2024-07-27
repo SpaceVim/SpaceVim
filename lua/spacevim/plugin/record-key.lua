@@ -42,6 +42,7 @@ local function show_key(key, where)
     focusable = false,
     noautocmd = true,
     border = 'single',
+    zindex = 100,
   })
   table.insert(winids, winid)
   vim.fn.setbufvar(buf, '&number', 0)

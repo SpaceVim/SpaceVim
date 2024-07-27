@@ -271,11 +271,12 @@ CONTENTS                                                   *SpaceVim-contents*
     2. Symbol highlighter............... |SpaceVim-plugins-symbol-highlighter|
     3. alternate................................. |SpaceVim-plugins-alternate|
     4. autosave................................... |SpaceVim-plugins-autosave|
-    5. iedit......................................... |SpaceVim-plugins-iedit|
-    6. runner....................................... |SpaceVim-plugins-runner|
-    7. scrollbar................................. |SpaceVim-plugins-scrollbar|
-    8. tab manager.............................. |SpaceVim-plugins-tabmanager|
-    9. todo manager............................ |SpaceVim-plugins-todomanager|
+    5. flygrep..................................... |SpaceVim-plugins-flygrep|
+    6. iedit......................................... |SpaceVim-plugins-iedit|
+    7. runner....................................... |SpaceVim-plugins-runner|
+    8. scrollbar................................. |SpaceVim-plugins-scrollbar|
+    9. tab manager.............................. |SpaceVim-plugins-tabmanager|
+    10. todo manager........................... |SpaceVim-plugins-todomanager|
 9. API......................................................... |SpaceVim-api|
     1. clock............................................. |SpaceVim-api-clock|
     2. cmdlinemenu................................. |SpaceVim-api-cmdlinemenu|
@@ -7646,6 +7647,47 @@ AUTOSAVE                                           *SpaceVim-plugins-autosave*
 
 The `autosave` plugin will save your work automatically, and this plugin has
 been used in `edit` layer, checkout |SpaceVim-layers-edit| for more info.
+
+==============================================================================
+FLYGREP                                             *SpaceVim-plugins-flygrep*
+
+`flygrep` means `grep on the fly`, it will update the result as you type. Of
+course, it is running asynchronously. Before using this feature, you need to
+install a searching tool. flygrep supports those tools: `ag`, `rg`, `ack`,
+`pt` and `grep`, Choose one you like.
+
+checkout |SpaceVim-usage-search-and-replace| for more info to use flygrep in
+SpaceVim.
+
+KEY BINDINGS IN FLYGREP WINDOW
+
+After opening flygrep window, those key bindings can be used:
+>
+   Key Bindings        | Descriptions
+   ------------------- | ----------------------------------
+   Tab  / Ctrl-j       | move cursor to next item
+   Shift-Tab  / Ctrl-K | move cursor to previous item
+   ScrollWheelDown     | move cursor to next item
+   ScrollWheelUp       | move cursor to previous item
+   Enter               | open file at the cursor line
+   Ctrl-t              | open item in new tab
+   LeftMouse           | move cursor to mouse position
+   2-LeftMouse         | open file at the mouse position
+   Ctrl-f              | start filter mode
+   Ctrl-v              | open item in vertical split window
+   Ctrl-s              | open item in split window
+   Ctrl-q              | apply all items into quickfix
+   Ctrl-e              | toggle fix-string mode
+   Ctrl-h              | toggle display hidden files
+   Ctrl-r              | read from register, need insert register name
+   Left / Right        | move cursor to left or right
+   BackSpace           | remove last character
+   Ctrl-w              | remove the Word before the cursor
+   Ctrl-u              | remove the Line before the cursor
+   Ctrl-k              | remove the Line after the cursor
+   Ctrl-a / Home       | Go to the beginning of the line
+   End                 | Go to the end of the line
+<
 
 ==============================================================================
 IEDIT                                                 *SpaceVim-plugins-iedit*

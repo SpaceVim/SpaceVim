@@ -3,8 +3,8 @@ Wang Shidong                                               *flygrep* *FlyGrep*
 
 ==============================================================================
 CONTENTS                                                    *FlyGrep-contents*
-  1. Introduction..............................................|FlyGrep-intro|
-  2. CONFIGURATION............................................|FlyGrep-config|
+1. Introduction............................................... |FlyGrep-intro|
+2. CONFIGURATION............................................. |FlyGrep-config|
 
 ==============================================================================
 INTRODUCTION                                                   *FlyGrep-intro*

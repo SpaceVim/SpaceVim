@@ -115,7 +115,7 @@ function M._handle_input(...)
         '',
         'g'
       )
-      M._prompt.cursor_char = M.__cmp.matchstr(M._prompt.cursor_begin, '^.')
+      M._prompt.cursor_char = M.__cmp.fn.matchstr(M._prompt.cursor_begin, '^.')
       M._prompt.cursor_begin = ''
       M._build_prompt()
       goto continue

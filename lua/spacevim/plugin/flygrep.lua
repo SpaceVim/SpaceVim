@@ -44,7 +44,7 @@ local timer_stop = vim.fn.timer_stop
 -- the script local values, same as s: in vim script
 local previous_winid = -1
 local grep_expr = ''
-local grep_default_exe, grep_default_opt, grep_default_ropt, grep_default_expr_opt, grep_default_fix_string_opt, grep_default_ignore_case, grep_default_smart_case =
+local grep_default_exe, grep_default_opt, grep_default_ropt, grep_default_expr_opt, grep_default_fix_string_opt, grep_default_ignore_case, grep_default_smart_case, grep_default_hidden_opt=
   require('spacevim.plugin.search').default_tool()
 
 local grep_timer_id = -1
@@ -63,6 +63,7 @@ local grep_ropt = {}
 local grep_ignore_case = {}
 local grep_smart_case = {}
 local grep_expr_opt = {}
+local grep_hidden_opt = {}
 local search_hi_id = -1
 local filter_hi_id = -1
 local grep_mode = 'expr'
@@ -71,6 +72,7 @@ local preview_able = false
 local grep_history = {}
 local preview_win_id = -1
 local filter_file = ''
+local show_hidden_files = false
 
 --- @return table # a list of searching pattern history
 local function read_histroy()
@@ -127,6 +129,9 @@ local function get_search_cmd(expr)
   append(cmd, grep_opt)
   if vim.o.ignorecase then
     append(cmd, grep_ignore_case)
+  end
+  if show_hidden_files then
+    append(cmd, grep_hidden_opt)
   end
   if vim.o.smartcase then
     append(cmd, grep_smart_case)
@@ -686,6 +691,12 @@ local function start_replace()
   end
 end
 
+local function toggle_hidden_files()
+  show_hidden_files = not show_hidden_files
+  mpt._oninputpro()
+  mpt._handle_fly(mpt._prompt.cursor_begin .. mpt._prompt.cursor_char .. mpt._prompt.cursor_end)
+end
+
 mpt._function_key = {
   [Key.t('<Tab>')] = next_item,
   [Key.t('<C-j>')] = next_item,
@@ -701,6 +712,7 @@ mpt._function_key = {
   [Key.t('<C-v>')] = open_item_vertically,
   [Key.t('<C-s>')] = open_item_horizontally,
   [Key.t('<C-q>')] = apply_to_quickfix,
+  [Key.t('<C-h>')] = toggle_hidden_files,
   [Key.t('<M-r>')] = start_replace,
   [Key.t('<C-p>')] = toggle_preview,
   [Key.t('<C-e>')] = toggle_expr_mode,
@@ -820,6 +832,7 @@ function M.open(argv)
   grep_ignore_case = argv.ignore_case or grep_default_ignore_case
   grep_smart_case = argv.smart_case or grep_default_smart_case
   grep_expr_opt = argv.expr_opt or grep_default_expr_opt
+  grep_hidden_opt = argv.hidden_opt or grep_default_hidden_opt
   logger.info('FlyGrep startting ===========================')
   logger.info('   executable    : ' .. grep_exe)
   logger.info('   option        : ' .. vim.fn.string(grep_opt))
