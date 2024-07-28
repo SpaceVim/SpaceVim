@@ -71,6 +71,7 @@ main () {
             _detact lua/spacevim/api/logger.lua
             _detact lua/spacevim/api/prompt.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/job.lua
             _detact lua/spacevim/api/password.lua
             _detact lua/spacevim/api/vim.lua
             _detact lua/spacevim/api/system.lua
