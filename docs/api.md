@@ -30,7 +30,9 @@ echom s:file.separator
 echom s:file.pathSeparator
 ```
 
-<!-- call SpaceVim#dev#api#update() -->
+<!--
+call SpaceVim#dev#api#update()
+-->
 
 <!-- SpaceVim api list start -->
 
@@ -53,6 +55,7 @@ Here is the list of all available APIs, and welcome to contribute to SpaceVim.
 | [messletters](messletters/)           | messletters API provides some basic functions for generating messletters                           |
 | [notify](notify/)                     | notify API provides some basic functions for generating notifications                              |
 | [password](password/)                 | password API provides some basic functions for generating password                                 |
+| [prompt](prompt/)                     | create cmdline prompt and handle input                                                             |
 | [system](system/)                     | system API provides some basic functions and values for current os.                                |
 | [transient-state](transient-state/)   | transient state API provides some basic functions and values for current os.                       |
 | [unicode#box](unicode/box/)           | unicode#box API provides some basic functions for drawing box.                                     |
