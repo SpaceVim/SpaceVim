@@ -86,7 +86,14 @@ end
 -- https://zenn.dev/kawarimidoll/articles/a8ac50a17477bd
 
 local function copy_color()
-  local from, to = vim.regex(table.concat(vim.tbl_map(function(t) return t[2] end, color_code_regex), '\\|')):match_str(vim.fn.getline('.'))
+  local from, to = vim
+    .regex(table.concat(
+      vim.tbl_map(function(t)
+        return t[2]
+      end, color_code_regex),
+      '\\|'
+    ))
+    :match_str(vim.fn.getline('.'))
   if from then
     vim.fn.setreg('+', string.sub(vim.fn.getline('.'), from, to))
     notify.notify('copied:' .. string.sub(vim.fn.getline('.'), from, to))
@@ -141,9 +148,6 @@ M.picker = function(formats)
     vim.api.nvim_set_option_value('bufhidden', 'wipe', {
       buf = bufnr,
     })
-    vim.api.nvim_set_option_value('wrap', false, {
-      buf = bufnr,
-    })
     vim.api.nvim_set_option_value('number', false, {
       buf = bufnr,
     })
@@ -179,6 +183,9 @@ M.picker = function(formats)
     })
   end
   vim.api.nvim_set_option_value('number', false, {
+    win = winid,
+  })
+  vim.api.nvim_set_option_value('wrap', false, {
     win = winid,
   })
   vim.api.nvim_set_option_value('winhighlight', 'NormalFloat:Normal,FloatBorder:WinSeparator', {

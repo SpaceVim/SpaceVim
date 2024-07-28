@@ -71,3 +71,5 @@ Plug 'wsdjeg/git.vim'
 ## Feedback
 
 The development of this plugin is in [`SpaceVim/bundle/git.vim`](https://github.com/SpaceVim/SpaceVim/tree/master/bundle/git.vim) directory.
+
+If you encounter any bugs or have suggestions, please file an issue in the [issue tracker](https://github.com/SpaceVim/SpaceVim/issues)
