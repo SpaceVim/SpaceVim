@@ -5,6 +5,8 @@
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](LICENSE)
 
+![scrollbar](https://img.spacevim.org/scrollbar-vim.png)
+
 <!-- vim-markdown-toc GFM -->
 
 - [Install](#install)
