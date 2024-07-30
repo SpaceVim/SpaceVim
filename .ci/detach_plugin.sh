@@ -436,7 +436,9 @@ EOT
             _checkdir autoload/SpaceVim/plugins/
             _detact autoload/SpaceVim/plugins/scrollbar.vim
             _detact LICENSE
-            _default_readme "scrollbar.vim" "floating scrollbar support for neovim/vim[wip]"
+            _detact_bundle scrollbar.vim README.md
+            _checkdir plugin
+            _detact_bundle scrollbar.vim plugin/scrollbar.vim
             ;;
         GitHub.vim)
             git clone https://github.com/wsdjeg/GitHub.vim.git detach/$1
