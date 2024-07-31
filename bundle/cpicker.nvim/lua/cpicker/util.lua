@@ -125,4 +125,83 @@ function M.set_default_color(formats)
   end
 end
 
+function M.get_cursor_hl()
+  local inspect = vim.inspect_pos()
+  local name, hl
+  if #inspect.semantic_tokens > 0 then
+    local token, priority = {}, 0
+    for _, semantic_token in ipairs(inspect.semantic_tokens) do
+      if semantic_token.opts.priority > priority then
+        priority = semantic_token.opts.priority
+        token = semantic_token
+      end
+    end
+    if token then
+      name = token.opts.hl_group_link
+      hl = vim.api.nvim_get_hl(0, { name = token.opts.hl_group_link })
+    end
+  elseif #inspect.treesitter > 0 then
+    for i = #inspect.treesitter, 1, -1 do
+      name = inspect.treesitter[i].hl_group_link
+      hl = vim.api.nvim_get_hl(0, { name = name })
+      if hl.fg then
+        break
+      end
+    end
+  else
+    name = vim.fn.synIDattr(vim.fn.synID(vim.fn.line('.'), vim.fn.col('.'), 1), 'name', 'gui')
+    hl = get_color(name)
+  end
+  return name, hl
+end
+
+function M.read_color_patch()
+  if
+    vim.fn.filereadable(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/cpicker_color_patch'))
+    == 1
+  then
+    local _his = vim.fn.json_decode( vim.fn.join( vim.fn.readfile(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/cpicker_color_patch'), ''), '' ) )
+    if type(_his) == 'table' then
+      return _his or {}
+    else
+      return {}
+    end
+  else
+    return {}
+  end
+end
+function M.update_color_patch(name, hl)
+  if vim.fn.isdirectory(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim')) == 0 then
+    vim.fn.mkdir(vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim'))
+  end
+  local patch = M.read_color_patch()
+  if not patch[vim.g.colors_name] then
+    patch[vim.g.colors_name] = {}
+  end
+  patch[vim.g.colors_name][name] = hl
+  vim.fn.writefile(
+    { vim.fn.json_encode(patch) },
+    vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/cpicker_color_patch')
+  )
+end
+
+function M.patch_color(c)
+  local patch = M.read_color_patch()
+  if patch[c] then
+    for name, hl in pairs(patch[c]) do
+      vim.api.nvim_set_hl(0, name, hl)
+    end
+  end
+end
+
+function M.clear_color_patch()
+  local patch = M.read_color_patch()
+  patch[vim.g.colors_name] = nil
+  vim.fn.writefile(
+    { vim.fn.json_encode(patch) },
+    vim.fn.expand(vim.g.spacevim_data_dir .. 'SpaceVim/cpicker_color_patch')
+  )
+  vim.cmd('colorscheme ' .. vim.g.colors_name)
+end
+
 return M

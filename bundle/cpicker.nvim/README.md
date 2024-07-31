@@ -27,6 +27,8 @@ Plug 'wsdjeg/cpicker.nvim'
 1. `:Cpicker`: open the color converter
 2. `:CpickerCursorForeground`: open the color converter with cursor highlight
 3. `:CpickerColorMix`: open the color mixer 
+4. `:CpickerCursorChangeHighlight`: change the highlight of cursor word
+5. `:CpickerClearColorPatch`: clear colorscheme patch
 
 ## Feedback
 

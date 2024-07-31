@@ -21,6 +21,8 @@ local enabled_formats = {}
 local increase_keys = {}
 local reduce_keys = {}
 local color_code_regex = {}
+local cursor_hl
+local cursor_hl_name
 
 local function update_buf_text()
   local rst = {}
@@ -112,6 +114,11 @@ local function increase()
     end
   end
   update_buf_text()
+  if cursor_hl and cursor_hl_name then
+    cursor_hl.fg = color_hi
+    vim.api.nvim_set_hl(0, cursor_hl_name, cursor_hl)
+    util.update_color_patch(cursor_hl_name, cursor_hl)
+  end
 end
 
 local function reduce()
@@ -126,6 +133,11 @@ local function reduce()
     end
   end
   update_buf_text()
+  if cursor_hl and cursor_hl_name then
+    cursor_hl.fg = color_hi
+    vim.api.nvim_set_hl(0, cursor_hl_name, cursor_hl)
+    util.update_color_patch(cursor_hl_name, cursor_hl)
+  end
 end
 
 M.picker = function(formats)
@@ -146,9 +158,6 @@ M.picker = function(formats)
       buf = bufnr,
     })
     vim.api.nvim_set_option_value('bufhidden', 'wipe', {
-      buf = bufnr,
-    })
-    vim.api.nvim_set_option_value('number', false, {
       buf = bufnr,
     })
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'l', '', {
@@ -201,4 +210,9 @@ M.set_default_color = function(hex)
   color_hi = hex
 end
 
+function M.change_cursor_highlight(name, hl, formats)
+  cursor_hl_name = name
+  cursor_hl = hl
+  M.picker(formats)
+end
 return M
