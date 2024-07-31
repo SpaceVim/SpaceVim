@@ -6,6 +6,11 @@
 -- License: GPLv3
 --=============================================================================
 
+-- detached cpicker need this var
+if not vim.g.spacevim_data_dir then
+  vim.g.spacevim_data_dir = '~/.cache/'
+end
+
 if vim.api.nvim_create_user_command then
   local function complete()
     return { 'rgb', 'hsl', 'hsv', 'cmyk', 'hwb', 'linear', 'lab' }
