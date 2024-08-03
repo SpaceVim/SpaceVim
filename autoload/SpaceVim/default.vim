@@ -140,8 +140,10 @@ function! SpaceVim#default#options() abort
   " Do not wrap lone lines
   set nowrap
 
-  " disable all bell
-  set belloff=all
+  if exists('&belloff')
+    " disable all bell
+    set belloff=all
+  endif
 
   set foldtext=SpaceVim#default#Customfoldtext()
 
