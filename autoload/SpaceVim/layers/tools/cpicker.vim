@@ -69,3 +69,9 @@ function! SpaceVim#layers#tools#cpicker#loadeable() abort
   return has('nvim-0.10.0')
 
 endfunction
+
+function! SpaceVim#layers#tools#cpicker#health() abort
+
+  return 1
+
+endfunction
