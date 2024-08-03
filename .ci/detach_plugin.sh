@@ -431,6 +431,8 @@ EOT
             _checkdir autoload/SpaceVim/api/vim
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/vim.vim
+            _detact autoload/SpaceVim/api/logger.vim
+            _detact autoload/SpaceVim/api/time.vim
             _detact autoload/SpaceVim/api/vim/buffer.vim
             _detact autoload/SpaceVim/api/vim/window.vim
             _checkdir autoload/SpaceVim/plugins/
@@ -444,6 +446,7 @@ EOT
             _checkdir lua/spacevim/api/vim
             _detact lua/spacevim/api/vim/buffer.lua
             _detact lua/spacevim/api/vim/window.lua
+            _detact autoload/SpaceVim/logger.vim
             ;;
         GitHub.vim)
             git clone https://github.com/wsdjeg/GitHub.vim.git detach/$1
