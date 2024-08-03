@@ -429,12 +429,21 @@ EOT
             cd detach/$1
             _checkdir autoload/SpaceVim/api/
             _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/neovim
+            _checkdir autoload/SpaceVim/api/data
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/vim.vim
+            _detact autoload/SpaceVim/api/system.vim
             _detact autoload/SpaceVim/api/logger.vim
             _detact autoload/SpaceVim/api/time.vim
+            _detact autoload/SpaceVim/api/vim/compatible.vim
             _detact autoload/SpaceVim/api/vim/buffer.vim
             _detact autoload/SpaceVim/api/vim/window.vim
+            _detact autoload/SpaceVim/api/vim/floating.vim
+            _detact autoload/SpaceVim/api/vim/highlight.vim
+            _detact autoload/SpaceVim/api/neovim/floating.vim
+            _detact autoload/SpaceVim/api/data/dict.vim
+            _detact autoload/SpaceVim/api/data/string.vim
             _checkdir autoload/SpaceVim/plugins/
             _detact autoload/SpaceVim/plugins/scrollbar.vim
             _detact LICENSE
