@@ -450,6 +450,8 @@ EOT
             _detact_bundle scrollbar.vim README.md
             _checkdir plugin
             _detact_bundle scrollbar.vim plugin/scrollbar.vim
+            _checkdir test
+            _detact_bundle test/vimrc
             _checkdir lua/spacevim/plugin
             _detact lua/spacevim/plugin/scrollbar.lua
             _checkdir lua/spacevim/api/vim

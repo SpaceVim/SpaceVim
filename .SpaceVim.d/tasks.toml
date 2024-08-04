@@ -298,3 +298,10 @@
 [open-nvim-030.options.env]
     VIM = 'D:\Neovim\v0.3.0\share\nvim'
     VIMRUNTIME = 'D:\Neovim\v0.3.0\share\nvim\runtime'
+[bundle-scrollbar-vim-741185]
+    command = 'wt.exe'
+    args = ['-d', 'D:\wsdjeg\scrollbar.vim', 'D:\Vim\gvim_7.4.1185_x64\vim.exe', '-Nu', 'test/vimrc', '-c', 'Vader! ${relativeFile}']
+    isBackground = true
+[bundle-scrollbar-vim-741185.options.env]
+    VIM = 'D:\Vim\gvim_7.4.1185_x64'
+    VIMRUNTIME = 'D:\Vim\gvim_7.4.1185_x64'
