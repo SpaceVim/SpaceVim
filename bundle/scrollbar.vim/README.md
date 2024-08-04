@@ -9,12 +9,18 @@
 
 <!-- vim-markdown-toc GFM -->
 
-- [Install](#install)
+- [Requirements](#requirements)
+- [Installation](#installation)
 - [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
 
-## Install
+## Requirements
+
+- Vim: `exists('*popup_create')`
+- Neovim: `exists('*nvim_open_win')`
+
+## Installation
 
 1. Using `scrollbar.vim` in SpaceVim:
 
