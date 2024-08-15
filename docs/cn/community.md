@@ -13,7 +13,6 @@ lang: zh
 - [资讯](#资讯)
 - [寻求帮助](#寻求帮助)
 - [问题反馈](#问题反馈)
-- [其他](#其他)
 
 <!-- vim-markdown-toc -->
 
@@ -38,11 +37,3 @@ lang: zh
 发送邮件至 [spacevim-cn@googlegroups.com](mailto:spacevim-cn@googlegroups.com)
 
 如需订阅该邮件组，可以发送任意邮件至：[spacevim-cn+subscribe@googlegroups.com](mailto:spacevim-cn+subscribe@googlegroups.com)
-
-## 其他
-
-- Matrix room: [`#spacevim-cn:matrix.org`](https://app.element.io/#/room/#spacevim-cn:matrix.org)
-- Telegram group: [`t.me/SpaceVim_CN`](https://t.me/SpaceVim_CN)
-- Reddit: [`/r/SpaceVim/`](https://www.reddit.com/r/SpaceVim/)
-- Discord: [`#spacevim-cn`](https://discord.gg/g3MGdNB)
-- Slack: [SpaceVim](https://join.slack.com/t/spacevim/shared_invite/zt-74w64lg5-bT~~2~zEhtIy1zow53tHJg)

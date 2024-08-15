@@ -2873,20 +2873,9 @@ endfunction
 " 
 " To subscribe the maillist, send anything to：spacevim+subscribe@googlegroups.com
 " 
-" @subsection Chatroom
-" 
-" - Matrix room: #spacevim:matrix.org
-"
 " @subsection Forum
 "
 " - Reddit: https://www.reddit.com/r/SpaceVim/
-"
-" @subsection Others
-"
-" The messages from matrix also bridged to telegram, discord and slack. Please
-" checkout the community page for more info:
-"
-" https://spacevim.org/community/
 
 ""
 " @section Roadmap, roadmap

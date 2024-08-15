@@ -8465,20 +8465,9 @@ send email to spacevim@googlegroups.com
 To subscribe the maillist, send anything
 to：spacevim+subscribe@googlegroups.com
 
-CHATROOM
-
-Matrix room: #spacevim:matrix.org
-
 FORUM
 
 Reddit: https://www.reddit.com/r/SpaceVim/
-
-OTHERS
-
-The messages from matrix also bridged to telegram, discord and slack. Please
-checkout the community page for more info:
-
-https://spacevim.org/community/
 
 ==============================================================================
 FAQ                                                             *SpaceVim-faq*

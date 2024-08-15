@@ -34,9 +34,6 @@ Each of the following sections will be covered:
 
 This tutorial is not intended to teach you Python itself.
 
-If you have any problems, feel free to join the [chatting room](https://app.element.io/#/room/#spacevim:matrix.org) for general discussion.
-
-
 ### Enable language layer
 
 The python language support in SpaceVim is provided by `lang#python` layer, and it is not enabled by default.
