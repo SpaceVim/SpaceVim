@@ -625,9 +625,9 @@ else
         let name = SpaceVim#mapping#leader#getName(s:prefix_key)
         let _keys = join(keys, '-')
         if empty(_keys)
-          call s:build_mpt(['key bindings is not defined: ', name . '-' . inp])
+          call s:build_mpt(['Key binding not defined: ', name . '-' . inp])
         else
-          call s:build_mpt(['key bindings is not defined: ', name . '-' . _keys . '-' . inp])
+          call s:build_mpt(['Key binding not defined: ', name . '-' . _keys . '-' . inp])
         endif
         let s:prefix_key_inp = []
         let s:guide_help_mode = 0
