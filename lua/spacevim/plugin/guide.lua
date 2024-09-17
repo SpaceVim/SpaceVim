@@ -756,9 +756,9 @@ wait_for_input = function()
       local name = M.getName(prefix_key)
       local _keys = vim.fn.join(keys, '-')
       if vim.fn.empty(_keys) == 1 then
-        warn_not_defined({ 'Key bindings is not defined: ', name .. '-' .. inp })
+        warn_not_defined({ 'Key binding not defined: ', name .. '-' .. inp })
       else
-        warn_not_defined({ 'key bindings is not defined: ', name .. '-' .. _keys .. '-' .. inp })
+        warn_not_defined({ 'Key binding not defined: ', name .. '-' .. _keys .. '-' .. inp })
       end
       prefix_key_inp = {}
       guide_help_mode = false
