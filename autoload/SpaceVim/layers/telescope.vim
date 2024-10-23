@@ -10,6 +10,10 @@ if exists('s:file')
   finish
 endif
 
+let s:telescope_hidden = v:false
+
+let s:telescope_no_ignore = v:false
+
 ""
 " @section telescope, layers-telescope
 " @parentsection layers
@@ -151,7 +155,7 @@ function! SpaceVim#layers#telescope#config() abort
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
-        \ 'Telescope find_files',
+        \ join(['Telescope find_files ', s:telescope_hidden ? 'hidden=true' : 'hidden=false', s:telescope_no_ignore ? 'no_ignore=true' : 'no_ignore=false'], ' '),
         \ ['find-files-in-project',
         \ [
         \ '[SPC p f] is to find files in the root of the current project',
@@ -161,7 +165,7 @@ function! SpaceVim#layers#telescope#config() abort
         \ ]
         \ , 1)
 
-  nnoremap <silent> <C-p> :<C-u>Telescope find_files<cr>
+  call execute('nnoremap <silent> <C-p> :<C-u>' .. join(['Telescope find_files ', s:telescope_hidden ? 'hidden=true' : 'hidden=false', s:telescope_no_ignore ? 'no_ignore=true' : 'no_ignore=false'], ' ') .. '<cr>')
 
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['h', 'i'], 'call call('
@@ -390,7 +394,8 @@ endfunction
 
 function! SpaceVim#layers#telescope#set_variable(var) abort
 
-  
+  let s:telescope_hidden = get(a:var, 'hidden', s:telescope_hidden)
+  let s:telescope_no_ignore = get(a:var, 'no_ignore', s:telescope_no_ignore)
 
 endfunction
 

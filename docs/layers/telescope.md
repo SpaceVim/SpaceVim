@@ -11,6 +11,11 @@ This layer is a heavily customized wrapper for [telescope.nvim](https://github.c
 The `telescope` layer is only for nvim 0.7 or above.
 
 
+## Layer option
+
+- `hidden`: show hidden files, default is false
+- `no_ignore`: default is false
+
 ## Install
 
 To use this configuration layer, update your custom configuration file with:
