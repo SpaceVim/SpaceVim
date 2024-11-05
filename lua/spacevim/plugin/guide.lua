@@ -133,7 +133,9 @@ local function format_displaystring(map)
   end
 
   local display = vim.g['leaderGuide#displayname']
-  vim.cmd('unlet g:leaderGuide#displayname')
+  if vim.g['leaderGuide#displayname'] then
+    vim.cmd('unlet g:leaderGuide#displayname')
+  end
   return display
 end
 
@@ -271,7 +273,7 @@ local function start_parser(key, dict)
     mapd.lhs = cmp.fn.substitute(mapd.lhs, key, '', '')
     mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Space>', ' ', 'g')
     mapd.lhs = cmp.fn.substitute(mapd.lhs, '<Tab>', '<C-I>', 'g')
-    mapd.rhs = cmp.fn.substitute(mapd.rhs, '<SID>', '<SNR>' .. mapd['sid'] .. '_', 'g')
+    mapd.rhs = cmp.fn.substitute(mapd.rhs, '<SID>', '<SNR>' .. (mapd['sid'] or '') .. '_', 'g')
     if mapd.lhs ~= '' and mapd.display ~= 'LeaderGuide.*' then
       mapd.lhs = string_to_keys(mapd.lhs)
       if
