@@ -66,7 +66,7 @@ let s:CMP = SpaceVim#api#import('vim#compatible')
 function! SpaceVim#layers#load(layer, ...) abort
   if a:layer ==# '-l'
     if has('nvim')
-      lua require('spacevim.layer').load('-l')
+      silent! lua require('spacevim.layer').load('-l')
     else
       call s:list_layers()
     endif
