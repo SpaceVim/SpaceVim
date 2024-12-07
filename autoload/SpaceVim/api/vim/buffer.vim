@@ -334,7 +334,6 @@ function! s:self.buf_set_lines2(buffer, start, end, strict_indexing, replacement
     return
   elseif a:start >= 0 && a:end > a:start
     let endtext = a:end >= lct ? [] : getline(a:end + 1, '$')
-    Log endtext
     " 0 start end $
     if len(a:replacement) == a:end - a:start
       for i in range(a:start, len(a:replacement) + a:start - 1)
