@@ -2007,8 +2007,13 @@ function! SpaceVim#begin() abort
   endif
   if has('nvim-0.7')
     try
-      " @fixme unknown font error
-      lua require('spacevim.default').options()
+      " https://github.com/vim/vim/issues/7191
+      " patch 8.2.1908: Lua is initialized even when not used
+      if has('patch-8.2.1908')
+        lua require('spacevim.default').options()
+      else
+        silent! lua require('spacevim.default').options()
+      endif
     catch
 
     endtry
