@@ -2009,11 +2009,7 @@ function! SpaceVim#begin() abort
     try
       " https://github.com/vim/vim/issues/7191
       " patch 8.2.1908: Lua is initialized even when not used
-      if has('patch-8.2.1908')
-        lua require('spacevim.default').options()
-      else
-        silent! lua require('spacevim.default').options()
-      endif
+      silent! lua require('spacevim.default').options()
     catch
 
     endtry
