@@ -321,6 +321,39 @@ EOF
   call setbufvar(a:buffer,'&ma', ma)
 endfunction
 
+function! s:self.buf_set_lines2(buffer, start, end, strict_indexing, replacement) abort
+  if !bufexists(a:buffer)
+    return
+  endif
+  let ma = getbufvar(a:buffer, '&ma')
+  call setbufvar(a:buffer,'&ma', 1)
+  " if the function `nvim_buf_set_lines` exists
+  exe 'b' . a:buffer
+  let lct = line('$')
+  if a:start > lct
+    return
+  elseif a:start >= 0 && a:end > a:start
+    let endtext = a:end > lct ? [] : getline(a:end + 1, '$')
+    " 0 start end $
+    if len(a:replacement) == a:end - a:start
+      for i in range(a:start, len(a:replacement) + a:start - 1)
+        call setline(i + 1, a:replacement[i - a:start])
+      endfor
+    else
+      let replacement = a:replacement + endtext
+      for i in range(a:start, len(replacement) + a:start - 1)
+        call setline(i + 1, replacement[i - a:start])
+      endfor
+    endif
+  elseif a:start >= 0 && a:end < 0 && lct + a:end > a:start
+    call self.buf_set_lines(a:buffer, a:start, lct + a:end + 1, a:strict_indexing, a:replacement)
+  elseif a:start <= 0 && a:end > a:start && a:end < 0 && lct + a:start >= 0
+    call self.buf_set_lines(a:buffer, lct + a:start + 1, lct + a:end + 1, a:strict_indexing, a:replacement)
+  endif
+  call setbufvar(a:buffer,'&ma', ma)
+
+endfunction
+
 
 function! s:self.displayArea() abort
   return [
