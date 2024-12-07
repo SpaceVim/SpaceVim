@@ -322,6 +322,9 @@ function! SpaceVim#layers#autocomplete#config() abort
   endif
 
   "mapping
+  "
+  " 如果使用 nvim-cmp 作为补全引擎，那么 Tab 以及 Enter 快捷键的映射是在
+  " ./lua/config/nvim-cmp.lua 内设置。
   if s:tab_key_behavior ==# 'smart'
     if has('patch-7.4.774')
       imap <silent><expr><TAB> SpaceVim#mapping#tab()

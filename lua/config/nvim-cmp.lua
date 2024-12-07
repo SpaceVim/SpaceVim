@@ -43,7 +43,12 @@ end
 
 local function enter(f) -- {{{
   if copt.auto_completion_return_key_behavior == 'complete' then
-    cmp.mapping.confirm({ select = false })
+    if cmp.visible() then
+      cmp.mapping.confirm({ select = false })
+      return cmp.close()
+    else
+      pcall(f)
+    end
   elseif copt.auto_completion_return_key_behavior == 'smart' then
     expand_snippet(nil)
     if cmp.visible() then
