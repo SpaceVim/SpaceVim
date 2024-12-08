@@ -20,9 +20,8 @@ function M.circled_letter(c)
 end
 function M.bubble_num(num, t)
   local list = {}
-
-  table.insert(list, { '➊', '➋', '➌', '➍', '➎', '➏', '➐', '➑', '➒', '➓' })
-  table.insert(list, { '➀', '➁', '➂', '➃', '➄', '➅', '➆', '➇', '➈', '➉' })
+  table.insert(list, { '➊', '➋', '➌', '➍', '➎', '➏', '➐', '➑', '➒', '➓', '⓫', '⓬', '⓭', '⓮', '⓯', '⓰', '⓱', '⓲', '⓳', '⓴'})
+  table.insert(list, { '➀', '➁', '➂', '➃', '➄', '➅', '➆', '➇', '➈', '➉', '⑪', '⑫', '⑬', '⑭', '⑮', '⑯', '⑰', '⑱', '⑲', '⑳'})
   table.insert(list, { '⓵', '⓶', '⓷', '⓸', '⓹', '⓺', '⓻', '⓼', '⓽', '⓾' })
 
   local n = ''
@@ -31,7 +30,7 @@ function M.bubble_num(num, t)
     n = list[t + 1][num]
   end)
 
-  return n
+  return n or ''
 end
 
 function M.circled_num(num, t)
