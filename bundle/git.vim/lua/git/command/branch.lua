@@ -6,7 +6,6 @@ local log = require('git.log')
 local str = require('spacevim.api.data.string')
 local branch_ui = require('git.ui.branch')
 
-local branch = ''
 local branch_info = {}
 local job_pwds = {}
 
@@ -21,6 +20,7 @@ local function on_stdout_show_branch(id, data)
 end
 
 local function on_exit_show_branch(id, code, single)
+  log.debug('git-branch exit code:' .. code .. ' single:' .. single)
   local pwd = job_pwds['jobid' .. id] or ''
   if branch_info[pwd] == nil and #pwd > 0 then
     branch_info[pwd] = {}
@@ -41,11 +41,13 @@ local function update_branch_name(pwd, ...)
     or vim.fn.get(vim.fn.get(branch_info, pwd, {}), 'last_update_done', 0)
       <= vim.fn.localtime() - 1
   then
+    log.debug('git branch cmd:' .. vim.inspect(cmd))
     local jobid = job.start(cmd, {
       on_stdout = on_stdout_show_branch,
       on_exit = on_exit_show_branch,
       cwd = pwd,
     })
+    log.debug('git branch jobid:' .. jobid)
     if jobid > 0 then
       job_pwds['jobid' .. jobid] = pwd
     end
