@@ -7,6 +7,7 @@ lang: zh
 [![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
 [![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
+-[![matrix](https://img.spacevim.org/spacevim-cn-matrix.svg)](https://app.element.io/#/room/#spacevim-cn:matrix.org)
 
 ![work-flow](https://img.spacevim.org/workflow.png)
 

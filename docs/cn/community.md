@@ -16,7 +16,6 @@ lang: zh
 
 <!-- vim-markdown-toc -->
 
-
 ## 资讯
 
 关于 SpaceVim 最新资讯将在 Twitter 上进行更新，欢迎订阅：
@@ -29,11 +28,8 @@ lang: zh
 
 - [FAQ](../faq/): 常见问题及相应的解答。
 - [使用文档](../documentation/): 完整的 SpaceVim 使用文档。
+- [聊天室](https://app.element.io/#/room/#spacevim-cn:matrix.org): SpaceVim 中文用户聊天室.
 
 ## 问题反馈
 
-在正常使用 SpaceVim 时，如果遇到 Bug 或者有新的特性需求可以通过邮件列表来提交。
-
-发送邮件至 [spacevim-cn@googlegroups.com](mailto:spacevim-cn@googlegroups.com)
-
-如需订阅该邮件组，可以发送任意邮件至：[spacevim-cn+subscribe@googlegroups.com](mailto:spacevim-cn+subscribe@googlegroups.com)
+在使用过程中如果遇到问题或者是有什么建议，可以使用 [Github Issue](https://github.com/SpaceVim/SpaceVim/issues) 进行反馈。

@@ -18,10 +18,6 @@ You can only think about reading the part that is relevant to what you are going
   - [License](#license)
   - [Conventions](#conventions)
   - [Commit style guide](#commit-style-guide)
-  - [Merge request](#merge-request)
-    - [Steps](#steps)
-    - [Simple PRs](#simple-prs)
-    - [Complex PRs](#complex-prs)
   - [Contributing a layer](#contributing-a-layer)
     - [File header](#file-header)
     - [Author of a new layer](#author-of-a-new-layer)
@@ -39,7 +35,7 @@ You can only think about reading the part that is relevant to what you are going
 
 ## Contributing code
 
-The source code of spacevim is hosted at [git repository](../git/repos/SpaceVim/).
+The source code of spacevim is hosted at [github](https://github.com/SpaceVim/SpaceVim).
 Code and documentation contributions of any kind are welcome. 
 
 ### License
@@ -126,86 +122,6 @@ refactor(tools#mpv)!: change default musics_directory
 BREAKING CHANGE: `~/Music` is standard on macOS and
 also on FreeDesktop's XDG.
 ```
-
-### Merge request
-
-#### Steps
-
-The following steps describe how to create a new merge request using mail.
-
-- create new empty repository on github，gitlab or any other platform.
-- clone your repository
-
-  ```sh
-  git clone ${YOUR_OWN_REPOSITORY_URL}
-  ```
-
-- add upstream remote
-
-  ```sh
-  git remote add upstream https://spacevim.org/git/repos/SpaceVim/
-  ```
-
-- create new branch based on `upstream/master`
-
-  ```sh
-  git fetch upstream
-  git checkout -b new_branch upstream/master
-  ```
-
-- edit, commit and push to your own repository
-
-  ```
-  git push -u origin
-  ```
-
-- send merge request to mail list.
-
-  - email address: [spacevim@googlegroups.com](mailto:spacevim@googlegroups.com)
-  - email title:
-
-    The title of the email should contain one of the following prefixes::
-
-    - `Add:` Adding new features.
-    - `Change:` Change default behaviors or the existing features.
-    - `Fix:` Fix some bugs.
-    - `Remove:` Remove some existing features.
-    - `Doc:` Update the help files.
-    - `Website:` Update the content of website.
-
-    Here is an example:
-
-    `Website: Update the lang#c layer page.`
-
-  - email context
-
-    The context of this email should contain the url of repository and the branch name.
-    It is better to add some description about the changes. For example:
-
-    ```
-    repo url: https://gitlab.com/wsdjeg/hello.git
-    branch: fix_scrollbar
-
-    when switch windows, the highlight of scrollbar is wrong.
-    here is the reproduce steps:
-
-    。。。。
-    ```
-
-#### Simple PRs
-
-- Branch from `master`
-- One topic per PR
-- One commit per PR
-- If you have several commits on different topics, close the PR and create one PR per topic
-- If you still have several commits, squash them into only one commit
-
-#### Complex PRs
-
-Squash only the commits with uninteresting changes like typos, syntax fixes, etc.
-And keep the important and isolated steps in different commits.
-
-Those PRs are merged and explicitly not fast-forwarded.
 
 ### Contributing a layer
 
