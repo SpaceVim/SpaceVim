@@ -633,6 +633,7 @@ local function handle_input(input)
     start_buffer()
   else
     winclose()
+    vim.cmd('doautocmd WinEnter,BufEnter')
     prefix_key_inp = {}
     cmp.fn.feedkeys(vis .. reg .. count, 'ti')
 
@@ -731,7 +732,7 @@ wait_for_input = function()
     undo_history = {}
     guide_help_mode = false
     winclose()
-    vim.cmd('doautocmd WinEnter')
+    vim.cmd('doautocmd WinEnter,BufEnter')
   elseif guide_help_mode then
     submode_mappings(inp)
     guide_help_mode = false
@@ -753,7 +754,7 @@ wait_for_input = function()
       handle_input(fsel)
     else
       winclose()
-      vim.cmd('doautocmd WinEnter')
+      vim.cmd('doautocmd WinEnter,BufEnter')
       local keys = prefix_key_inp
       local name = M.getName(prefix_key)
       local _keys = vim.fn.join(keys, '-')
