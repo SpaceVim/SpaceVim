@@ -35,12 +35,15 @@ Plug 'wsdjeg/git.vim'
 - `:Git add .`: stage all files
 - `:Git commit`: edit commit message
 - `:Git push`: push to remote
+- `:Git pull`: pull updates from remote
 - `:Git fetch`: fetch remotes
 - `:Git checkout`: checkout branches
 - `:Git log %`: view git log of current file
 - `:Git config`: list all git config
 - `:Git reflog`: manage reflog information
 - `:Git branch`: list, create, or delete branches
+- `:Git rebase`: rebase git commit
+- `:Git diff`: view git-diff info
 
 ## Screenshot
 
