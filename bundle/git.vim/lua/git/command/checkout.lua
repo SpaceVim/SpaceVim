@@ -27,4 +27,22 @@ function M.run(argv)
   job.start(cmd, { on_exit = on_exit })
 end
 
+function M.complete(arglead, cmdline, cursorpos)
+  if vim.startswith(arglead, '-') then
+    return table.concat({ '-b', '-m' }, '\n')
+  end
+  local branchs = vim.fn.systemlist('git branch')
+  return table.concat(
+    vim.tbl_map(
+      function(t)
+        return vim.fn.trim(t)
+      end,
+      vim.tbl_filter(function(t)
+        return not vim.startswith(t, '*')
+      end, branchs)
+    ),
+    '\n'
+  )
+end
+
 return M
