@@ -382,6 +382,27 @@ EOT
             _checkdir doc/
             _detach_bundle vim-cheat doc/vim-cheat.txt
             ;;
+        vim-zettelkasten)
+            git clone https://github.com/wsdjeg/vim-zettelkasten.git detach/$1
+            cd detach/$1
+            _detact LICENSE
+            _checkdir plugin/
+            _detach_bundle vim-zettelkasten plugin/zettelkasten.lua
+            _detach_bundle vim-zettelkasten README.md
+            _checkdir doc/
+            _detach_bundle vim-zettelkasten doc/vim-zettelkasten.txt
+            _checkdir ftdetect
+            _detach_bundle vim-zettelkasten ftdetect/zettelkasten.lua
+            _checkdir ftplugin
+            _detach_bundle vim-zettelkasten ftplugin/markdown.lua
+            _detach_bundle vim-zettelkasten ftplugin/zkbrowser.lua
+            _checkdir lua/zettelkasten
+            _detach_bundle vim-zettelkasten lua/zettelkasten.lua
+            _detach_bundle vim-zettelkasten lua/zettelkasten/browser.lua
+            _detach_bundle vim-zettelkasten lua/zettelkasten/config.lua
+            _detach_bundle vim-zettelkasten lua/zettelkasten/formatter.lua
+            _detach_bundle vim-zettelkasten lua/zettelkasten/log.lua
+            ;;
         xmake.vim)
             git clone https://github.com/wsdjeg/xmake.vim.git detach/$1
             cd detach/$1

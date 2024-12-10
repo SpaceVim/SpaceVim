@@ -13,14 +13,8 @@ vim.opt_local.iskeyword:append(':')
 vim.opt_local.iskeyword:append('-')
 vim.opt_local.suffixesadd:append('.md')
 vim.opt_local.errorformat = '%f:%l: %m'
-
-if vim.opt_local.keywordprg:get() == '' then
-  vim.opt_local.keywordprg = ':ZkHover -preview'
-end
-
-if vim.opt_local.tagfunc:get() == '' then
-  vim.opt_local.tagfunc = 'v:lua.zettelkasten.tagfunc'
-end
+vim.opt_local.keywordprg = ':ZkHover -preview'
+vim.opt_local.tagfunc = 'v:lua.zettelkasten.tagfunc'
 
 local win = require('spacevim.api.vim.window')
 

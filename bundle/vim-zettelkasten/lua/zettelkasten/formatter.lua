@@ -1,3 +1,11 @@
+--=============================================================================
+-- formatter.lua --- formatter for zk notes browser
+-- Copyright (c) 2024 Wang Shidong & Contributors
+-- Author: Wang Shidong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
+
 local M = {}
 local s_formatters = {
   ['%r'] = function(line)
@@ -10,6 +18,9 @@ local s_formatters = {
     return vim.fn.fnamemodify(line.file_name, ':t')
   end,
   ['%h'] = function(line)
+    if vim.fn.strdisplaywidth(line.title) <= 30 then
+      return line.title .. string.rep(' ', 30 - vim.fn.strdisplaywidth(line.title))
+    end
     return line.title
   end,
   ['%d'] = function(line)
