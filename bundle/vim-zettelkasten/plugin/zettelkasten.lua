@@ -5,23 +5,19 @@
 -- URL: https://spacevim.org
 -- License: GPLv3
 --=============================================================================
-if vim.fn.exists(":ZkNew") == 0 then
-    vim.cmd([[command ZkNew :lua require('zettelkasten').zknew({})]])
-end
+vim.cmd([[command ZkNew :lua require('zettelkasten').zknew({})]])
 
-if vim.fn.exists(":ZkBrowse") == 0 then
-    vim.cmd([[command ZkBrowse :lua _G.zettelkasten.zkbrowse()]])
-end
+vim.cmd([[command ZkListTemplete :Telescope zettelkasten_template]])
+vim.cmd([[command ZkListTags :Telescope zettelkasten_tags]])
 
-if vim.fn.exists(":ZkListTemplete") == 0 then
-    vim.cmd([[command ZkListTemplete :Telescope zettelkasten_template]])
-end
-
+vim.api.nvim_create_user_command('ZkBrowse', function(opt)
+  require('zettelkasten.browser').browse(opt.fargs)
+end, { nargs = '*' })
 _G.zettelkasten = {
-    tagfunc = require("zettelkasten").tagfunc,
-    completefunc = require("zettelkasten").completefunc,
-    zknew = require("zettelkasten").zknew,
-    zkbrowse = function()
-        vim.cmd("edit zk://browser")
-    end,
+  tagfunc = require('zettelkasten').tagfunc,
+  completefunc = require('zettelkasten').completefunc,
+  zknew = require('zettelkasten').zknew,
+  zkbrowse = function()
+    vim.cmd('edit zk://browser')
+  end,
 }

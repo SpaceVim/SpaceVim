@@ -257,23 +257,40 @@ function M.get_toc(note_id, format)
   return formatter.format(lines, format)
 end
 
-function M.get_note_browser_content()
+function M.get_note_browser_content(opt)
   if config.zettel_dir == '' then
     log.notify("'notes_path' option is required for note browsing.", log_levels.WARN, {})
     return {}
+  end
+  local filter_tags = {}
+  for _, tag in ipairs(opt.tags) do
+    filter_tags[tag] = true
   end
 
   local all_notes = browser.get_notes()
   local lines = {}
   for _, note in ipairs(all_notes) do
-    table.insert(lines, {
-      file_name = note.file_name,
-      id = note.id,
-      references = note.references,
-      back_references = note.back_references,
-      tags = note.tags,
-      title = note.title,
-    })
+    local has_tag
+    if #opt.tags == 0 then
+      has_tag = true
+    else
+      for _, tag in ipairs(note.tags) do
+        if filter_tags[tag.name] then
+          has_tag = true
+          break
+        end
+      end
+    end
+    if has_tag then
+      table.insert(lines, {
+        file_name = note.file_name,
+        id = note.id,
+        references = note.references,
+        back_references = note.back_references,
+        tags = note.tags,
+        title = note.title,
+      })
+    end
   end
 
   return formatter.format(lines, config.browseformat)

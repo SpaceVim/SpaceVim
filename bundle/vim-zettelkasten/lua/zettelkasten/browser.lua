@@ -225,4 +225,21 @@ function M.get_tags()
   return tags
 end
 
+
+function M.browse(opt)
+  vim.cmd('edit zk://browser')
+    vim.opt_local.syntax = ''
+    vim.opt_local.modifiable = true
+    vim.api.nvim_buf_set_lines(
+      0,
+      0,
+      -1,
+      false,
+      require('zettelkasten').get_note_browser_content({ tags = opt })
+    )
+    vim.opt_local.syntax = 'zkbrowser'
+    vim.opt_local.buflisted = false
+    vim.opt_local.modifiable = false
+end
+
 return M
