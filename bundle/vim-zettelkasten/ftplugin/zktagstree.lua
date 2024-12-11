@@ -36,3 +36,22 @@ vim.api.nvim_buf_set_keymap(0, 'n', '<Enter>', '', {
     vim.api.nvim_set_option_value('modifiable', false, { buf = bufnr })
   end,
 })
+vim.api.nvim_buf_set_keymap(0, 'n', '<LeftRelease>', '', {
+  noremap = true,
+  silent = true,
+  nowait = true,
+  callback = function()
+    local bufnr = vim.fn.bufnr('zk://browser')
+    if vim.api.nvim_buf_is_valid(bufnr) then
+      vim.api.nvim_set_option_value('modifiable', true, { buf = bufnr })
+      vim.api.nvim_buf_set_lines(
+        bufnr,
+        0,
+        -1,
+        false,
+        require('zettelkasten').get_note_browser_content({ tags = { vim.fn.getline('.') } })
+      )
+    end
+    vim.api.nvim_set_option_value('modifiable', false, { buf = bufnr })
+  end,
+})
