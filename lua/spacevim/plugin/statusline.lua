@@ -585,6 +585,9 @@ local special_statusline = {
   zkbrowser = function()
     return simple_name('Zettelkasten Browser')
   end,
+  zktagstree = function()
+    return simple_name('ZkTags Tree')
+  end,
   ['vader-result'] = function()
     return simple_name('Vader result')
   end,

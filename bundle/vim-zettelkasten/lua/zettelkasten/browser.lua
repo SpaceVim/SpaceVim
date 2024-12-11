@@ -17,7 +17,6 @@ local ZK_FILE_NAME_PATTERN = '%d+-%d+-%d+-%d+-%d+-%d+.md'
 local s_note_cache_with_file_path = {}
 local s_note_cache_with_id = {}
 
-
 -- list all zettelkasten notes in specific folder
 local function get_files(folder)
   local files = fn.split(fn.globpath(folder, '*.md'), '\\n')
@@ -225,21 +224,45 @@ function M.get_tags()
   return tags
 end
 
-
 function M.browse(opt)
   vim.cmd('edit zk://browser')
-    vim.opt_local.syntax = ''
-    vim.opt_local.modifiable = true
-    vim.api.nvim_buf_set_lines(
-      0,
-      0,
-      -1,
-      false,
-      require('zettelkasten').get_note_browser_content({ tags = opt })
-    )
-    vim.opt_local.syntax = 'zkbrowser'
-    vim.opt_local.buflisted = false
-    vim.opt_local.modifiable = false
+  vim.opt_local.syntax = ''
+  vim.opt_local.modifiable = true
+  vim.api.nvim_buf_set_lines(
+    0,
+    0,
+    -1,
+    false,
+    require('zettelkasten').get_note_browser_content({ tags = opt })
+  )
+  vim.opt_local.syntax = 'zkbrowser'
+  vim.opt_local.buflisted = false
+  vim.opt_local.modifiable = false
+end
+local function unique_string_table(t)
+  local temp = {}
+  for _, k in ipairs(t) do
+    temp[k] = true
+  end
+  local rst = {}
+  for m, _ in pairs(temp) do
+    table.insert(rst, m)
+  end
+  return rst
 end
 
+function M.open_tag_tree()
+  vim.cmd('30vsplit zk://tags_tree')
+  vim.opt_local.filetype = 'zktagstree'
+  vim.opt_local.modifiable = true
+  local lines = {}
+  local result = M.get_tags()
+
+  for _, tag in ipairs(result) do
+    table.insert(lines, tag.name)
+  end
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, unique_string_table(lines))
+  vim.opt_local.buflisted = false
+  vim.opt_local.modifiable = false
+end
 return M
