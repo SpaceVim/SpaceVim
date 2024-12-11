@@ -16,6 +16,7 @@ vim.opt_local.keywordprg = ':ZkHover -preview'
 vim.opt_local.tagfunc = 'v:lua.zettelkasten.tagfunc'
 
 local win = require('spacevim.api.vim.window')
+local hi = require('spacevim.api.vim.highlight')
 
 require('zettelkasten').add_hover_command()
 
@@ -51,6 +52,17 @@ if vim.fn.mapcheck('[I', 'n') == '' then
     nowait = true,
     callback = function()
       vim.cmd('ZkBrowse')
+    end,
+  })
+  vim.api.nvim_buf_set_keymap(0, 'n', '<LeftRelease>', '', {
+    noremap = true,
+    silent = true,
+    nowait = true,
+    callback = function()
+      if hi.syntax_at() == 'ZettelKastenTags' then
+        vim.cmd('ZkBrowse #' .. vim.fn.expand('<cword>') )
+
+      end
     end,
   })
 end

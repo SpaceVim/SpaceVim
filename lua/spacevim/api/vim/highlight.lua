@@ -101,4 +101,47 @@ function M.hi_separator(a, b)
   M.hi(hi_b_a)
 end
 
+local function get_color(name)
+  local c = vim.api.nvim_get_hl(0, { name = name })
+
+  if c.link then
+    return get_color(c.link)
+  else
+    return c
+  end
+end
+
+
+function M.syntax_at(...)
+  local lnum = select(1, ...) or vim.fn.line('.')
+  local col = select(2, ...) or vim.fn.col('.')
+  local inspect = vim.inspect_pos(0, lnum - 1, col - 1)
+  local name, hl
+  if #inspect.semantic_tokens > 0 then
+    local token, priority = {}, 0
+    for _, semantic_token in ipairs(inspect.semantic_tokens) do
+      if semantic_token.opts.priority > priority then
+        priority = semantic_token.opts.priority
+        token = semantic_token
+      end
+    end
+    if token then
+      name = token.opts.hl_group_link
+      hl = vim.api.nvim_get_hl(0, { name = token.opts.hl_group_link })
+    end
+  elseif #inspect.treesitter > 0 then
+    for i = #inspect.treesitter, 1, -1 do
+      name = inspect.treesitter[i].hl_group_link
+      hl = vim.api.nvim_get_hl(0, { name = name })
+      if hl.fg then
+        break
+      end
+    end
+  else
+    name = vim.fn.synIDattr(vim.fn.synID(vim.fn.line('.'), vim.fn.col('.'), 1), 'name', 'gui')
+    hl = get_color(name)
+  end
+  return name, hl
+end
+
 return M
