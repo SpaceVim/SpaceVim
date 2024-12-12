@@ -11,6 +11,7 @@ vim.opt_local.bufhidden = 'wipe'
 vim.opt_local.syntax = 'zktagstree'
 vim.opt_local.buftype = 'nofile'
 vim.opt_local.swapfile = false
+vim.opt_local.winfixwidth = true
 vim.api.nvim_buf_set_keymap(0, 'n', '<F2>', '', {
   noremap = true,
   silent = true,
