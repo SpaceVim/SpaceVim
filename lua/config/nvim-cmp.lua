@@ -57,6 +57,11 @@ local function enter(f) -- {{{
     else
       pcall(f)
     end
+  elseif copt.auto_completion_return_key_behavior == 'nil' then
+    if cmp.visible() then
+      cmp.close()
+    end
+    pcall(f)
   end
 end
 -- }}}
