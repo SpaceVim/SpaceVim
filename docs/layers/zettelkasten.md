@@ -39,14 +39,20 @@ update your custom configuration file with:
 
 ## Key bindings
 
-| Key bindings | description                   |
-| ------------ | ----------------------------- |
-| `SPC m z n`  | create new note               |
-| `SPC m z t`  | create new note with template |
-| `SPC m z b`  | open zettelkasten browse      |
+| Key bindings | description                            |
+| ------------ | -------------------------------------- |
+| `SPC m z n`  | create new note                        |
+| `SPC m z t`  | create new note with template          |
+| `SPC m z b`  | open zettelkasten browse               |
+| `SPC m z g`  | filter zettelkasten tags via telescope |
 
 In the zettelkasten browse buffer:
 
-| key bindings | description      |
-| ------------ | ---------------- |
-| `K`          | preview the note |
+| key bindings    | description                        |
+| --------------- | ---------------------------------- |
+| `F2`            | open zettelkasten tags sidebar     |
+| `<LeftRelease>` | filter notes based on cursor tag   |
+| `gf`            | open the note                      |
+| `Ctrl-l`        | clear tags filter pattarn          |
+| `Ctrl-] / K`    | preview note in vim preview-window |
+| `[I`            | list references in quickfix-window |

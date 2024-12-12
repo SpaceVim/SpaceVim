@@ -73,6 +73,14 @@ if vim.fn.mapcheck('[I', 'n') == '' then
       require('zettelkasten.browser').open_tag_tree()
     end,
   })
+  vim.api.nvim_buf_set_keymap(0, 'n', '<Enter>', '', {
+    noremap = true,
+    silent = true,
+    nowait = true,
+    callback = function()
+      vim.cmd('normal 0gf')
+    end,
+  })
 end
 
 local config = require('zettelkasten.config')
