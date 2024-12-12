@@ -71,6 +71,43 @@ function M.run(argv)
   end
 end
 
-function M.complete(ArgLead, CmdLine, CursorPos) end
+local options = { '-u', '--set-upstream', '-d', '--delete' }
+
+local function remotes()
+  return vim.tbl_map(function(t)
+    return vim.fn.trim(t)
+  end, vim.fn.systemlist('git remote'))
+end
+
+local function remote_branch(r)
+  local branchs = vim.fn.systemlist('git branch -a')
+  if vim.v.shell_error then
+    return ''
+  else
+    branchs = table.concat(
+      vim.fn.map(
+        vim.fn.filter(branchs, [[v:val =~ "\s*remotes/" . a:remote . "/[^ ]*$"]]),
+        'trim(v:val)[len(a:remote) + 9:]'
+      ),
+      '\n'
+    )
+    return branchs
+  end
+end
+
+function M.complete(ArgLead, CmdLine, CursorPos)
+  local str = string.sub(CmdLine, 1,  CursorPos)
+  if vim.regex([[^Git\s\+push\s\+-$]]):match_str(str) then
+    return table.concat(options, '\n')
+  elseif
+    vim.regex([[^Git\s\+push\s\+[^ ]*$]]):match_str(str)
+    or vim.regex([[^Git\s\+push\s\+-u\s\+[^ ]*$]]):match_str(str)
+  then
+    return table.concat(remotes(), '\n')
+  else
+    local remote = vim.fn.matchstr(str, [[\(Git\s\+push\s\+\)\@<=[^ ]*]])
+    return remote_branch(remote)
+  end
+end
 
 return M
