@@ -102,3 +102,4 @@ If you don't want to install php, you can use [mdctags](https://github.com/wsdje
 | `SPC l r`    | Normal/Visual | Run code in block                                      |
 | `SPC l u`    | Normal/Visual | Update content                                         |
 | `SPC l p`    | Normal        | Real-time markdown preview                             |
+| `SPC l t`    | Normal        | toggle todo status                                     |

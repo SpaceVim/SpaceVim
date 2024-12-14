@@ -102,3 +102,4 @@ npm install --global prettier
 | `SPC l r` | Normal/Visual | 运行区块中的代码                        |
 | `SPC l u` | Normal/Visual | 更新目录                                |
 | `SPC l p` | Normal        | 通过浏览器实时预览当前文件              |
+| `SPC l t` | Normal        | 切换待办事项状态                        |

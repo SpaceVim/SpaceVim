@@ -156,6 +156,10 @@ function! s:mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c'], 'GenTocGFM', 'create content at cursor', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','C'], 'RemoveToc', 'remove content', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','u'], 'UpdateToc', 'update content', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 't'], 
+        \ 'call call('
+        \ . string(function('s:toggle_todo'))
+        \ . ', [])', 'toggle-checkbox', 1)
 endfunction
 
 function! s:generate_remarkrc() abort
@@ -177,6 +181,15 @@ function! s:generate_remarkrc() abort
   let f  = tempname() . '.js'
   call writefile(conf, f)
   return f
+endfunction
+
+function! s:toggle_todo() abort
+  let line = getline('.')
+  if line =~# '\s*-\s\[\s\]'
+    call setline('.', substitute(getline('.'), '- \[ \]', '- [x]', ''))
+  elseif line =~# '\s*-\s\[x\]'
+    call setline('.', substitute(getline('.'), '- \[x\]', '- [ ]', ''))
+  endif
 endfunction
 
 function! s:markdown_insert_link(isVisual, isPicture) abort
