@@ -70,7 +70,7 @@ if vim.fn.mapcheck('[I', 'n') == '' then
     silent = true,
     nowait = true,
     callback = function()
-      require('zettelkasten.browser').open_tag_tree()
+      require('zettelkasten.sidebar').open_tag_tree()
     end,
   })
   vim.api.nvim_buf_set_keymap(0, 'n', '<Enter>', '', {
