@@ -4,7 +4,7 @@ _detact () {
     cp -f ../../$1 $1
 }
 
-_detach_bundle () {
+_detact_bundle () {
     cp -f ../../bundle/$1/$2 $2
 }
 
@@ -86,16 +86,16 @@ main () {
             _detact syntax/SpaceVimFlyGrep.vim
             # detach bundle
             _checkdir plugin
-            _detach_bundle FlyGrep plugin/FlyGrep.vim
-            _detach_bundle FlyGrep README.md
-            _detach_bundle FlyGrep addon-info.json
+            _detact_bundle FlyGrep plugin/FlyGrep.vim
+            _detact_bundle FlyGrep README.md
+            _detact_bundle FlyGrep addon-info.json
             _checkdir doc/
-            _detach_bundle FlyGrep doc/FlyGrep.txt
+            _detact_bundle FlyGrep doc/FlyGrep.txt
             # detach LICENSE
             _detact LICENSE
             # detach test vimrc
             _checkdir test
-            _detach_bundle FlyGrep test/vimrc
+            _detact_bundle FlyGrep test/vimrc
             ;;
         dein-ui.vim)
             git clone https://github.com/wsdjeg/dein-ui.vim.git detach/$1
@@ -121,23 +121,23 @@ main () {
             git clone https://github.com/wsdjeg/cpicker.nvim.git detach/$1
             cd detach/$1
             _checkdir syntax
-            _detach_bundle cpicker.nvim syntax/spacevim_cpicker.vim
-            _detach_bundle cpicker.nvim syntax/spacevim_cpicker_mix.vim
-            _detach_bundle cpicker.nvim README.md
+            _detact_bundle cpicker.nvim syntax/spacevim_cpicker.vim
+            _detact_bundle cpicker.nvim syntax/spacevim_cpicker_mix.vim
+            _detact_bundle cpicker.nvim README.md
             _checkdir plugin
-            _detach_bundle cpicker.nvim plugin/cpicker.lua
+            _detact_bundle cpicker.nvim plugin/cpicker.lua
             _checkdir lua/cpicker/formats
-            _detach_bundle cpicker.nvim lua/cpicker.lua
-            _detach_bundle cpicker.nvim lua/cpicker/util.lua
-            _detach_bundle cpicker.nvim lua/cpicker/mix.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/cmyk.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/hsl.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/hsv.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/hwb.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/lab.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/linear.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/rgb.lua
-            _detach_bundle cpicker.nvim lua/cpicker/formats/xyz.lua
+            _detact_bundle cpicker.nvim lua/cpicker.lua
+            _detact_bundle cpicker.nvim lua/cpicker/util.lua
+            _detact_bundle cpicker.nvim lua/cpicker/mix.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/cmyk.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/hsl.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/hsv.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/hwb.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/lab.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/linear.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/rgb.lua
+            _detact_bundle cpicker.nvim lua/cpicker/formats/xyz.lua
             _checkdir lua/spacevim/api
             _detact lua/spacevim/api/color.lua
             _detact lua/spacevim/api/notify.lua
@@ -157,16 +157,16 @@ main () {
             git clone https://github.com/wsdjeg/SourceCounter.vim.git detach/$1
             cd detach/$1
             _checkdir plugin
-            _detach_bundle SourceCounter.vim plugin/SourceCounter.vim
+            _detact_bundle SourceCounter.vim plugin/SourceCounter.vim
             _checkdir autoload
-            _detach_bundle SourceCounter.vim autoload/SourceCounter.vim
+            _detact_bundle SourceCounter.vim autoload/SourceCounter.vim
             _checkdir doc
-            _detach_bundle SourceCounter.vim doc/SourceCounter.vim.txt
-            _detach_bundle SourceCounter.vim README.md
-            _detach_bundle SourceCounter.vim addon-info.json
+            _detact_bundle SourceCounter.vim doc/SourceCounter.vim.txt
+            _detact_bundle SourceCounter.vim README.md
+            _detact_bundle SourceCounter.vim addon-info.json
             _detact LICENSE
             _checkdir pic
-            _detach_bundle SourceCounter.vim pic/screen.png
+            _detact_bundle SourceCounter.vim pic/screen.png
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/api/data
             _detact autoload/SpaceVim/api/notify.vim
@@ -255,18 +255,18 @@ EOT
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/job.vim
             _checkdir autoload/chat/
-            _detach_bundle vim-chat autoload/chat.vim
-            _detach_bundle vim-chat autoload/chat/gitter.vim
-            _detach_bundle vim-chat autoload/chat/logger.vim
-            _detach_bundle vim-chat autoload/chat/notify.vim
-            _detach_bundle vim-chat autoload/chat/qq.vim
-            _detach_bundle vim-chat autoload/chat/weixin.vim
+            _detact_bundle vim-chat autoload/chat.vim
+            _detact_bundle vim-chat autoload/chat/gitter.vim
+            _detact_bundle vim-chat autoload/chat/logger.vim
+            _detact_bundle vim-chat autoload/chat/notify.vim
+            _detact_bundle vim-chat autoload/chat/qq.vim
+            _detact_bundle vim-chat autoload/chat/weixin.vim
             _checkdir doc/
-            _detach_bundle vim-chat doc/vim-chat.txt
+            _detact_bundle vim-chat doc/vim-chat.txt
             _checkdir syntax/
-            _detach_bundle vim-chat syntax/vimchat.vim
-            _detach_bundle vim-chat addon-info.json
-            _detach_bundle vim-chat README.md
+            _detact_bundle vim-chat syntax/vimchat.vim
+            _detact_bundle vim-chat addon-info.json
+            _detact_bundle vim-chat README.md
             ;;
         JavaUnit.vim)
             git clone https://github.com/wsdjeg/JavaUnit.vim.git detach/$1
@@ -276,7 +276,7 @@ EOT
             # _detact autoload/SpaceVim/api.vim
             # _detact autoload/SpaceVim/api/job.vim
             # _checkdir autoload/chat/
-            _detach_bundle JavaUnit.vim README.md
+            _detact_bundle JavaUnit.vim README.md
             ;;
         git.vim)
             git clone https://github.com/wsdjeg/git.vim.git detach/$1
@@ -284,48 +284,48 @@ EOT
             _checkdir autoload/SpaceVim/api
             _detact autoload/SpaceVim/api.vim
             _detact autoload/SpaceVim/api/job.vim
-            _detach_bundle git.vim LICENSE
-            _detach_bundle git.vim README.md
-            _detach_bundle git.vim addon-info.json
+            _detact_bundle git.vim LICENSE
+            _detact_bundle git.vim README.md
+            _detact_bundle git.vim addon-info.json
             _checkdir autoload/git/branch
-            _detach_bundle git.vim autoload/git.vim
-            _detach_bundle git.vim autoload/git/add.vim
-            _detach_bundle git.vim autoload/git/blame.vim
-            _detach_bundle git.vim autoload/git/branch.vim
-            _detach_bundle git.vim autoload/git/branch/manager.vim
-            _detach_bundle git.vim autoload/git/checkout.vim
-            _detach_bundle git.vim autoload/git/cherry_pick.vim
-            _detach_bundle git.vim autoload/git/clean.vim
-            _detach_bundle git.vim autoload/git/commit.vim
-            _detach_bundle git.vim autoload/git/config.vim
-            _detach_bundle git.vim autoload/git/diff.vim
-            _detach_bundle git.vim autoload/git/fetch.vim
-            _detach_bundle git.vim autoload/git/log.vim
-            _detach_bundle git.vim autoload/git/logger.vim
-            _detach_bundle git.vim autoload/git/merge.vim
-            _detach_bundle git.vim autoload/git/mv.vim
-            _detach_bundle git.vim autoload/git/pull.vim
-            _detach_bundle git.vim autoload/git/push.vim
-            _detach_bundle git.vim autoload/git/rebase.vim
-            _detach_bundle git.vim autoload/git/reflog.vim
-            _detach_bundle git.vim autoload/git/remote.vim
-            _detach_bundle git.vim autoload/git/reset.vim
-            _detach_bundle git.vim autoload/git/rm.vim
-            _detach_bundle git.vim autoload/git/stash.vim
-            _detach_bundle git.vim autoload/git/status.vim
+            _detact_bundle git.vim autoload/git.vim
+            _detact_bundle git.vim autoload/git/add.vim
+            _detact_bundle git.vim autoload/git/blame.vim
+            _detact_bundle git.vim autoload/git/branch.vim
+            _detact_bundle git.vim autoload/git/branch/manager.vim
+            _detact_bundle git.vim autoload/git/checkout.vim
+            _detact_bundle git.vim autoload/git/cherry_pick.vim
+            _detact_bundle git.vim autoload/git/clean.vim
+            _detact_bundle git.vim autoload/git/commit.vim
+            _detact_bundle git.vim autoload/git/config.vim
+            _detact_bundle git.vim autoload/git/diff.vim
+            _detact_bundle git.vim autoload/git/fetch.vim
+            _detact_bundle git.vim autoload/git/log.vim
+            _detact_bundle git.vim autoload/git/logger.vim
+            _detact_bundle git.vim autoload/git/merge.vim
+            _detact_bundle git.vim autoload/git/mv.vim
+            _detact_bundle git.vim autoload/git/pull.vim
+            _detact_bundle git.vim autoload/git/push.vim
+            _detact_bundle git.vim autoload/git/rebase.vim
+            _detact_bundle git.vim autoload/git/reflog.vim
+            _detact_bundle git.vim autoload/git/remote.vim
+            _detact_bundle git.vim autoload/git/reset.vim
+            _detact_bundle git.vim autoload/git/rm.vim
+            _detact_bundle git.vim autoload/git/stash.vim
+            _detact_bundle git.vim autoload/git/status.vim
             _checkdir doc
-            _detach_bundle git.vim doc/git.txt
+            _detact_bundle git.vim doc/git.txt
             _checkdir plugin
-            _detach_bundle git.vim plugin/git.vim
+            _detact_bundle git.vim plugin/git.vim
             _checkdir syntax
-            _detach_bundle git.vim syntax/git-blame.vim
-            _detach_bundle git.vim syntax/git-commit.vim
-            _detach_bundle git.vim syntax/git-config.vim
-            _detach_bundle git.vim syntax/git-log.vim
-            _detach_bundle git.vim syntax/git-rebase.vim
-            _detach_bundle git.vim syntax/git-reflog.vim
+            _detact_bundle git.vim syntax/git-blame.vim
+            _detact_bundle git.vim syntax/git-commit.vim
+            _detact_bundle git.vim syntax/git-config.vim
+            _detact_bundle git.vim syntax/git-log.vim
+            _detact_bundle git.vim syntax/git-rebase.vim
+            _detact_bundle git.vim syntax/git-reflog.vim
             _checkdir test
-            _detach_bundle git.vim test/vimrc
+            _detact_bundle git.vim test/vimrc
             _checkdir lua/spacevim/api
             _detact lua/spacevim/api/job.lua
             _detact lua/spacevim/api/logger.lua
@@ -336,37 +336,37 @@ EOT
             _detact lua/spacevim/api/password.lua
             _checkdir lua/git/command
             _checkdir lua/git/ui
-            _detach_bundle git.vim lua/git/init.lua
-            _detach_bundle git.vim lua/git/log.lua
-            _detach_bundle git.vim lua/git/command/add.lua
-            _detach_bundle git.vim lua/git/command/add.lua
-            _detach_bundle git.vim lua/git/command/blame.lua
-            _detach_bundle git.vim lua/git/command/branch.lua
-            _detach_bundle git.vim lua/git/command/checkout.lua
-            _detach_bundle git.vim lua/git/command/cherry-pick.lua
-            _detach_bundle git.vim lua/git/command/clean.lua
-            _detach_bundle git.vim lua/git/command/commit.lua
-            _detach_bundle git.vim lua/git/command/config.lua
-            _detach_bundle git.vim lua/git/command/diff.lua
-            _detach_bundle git.vim lua/git/command/fetch.lua
-            _detach_bundle git.vim lua/git/command/grep.lua
-            _detach_bundle git.vim lua/git/command/log.lua
-            _detach_bundle git.vim lua/git/command/merge.lua
-            _detach_bundle git.vim lua/git/command/mv.lua
-            _detach_bundle git.vim lua/git/command/pull.lua
-            _detach_bundle git.vim lua/git/command/push.lua
-            _detach_bundle git.vim lua/git/command/rebase.lua
-            _detach_bundle git.vim lua/git/command/reflog.lua
-            _detach_bundle git.vim lua/git/command/remote.lua
-            _detach_bundle git.vim lua/git/command/reset.lua
-            _detach_bundle git.vim lua/git/command/rm.lua
-            _detach_bundle git.vim lua/git/command/shortlog.lua
-            _detach_bundle git.vim lua/git/command/stash.lua
-            _detach_bundle git.vim lua/git/command/status.lua
-            _detach_bundle git.vim lua/git/command/tag.lua
-            _detach_bundle git.vim lua/git/command/update-index.lua
-            _detach_bundle git.vim lua/git/ui/branch.lua
-            _detach_bundle git.vim lua/git/ui/remote.lua
+            _detact_bundle git.vim lua/git/init.lua
+            _detact_bundle git.vim lua/git/log.lua
+            _detact_bundle git.vim lua/git/command/add.lua
+            _detact_bundle git.vim lua/git/command/add.lua
+            _detact_bundle git.vim lua/git/command/blame.lua
+            _detact_bundle git.vim lua/git/command/branch.lua
+            _detact_bundle git.vim lua/git/command/checkout.lua
+            _detact_bundle git.vim lua/git/command/cherry-pick.lua
+            _detact_bundle git.vim lua/git/command/clean.lua
+            _detact_bundle git.vim lua/git/command/commit.lua
+            _detact_bundle git.vim lua/git/command/config.lua
+            _detact_bundle git.vim lua/git/command/diff.lua
+            _detact_bundle git.vim lua/git/command/fetch.lua
+            _detact_bundle git.vim lua/git/command/grep.lua
+            _detact_bundle git.vim lua/git/command/log.lua
+            _detact_bundle git.vim lua/git/command/merge.lua
+            _detact_bundle git.vim lua/git/command/mv.lua
+            _detact_bundle git.vim lua/git/command/pull.lua
+            _detact_bundle git.vim lua/git/command/push.lua
+            _detact_bundle git.vim lua/git/command/rebase.lua
+            _detact_bundle git.vim lua/git/command/reflog.lua
+            _detact_bundle git.vim lua/git/command/remote.lua
+            _detact_bundle git.vim lua/git/command/reset.lua
+            _detact_bundle git.vim lua/git/command/rm.lua
+            _detact_bundle git.vim lua/git/command/shortlog.lua
+            _detact_bundle git.vim lua/git/command/stash.lua
+            _detact_bundle git.vim lua/git/command/status.lua
+            _detact_bundle git.vim lua/git/command/tag.lua
+            _detact_bundle git.vim lua/git/command/update-index.lua
+            _detact_bundle git.vim lua/git/ui/branch.lua
+            _detact_bundle git.vim lua/git/ui/remote.lua
             ;;
         vim-cheat)
             git clone https://github.com/wsdjeg/vim-cheat.git detach/$1
@@ -374,76 +374,101 @@ EOT
             _checkdir plugin/
             _checkdir autoload/
             _detact LICENSE
-            _detach_bundle vim-cheat autoload/cheat.vim
-            _detach_bundle vim-cheat plugin/cheat.vim
-            _detach_bundle vim-cheat README.md
-            _detach_bundle vim-cheat .travis.yml
-            _detach_bundle vim-cheat .vintrc.yaml
+            _detact_bundle vim-cheat autoload/cheat.vim
+            _detact_bundle vim-cheat plugin/cheat.vim
+            _detact_bundle vim-cheat README.md
+            _detact_bundle vim-cheat .travis.yml
+            _detact_bundle vim-cheat .vintrc.yaml
             _checkdir doc/
-            _detach_bundle vim-cheat doc/vim-cheat.txt
+            _detact_bundle vim-cheat doc/vim-cheat.txt
             ;;
         vim-zettelkasten)
             git clone https://github.com/wsdjeg/vim-zettelkasten.git detach/$1
             cd detach/$1
             _detact LICENSE
             _checkdir plugin/
-            _detach_bundle vim-zettelkasten plugin/zettelkasten.lua
-            _detach_bundle vim-zettelkasten README.md
+            _detact_bundle vim-zettelkasten plugin/zettelkasten.lua
+            _detact_bundle vim-zettelkasten README.md
             _checkdir doc/
-            _detach_bundle vim-zettelkasten doc/vim-zettelkasten.txt
+            _detact_bundle vim-zettelkasten doc/vim-zettelkasten.txt
             _checkdir ftdetect
-            _detach_bundle vim-zettelkasten ftdetect/zettelkasten.lua
+            _detact_bundle vim-zettelkasten ftdetect/zettelkasten.lua
             _checkdir ftplugin
-            _detach_bundle vim-zettelkasten ftplugin/markdown.lua
-            _detach_bundle vim-zettelkasten ftplugin/zkbrowser.lua
+            _detact_bundle vim-zettelkasten ftplugin/markdown.lua
+            _detact_bundle vim-zettelkasten ftplugin/zkbrowser.lua
+            _detact_bundle vim-zettelkasten ftplugin/zktagstree.lua
             _checkdir lua/zettelkasten
-            _detach_bundle vim-zettelkasten lua/zettelkasten.lua
-            _detach_bundle vim-zettelkasten lua/zettelkasten/browser.lua
-            _detach_bundle vim-zettelkasten lua/zettelkasten/config.lua
-            _detach_bundle vim-zettelkasten lua/zettelkasten/formatter.lua
-            _detach_bundle vim-zettelkasten lua/zettelkasten/log.lua
+            _detact_bundle vim-zettelkasten lua/zettelkasten.lua
+            _detact_bundle vim-zettelkasten lua/zettelkasten/browser.lua
+            _detact_bundle vim-zettelkasten lua/zettelkasten/config.lua
+            _detact_bundle vim-zettelkasten lua/zettelkasten/formatter.lua
+            _detact_bundle vim-zettelkasten lua/zettelkasten/log.lua
+            _detact_bundle vim-zettelkasten lua/zettelkasten/sidebar.lua
+            _checkdir test/
+            _detact_bundle vim-zettelkasten test/init.vim
+            _checkdir lua/telescope/_extensions
+            _detact_bundle vim-zettelkasten lua/telescope/_extensions/zettelkasten_tags.lua
+            _detact_bundle vim-zettelkasten lua/telescope/_extensions/zettelkasten_template.lua
+            # detach spacevim core files
+            _checkdir lua/spacevim
+            _checkdir lua/spacevim/api
+            _detact lua/spacevim.lua
+            _detact lua/spacevim/logger.lua
+            _detact lua/spacevim/api.lua
+            _detact lua/spacevim/api/logger.lua
+            _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/password.lua
+            _checkdir autoload/SpaceVim/api
+            _checkdir autoload/SpaceVim/api/neovim
+            _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/data
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/notify.vim
+            _detact autoload/SpaceVim/api/neovim/floating.vim
+            _detact autoload/SpaceVim/api/vim/floating.vim
+            _detact autoload/SpaceVim/api/data/dict.vim
             ;;
         xmake.vim)
             git clone https://github.com/wsdjeg/xmake.vim.git detach/$1
             cd detach/$1
             _checkdir plugin/
-            _detach_bundle xmake.vim plugin/xmake.vim
-            _detach_bundle xmake.vim plugin/xmgen.py
+            _detact_bundle xmake.vim plugin/xmake.vim
+            _detact_bundle xmake.vim plugin/xmgen.py
             _checkdir autoload/
-            _detach_bundle xmake.vim autoload/xmake.vim
-            _detach_bundle xmake.vim autoload/spy.lua
+            _detact_bundle xmake.vim autoload/xmake.vim
+            _detact_bundle xmake.vim autoload/spy.lua
             _detact LICENSE
             _default_readme "xmake.vim" "xmake support for neovim/vim"
             _checkdir autoload/xmake/
-            _detach_bundle xmake.vim autoload/xmake/log.vim
+            _detact_bundle xmake.vim autoload/xmake/log.vim
             _checkdir doc/
-            _detach_bundle xmake.vim doc/xmake.txt
+            _detact_bundle xmake.vim doc/xmake.txt
             _checkdir UltiSnips/
-            _detach_bundle xmake.vim UltiSnips/lua.snippets
+            _detact_bundle xmake.vim UltiSnips/lua.snippets
             _checkdir rplugin/python3/deoplete/sources/docs/
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/xmake.py
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_defines
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_defines                     
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_deps                        
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_files                       
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_headers                     
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_includedirs                 
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_linkdirs                    
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_links                       
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_subdirs                     
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/is_os                           
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/is_plat                         
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_basename                    
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_headerdir                   
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_kind                        
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_languages                   
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_objectdir                   
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_optimize                    
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_project                     
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_strip                       
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_symbols                     
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_targetdir                   
-            _detach_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_warnings 
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/xmake.py
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_defines
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_defines                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_deps                        
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_files                       
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_headers                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_includedirs                 
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_linkdirs                    
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_links                       
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/add_subdirs                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/is_os                           
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/is_plat                         
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_basename                    
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_headerdir                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_kind                        
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_languages                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_objectdir                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_optimize                    
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_project                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_strip                       
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_symbols                     
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_targetdir                   
+            _detact_bundle xmake.vim rplugin/python3/deoplete/sources/docs/set_warnings 
             ;;
         scrollbar.vim)
             git clone https://github.com/wsdjeg/scrollbar.vim.git detach/$1
@@ -468,11 +493,11 @@ EOT
             _checkdir autoload/SpaceVim/plugins/
             _detact autoload/SpaceVim/plugins/scrollbar.vim
             _detact LICENSE
-            _detach_bundle scrollbar.vim README.md
+            _detact_bundle scrollbar.vim README.md
             _checkdir plugin
-            _detach_bundle scrollbar.vim plugin/scrollbar.vim
+            _detact_bundle scrollbar.vim plugin/scrollbar.vim
             _checkdir test
-            _detach_bundle scrollbar.vim test/vimrc
+            _detact_bundle scrollbar.vim test/vimrc
             _checkdir lua/spacevim/plugin
             _detact lua/spacevim/plugin/scrollbar.lua
             _checkdir lua/spacevim/api/vim
@@ -486,11 +511,11 @@ EOT
             _checkdir plugin/
             _checkdir autoload/
             _detact LICENSE
-            _detach_bundle github.vim autoload/github.vim
-            _detach_bundle github.vim plugin/github.vim
+            _detact_bundle github.vim autoload/github.vim
+            _detact_bundle github.vim plugin/github.vim
             _default_readme "GitHub.vim" "GitHub API support for neovim/vim[wip]"
             _checkdir doc/
-            _detach_bundle github doc/github.txt
+            _detact_bundle github doc/github.txt
             ;;
     esac
     git add .
