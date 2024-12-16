@@ -25,9 +25,12 @@
 
 2. Using `vim-zettelkasten` without SpaceVim:
 
-```
+```vim
 Plug 'wsdjeg/vim-zettelkasten'
+let g:zettelkasten_directory = 'D:\me\zettelkasten'
+let g:zettelkasten_template_directory = 'D:\me\zettelkasten_template'
 ```
+
 
 ## Feedback
 
