@@ -316,7 +316,7 @@
     VIMRUNTIME = 'D:\Neovim\v0.4.2\share\nvim\runtime'
 [bundle-vim-zettelkasten-nvim]
     command = 'wt.exe'
-    args = ['-d', 'D:\wsdjeg\vim-zettelkasten', 'D:\Scoop\apps\neovim\current\bin\nvim.exe', '-Nu', 'test/vimrc']
+    args = ['-d', 'D:\wsdjeg\vim-zettelkasten', 'D:\Scoop\apps\neovim\current\bin\nvim.exe', '-Nu', 'test/init.vim']
     isBackground = true
 [bundle-vim-zettelkasten-nvim.options.env]
     VIM = 'D:\Scoop\apps\neovim\current\share\nvim'
