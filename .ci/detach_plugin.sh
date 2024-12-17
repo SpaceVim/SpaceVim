@@ -393,6 +393,9 @@ EOT
             _detact_bundle vim-zettelkasten doc/vim-zettelkasten.txt
             _checkdir ftdetect
             _detact_bundle vim-zettelkasten ftdetect/zettelkasten.lua
+            _checkdir syntax
+            _detact_bundle vim-zettelkasten syntax/zkbrowser.vim
+            _detact_bundle vim-zettelkasten syntax/zktagstree.vim
             _checkdir ftplugin
             _detact_bundle vim-zettelkasten ftplugin/markdown.lua
             _detact_bundle vim-zettelkasten ftplugin/zkbrowser.lua
