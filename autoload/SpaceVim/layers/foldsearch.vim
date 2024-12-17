@@ -68,7 +68,7 @@ let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#foldsearch#config()
 
-  let g:_spacevim_mappings_space.F = {'name' : '+Foldsearch'}
+  let g:_spacevim_mappings_space.F.name = '+Foldsearch/Tabs'
   let lnum = expand('<slnum>') + s:lnum - 1
   call SpaceVim#mapping#space#def('nnoremap', ['F', 'w'], 'call call('
         \ . string(s:_function('s:foldsearch_word')) . ', [])',

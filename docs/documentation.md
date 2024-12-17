@@ -47,9 +47,11 @@ description: "General documentation about how to use SpaceVim, including the qui
     - [Commenting](#commenting)
     - [Undo tree](#undo-tree)
     - [Multi-Encodings](#multi-encodings)
-  - [Window manager](#window-manager)
+  - [Windows and Tabs](#windows-and-tabs)
+    - [Windows Manager](#windows-manager)
     - [General Editor windows](#general-editor-windows)
     - [Window manipulation key bindings](#window-manipulation-key-bindings)
+    - [Tabs manipulation key bindings](#tabs-manipulation-key-bindings)
   - [Buffers and Files](#buffers-and-files)
     - [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
     - [Create a new empty buffer](#create-a-new-empty-buffer)
@@ -1351,7 +1353,9 @@ set enc=utf-8
 write
 ```
 
-### Window manager
+### Windows and Tabs
+
+#### Windows Manager
 
 Window manager key bindings can only be used in normal mode. The default leader `[WIN]` is `s`, you
 can change it via `windows_leader` in the `[options]` section:
@@ -1446,31 +1450,41 @@ Windows manipulation commands (start with `w`):
 | `SPC w W`             | select window using vim-choosewin                                             |
 | `SPC w x`             | exchange current window with next one                                         |
 
+#### Tabs manipulation key bindings
+
+Tab manipulation commands (start with `F`):
+
+| Key Bindings | Descriptions      |
+| ------------ | ----------------- |
+| `SPC F d`    | close current tab |
+| `SPC F D`    | close other tabs  |
+| `SPC F n`    | create a new tab  |
+
 ### Buffers and Files
 
 #### Buffers manipulation key bindings
 
 Buffer manipulation commands (start with `b`):
 
-| Key Bindings         | Descriptions                                                                   |
-| -------------------- | ------------------------------------------------------------------------------ |
-| `SPC <Tab>`          | switch to alternate buffer in the current window (switch back and forth)       |
-| `SPC b .`            | buffer transient state                                                         |
-| `SPC b b`            | switch to a buffer (via denite/unite)                                          |
-| `SPC b d`            | kill the current buffer (does not delete the visited file)                     |
-| `SPC b D`            | kill a visible buffer using vim-choosewin                                      |
-| `SPC b Ctrl-d`       | kill other buffers                                                             |
-| `SPC b Ctrl-Shift-d` | kill buffers using a regular expression                                        |
-| `SPC b e`            | erase the content of the buffer (ask for confirmation)                         |
-| `SPC b n`            | switch to next buffer avoiding special buffers                                 |
-| `SPC b m`            | open _Messages_ buffer                                                         |
-| `SPC b o`            | kill all saved buffers and windows except the current one                      |
-| `SPC b p`            | switch to previous buffer avoiding special buffers                             |
-| `SPC b P`            | copy clipboard and replace buffer (useful when pasting from a browser)         |
-| `SPC b R`            | revert the current buffer (reload from disk)                                   |
-| `SPC b s`            | switch to the _scratch_ buffer (create it if needed)                           |
-| `SPC b w`            | toggle read-only (writable state)                                              |
-| `SPC b Y`            | copy whole buffer to clipboard (useful when copying to a browser)              |
+| Key Bindings         | Descriptions                                                             |
+| -------------------- | ------------------------------------------------------------------------ |
+| `SPC <Tab>`          | switch to alternate buffer in the current window (switch back and forth) |
+| `SPC b .`            | buffer transient state                                                   |
+| `SPC b b`            | switch to a buffer (via denite/unite)                                    |
+| `SPC b d`            | kill the current buffer (does not delete the visited file)               |
+| `SPC b D`            | kill a visible buffer using vim-choosewin                                |
+| `SPC b Ctrl-d`       | kill other buffers                                                       |
+| `SPC b Ctrl-Shift-d` | kill buffers using a regular expression                                  |
+| `SPC b e`            | erase the content of the buffer (ask for confirmation)                   |
+| `SPC b n`            | switch to next buffer avoiding special buffers                           |
+| `SPC b m`            | open _Messages_ buffer                                                   |
+| `SPC b o`            | kill all saved buffers and windows except the current one                |
+| `SPC b p`            | switch to previous buffer avoiding special buffers                       |
+| `SPC b P`            | copy clipboard and replace buffer (useful when pasting from a browser)   |
+| `SPC b R`            | revert the current buffer (reload from disk)                             |
+| `SPC b s`            | switch to the _scratch_ buffer (create it if needed)                     |
+| `SPC b w`            | toggle read-only (writable state)                                        |
+| `SPC b Y`            | copy whole buffer to clipboard (useful when copying to a browser)        |
 
 #### Create a new empty buffer
 

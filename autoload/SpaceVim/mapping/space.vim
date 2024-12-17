@@ -643,6 +643,38 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'call SpaceVim#plugins#searcher#clear()',
         \ 'clear-search-results', 1)
 
+  " Tab key bindings:
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'D'], 'tabonly',
+        \ ['close-other-tabs',
+        \ [
+        \ 'SPC F D is to close all of other tabs',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ],
+        \ 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'n'], 'tabnew',
+        \ ['create-new-tab',
+        \ [
+        \ 'SPC F D is to create a new tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ],
+        \ 1)
+  let s:lnum = expand('<slnum>') + s:funcbeginline
+  call SpaceVim#mapping#space#def('nnoremap', ['F', 'd'], 'tabclose',
+        \ ['close-current-tab',
+        \ [
+        \ 'SPC F D is to close current tab',
+        \ '',
+        \ 'Definition: ' . s:file . ':' . s:lnum,
+        \ ]
+        \ ],
+        \ 1)
+
   "Symbol
   if has('nvim-0.7.0')
     nnoremap <silent> <plug>SpaceVim-plugin-iedit :lua require('spacevim.plugin.iedit').start()<cr>

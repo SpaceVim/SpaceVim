@@ -1768,6 +1768,7 @@ let g:_spacevim_mappings_space.l = {'name' : '+Language Specified'}
 let g:_spacevim_mappings_space.s = {'name' : '+Searching/Symbol'}
 let g:_spacevim_mappings_space.r = {'name' : '+Registers/rings/resume'}
 let g:_spacevim_mappings_space.d = {'name' : '+Debug'}
+let g:_spacevim_mappings_space.F = {'name' : '+Tabs'}
 let g:_spacevim_mappings_space.e = {'name' : '+Errors/Encoding'}
 let g:_spacevim_mappings_space.B = {'name' : '+Global buffers'}
 let g:_spacevim_mappings_space.f.v = {'name' : '+Vim/SpaceVim'}
