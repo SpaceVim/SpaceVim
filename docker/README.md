@@ -1,8 +1,8 @@
 ## SpaceVim in DockerHub
 
-![Docker Automated build](https://img.shields.io/docker/automated/spacevim/spacevim)
-![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/spacevim/spacevim?sort=date)
-[![Docker Pulls](https://img.shields.io/docker/pulls/spacevim/spacevim)](https://hub.docker.com/r/spacevim/spacevim)
+[![Docker Automated build](https://img.shields.io/docker/automated/wsdjeg2/spacevim)](https://hub.docker.com/r/wsdjeg2/spacevim)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/wsdjeg2/spacevim?sort=date)](https://hub.docker.com/r/wsdjeg2/spacevim)
+[![Docker Pulls](https://img.shields.io/docker/pulls/wsdjeg2/spacevim)](https://hub.docker.com/r/wsdjeg2/spacevim)
 
 This Dockerfile builds neovim `HEAD` and installs the latest available version of SpaceVim. You might want to use this for several reasons:
 
