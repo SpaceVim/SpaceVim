@@ -31,6 +31,37 @@ call SpaceVim#dev#followHEAD#update('cn')
 <!-- SpaceVim follow HEAD start -->
 ## 新特性
 
+- feat(git): implement lua complete for git-add
+- feat(markdown): add `SPC l t` to toggle todo
+- feat(zettelkasten): sort tags in sidebar
+- feat(git.vim): complete git push command
+- feat(git): improve git branch detection
+- feat(zettelkasten): use `<Enter>` to open note
+- perf(zettelkasten): set winfixwidth option
+- feat(zktagstree): support `<LeftRelease>` key
+- feat(zettelkasten): add zk tags tree
+- feat(zkbrowser): use `<LeftRelease>` to filter tag
+- feat(zettelkasten): filter zk tags
+- feat(zettelkasten): detach vim-zettelkasten plugin
+- feat(git): complete checkout command
+- feat(zettelkasten): improve zettelkasten plugin
+- feat(telescope): add `hidden` & `no_ignore` opt
+- feat(cpicker): change cursor highlight
+- feat(flygrep): use `ctrl-h` toggle hidden files
+- perf(shell): add `center-float` position
+- perf(SourceCounter): import sourcecounter
+- feat(cpicker.nvim): detact_bundle cpicker.nvim
+- feat(cpicker): add xyz color space
+- feat(cpicker): add linear and lab color space
+- feat(cpicker): add hwb color-mix
+- feat(cpicker): add color-mix-method
+- feat(cpicker): add color-mix function
+- feat(cpicker): picker color from cursor
+- feat(cpicker): change color code background
+- feat(cpicker): add hwb color space
+- feat(cpicker): add cmyk color space
+- feat(hsv): add hsv format
+- feat(cpicker): use Enter to copy color
 - feat(cpicker): add tools#cpicker layer
 - feat(core): add logevent plugin
 - feat(github): add ci files
@@ -118,6 +149,30 @@ call SpaceVim#dev#followHEAD#update('cn')
 
 ## 问题修复
 
+- fix(tasks): update vim-zettelkasten task
+- fix(zettelkasten): test zettelkasten plugin
+- fix(cmp): fix return nil behavior
+- fix(guide): update language specified mapping
+- fix(messletters): make bubble_num avoid nil
+- fix(telescope): remove on_cmd option
+- fix(cmp): fix nvim-cmp mapping
+- fix(guide): fix `g` guide map
+- fix(javavi): include jar files
+- fix(opt): check belloff opt
+- fix(cpicker): fix unknow function
+- fix(scrollbar): detach apis
+- fix(scrollbar): detach logger
+- fix(cpicker): init data_dir
+- fix(cpicker): set wrap opt for win
+- fix(flygrep): detach job api
+- fix(detach): fix detach url
+- fix(bootstrap): use timer for bootstrap_after
+- fix(cpicker): disable number and wrap opt
+- fix(chat): fix vim chat statusline
+- fix(cpicker): remove extra space
+- fix(color): add missing functions
+- fix(cpicker): fix get cursor color function
+- fix(color): use math.round instead of floor
 - fix(mapping): fix SPC a r/o
 - fix(mapping): fix SPC b d key binding
 - fix(tabline): update tabline on buflisted changed
@@ -187,6 +242,19 @@ call SpaceVim#dev#followHEAD#update('cn')
 
 ## 文档更新
 
+- docs(docker): update docker link
+- docs(zettelkasten): update vim-zettelkasten readme
+- docs(git): update readme of git.vim
+- docs(development): use github issue & pull request
+- docs(matrix): remove all chatting rooms
+- docs(scrollbar): update requirements
+- docs(scrollbar): add scrollbar img
+- docs(flygrep): update flygrep readme
+- docs(api): add prompt doc
+- docs(git): update README
+- docs(development): fix dev link
+- docs(cpicker): update key bindings
+- docs(website): update layer list
 - docs(readme): update readme
 - docs(bundle-plugins): add neo-tree link
 - docs(autocomplete): update doc
@@ -228,10 +296,28 @@ call SpaceVim#dev#followHEAD#update('cn')
 
 ## 测试
 
+- test(zettelkasten): fix test script
+- test(scrollbar): fix scrollbar task
+- test(scrollbar): add scrollbar task
 - test(vader): fix vader test
 
 ## 其他
 
+- ci(plugin): change commit email
+- ci(detach): fix detach script
+- ci(version)! remove old tests
+- typo(guide): Key binding not defined
+- ci(detach): fix scrollbar detach script
+- ci(runner): switch to ubuntu-22.04
+- ci(scrollbar): detach lua scrollbar
+- refactor(scrollbar): detach scrollbar
+- ci(detach): detach lua git plugin
+- ci(detach): update detach script
+- chore(async): detach SourceCounter.vim
+- ci(async): add cpicker.nvim
+- chore(log): remove log.txt
+- chore(cpicker): remove duplicate code
+- chore(typo): typo in cpicker
 - build(docker): use new docker repo
 - build(makefile): update makefile
 - chore(colorscheme): use bundle vim-hybrid
