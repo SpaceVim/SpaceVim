@@ -72,7 +72,14 @@ function M.run(argv)
   end
 end
 
-function M.complete(ArgLead, CmdLine, CursorPos) end
+function M.complete(ArgLead, CmdLine, CursorPos)
+  local str = string.sub(CmdLine, 1, CursorPos)
+  if vim.regex([[^Git\s\+tag\s\+-\+$]]):match_str(str) then
+    return table.concat({'--list'}, '\n')
+  else
+    return ''
+  end
+end
 
 return M
 
