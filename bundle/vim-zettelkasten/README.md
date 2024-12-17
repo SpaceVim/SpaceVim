@@ -8,6 +8,8 @@
 <!-- vim-markdown-toc GFM -->
 
 - [Install](#install)
+- [Usage](#usage)
+- [Screenshots](#screenshots)
 - [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
@@ -31,6 +33,34 @@ let g:zettelkasten_directory = 'D:\me\zettelkasten'
 let g:zettelkasten_template_directory = 'D:\me\zettelkasten_template'
 ```
 
+## Usage
+
+**Commands:**
+
+| Command           | description                       |
+| ----------------- | --------------------------------- |
+| `:ZkNew`          | create new note                   |
+| `:ZkBrowse`       | list note in browser window       |
+| `:ZkListTags`     | filter tags in telescope          |
+| `:ZkListTemplete` | filte note templates in telescope |
+
+**Key bindings in browser window:**
+
+| key bindings    | description                        |
+| --------------- | ---------------------------------- |
+| `F2`            | open zettelkasten tags sidebar     |
+| `<LeftRelease>` | filter notes based on cursor tag   |
+| `gf`            | open the note                      |
+| `Ctrl-l`        | clear tags filter pattarn          |
+| `Ctrl-] / K`    | preview note in vim preview-window |
+| `[I`            | list references in quickfix-window |
+
+## Screenshots
+
+![](https://wsdjeg.net/images/zkbrowser.png)
+![](https://wsdjeg.net/images/zettelkasten-tags-sidebar.png)
+![](https://wsdjeg.net/images/zettelkasten-tags-filter.png)
+![](https://wsdjeg.net/images/zettelkasten-complete-id.png)
 
 ## Feedback
 
