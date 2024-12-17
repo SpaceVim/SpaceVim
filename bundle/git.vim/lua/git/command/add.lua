@@ -39,4 +39,10 @@ function M.run(argv)
   job.start(cmd, { on_exit = on_exit })
 end
 
+function M.complete(ArgLead, CmdLine, CursorPos)
+  local rst = vim.fn.getcompletion(ArgLead, 'file')
+  table.insert(rst, '%')
+  return table.concat(rst, '\n')
+end
+
 return M
