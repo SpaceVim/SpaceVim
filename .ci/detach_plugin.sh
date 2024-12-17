@@ -519,7 +519,7 @@ EOT
             ;;
     esac
     git add .
-    git config user.email "eric@wsdjeg.net"
+    git config user.email "wsdjeg@outlook.com"
     git config user.name  "Eric Wong"
     git commit -m "${SpaceVim_COMMIT_MSG}"
     git remote add wsdjeg_$1 https://SpaceVimBot:${BOTSECRET}@github.com/wsdjeg/$1.git
