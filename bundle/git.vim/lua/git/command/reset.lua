@@ -5,7 +5,7 @@
 -- URL: https://spacevim.org
 -- License: GPLv3
 --=============================================================================
-local m = {}
+local M = {}
 
 local job = require('spacevim.api.job')
 local nt = require('spacevim.api.notify')
@@ -23,7 +23,7 @@ local function on_exit(id, code, single)
   end
 end
 
-function m.run(argv)
+function M.run(argv)
   local cmd = { 'git', 'reset' }
   if #argv == 1 and argv[1] == '%' then
     cmd = { 'git', 'reset', 'HEAD', vim.fn.expand('%') }
@@ -38,4 +38,9 @@ function m.run(argv)
   })
 end
 
-return m
+function M.complete(ArgLead, CmdLine, CursorPos)
+  local rst = vim.fn.getcompletion(ArgLead, 'file')
+  return table.concat(rst, '\n')
+end
+
+return M

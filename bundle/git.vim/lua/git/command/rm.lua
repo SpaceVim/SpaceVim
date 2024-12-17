@@ -47,4 +47,9 @@ function m.run(argv)
   })
 end
 
+function M.complete(ArgLead, CmdLine, CursorPos)
+  local rst = vim.fn.getcompletion(ArgLead, 'file')
+  return table.concat(rst, '\n')
+end
+
 return m

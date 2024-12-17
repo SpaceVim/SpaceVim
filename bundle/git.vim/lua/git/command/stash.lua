@@ -97,4 +97,27 @@ function M.run(argv)
   end
 end
 
+local function sub_commands()
+  return {
+    'list',
+    'show',
+    'drop',
+    'pop',
+    'apply',
+    'branch',
+    'clear',
+    'save',
+    'push',
+  }
+end
+
+function M.complete(ArgLead, CmdLine, CursorPos)
+  local str = string.sub(CmdLine, 1, CursorPos)
+  if vim.regex([[^Git\s\+stash\s\+[a-z]\+$]]):match_str(str) then
+    return table.concat(sub_commands(), '\n')
+  else
+    return ''
+  end
+end
+
 return M
