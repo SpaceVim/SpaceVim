@@ -5,8 +5,6 @@ description: "SpaceVim is a modular Vim/Neovim configuration that seeks to provi
 
 [![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#license)
-[![reddit](https://img.spacevim.org/reddit.svg)](https://www.reddit.com/r/SpaceVim/)
-[![matrix](https://img.spacevim.org/spacevim-matrix.svg)](https://app.element.io/#/room/#spacevim:matrix.org)
 
 ![work-flow](https://img.spacevim.org/workflow.png)
 

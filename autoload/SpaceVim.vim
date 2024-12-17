@@ -2872,10 +2872,6 @@ endfunction
 " send email to spacevim@googlegroups.com
 " 
 " To subscribe the maillist, send anything to：spacevim+subscribe@googlegroups.com
-" 
-" @subsection Forum
-"
-" - Reddit: https://www.reddit.com/r/SpaceVim/
 
 ""
 " @section Roadmap, roadmap
