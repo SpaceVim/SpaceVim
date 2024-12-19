@@ -117,6 +117,40 @@ main () {
             _detact syntax/SpaceVimPlugManager.vim
             _detact LICENSE
             ;;
+        format.nvim)
+            git clone https://github.com/wsdjeg/format.nvim.git detach/$1
+            cd detach/$1
+            _detact LICENSE
+            _checkdir plugin
+            _detact_bundle format.nvim plugin/format.lua
+            _detact_bundle format.nvim README.md
+            _checkdir lua/format/ft
+            _detact_bundle format.nvim lua/format.lua
+            _detact_bundle format.nvim lua/format/util.lua
+            _detact_bundle format.nvim lua/format/task.lua
+            _detact_bundle format.nvim lua/format/config.lua
+            _detact_bundle format.nvim lua/format/ft/c.lua
+            _detact_bundle format.nvim lua/format/ft/json.lua
+            _detact_bundle format.nvim lua/format/ft/markdown.lua
+            _detact_bundle format.nvim lua/format/ft/rust.lua
+            # detact spacevim core files
+            _checkdir lua/spacevim/api
+            _detact lua/spacevim.lua
+            _detact lua/spacevim/logger.lua
+            _detact lua/spacevim/api.lua
+            _detact lua/spacevim/api/logger.lua
+            _detact lua/spacevim/api/job.lua
+            _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/password.lua
+            _checkdir autoload/SpaceVim/api/neovim
+            _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/data
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/notify.vim
+            _detact autoload/SpaceVim/api/neovim/floating.vim
+            _detact autoload/SpaceVim/api/vim/floating.vim
+            _detact autoload/SpaceVim/api/data/dict.vim
+            ;;
         cpicker.nvim)
             git clone https://github.com/wsdjeg/cpicker.nvim.git detach/$1
             cd detach/$1
