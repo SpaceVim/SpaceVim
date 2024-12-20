@@ -151,6 +151,30 @@ main () {
             _detact autoload/SpaceVim/api/vim/floating.vim
             _detact autoload/SpaceVim/api/data/dict.vim
             ;;
+        record-key.nvim)
+            git clone https://github.com/wsdjeg/record-key.nvim.git detach/$1
+            cd detach/$1
+            _checkdir plugin
+            _detact_bundle record-key.nvim plugin/record-key.lua
+            _detact_bundle record-key.nvim README.md
+            _checkdir lua/spacevim/plugin
+            _detact lua/spacevim/plugin/record-key.lua
+            _checkdir lua/spacevim/api
+            _detact lua/spacevim.lua
+            _detact lua/spacevim/logger.lua
+            _detact lua/spacevim/api.lua
+            _detact lua/spacevim/api/logger.lua
+            _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/password.lua
+            _checkdir autoload/SpaceVim/api/neovim
+            _checkdir autoload/SpaceVim/api/vim
+            _checkdir autoload/SpaceVim/api/data
+            _detact autoload/SpaceVim/api.vim
+            _detact autoload/SpaceVim/api/notify.vim
+            _detact autoload/SpaceVim/api/neovim/floating.vim
+            _detact autoload/SpaceVim/api/vim/floating.vim
+            _detact autoload/SpaceVim/api/data/dict.vim
+            ;;
         cpicker.nvim)
             git clone https://github.com/wsdjeg/cpicker.nvim.git detach/$1
             cd detach/$1
