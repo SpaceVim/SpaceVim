@@ -152,7 +152,11 @@ function! s:mappings() abort
   call SpaceVim#mapping#space#langSPC('nmap', ['l', 'r'], 
         \ 'call call('
         \ . string(function('s:run_code_in_block'))
-        \ . ', [])', 'run code in block', 1)
+        \ . ', [])', 'run-code-bl', 1)
+  call SpaceVim#mapping#space#langSPC('nmap', ['l', 'f'], 
+        \ 'call call('
+        \ . string(function('s:format_code_block'))
+        \ . ', [])', 'format-code-block', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','c'], 'GenTocGFM', 'create content at cursor', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','C'], 'RemoveToc', 'remove content', 1)
   call SpaceVim#mapping#space#langSPC('nmap', ['l','u'], 'UpdateToc', 'update content', 1)
@@ -234,6 +238,15 @@ function! s:run_code_in_block() abort
       call SpaceVim#plugins#runner#open(runner)
     endif
   endif
+endfunction
+
+function! s:format_code_block() abort
+  let cf = context_filetype#get()
+  if cf.filetype !=# 'markdown'
+    let command = printf('%s,%sFormat! %s', cf.range[0][0], cf.range[1][0], cf.filetype)
+    exe command
+  endif
+  
 endfunction
 
 

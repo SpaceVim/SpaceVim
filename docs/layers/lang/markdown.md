@@ -99,7 +99,8 @@ If you don't want to install php, you can use [mdctags](https://github.com/wsdje
 | `SPC l C`    | Normal/Visual | Remove content                                         |
 | `SPC l k`    | Normal/Visual | Add URL link for word under cursor or slected word     |
 | `SPC l K`    | Normal/Visual | Add picture link for word under cursor or slected word |
-| `SPC l r`    | Normal/Visual | Run code in block                                      |
+| `SPC l r`    | Normal/Visual | Run code block                                      |
+| `SPC l f`    | Normal/Visual | Format code block                                      |
 | `SPC l u`    | Normal/Visual | Update content                                         |
 | `SPC l p`    | Normal        | Real-time markdown preview                             |
 | `SPC l t`    | Normal        | toggle todo status                                     |
