@@ -20,8 +20,9 @@ local s_formatters = {
   ['%h'] = function(line)
     if vim.fn.strdisplaywidth(line.title) <= 30 then
       return line.title .. string.rep(' ', 30 - vim.fn.strdisplaywidth(line.title))
+    else
+      return string.sub(line.title, 1, 27) .. '...'
     end
-    return line.title
   end,
   ['%d'] = function(line)
     return line.id
