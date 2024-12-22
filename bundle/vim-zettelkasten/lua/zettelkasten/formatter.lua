@@ -7,6 +7,15 @@
 --=============================================================================
 
 local M = {}
+
+local function str2chars(str)
+  local t = {}
+  for _, k in ipairs(vim.fn.split(str, '\\zs')) do
+    table.insert(t, k)
+  end
+  return t
+end
+
 local s_formatters = {
   ['%r'] = function(line)
     return #line.references
@@ -18,10 +27,19 @@ local s_formatters = {
     return vim.fn.fnamemodify(line.file_name, ':t')
   end,
   ['%h'] = function(line)
-    if vim.fn.strdisplaywidth(line.title) <= 30 then
+    if vim.fn.strdisplaywidth(line.title) < 30 then
       return line.title .. string.rep(' ', 30 - vim.fn.strdisplaywidth(line.title))
     else
-      return string.sub(line.title, 1, 27) .. '...'
+      local t = ''
+      for _, char in ipairs(str2chars(line.title)) do
+        if vim.fn.strdisplaywidth(t) + vim.fn.strdisplaywidth(char) <= 27 then
+          t = t .. char
+        else
+          break
+        end
+      end
+      t = t .. '...'
+      return t .. string.rep(' ', 30 - vim.fn.strdisplaywidth(t))
     end
   end,
   ['%d'] = function(line)
