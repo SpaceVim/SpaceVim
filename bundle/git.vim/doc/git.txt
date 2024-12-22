@@ -121,6 +121,12 @@ This commands is to run `git tag` commands.
   :Git tag --list
 <
 
+COMMAND LINE COMPLETION
+
+complete git tag options after `Git tag -<cursor>`,
+
+complete git tags after `-d` option.
+
 ==============================================================================
 FUNCTIONS                                                      *git-functions*
 

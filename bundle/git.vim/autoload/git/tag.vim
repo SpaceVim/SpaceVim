@@ -5,6 +5,12 @@
 " >
 "   :Git tag --list
 " <
+"
+" @subsection Command line completion
+"
+" complete git tag options after `Git tag -<cursor>`, 
+"
+" complete git tags after `-d` option.
 
 if has('nvim-0.9.0')
   function! git#tag#complete(ArgLead, CmdLine, CursorPos) abort
