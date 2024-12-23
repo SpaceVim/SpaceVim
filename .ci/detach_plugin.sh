@@ -470,6 +470,7 @@ EOT
             _checkdir lua/telescope/_extensions
             _detact_bundle vim-zettelkasten lua/telescope/_extensions/zettelkasten_tags.lua
             _detact_bundle vim-zettelkasten lua/telescope/_extensions/zettelkasten_template.lua
+            _detact_bundle vim-zettelkasten lua/telescope/_extensions/zettelkasten.lua
             # detach spacevim core files
             _checkdir lua/spacevim
             _checkdir lua/spacevim/api
