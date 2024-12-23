@@ -18,7 +18,7 @@ what packages to install.
 - [Documentation](documentation/): the primary official documentation of SpaceVim
 - [Available layers](layers/): a list of available layers which can be used in SpaceVim
 
-The project is currently under active development and the latest stable release is [v2.3.0](https://spacevim.org/SpaceVim-release-v2.3.0/) which was released at 2024-03-24,
+The project is currently under active development and the latest stable release is [v2.4.0](SpaceVim-release-v2.4.0/) which was released at 2024-12-22,
 check out [following-HEAD](following-head/) page for what happened since last release. The [roadmap](roadmap/) page defines the project direction and priorities.
 
 ## News
