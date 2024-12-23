@@ -4,7 +4,6 @@
   </a>
 </h1>
 
-[![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#license)
 
 ![work-flow](https://img.spacevim.org/workflow.png)

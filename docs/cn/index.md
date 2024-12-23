@@ -4,7 +4,6 @@ description: "SpaceVim 是一个模块化的 Vim 和 Neovim 的配置集合，�
 lang: zh
 ---
 
-[![twitter](https://img.spacevim.org/twitter.svg)](https://twitter.com/SpaceVim)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](development/#证书)
 
 ![work-flow](https://img.spacevim.org/workflow.png)

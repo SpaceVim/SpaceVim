@@ -17,7 +17,7 @@ description: "A list of SpaceVim's public channels, All messages are bridged bet
 
 The news about spacevim will be post on twitter, feel free to follow them:
 
-- <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
+- <i class="fab fa-twitter"></i> [Twitter #spacevim](https://x.com/hashtag/spacevim?f=live)
 
 ## Asking for help
 

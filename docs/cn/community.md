@@ -20,7 +20,7 @@ lang: zh
 
 关于 SpaceVim 最新资讯将在 Twitter 上进行更新，欢迎订阅：
 
-- <i class="fab fa-twitter"></i> [Twitter](https://twitter.com/SpaceVim)
+- <i class="fab fa-twitter"></i> [Twitter #spacevim](https://x.com/hashtag/spacevim?f=live)
 
 ## 寻求帮助
 
