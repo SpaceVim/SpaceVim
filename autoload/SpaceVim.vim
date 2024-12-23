@@ -184,7 +184,7 @@ let s:SYSTEM = SpaceVim#api#import('system')
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '2.4.0'
+let g:spacevim_version = '2.5.0-dev'
 
 ""
 " @section default_indent, options-default_indent
