@@ -9,6 +9,7 @@ vim.cmd([[command ZkNew :lua require('zettelkasten').zknew({})]])
 
 vim.cmd([[command ZkListTemplete :Telescope zettelkasten_template]])
 vim.cmd([[command ZkListTags :Telescope zettelkasten_tags]])
+vim.cmd([[command ZkListNotes :Telescope zettelkasten]])
 
 vim.api.nvim_create_user_command('ZkBrowse', function(opt)
   require('zettelkasten.browser').browse(opt.fargs)

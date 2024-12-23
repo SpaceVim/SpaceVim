@@ -39,12 +39,13 @@ update your custom configuration file with:
 
 ## Key bindings
 
-| Key bindings | description                            |
-| ------------ | -------------------------------------- |
-| `SPC m z n`  | create new note                        |
-| `SPC m z t`  | create new note with template          |
-| `SPC m z b`  | open zettelkasten browse               |
-| `SPC m z g`  | filter zettelkasten tags via telescope |
+| Key bindings | description                             |
+| ------------ | --------------------------------------- |
+| `SPC m z n`  | create new note                         |
+| `SPC m z t`  | create new note with template           |
+| `SPC m z b`  | open zettelkasten browse                |
+| `SPC m z g`  | filter zettelkasten tags via telescope  |
+| `SPC m z f`  | filter zettelkasten title via telescope |
 
 In the zettelkasten browse buffer:
 

@@ -43,6 +43,7 @@ let g:zettelkasten_template_directory = 'D:\me\zettelkasten_template'
 | `:ZkBrowse`       | list note in browser window       |
 | `:ZkListTags`     | filter tags in telescope          |
 | `:ZkListTemplete` | filte note templates in telescope |
+| `:ZkListNotes`    | filte note title in telescope     |
 
 **Key bindings in browser window:**
 
