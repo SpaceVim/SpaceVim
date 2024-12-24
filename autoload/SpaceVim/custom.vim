@@ -282,7 +282,9 @@ function! s:apply(config, type) abort
 
     if !empty(bootstrap_before)
       try
+        call SpaceVim#logger#info('run bootstrap_before function:' . bootstrap_before)
         call call(bootstrap_before, [])
+        call SpaceVim#logger#info('bootstrap_before function was called successfully.')
         let g:_spacevim_bootstrap_before_success = 1
       catch
         call SpaceVim#logger#error('bootstrap_before function failed: '
