@@ -472,14 +472,14 @@ EOT
             _detact_bundle vim-zettelkasten lua/telescope/_extensions/zettelkasten_template.lua
             _detact_bundle vim-zettelkasten lua/telescope/_extensions/zettelkasten.lua
             # detach spacevim core files
-            _checkdir lua/spacevim
-            _checkdir lua/spacevim/api
+            _checkdir lua/spacevim/api/vim
             _detact lua/spacevim.lua
             _detact lua/spacevim/logger.lua
             _detact lua/spacevim/api.lua
             _detact lua/spacevim/api/logger.lua
             _detact lua/spacevim/api/notify.lua
             _detact lua/spacevim/api/password.lua
+            _detact lua/spacevim/api/vim/highlight.lua
             _checkdir autoload/SpaceVim/api
             _checkdir autoload/SpaceVim/api/neovim
             _checkdir autoload/SpaceVim/api/vim

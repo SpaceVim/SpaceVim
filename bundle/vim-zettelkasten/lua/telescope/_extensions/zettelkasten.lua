@@ -5,7 +5,7 @@ local entry_display = require('telescope.pickers.entry_display')
 local finders = require('telescope.finders')
 local pickers = require('telescope.pickers')
 local browser = require('zettelkasten.browser')
-local file = require('spacevim.api.file')
+local hi = require('spacevim.api.vim.highlight')
 
 local function get_all_zettelkasten_notes()
   local p = {}
@@ -39,10 +39,12 @@ local function show_changes(opts)
     },
   })
   local function make_display(entry)
-    -- print(vim.inspect(entry))
+    local normal = hi.group2dict('Normal')
+    hi.hi({
+    name = 'NormalFG', guifg = normal.guifg})
     return displayer({
       { vim.fn.fnamemodify(entry.value.file_name, ':t'), 'String' },
-      { entry.value.title, 'Normal' },
+      { entry.value.title, 'NormalFG' },
       {
         concat_tags(entry.value.tags),
         'Tag',
