@@ -28,7 +28,9 @@ if has('nvim-0.10.0')
     if !empty(get(g:, '_spacevim_bootstrap_after', ''))
       function! s:bootstrap_after(...) abort
         try
+          call SpaceVim#logger#info('run bootstrap_after function:' . g:_spacevim_bootstrap_after)
           call call(g:_spacevim_bootstrap_after, [])
+          call SpaceVim#logger#info('bootstrap_after function was called successfully.')
           let g:_spacevim_bootstrap_after_success = 1
         catch
           call SpaceVim#logger#error('failed to call bootstrap_after function: ' . g:_spacevim_bootstrap_after)
