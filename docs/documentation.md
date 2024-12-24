@@ -282,11 +282,11 @@ you can use SpaceVim `disabled_plugins` in the `[options]` section of your confi
 
 ### Bootstrap Functions
 
-SpaceVim provides two kinds of bootstrap functions
-for custom configurations and key bindings,
-namely `bootstrap_before` and `bootstrap_after`.
+Due to the limitations of toml syntax, SpaceVim provides two bootstrap function options
+`bootstrap_before` and `bootstrap_after`, which specify two Vim custom functions.
 
-To enable them you need to add the following into lines to the `[options]` section of your configuration file.
+To enable this feature you need to add the following config to the `[options]` section of your
+configuration file `~/.SpaceVim.d/init.toml`.
 
 ```toml
 [options]
@@ -295,7 +295,8 @@ To enable them you need to add the following into lines to the `[options]` secti
 ```
 
 The difference is that the bootstrap before function will be called before SpaceVim core,
-and the bootstrap after function is called on autocmd `VimEnter`.
+and the bootstrap after function is called on autocmd `VimEnter`, so you can override defaults
+key bindings in `bootstrap_after` function.
 
 The bootstrap functions should be placed in the `autoload` directory
 in `~/.SpaceVim.d/`. In our case, create file `~/.SpaceVim.d/autoload/myspacevim.vim`
@@ -311,7 +312,10 @@ endfunction
 
 function! myspacevim#after() abort
     " you can remove key binding in bootstrap_after function
-    iunmap kj
+    " for example, remove F3 which is to open file tree by default.
+    unmap <F3>
+    " create new key binding to open file tree.
+    nnoremap <silent> <F3> :Defx<Cr> 
 endfunction
 ```
 

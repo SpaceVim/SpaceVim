@@ -289,8 +289,8 @@ SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以�
 
 ### 启动函数
 
-由于 toml 配置的局限性，SpaceVim 提供了两种启动函数 `bootstrap_before` 和 `bootstrap_after`，在该函数内可以使用 Vim script。
-可通过 `~/.SpaceVim.d/init.toml` 的 `[options]` 片段中的这两个选项 `bootstrap_before` 和 `bootstrap_after` 来指定函数名称，例如：
+由于 toml 语法的局限性，SpaceVim 提供了两种启动函数选项 `bootstrap_before` 和 `bootstrap_after`，这两个选项分别指定两个 Vim 自定义函数。
+可以在 toml 配置文件 `~/.SpaceVim.d/init.toml` 的 `[options]` 字段中设置这两个选项 `bootstrap_before` 和 `bootstrap_after` 对应的函数名称，例如：
 
 ```toml
 [options]
@@ -298,10 +298,13 @@ SpaceVim 默认安装了一些插件，如果需要禁用某个插件，可以�
     bootstrap_after  = "myspacevim#after"
 ```
 
-这两种启动函数的区别在于，`bootstrap_before`函数是在载入用户配置时候执行的，
-而`bootstrap_after`函数是在触发`VimEnter`事件时执行的。
+这两种启动函数的区别在于，`bootstrap_before` 函数是在载入用户配置时候执行的，
+而 `bootstrap_after` 函数是在触发 `VimEnter` 事件时执行的。因此，可以在 `bootstrap_after`
+函数内对默认的快捷键进行修改。
 
-启动函数文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：
+下面展示一个启动函数的示例，包含 `bootstrap_before` 和 `bootstrap_after` 两个函数：
+
+定义启动函数的 Vim 脚本文件应放置在 Vim &runtimepath 的 autoload 文件夹内。例如：
 
 文件名：`~/.SpaceVim.d/autoload/myspacevim.vim`
 
@@ -312,7 +315,10 @@ function! myspacevim#before() abort
 endfunction
 
 function! myspacevim#after() abort
-    iunmap jk
+    " 删除默认快捷键 <F3>, 该快捷键原先设定为打开文件树
+    unmap <F3>
+    " 设定新的快捷打开文件树, 在这里假定文件树插件选择的是 defx.nvim
+    nnoremap <silent> <F3> :Defx<Cr> 
 endfunction
 ```
 
