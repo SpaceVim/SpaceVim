@@ -1540,6 +1540,7 @@ let g:_spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:_spacevim_mappings_space = {}
 let g:_spacevim_mappings_prefixs = {}
 let g:_spacevim_mappings_windows = {}
+let g:_spacevim_statusline_fileformat = ''
 let g:spacevim_enable_javacomplete2_py = 0
 ""
 " @section src_root, options-src_root
