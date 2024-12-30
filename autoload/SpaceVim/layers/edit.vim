@@ -110,7 +110,7 @@ function! SpaceVim#layers#edit#plugins() abort
         \ [g:_spacevim_root_dir . 'bundle/vim-textobj-entire'],
         \ [g:_spacevim_root_dir . 'bundle/wildfire.vim',{'on_map' : '<Plug>(wildfire-'}],
         \ [g:_spacevim_root_dir . 'bundle/editorconfig-vim', { 'merged' : 0, 'if' : has('python') || has('python3')}],
-        \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus' }],
+        \ [g:_spacevim_root_dir . 'bundle/vim-jplus', { 'on_map' : '<Plug>(jplus', 'loadconf_before' : 1 }],
         \ [g:_spacevim_root_dir . 'bundle/tabular',           { 'merged' : 0, 'on_cmd' : ['Tabularize']}],
         \ [g:_spacevim_root_dir . 'bundle/splitjoin.vim',{ 'on_cmd':['SplitjoinJoin', 'SplitjoinSplit'],'merged' : 0, 'loadconf' : 1}],
         \ ]
@@ -184,12 +184,6 @@ function! SpaceVim#layers#edit#config() abort
   "noremap <SPACE> <Plug>(wildfire-fuel)
   vnoremap <C-SPACE> <Plug>(wildfire-water)
   let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
-
-  " osyo-manga/vim-jplus {{{
-  nmap <silent> J <Plug>(jplus)
-  vmap <silent> J <Plug>(jplus)
-  " }}}
-
 
   if s:CMP.has('python3') || s:CMP.has('python')
     nnoremap <silent> <F7> :MundoToggle<CR>
