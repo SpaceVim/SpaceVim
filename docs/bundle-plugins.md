@@ -54,6 +54,7 @@ These plugins are changed based on a specific version of origin plugin.
 - `jedi-vim`: based on [jedi-vim@e82d07](https://github.com/davidhalter/jedi-vim/tree/e82d07faa17c3b3fe04b4fa6ab074e8e8601a596)
 - `vim-unstack`: based on [vim-unstack@9b191419](https://github.com/mattboehm/vim-unstack/tree/9b191419b4d3f26225a5ae3df5e409c62b426941)
 - `tagbar`: based on [tagbar@af3ce7c](https://github.com/preservim/tagbar/tree/af3ce7c3cec81f2852bdb0a0651d2485fcd01214)
+- `nerdcommenter`: based on [nerdcommenter@fade3d4b2](https://github.com/preservim/nerdcommenter/tree/fade3d4b26f5a0d58f256a06ba7b0a04d9fb4f3b)
 
 #### `core` layer
 

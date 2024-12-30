@@ -1205,6 +1205,10 @@ function! NERDCommentIsLineCommented(lineNo)
     return s:IsInSexyComment(a:lineNo) || s:IsCommentedFromStartOfLine(s:Left(), theLine) || s:IsCommentedFromStartOfLine(s:Left({'alt': 1}), theLine)
 endfunction
 
+function! NERDCommentSetUpForNewFiletype(ft) abort
+  call s:SetUpForNewFiletype(a:ft, 1)
+endfunction
+
 " Function: NERDComment(mode, type) function
 " This function is a Wrapper for the main commenting functions
 "

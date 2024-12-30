@@ -30,19 +30,19 @@ let g:NERDTrimTrailingWhitespace = 1
 " Always use alternative delimiter
 let g:NERD_c_alt_style = 1
 let g:NERDCustomDelimiters = {'c': { 'left': '//', 'leftAlt': '/*', 'rightAlt': '*/' }}
-let g:ft = ''
+let s:ft = ''
 fu! NERDCommenter_before()
   if &ft ==# 'markdown'
-    let g:ft = 'markdown'
     let cf = context_filetype#get()
     if cf.filetype !=# 'markdown'
-      exe 'setf ' . cf.filetype
+      let s:ft = 'markdown'
+      call NERDCommentSetUpForNewFiletype(cf.filetype)
     endif
   endif
 endfu
 fu! NERDCommenter_after()
-  if g:ft ==# 'markdown'
-    setf markdown
-    let g:ft = ''
+  if s:ft ==# 'markdown'
+      call NERDCommentSetUpForNewFiletype(s:ft)
+      let s:ft = ''
   endif
 endfu
