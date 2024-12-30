@@ -261,7 +261,6 @@ function! SpaceVim#layers#core#config() abort
     nnoremap <silent> <F3> <cmd>NeoTreeFocusToggle<CR>
   endif
   let g:matchup_matchparen_status_offscreen = 0
-  let g:smoothie_no_default_mappings = !s:enable_smooth_scrolling
   " Unimpaired bindings
   " Quickly add empty lines
   nnoremap <silent> [<Space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
@@ -1204,6 +1203,7 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let s:enable_smooth_scrolling = get(a:var,
         \ 'enable_smooth_scrolling',
         \ s:enable_smooth_scrolling)
+  let g:smoothie_no_default_mappings = !s:enable_smooth_scrolling
   let g:_spacevim_enable_filetree_filetypeicon = get(a:var,
         \ 'enable_filetree_filetypeicon',
         \ g:_spacevim_enable_filetree_filetypeicon)
