@@ -8,6 +8,7 @@
 <!-- vim-markdown-toc GFM -->
 
 - [Install](#install)
+- [Key bindings in quickfix window](#key-bindings-in-quickfix-window)
 - [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
@@ -27,6 +28,14 @@
 ```
 Plug 'wsdjeg/quickfix.nvim'
 ```
+
+## Key bindings in quickfix window
+
+| Key bindings | description                                  |
+| ------------ | -------------------------------------------- |
+| `dd`         | remove item under cursor line in normal mode |
+| `d`          | remove selected items in visual mode         |
+| `c`          | start filter mode                            |
 
 ## Feedback
 
