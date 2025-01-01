@@ -152,6 +152,7 @@ endif
 
 let s:enable_smooth_scrolling = 1
 let s:enable_netrw = 0
+let s:enable_quickfix_key_bindings = 0
 
 let g:_spacevim_enable_filetree_gitstatus = 0
 let g:_spacevim_enable_filetree_filetypeicon = 0
@@ -238,6 +239,10 @@ function! SpaceVim#layers#core#plugins() abort
         \}])
   call add(plugins, [g:_spacevim_root_dir . 'bundle/vim-grepper' ,              { 'on_cmd' : 'Grepper',
         \ 'loadconf' : 1} ])
+
+  if s:enable_quickfix_key_bindings
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/quickfix.nvim' ,              { 'merged' : 0} ])
+  endif
   return plugins
 endfunction
 
@@ -1213,6 +1218,9 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let s:enable_netrw = get(a:var,
         \ 'enable_netrw',
         \ 0)
+  let s:enable_quickfix_key_bindings = get(a:var,
+        \ 'enable_quickfix_key_bindings',
+        \ s:enable_quickfix_key_bindings)
 endfunction
 
 function! s:defx_find_current_file() abort
