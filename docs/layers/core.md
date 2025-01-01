@@ -38,6 +38,7 @@ To use defx, please add following snippet into your configuration file.
 - `enable_filetree_gitstatus`: enable/disable git status column in filetree.
 - `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
 - `enable_netrw`: enable/disable netrw, disabled by default.
+- `enable_quickfix_key_bindings`: enable/disable quickfix.nvim, mappings for neovim quickfix window. This option is only for neovim.
 
 ```toml
 [[layers]]

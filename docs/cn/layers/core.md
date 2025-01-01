@@ -27,10 +27,16 @@ nerdtree 或者 vimfiler，默认为 vimfiler，由 `filemanager` 选项控制�
 
 - `filetree_show_hidden`: 在文件树内显示隐藏的文件，默认是 false。
 - `enable_smooth_scrolling`: 启用或者禁用平滑滚屏快捷键，默认已启用。
+- `enable_filetree_gitstatus`: 在文件树内显示 Git 文件状态
+- `enable_filetree_filetypeicon`: 在文件树内显示文件类型图标
+- `enable_netrw`: 启用或者禁用 netrw
+- `enable_quickfix_key_bindings`: 启用或者禁用 quickfix 窗口内常用快捷键
 
 ```toml
 [[layers]]
     name = 'core'
     filetree_show_hidden = true
     enable_smooth_scrolling = true
+    filetree_opened_icon = ''
+    filetree_closed_icon = ''
 ```

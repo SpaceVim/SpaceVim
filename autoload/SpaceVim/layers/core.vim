@@ -21,6 +21,8 @@ scriptencoding utf-8
 " 3. `enable_filetree_gitstatus`: enable/disable git status column in filetree.
 " 4. `enable_filetree_filetypeicon`: enable/disable filetype icons in filetree.
 " 5. `enable_netrw`: enable/disable netrw, disabled by default.
+" 6. `enable_quickfix_key_bindings`: enable/disable quickfix.nvim, mappings
+" for neovim quickfix window. This option is only for neovim.
 "
 " NOTE: the `enable_vimfiler_gitstatus` and `enable_filetree_gitstatus` option
 " has been deprecated. Use layer option instead.
