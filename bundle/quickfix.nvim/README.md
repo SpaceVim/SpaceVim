@@ -1,6 +1,6 @@
 # quickfix.nvim
 
-> _quickfix.nvim_ is a plugin which provides default key bindings for quickfix window.
+> _quickfix.nvim_ is a plugin which provides default key bindings for quickfix window and location list window.
 
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](LICENSE)
