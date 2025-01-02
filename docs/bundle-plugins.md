@@ -68,6 +68,7 @@ These plugins are changed based on a specific version of origin plugin.
 #### `ui` layer
 
 - `vim-startify`: based on [mhinz/vim-startify@4e089dffd](https://github.com/mhinz/vim-startify/tree/4e089dffdad46f3f5593f34362d530e8fe823dcf)
+- `indent-blankline`: based on [indent-blankline.nvim@045d958](https://github.com/lukas-reineke/indent-blankline.nvim/tree/045d9582094b27f5ae04d8b635c6da8e97e53f1d)
 
 #### `chat` layer
 
@@ -113,7 +114,6 @@ These plugins are changed based on a specific version of origin plugin.
 
 #### `ui` layer
 
-- [indent-blankline.nvim@045d958](https://github.com/lukas-reineke/indent-blankline.nvim/tree/045d9582094b27f5ae04d8b635c6da8e97e53f1d)
 
 #### `checkers` layer
 
