@@ -51,6 +51,7 @@ nerdtree 或者 vimfiler，默认为 vimfiler，由 `filemanager` 选项控制�
 | `C`          | remove items which filename not match input regex          |
 | `o`          | remove items which error description match input regex     |
 | `O`          | remove items which error description not match input regex |
+| `u`          | undo last change                                           |
 
 也可以在启动函数里面使用如下变量修改默认的按键：
 
@@ -60,4 +61,5 @@ nerdtree 或者 vimfiler，默认为 vimfiler，由 `filemanager` 选项控制�
 - `g:quickfix_mapping_rfilter_filename`: default is `C` 
 - `g:quickfix_mapping_filter_text`: default is `o` 
 - `g:quickfix_mapping_rfilter_text`: default is `O` 
+- `g:quickfix_mapping_undo`: default is `u`
 

@@ -60,6 +60,7 @@ and which also can be change in bootstrap function.
 | `C`          | remove items which filename not match input regex          |
 | `o`          | remove items which error description match input regex     |
 | `O`          | remove items which error description not match input regex |
+| `u`          | undo last change                                           |
 
 Options to change these mappings:
 
@@ -69,4 +70,5 @@ Options to change these mappings:
 - `g:quickfix_mapping_rfilter_filename`: default is `C` 
 - `g:quickfix_mapping_filter_text`: default is `o` 
 - `g:quickfix_mapping_rfilter_text`: default is `O` 
+- `g:quickfix_mapping_undo`: default is `u`
 
