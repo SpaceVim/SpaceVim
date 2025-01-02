@@ -17,7 +17,7 @@ M.setup = function()
     pattern = 'qf',
     group = group,
     callback = function(ev)
-      vim.keymap.set('n', 'dd', function()
+      vim.keymap.set('n', vim.g.quickfix_mapping_delete or 'dd', function()
         local qflist = vim.fn.getqflist()
         local line = vim.fn.line('.')
         table.remove(qflist, line)
@@ -41,7 +41,7 @@ M.setup = function()
     pattern = 'qf',
     group = group,
     callback = function(ev)
-      vim.keymap.set('v', 'd', function()
+      vim.keymap.set('v', vim.g.quickfix_mapping_visual_delete or 'd', function()
         local esc = vim.api.nvim_replace_termcodes('<esc>', true, false, true)
         vim.api.nvim_feedkeys(esc, 'x', false)
         local qflist = vim.fn.getqflist()
@@ -60,13 +60,68 @@ M.setup = function()
     pattern = 'qf',
     group = group,
     callback = function(ev)
-      vim.keymap.set('n', 'c', function()
+      vim.keymap.set('n', vim.g.quickfix_mapping_filter_filename or 'c', function()
         local input_pattern = vim.fn.input('filter pattern:')
         -- vim.cmd('noautocmd normal! :')
         local re = vim.regex(input_pattern)
         local qf = {}
         for _, item in ipairs(vim.fn.getqflist()) do
           if not re:match_str(vim.fn.bufname(item.bufnr)) then
+            table.insert(qf, item)
+          end
+        end
+        vim.fn.setqflist(qf)
+      end, { buffer = ev.buf })
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ 'FileType' }, {
+    pattern = 'qf',
+    group = group,
+    callback = function(ev)
+      vim.keymap.set('n', vim.g.quickfix_mapping_rfilter_filename or 'C', function()
+        local input_pattern = vim.fn.input('filter pattern:')
+        -- vim.cmd('noautocmd normal! :')
+        local re = vim.regex(input_pattern)
+        local qf = {}
+        for _, item in ipairs(vim.fn.getqflist()) do
+          if re:match_str(vim.fn.bufname(item.bufnr)) then
+            table.insert(qf, item)
+          end
+        end
+        vim.fn.setqflist(qf)
+      end, { buffer = ev.buf })
+    end,
+  })
+  vim.api.nvim_create_autocmd({ 'FileType' }, {
+    pattern = 'qf',
+    group = group,
+    callback = function(ev)
+      vim.keymap.set('n', vim.g.quickfix_mapping_filter_text or 'o', function()
+        local input_pattern = vim.fn.input('filter pattern:')
+        -- vim.cmd('noautocmd normal! :')
+        local re = vim.regex(input_pattern)
+        local qf = {}
+        for _, item in ipairs(vim.fn.getqflist()) do
+          if not re:match_str(item.text) then
+            table.insert(qf, item)
+          end
+        end
+        vim.fn.setqflist(qf)
+      end, { buffer = ev.buf })
+    end,
+  })
+  vim.api.nvim_create_autocmd({ 'FileType' }, {
+    pattern = 'qf',
+    group = group,
+    callback = function(ev)
+      vim.keymap.set('n', vim.g.quickfix_mapping_rfilter_text or 'O', function()
+        local input_pattern = vim.fn.input('filter pattern:')
+        -- vim.cmd('noautocmd normal! :')
+        local re = vim.regex(input_pattern)
+        local qf = {}
+        for _, item in ipairs(vim.fn.getqflist()) do
+          if re:match_str(item.text) then
             table.insert(qf, item)
           end
         end
