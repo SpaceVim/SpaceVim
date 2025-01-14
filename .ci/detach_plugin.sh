@@ -586,6 +586,10 @@ EOT
             _detact_bundle winbar.nvim plugin/winbar.lua
             _detact LICENSE
             _detact_bundle winbar.nvim README.md
+            _checkdir autoload/SpaceVim/mapping/guide/theme
+            _detact autoload/SpaceVim/mapping/guide/theme/gruvbox.vim
+            _checkdir lua/spacevim/api/vim
+            _detact lua/spacevim/api/vim/highlight.lua
             ;;
         GitHub.vim)
             git clone https://github.com/wsdjeg/GitHub.vim.git detach/$1

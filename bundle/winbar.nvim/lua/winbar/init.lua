@@ -19,7 +19,7 @@ local function def_colors()
 
   local t
 
-  if #vim.g.spacevim_custom_color_palette > 0 then
+  if vim.g.spacevim_custom_color_palette and #vim.g.spacevim_custom_color_palette > 0 then
     t = vim.g.spacevim_custom_color_palette
   else
     local ok = pcall(function()
