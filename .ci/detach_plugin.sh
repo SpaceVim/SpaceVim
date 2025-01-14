@@ -577,6 +577,16 @@ EOT
             _detact LICENSE
             _detact_bundle quickfix.nvim README.md
             ;;
+        winbar.nvim)
+            git clone https://github.com/wsdjeg/winbar.nvim.git detach/$1
+            cd detach/$1
+            _checkdir plugin
+            _checkdir lua/winbar
+            _detact_bundle winbar.nvim lua/winbar/init.lua
+            _detact_bundle winbar.nvim plugin/winbar.lua
+            _detact LICENSE
+            _detact_bundle winbar.nvim README.md
+            ;;
         GitHub.vim)
             git clone https://github.com/wsdjeg/GitHub.vim.git detach/$1
             cd detach/$1

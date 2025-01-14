@@ -23,6 +23,7 @@ scriptencoding utf-8
 " 5. `enable_netrw`: enable/disable netrw, disabled by default.
 " 6. `enable_quickfix_key_bindings`: enable/disable quickfix.nvim, mappings
 " for neovim quickfix window. This option is only for neovim.
+" 7. `enable_winbar`: enable/disable `wsdjeg/winbar.nvim`
 "
 " NOTE: the `enable_vimfiler_gitstatus` and `enable_filetree_gitstatus` option
 " has been deprecated. Use layer option instead.
@@ -155,6 +156,7 @@ endif
 let s:enable_smooth_scrolling = 1
 let s:enable_netrw = 0
 let s:enable_quickfix_key_bindings = 0
+let s:enable_winbar = 0
 
 let g:_spacevim_enable_filetree_gitstatus = 0
 let g:_spacevim_enable_filetree_filetypeicon = 0
@@ -244,6 +246,9 @@ function! SpaceVim#layers#core#plugins() abort
 
   if s:enable_quickfix_key_bindings
     call add(plugins, [g:_spacevim_root_dir . 'bundle/quickfix.nvim' ,              { 'merged' : 0} ])
+  endif
+  if s:enable_winbar
+    call add(plugins, [g:_spacevim_root_dir . 'bundle/winbar.nvim' ,              { 'merged' : 0} ])
   endif
   return plugins
 endfunction
@@ -1223,6 +1228,9 @@ function! SpaceVim#layers#core#set_variable(var) abort
   let s:enable_quickfix_key_bindings = get(a:var,
         \ 'enable_quickfix_key_bindings',
         \ s:enable_quickfix_key_bindings)
+  let s:enable_winbar = get(a:var,
+        \ 'enable_winbar',
+        \ s:enable_winbar)
 endfunction
 
 function! s:defx_find_current_file() abort
