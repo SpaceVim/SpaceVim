@@ -1795,6 +1795,17 @@ This option maybe removed when `flygrep.nvim` development is done.
   flygrep_next_version = true
 ```
 
+When this option is `true`, only `SPC s /` will be mapped to `:FlyGrep` command from `flygrep.nvim`. And the key binding in `flygrep.nvim` window is:
+
+| Key bindings | descretion                         |
+| ------------ | ---------------------------------- |
+| `<Enter>`    | open cursor item                   |
+| `<Tab>`      | next item                          |
+| `<S-Tab>`    | previous item                      |
+| `<C-s>`      | open item in split window          |
+| `<C-v>`      | open item in vertical split window |
+| `<C-t>`      | open item in new tabpage           |
+
 #### Persistent highlighting
 
 SpaceVim uses `search_highlight_persist` to keep the searched expression highlighted until the next search.
