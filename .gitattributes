@@ -3,3 +3,7 @@ lua/spacevim/api/iconv/**  linguist-vendored
 bundle/** linguist-vendored
 bundle/bookmarks.vim/** linguist-vendored=false
 bundle/git.vim/** linguist-vendored=false
+.ci/** linguist-vendored
+docker/** linguist-vendored
+docs/** linguist-documentation
+Makefile linguist-vendored
