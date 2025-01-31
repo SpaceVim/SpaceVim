@@ -1,6 +1,6 @@
 # flygrep.nvim
 
-> _flygrep.nvim_ is a plugin to searching text in neovim floating window asynchronously
+> _flygrep.nvim_ is a plugin to search text in neovim floating window asynchronously
 
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](LICENSE)
