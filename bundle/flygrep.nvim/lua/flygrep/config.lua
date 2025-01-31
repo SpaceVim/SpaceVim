@@ -40,6 +40,8 @@ M.timeout = 200
 
 M.matched_higroup = 'IncSearch'
 
+M.enable_preview = false
+
 M.setup = function(conf)
   if type(conf) ~= 'table' then
     return

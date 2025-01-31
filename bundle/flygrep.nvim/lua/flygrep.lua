@@ -1,3 +1,11 @@
+--=============================================================================
+-- flygrep.lua
+-- Copyright 2025 Eric Wong
+-- Author: Eric Wong < wsdjeg@outlook.com >
+-- URL: https://spacevim.org
+-- License: GPLv3
+--=============================================================================
+
 local M = {}
 local conf = require('flygrep.config')
 local job = require('spacevim.api.job')
@@ -18,6 +26,9 @@ local result_bufid = -1
 local result_winid = -1
 local prompt_bufid = -1
 local prompt_winid = -1
+local preview_winid = -1
+local preview_bufid = -1
+local preview_timer_id = -1
 
 local prompt_count_id
 local extns = vim.api.nvim_create_namespace('floatgrep_ext')
@@ -33,14 +44,59 @@ local function update_result_count()
 end
 
 local function build_grep_command()
-  local cmd = {conf.command.execute}
+  local cmd = { conf.command.execute }
   for _, v in ipairs(conf.command.default_opts) do
     table.insert(cmd, v)
   end
-  if fix_string then table.insert(cmd, conf.command.fixed_string_opt) else table.insert(cmd, conf.command.expr_opt) end
+  if fix_string then
+    table.insert(cmd, conf.command.fixed_string_opt)
+  else
+    table.insert(cmd, conf.command.expr_opt)
+  end
   table.insert(cmd, grep_input)
   table.insert(cmd, '.')
   return cmd
+end
+
+-- 搜索结果行转换成文件名、光标位置
+local function get_file_pos(line)
+  local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
+  local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
+  local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
+  return filename, linenr, colum
+end
+local function preview_timer(t)
+  -- if preview win does exists, return
+  if not vim.api.nvim_win_is_valid(preview_winid) then
+    return
+  end
+  local cursor = vim.api.nvim_win_get_cursor(result_winid)
+  local line = vim.api.nvim_buf_get_lines(result_bufid, cursor[1] - 1, cursor[1], false)[1]
+  if line == '' then
+    return
+  end
+  local filename, liner, colum = get_file_pos(line)
+  vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, vim.fn.readfile(filename, ''))
+  local ft = vim.filetype.match({ filename = filename })
+  if ft then
+    vim.api.nvim_buf_set_option(preview_bufid, 'syntax', ft)
+  else
+    local ftdetect_autocmd = vim.api.nvim_get_autocmds({
+      group = 'filetypedetect',
+      event = 'BufRead',
+      pattern = '*.' .. vim.fn.fnamemodify(filename, ':e'),
+    })
+    -- logger.info(vim.inspect(ftdetect_autocmd))
+    if ftdetect_autocmd[1] then
+      if
+        ftdetect_autocmd[1].command and vim.startswith(ftdetect_autocmd[1].command, 'set filetype=')
+      then
+        ft = ftdetect_autocmd[1].command:gsub('set filetype=', '')
+        vim.api.nvim_buf_set_option(preview_bufid, 'syntax', ft)
+      end
+    end
+  end
+  vim.api.nvim_win_set_cursor(preview_winid, { liner, colum })
 end
 
 local function grep_timer(t)
@@ -51,9 +107,17 @@ local function grep_timer(t)
   end
   search_jobid = job.start(build_grep_command(), {
     on_stdout = function(id, data)
-      if id == search_jobid and vim.api.nvim_buf_is_valid(prompt_bufid) and vim.api.nvim_win_is_valid(prompt_winid) then
+      if
+        id == search_jobid
+        and vim.api.nvim_buf_is_valid(prompt_bufid)
+        and vim.api.nvim_win_is_valid(prompt_winid)
+      then
         if vim.fn.getbufline(result_bufid, 1)[1] == '' then
           vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, data)
+          if conf.enable_preview then
+            vim.fn.timer_stop(preview_timer_id)
+            preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
+          end
         else
           vim.api.nvim_buf_set_lines(result_bufid, -1, -1, false, data)
         end
@@ -85,6 +149,43 @@ local function toggle_fix_string()
   local conf = vim.api.nvim_win_get_config(prompt_winid)
   conf.title = build_prompt_title()
   vim.api.nvim_win_set_config(prompt_winid, conf)
+end
+
+local function toggle_preview_win()
+  conf.enable_preview = not conf.enable_preview
+  local screen_width = math.floor(vim.o.columns * 0.8)
+  -- 起始位位置： lines * 10%, columns * 10%
+  local start_col = math.floor(vim.o.columns * 0.1)
+  local start_row = math.floor(vim.o.lines * 0.1)
+  -- 整体高度：lines 的 80%
+  local screen_height = math.floor(vim.o.lines * 0.8)
+  if conf.enable_preview then
+    if not vim.api.nvim_buf_is_valid(preview_bufid) then
+      preview_bufid = vim.api.nvim_create_buf(false, true)
+    end
+    preview_winid = vim.api.nvim_open_win(preview_bufid, false, {
+      relative = 'editor',
+      width = screen_width,
+      height = math.floor((screen_height - 5) / 2),
+      col = start_col,
+      row = start_row,
+      focusable = false,
+      border = 'rounded',
+      -- title = 'Result',
+      -- title_pos = 'center',
+      -- noautocmd = true,
+    })
+    local winopt = vim.api.nvim_win_get_config(result_winid)
+    winopt.row = start_row + math.floor((screen_height - 5) / 2) + 2
+    winopt.height = screen_height - 5 - math.floor((screen_height - 5) / 2) - 2
+    vim.api.nvim_win_set_config(result_winid, winopt)
+  else
+    vim.api.nvim_win_close(preview_winid, true)
+    local winopt = vim.api.nvim_win_get_config(result_winid)
+    winopt.row = start_row
+    winopt.height = screen_height - 5
+    vim.api.nvim_win_set_config(result_winid, winopt)
+  end
 end
 
 local function open_win()
@@ -126,19 +227,50 @@ local function open_win()
     sign_hl_group = 'Error',
   })
 
-  result_bufid = vim.api.nvim_create_buf(false, true)
-  result_winid = vim.api.nvim_open_win(result_bufid, false, {
-    relative = 'editor',
-    width = screen_width,
-    height = screen_height - 5,
-    col = start_col,
-    row = start_row,
-    focusable = false,
-    border = 'rounded',
-    -- title = 'Result',
-    -- title_pos = 'center',
-    -- noautocmd = true,
-  })
+  if conf.enable_preview then
+    if not vim.api.nvim_buf_is_valid(preview_bufid) then
+      preview_bufid = vim.api.nvim_create_buf(false, true)
+    end
+    preview_winid = vim.api.nvim_open_win(preview_bufid, false, {
+      relative = 'editor',
+      width = screen_width,
+      height = math.floor((screen_height - 5) / 2),
+      col = start_col,
+      row = start_row,
+      focusable = false,
+      border = 'rounded',
+      -- title = 'Result',
+      -- title_pos = 'center',
+      -- noautocmd = true,
+    })
+    result_bufid = vim.api.nvim_create_buf(false, true)
+    result_winid = vim.api.nvim_open_win(result_bufid, false, {
+      relative = 'editor',
+      width = screen_width,
+      height = screen_height - 5 - math.floor((screen_height - 5) / 2) - 2,
+      col = start_col,
+      row = start_row + math.floor((screen_height - 5) / 2) + 2,
+      focusable = false,
+      border = 'rounded',
+      -- title = 'Result',
+      -- title_pos = 'center',
+      -- noautocmd = true,
+    })
+  else
+    result_bufid = vim.api.nvim_create_buf(false, true)
+    result_winid = vim.api.nvim_open_win(result_bufid, false, {
+      relative = 'editor',
+      width = screen_width,
+      height = screen_height - 5,
+      col = start_col,
+      row = start_row,
+      focusable = false,
+      border = 'rounded',
+      -- title = 'Result',
+      -- title_pos = 'center',
+      -- noautocmd = true,
+    })
+  end
   vim.api.nvim_set_option_value(
     'winhighlight',
     'NormalFloat:Normal,FloatBorder:WinSeparator',
@@ -164,7 +296,8 @@ local function open_win()
       if grep_input ~= '' then
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
         pcall(vim.fn.timer_stop, grep_timer_id)
-        search_hi_id = vim.fn.matchadd(conf.matched_higroup, grep_input, 10, -1, { window = result_winid })
+        search_hi_id =
+          vim.fn.matchadd(conf.matched_higroup, grep_input, 10, -1, { window = result_winid })
         grep_timer_id = vim.fn.timer_start(conf.timeout, grep_timer, { ['repeat'] = 1 })
       else
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
@@ -181,17 +314,16 @@ local function open_win()
     vim.keymap.set('i', k, function()
       vim.cmd('noautocmd stopinsert')
       vim.api.nvim_win_close(prompt_winid, true)
+      vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {})
       vim.api.nvim_win_close(result_winid, true)
+      vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
+      if conf.enable_preview then
+        vim.api.nvim_win_close(preview_winid, true)
+        vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
+      end
     end, { buffer = prompt_bufid })
   end
 
-  -- 搜索结果行转换成文件名、光标位置
-  local function get_file_pos(line)
-    local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
-    local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
-    local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
-    return filename, linenr, colum
-  end
   -- 使用回车键打开光标所在的搜索结果，同时关闭界面
   local function open_item(cmd)
     vim.cmd('noautocmd stopinsert')
@@ -200,7 +332,13 @@ local function open_win()
     local filename, linenr, colum =
       get_file_pos(vim.api.nvim_buf_get_lines(result_bufid, line_number - 1, line_number, false)[1])
     vim.api.nvim_win_close(prompt_winid, true)
+    vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {})
     vim.api.nvim_win_close(result_winid, true)
+    vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
+    if conf.enable_preview then
+      vim.api.nvim_win_close(preview_winid, true)
+      vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
+    end
     vim.cmd(cmd .. ' ' .. filename)
     vim.api.nvim_win_set_cursor(0, { linenr, colum })
   end
@@ -231,17 +369,28 @@ local function open_win()
   vim.keymap.set('i', '<Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
     pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
+    if conf.enable_preview then
+      vim.fn.timer_stop(preview_timer_id)
+      preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
+    end
     update_result_count()
   end, { buffer = prompt_bufid })
 
   vim.keymap.set('i', '<S-Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
     pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
+    if conf.enable_preview then
+      vim.fn.timer_stop(preview_timer_id)
+      preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
+    end
     update_result_count()
   end, { buffer = prompt_bufid })
   vim.keymap.set('i', '<C-e>', function()
     toggle_fix_string()
     update_result_count()
+  end, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<C-p>', function()
+    toggle_preview_win()
   end, { buffer = prompt_bufid })
 
   -- 高亮文件名及位置
