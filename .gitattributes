@@ -3,6 +3,9 @@ lua/spacevim/api/iconv/**  linguist-vendored
 bundle/** linguist-vendored
 bundle/bookmarks.vim/** linguist-vendored=false
 bundle/git.vim/** linguist-vendored=false
+bundle/flygrep.nvim/** linguist-vendored=false
+bundle/FlyGrep/** linguist-vendored=false
+bundle/Chatting-server/** linguist-vendored=false
 .ci/** linguist-vendored
 docker/** linguist-vendored
 docs/** linguist-documentation
