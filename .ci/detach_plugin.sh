@@ -97,6 +97,23 @@ main () {
             _checkdir test
             _detact_bundle FlyGrep test/vimrc
             ;;
+        flygrep.nvim)
+            git clone https://github.com/wsdjeg/$1.git detach/$1
+            cd detach/$1
+            _detact LICENSE
+            _checkdir plugin
+            _detact_bundle flygrep.nvim plugin/flygrep.lua
+            _detact_bundle flygrep.nvim README.md
+            _checkdir lua/flygrep
+            _detact_bundle flygrep.nvim lua/flygrep.lua
+            _detact_bundle flygrep.nvim lua/flygrep/config.lua
+            _detact_bundle flygrep.nvim lua/flygrep/highlight.lua
+            _detact LICENSE
+            _detact .stylua.toml
+            _checkdir lua/spacevim/api/vim
+            _detact lua/spacevim/api/job.lua
+            _detact lua/spacevim/api/vim/highlight.lua
+            ;;
         dein-ui.vim)
             git clone https://github.com/wsdjeg/dein-ui.vim.git detach/$1
             cd detach/$1
