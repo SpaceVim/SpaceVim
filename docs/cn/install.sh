@@ -138,7 +138,9 @@ fetch_repo () {
     success "SpaceVim 更新已完成"
   else
     info "正在安装 SpaceVim..."
-    git clone --depth 1 https://github.com/SpaceVim/SpaceVim.git "$HOME/.SpaceVim"
+    git clone --depth 1 https://github.com/wsdjeg/SpaceVim.git "$HOME/.SpaceVim"
+    cd "$HOME/.SpaceVim"
+    git fetch --tags
     success "SpaceVim 安装已完成"
   fi
 }
