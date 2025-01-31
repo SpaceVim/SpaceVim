@@ -175,6 +175,7 @@ local function toggle_preview_win()
       -- title_pos = 'center',
       -- noautocmd = true,
     })
+    vim.api.nvim_set_option_value('cursorline', true, { win = preview_winid })
     local winopt = vim.api.nvim_win_get_config(result_winid)
     winopt.row = start_row + math.floor((screen_height - 5) / 2) + 2
     winopt.height = screen_height - 5 - math.floor((screen_height - 5) / 2) - 2
@@ -243,6 +244,7 @@ local function open_win()
       -- title_pos = 'center',
       -- noautocmd = true,
     })
+    vim.api.nvim_set_option_value('cursorline', true, { win = preview_winid })
     result_bufid = vim.api.nvim_create_buf(false, true)
     result_winid = vim.api.nvim_open_win(result_bufid, false, {
       relative = 'editor',
