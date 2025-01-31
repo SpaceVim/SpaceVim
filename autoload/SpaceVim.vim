@@ -1334,6 +1334,9 @@ let g:spacevim_lint_on_save            = 1
 " Default search tools supported by flygrep. The default order is ['rg', 'ag',
 " 'pt', 'ack', 'grep', 'findstr', 'git']
 let g:spacevim_search_tools            = ['rg', 'ag', 'pt', 'ack', 'grep', 'findstr', 'git']
+
+let g:spacevim_flygrep_next_version = v:false
+
 ""
 " @section project_rooter_patterns, options-project_rooter_patterns
 " @parentsection options

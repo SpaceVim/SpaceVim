@@ -1787,6 +1787,14 @@ Key bindings in FlyGrep buffer:
 | `Ctrl-a` / `<Home>` | Go to the beginning of the line    |
 | `Ctrl-e` / `<End>`  | Go to the end of the line          |
 
+The next version of FlyGrep.vim is WIP, If you want to have a try. Set `flygrep_next_version` to `true`.
+This option maybe removed when `flygrep.nvim` development is done.
+
+```
+[options]
+  flygrep_next_version = true
+```
+
 #### Persistent highlighting
 
 SpaceVim uses `search_highlight_persist` to keep the searched expression highlighted until the next search.

@@ -637,8 +637,13 @@ function! SpaceVim#mapping#space#init() abort
   call SpaceVim#mapping#space#def('nnoremap', ['s', 't', 'J'], 'call SpaceVim#plugins#searcher#find(expand("<cword>"), "pt")',
         \ 'Background search cursor words in project with pt', 1)
 
-  call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
-        \ 'grep-on-the-fly', 1)
+  if g:spacevim_flygrep_next_version
+    call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'FlyGrep',
+          \ 'grep-on-the-fly', 1)
+  else
+    call SpaceVim#mapping#space#def('nnoremap', ['s', '/'], 'call SpaceVim#plugins#flygrep#open({})',
+          \ 'grep-on-the-fly', 1)
+  endif
 
   call SpaceVim#mapping#space#def('nnoremap', ['s', 'c'], 'call SpaceVim#plugins#searcher#clear()',
         \ 'clear-search-results', 1)
