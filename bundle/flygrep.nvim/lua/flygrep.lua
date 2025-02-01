@@ -180,6 +180,8 @@ local function toggle_preview_win()
     winopt.row = start_row + math.floor((screen_height - 5) / 2) + 2
     winopt.height = screen_height - 5 - math.floor((screen_height - 5) / 2) - 2
     vim.api.nvim_win_set_config(result_winid, winopt)
+    vim.fn.timer_stop(preview_timer_id)
+    preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
   else
     vim.api.nvim_win_close(preview_winid, true)
     local winopt = vim.api.nvim_win_get_config(result_winid)
