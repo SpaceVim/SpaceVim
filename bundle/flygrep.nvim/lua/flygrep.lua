@@ -307,6 +307,9 @@ local function open_win()
         job.stop(search_jobid)
         search_jobid = 0
         vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
+        if conf.enable_preview and vim.api.nvim_buf_is_valid(preview_bufid) then
+          vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
+        end
       end
     end,
   })
