@@ -87,15 +87,15 @@ require('flygrep').setup({
 
 ## Key Bindings
 
-| Key bindings | descretion                         |
-| ------------ | ---------------------------------- |
-| `<Enter>`    | open cursor item                   |
-| `<Tab>`      | next item                          |
-| `<S-Tab>`    | previous item                      |
-| `<C-s>`      | open item in split window          |
-| `<C-v>`      | open item in vertical split window |
-| `<C-t>`      | open item in new tabpage           |
-| `<C-p>`      | toggle preview window              |
+| Key bindings         | descretion                         |
+| -------------------- | ---------------------------------- |
+| `<Enter>`            | open cursor item                   |
+| `<Tab>` or `<C-j>`   | next item                          |
+| `<S-Tab>` or `<C-k>` | previous item                      |
+| `<C-s>`              | open item in split window          |
+| `<C-v>`              | open item in vertical split window |
+| `<C-t>`              | open item in new tabpage           |
+| `<C-p>`              | toggle preview window              |
 
 ## Feedback
 

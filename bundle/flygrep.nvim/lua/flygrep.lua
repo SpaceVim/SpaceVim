@@ -191,6 +191,38 @@ local function toggle_preview_win()
   end
 end
 
+local function next_item()
+  local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
+  if line_number == vim.api.nvim_buf_line_count(result_bufid) then
+    pcall(vim.api.nvim_win_set_cursor, result_winid, { 1, 0 })
+  else
+    pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
+  end
+  if conf.enable_preview then
+    vim.fn.timer_stop(preview_timer_id)
+    preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
+  end
+  update_result_count()
+end
+
+local function previous_item()
+  local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
+  if line_number == 1 then
+    pcall(
+      vim.api.nvim_win_set_cursor,
+      result_winid,
+      { vim.api.nvim_buf_line_count(result_bufid), 0 }
+    )
+  else
+    pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
+  end
+  if conf.enable_preview then
+    vim.fn.timer_stop(preview_timer_id)
+    preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
+  end
+  update_result_count()
+end
+
 local function open_win()
   require('flygrep.highlight').def_higroup()
   -- 窗口位置
@@ -374,38 +406,11 @@ local function open_win()
     })
   end
 
-  -- 使用 Tab/Shift-Tab 上下移动搜素结果
-  vim.keymap.set('i', '<Tab>', function()
-    local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
-    if line_number == vim.api.nvim_buf_line_count(result_bufid) then
-      pcall(vim.api.nvim_win_set_cursor, result_winid, { 1, 0 })
-    else
-      pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
-    end
-    if conf.enable_preview then
-      vim.fn.timer_stop(preview_timer_id)
-      preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
-    end
-    update_result_count()
-  end, { buffer = prompt_bufid })
-
-  vim.keymap.set('i', '<S-Tab>', function()
-    local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
-    if line_number == 1 then
-      pcall(
-        vim.api.nvim_win_set_cursor,
-        result_winid,
-        { vim.api.nvim_buf_line_count(result_bufid), 0 }
-      )
-    else
-      pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
-    end
-    if conf.enable_preview then
-      vim.fn.timer_stop(preview_timer_id)
-      preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
-    end
-    update_result_count()
-  end, { buffer = prompt_bufid })
+  -- 使用 Tab/Shift-Tab and Ctrl-jk 上下移动搜素结果
+  vim.keymap.set('i', '<Tab>', next_item, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<C-j>', next_item, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<S-Tab>', previous_item, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<C-k>', previous_item, { buffer = prompt_bufid })
   vim.keymap.set('i', '<C-e>', function()
     toggle_fix_string()
     update_result_count()
