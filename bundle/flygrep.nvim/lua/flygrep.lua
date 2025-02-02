@@ -375,7 +375,11 @@ local function open_win()
   -- 使用 Tab/Shift-Tab 上下移动搜素结果
   vim.keymap.set('i', '<Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
-    pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
+    if line_number == vim.api.nvim_buf_line_count(result_bufid) then
+      pcall(vim.api.nvim_win_set_cursor, result_winid, { 1, 0 })
+    else
+      pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number + 1, 0 })
+    end
     if conf.enable_preview then
       vim.fn.timer_stop(preview_timer_id)
       preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
@@ -385,7 +389,15 @@ local function open_win()
 
   vim.keymap.set('i', '<S-Tab>', function()
     local line_number = vim.api.nvim_win_get_cursor(result_winid)[1]
-    pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
+    if line_number == 1 then
+      pcall(
+        vim.api.nvim_win_set_cursor,
+        result_winid,
+        { vim.api.nvim_buf_line_count(result_bufid), 0 }
+      )
+    else
+      pcall(vim.api.nvim_win_set_cursor, result_winid, { line_number - 1, 0 })
+    end
     if conf.enable_preview then
       vim.fn.timer_stop(preview_timer_id)
       preview_timer_id = vim.fn.timer_start(500, preview_timer, { ['repeat'] = 1 })
