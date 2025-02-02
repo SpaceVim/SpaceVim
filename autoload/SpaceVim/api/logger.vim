@@ -158,6 +158,6 @@ function! s:self._comp(msg, l) abort
   end
 endfunction
 
-function! s:self.clear(level) abort
-  let self.temp = filter(deepcopy(self.temp), '!self._comp(v:val, a:level)')
+function! s:self.clear() abort
+  let self.temp = []
 endfunction

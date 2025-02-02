@@ -1887,6 +1887,11 @@ SpaceVim#logger#viewRuntimeLog()            *SpaceVim#logger#viewRuntimeLog()*
   This a a function to view the spacevim runtime log. same as |:SPRuntimeLog|
   and `SPC h L`
 
+  To clear runtime log, just run:
+>
+    :SPRuntimeLog --clear
+<
+
 SpaceVim#logger#viewLog()                          *SpaceVim#logger#viewLog()*
   Print the debug information of spacevim, same as |:SPDebugInfo|
 

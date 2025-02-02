@@ -62,6 +62,10 @@ function M.viewRuntimeLog()
   -- M.syntax_extra()
 end
 
+function M.clearRuntimeLog()
+  logger.clear()
+end
+
 function M.viewLog(...)
   local argvs = { ... }
   local info = '<details><summary> SpaceVim debug information </summary>\n\n'

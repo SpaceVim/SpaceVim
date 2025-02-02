@@ -79,6 +79,10 @@ function M.write(log)
   table.insert(rtplog, log.str)
 end
 
+function M.clear()
+  rtplog = {}
+end
+
 function M.debug(msg)
   if M.level <= 0 then
     local log = M._build_msg(msg, 4)
