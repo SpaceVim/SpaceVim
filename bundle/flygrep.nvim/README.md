@@ -96,6 +96,7 @@ require('flygrep').setup({
 | `<C-v>`              | open item in vertical split window |
 | `<C-t>`              | open item in new tabpage           |
 | `<C-p>`              | toggle preview window              |
+| `<C-h>`              | toggle display hidden files        |
 
 ## Feedback
 

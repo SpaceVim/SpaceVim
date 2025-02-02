@@ -20,6 +20,7 @@ local grep_input = ''
 local search_jobid = -1
 local search_hi_id = -1
 local fix_string = false
+local include_hidden_file = false
 
 -- all buffers
 local result_bufid = -1
@@ -47,6 +48,9 @@ local function build_grep_command()
   local cmd = { conf.command.execute }
   for _, v in ipairs(conf.command.default_opts) do
     table.insert(cmd, v)
+  end
+  if include_hidden_file then
+    table.insert(cmd, conf.command.hidden_opt)
   end
   if fix_string then
     table.insert(cmd, conf.command.fixed_string_opt)
@@ -141,6 +145,11 @@ local function build_prompt_title()
   table.insert(t, { '', 'FlyGrep_b_Normal' })
   -- return {{}, {}, {}}
   return t
+end
+
+local function toggle_hidden_file()
+  include_hidden_file = not include_hidden_file
+  vim.cmd('doautocmd TextChangedI')
 end
 
 local function toggle_fix_string()
@@ -414,6 +423,10 @@ local function open_win()
   vim.keymap.set('i', '<C-k>', previous_item, { buffer = prompt_bufid })
   vim.keymap.set('i', '<C-e>', function()
     toggle_fix_string()
+    update_result_count()
+  end, { buffer = prompt_bufid })
+  vim.keymap.set('i', '<C-h>', function()
+    toggle_hidden_file()
     update_result_count()
   end, { buffer = prompt_bufid })
   vim.keymap.set('i', '<C-p>', function()
