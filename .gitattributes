@@ -6,6 +6,12 @@ bundle/git.vim/** linguist-vendored=false
 bundle/flygrep.nvim/** linguist-vendored=false
 bundle/FlyGrep/** linguist-vendored=false
 bundle/Chatting-server/** linguist-vendored=false
+bundle/ChineseLinter.vim/** linguist-vendored=false
+bundle/cpicker.nvim/** linguist-vendored=false
+bundle/format.nvim/** linguist-vendored=false
+bundle/github.vim/** linguist-vendored=false
+bundle/gtags.vim/** linguist-vendored=false
+bundle/record-key.nvim/** linguist-vendored=false
 .ci/** linguist-vendored
 docker/** linguist-vendored
 docs/** linguist-documentation
