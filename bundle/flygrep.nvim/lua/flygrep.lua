@@ -281,11 +281,13 @@ local function open_win()
     { win = result_winid }
   )
   vim.api.nvim_set_option_value('cursorline', true, { win = result_winid })
-  cmp.setup.buffer({
-    completion = {
-      autocomplete = false,
-    },
-  })
+  if ok then
+    cmp.setup.buffer({
+      completion = {
+        autocomplete = false,
+      },
+    })
+  end
   vim.cmd('noautocmd startinsert')
 
   local augroup = vim.api.nvim_create_augroup('floatgrep', {
