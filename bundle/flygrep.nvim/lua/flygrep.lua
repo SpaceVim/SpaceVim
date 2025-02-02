@@ -334,6 +334,7 @@ local function open_win()
       if grep_input ~= '' then
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
         pcall(vim.fn.timer_stop, grep_timer_id)
+        job.stop(search_jobid)
         search_hi_id =
           vim.fn.matchadd(conf.matched_higroup, grep_input, 10, -1, { window = result_winid })
         grep_timer_id = vim.fn.timer_start(conf.timeout, grep_timer, { ['repeat'] = 1 })
