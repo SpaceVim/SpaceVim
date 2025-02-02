@@ -12,6 +12,7 @@ bundle/format.nvim/** linguist-vendored=false
 bundle/github.vim/** linguist-vendored=false
 bundle/gtags.vim/** linguist-vendored=false
 bundle/record-key.nvim/** linguist-vendored=false
+bundle/vim-zettelkasten/** linguist-vendored=false
 .ci/** linguist-vendored
 docker/** linguist-vendored
 docs/** linguist-documentation
