@@ -47,9 +47,11 @@ M.setup = function(conf)
     return
   end
 
-  M.color_templete = conf.color_templete or M.color_templete
-
   M.timeout = conf.timeout or M.timeout
+  M.command = vim.tbl_deep_extend('force', {}, M.command, conf.command or {})
+  M.color_templete = vim.tbl_deep_extend('force', {}, M.color_templete, conf.color_templete or {})
+  M.matched_higroup = conf.matched_higroup or M.matched_higroup
+  M.enable_preview = conf.enable_preview
 end
 
 return M
