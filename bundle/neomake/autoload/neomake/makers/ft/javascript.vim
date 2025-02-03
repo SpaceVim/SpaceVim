@@ -64,7 +64,6 @@ function! neomake#makers#ft#javascript#eslint() abort
     let maker = {
         \ 'args': ['--format=json'],
         \ 'process_json': function('neomake#makers#ft#javascript#ProcessEslint'),
-        \ 'cwd': '%:p:h',
         \ 'output_stream': 'stdout',
         \ }
 
