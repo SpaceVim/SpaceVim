@@ -9,6 +9,7 @@
 
 - [Install](#install)
 - [usage](#usage)
+- [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
 
@@ -30,3 +31,9 @@ update all plugins
 ```log
 :DeinUpdate
 ```
+
+## Feedback
+
+The development of this plugin is in [`SpaceVim/bundle/dein-ui.vim`](https://github.com/SpaceVim/SpaceVim/tree/master/bundle/dein-ui.vim) directory.
+
+If you encounter any bugs or have suggestions, please file an issue in the [issue tracker](https://github.com/SpaceVim/SpaceVim/issues)
