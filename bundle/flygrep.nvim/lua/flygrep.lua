@@ -42,6 +42,7 @@ local function update_result_count()
     virt_text = { { string.format('%d/%d', line, count), 'Comment' } },
     virt_text_pos = 'right_align',
   })
+  return prompt_count_id
 end
 
 local function build_grep_command()
@@ -107,7 +108,7 @@ local function grep_timer(t)
   vim.api.nvim_buf_set_lines(result_bufid, 0, -1, false, {})
   if prompt_count_id then
     pcall(vim.api.nvim_buf_del_extmark, prompt_bufid, extns, prompt_count_id)
-    prompt_count_id = nil
+    prompt_count_id = update_result_count()
   end
   search_jobid = job.start(build_grep_command(), {
     on_stdout = function(id, data)
