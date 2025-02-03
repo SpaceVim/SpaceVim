@@ -133,6 +133,8 @@ main () {
             _detact autoload/SpaceVim/api/vim/compatible.vim
             _detact syntax/SpaceVimPlugManager.vim
             _detact LICENSE
+            _detact_bundle dein-ui.vim README.md
+            _detact_bundle dein-ui.vim plugin/deinui.vim
             ;;
         format.nvim)
             git clone https://github.com/wsdjeg/format.nvim.git detach/$1
