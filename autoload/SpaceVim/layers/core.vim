@@ -250,7 +250,7 @@ function! SpaceVim#layers#core#plugins() abort
   if s:enable_winbar
     call add(plugins, [g:_spacevim_root_dir . 'bundle/winbar.nvim' ,              { 'merged' : 0} ])
   endif
-  if g:spacevim_flygrep_next_version
+  if g:spacevim_flygrep_next_version && has('nvim-0.10.0')
     call add(plugins, [g:_spacevim_root_dir . 'bundle/flygrep.nvim' ,              { 'merged' : 0} ])
   endif
   return plugins
