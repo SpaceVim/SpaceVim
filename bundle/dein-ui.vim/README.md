@@ -24,6 +24,13 @@ for dein.vim
 call dein#add('wsdjeg/dein-ui.vim')
 ```
 
+for neobundle.vim
+
+```vim
+NeoBundle 'wsdjeg/dein-ui.vim'
+let g:spacevim_plugin_manager = 'neobundle'
+```
+
 ## usage
 
 update all plugins
