@@ -13,6 +13,9 @@ bundle/github.vim/** linguist-vendored=false
 bundle/gtags.vim/** linguist-vendored=false
 bundle/record-key.nvim/** linguist-vendored=false
 bundle/vim-zettelkasten/** linguist-vendored=false
+
+# Bundle changed plugins:
+bundle/vim-startify/** linguist-vendored=false
 .ci/** linguist-vendored
 docker/** linguist-vendored
 docs/** linguist-documentation
