@@ -183,7 +183,7 @@ vimhelplint: | $(if $(VIMHELPLINT_DIR),,build/vimhelplint)
 
 # Run tests in dockerized Vims.
 DOCKER_REPO:=neomake/vims-for-tests
-DOCKER_TAG:=50
+DOCKER_TAG:=52
 NEOMAKE_DOCKER_IMAGE?=
 DOCKER_IMAGE:=$(if $(NEOMAKE_DOCKER_IMAGE),$(NEOMAKE_DOCKER_IMAGE),$(DOCKER_REPO):$(DOCKER_TAG))
 DOCKER_STREAMS:=-ti
@@ -217,7 +217,7 @@ docker_update_image:
 	@echo "Done.  Use 'make docker_push' to push it, and then update .circleci/config.yml."
 
 DOCKER_VIMS:=vim73 vim74-trusty vim74-xenial vim80 vim81 \
-  neovim-v0.1.7 neovim-v0.3.8 neovim-master vim-master
+  neovim-v0.1.7 neovim-v0.3.8 neovim-v0.5.0 neovim-master vim-master
 _DOCKER_VIM_TARGETS:=$(addprefix docker_test-,$(DOCKER_VIMS))
 
 docker_test_all: $(_DOCKER_VIM_TARGETS)

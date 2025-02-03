@@ -1,58 +1,67 @@
 Include: include/setup.vader
 
 Execute (javascript: eslint: errorformat):
-  Save &errorformat
-  let &errorformat = neomake#makers#ft#javascript#eslint().errorformat
   new
-  file errors.js
-  let bufnr = bufnr('%')
+  file fullOfProblems.js
 
-  let output = [
-  \ "errors.js: line 2, col 10, Error - 'some_unused_var' is defined but never used. (no-unused-vars)",
-  \ '',
-  \ '1 problem',
-  \ ]
+  let eslint = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#javascript#eslint(),
+    \ 'tests/fixtures/javascript/eslint_example.json')
 
-  lgetexpr output
+  CallNeomake 1, [eslint]
   AssertEqualQf getloclist(0), [{
-    \ 'lnum': 2,
-    \ 'bufnr': bufnr,
-    \ 'col': 10,
-    \ 'valid': 1,
-    \ 'vcol': 0,
-    \ 'nr': -1,
-    \ 'type': 'E',
-    \ 'pattern': '',
-    \ 'text': "'some_unused_var' is defined but never used. (no-unused-vars)"}]
-
-  let output = [
-  \ "errors.js: line 2, col 10, Error - 'some_unused_var' is defined but never used. (no-unused-vars)",
-  \ "errors.js: line 3, col 20, Warning - Missing semicolon. (semi)",
-  \ '',
-  \ '2 problems',
-  \ ]
-
-  lgetexpr output
-  AssertEqualQf getloclist(0), [{
-    \ 'lnum': 2,
-    \ 'bufnr': bufnr,
-    \ 'col': 10,
-    \ 'valid': 1,
-    \ 'vcol': 0,
-    \ 'nr': -1,
-    \ 'type': 'E',
-    \ 'pattern': '',
-    \ 'text': "'some_unused_var' is defined but never used. (no-unused-vars)",
-    \ }, {
-    \ 'lnum': 3,
-    \ 'bufnr': bufnr,
-    \ 'col': 20,
-    \ 'valid': 1,
-    \ 'vcol': 0,
-    \ 'nr': -1,
-    \ 'type': 'W',
-    \ 'pattern': '',
-    \ 'text': 'Missing semicolon. (semi)'}]
+  \ 'lnum': 1, 'bufnr': bufnr('%'), 'col': 10, 'type': 'E',
+  \ 'text': "'addOne' is defined but never used.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 2, 'bufnr': bufnr('%'), 'col': 9, 'type': 'E',
+  \ 'text': "Use the isNaN function to compare with NaN.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 3, 'bufnr': bufnr('%'), 'col': 16, 'type': 'E',
+  \ 'text': "Unexpected space before unary operator '++'.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 3, 'bufnr': bufnr('%'), 'col': 20, 'type': 'W',
+  \ 'text': "Missing semicolon.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 4, 'bufnr': bufnr('%'), 'col': 12, 'type': 'W',
+  \ 'text': "Unnecessary 'else' after 'return'.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 5, 'bufnr': bufnr('%'), 'col': 1, 'type': 'W',
+  \ 'text': "Expected indentation of 8 spaces but found 6.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 5, 'bufnr': bufnr('%'), 'col': 7, 'type': 'E',
+  \ 'text': "Function 'addOne' expected a return value.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 5, 'bufnr': bufnr('%'), 'col': 13, 'type': 'W',
+  \ 'text': "Missing semicolon.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ },
+  \ {
+  \ 'lnum': 7, 'bufnr': bufnr('%'), 'col': 2, 'type': 'E',
+  \ 'text': "Unnecessary semicolon.",
+  \ 'pattern': '', 'vcol': 0, 'nr': -1,
+  \ 'valid': 1,
+  \ }]
   bwipe
 
 Execute (javascript: standard: errorformat):

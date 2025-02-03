@@ -578,7 +578,7 @@ function! s:configure_buffer(bufnr, ...) abort
     if old_config != config
         call s:debug_log('resetting tick because of config changes')
         call setbufvar(bufnr, '_neomake_automake_tick', [])
-    elseif exists('old_registration')
+    elseif exists('l:old_registration')
         if old_registration != s:configured_buffers[bufnr]
             call s:debug_log('resetting tick because of registration changes')
             call setbufvar(bufnr, '_neomake_automake_tick', [])

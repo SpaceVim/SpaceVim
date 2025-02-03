@@ -51,8 +51,10 @@ Include (Vim/Neovim behavior): vim_and_neovim_behavior.vader
 
 ~ Filetype specific
 Include (Asciidoc): ft_asciidoc.vader
+Include (Clojure): ft_clojure.vader
 Include (Cs): ft_cs.vader
 Include (Css): ft_css.vader
+Include (Dockerfile): ft_dockerfile.vader
 Include (Elixir): ft_elixir.vader
 Include (Elm): ft_elm.vader
 Include (Erlang): ft_erlang.vader

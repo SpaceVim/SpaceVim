@@ -12,6 +12,6 @@ function! neomake#makers#ft#ansible#ansiblelint() abort
     return {
         \ 'exe': 'ansible-lint',
         \ 'args': ['-p', '--nocolor'],
-        \ 'errorformat': '%f:%l: [%tANSIBLE%n] %m',
+        \ 'errorformat': '%f:%l: [%t%n] %m,%f:%l: [%tANSIBLE%n] %m',
         \ }
 endfunction

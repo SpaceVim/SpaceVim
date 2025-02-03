@@ -728,7 +728,16 @@ Execute (neomake#utils#fnamemodify handles fugitive buffer):
   let bufname = bufname('%')
   let bufname_abs = fnamemodify(bufname, ':p')
 
-  Gedit
+  try
+    Gedit
+  catch /^Vim\%((\a\+)\)\=:E/
+    NeomakeTestsSkip 'error with/through vim-fugitive (not b/c, e.g. neovim-0.1.7)'
+    bwipe
+    if exists('*VimFtpluginUndo')
+      delfunction VimFtpluginUndo
+    endif
+    return
+  endtry
   AssertNotEqual bufname, bufname('%')
   Assert bufname('%') =~# '^fugitive://'
 

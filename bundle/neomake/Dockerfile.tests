@@ -1,5 +1,5 @@
 # From https://github.com/tweekmonster/vim-testbed.
-FROM testbed/vim:18@sha256:2b1872c68b6e9dfbfd8f804ad9727516ee971150142a80df354c244dcafa59c4
+FROM testbed/vim:23@sha256:d92287a56d52af24800f1ad54fa9c8570fee7b2aa748c9d23c219bc93377e401
 
 # Currently tested versions:
 #  - v7.3.429 (Ubuntu Precise, 12.04LTS)
@@ -16,9 +16,10 @@ RUN install_vim -tag v7.3.429 -name vim73 --with-features=huge -build \
   && rm -rf /vim-build/**/runtime/tutor
 RUN install_vim -tag v8.1.0622 -name vim81 -build \
                 -tag neovim:v0.3.8 -py3 -build \
+                -tag neovim:v0.5.0 -build \
   && rm -rf /vim-build/**/runtime/tutor
 
-ENV NEOMAKE_DOCKERFILE_UPDATE=2020-01-27
+ENV NEOMAKE_DOCKERFILE_UPDATE=2021-09-10
 
 # Git master in a separate layer, since the above is meant to be stable.
 RUN install_vim -tag master -build \
@@ -38,26 +39,27 @@ RUN curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest
 # files).  grep for checks.
 ENV NEOMAKE_TESTS_DEP_PLUGINS_DIR=/neomake-deps
 ENV VIMHELPLINT_DIR=$NEOMAKE_TESTS_DEP_PLUGINS_DIR/vim-vimhelplint
-RUN mkdir $NEOMAKE_TESTS_DEP_PLUGINS_DIR
-RUN apk --no-cache add git \
+RUN mkdir $NEOMAKE_TESTS_DEP_PLUGINS_DIR \
+  && apk --no-cache add git \
   && git clone -q --depth=1 -b display-source-with-exceptions https://github.com/blueyed/vader.vim $NEOMAKE_TESTS_DEP_PLUGINS_DIR/vader \
   && git clone -q --depth=1 https://github.com/tpope/vim-fugitive $NEOMAKE_TESTS_DEP_PLUGINS_DIR/vim-fugitive \
   && git clone -q --depth=1 https://github.com/machakann/vim-vimhelplint $NEOMAKE_TESTS_DEP_PLUGINS_DIR/vim-vimhelplint \
   && git clone -q --depth=1 https://github.com/syngan/vim-vimlint /tools/vim-vimlint \
-  && git clone -q --depth=1 https://github.com/ynkdir/vim-vimlparser /tools/vim-vimlparser
-RUN test -f /vim-build/bin/vim81 && ln -s /vim-build/bin/vim81 /usr/local/bin/vim
-RUN printf '#!/bin/sh -x\n/tools/vim-vimlint/bin/vimlint.sh -l /tools/vim-vimlint -p /tools/vim-vimlparser "$@"\n' > /usr/local/bin/vimlint
-RUN chmod +x /usr/local/bin/vimlint
+  && git clone -q --depth=1 https://github.com/ynkdir/vim-vimlparser /tools/vim-vimlparser \
+  && test -f /vim-build/bin/vim81 && ln -s /vim-build/bin/vim81 /usr/local/bin/vim \
+  && printf '#!/bin/sh -x\n/tools/vim-vimlint/bin/vimlint.sh -l /tools/vim-vimlint -p /tools/vim-vimlparser "$@"\n' > /usr/local/bin/vimlint \
+  && chmod +x /usr/local/bin/vimlint
 
 # Install covimerage and vint.
 RUN apk --no-cache add python3 \
-  && pip3 install -U pip \
-  && pip3 install --no-cache-dir 'coverage<5' python-coveralls covimerage==0.2.1 vim-vint==0.3.21 \
   && rm -rf /usr/include /usr/lib/python*/turtle* /usr/lib/python*/tkinter \
-  && pip3 uninstall --yes pip \
-  && curl https://codecov.io/bash -o /usr/bin/codecov \
-  && chmod +x /usr/bin/codecov \
-  && cd /usr/bin && ln -s python3 python
+  && ln -s /usr/bin/python3 /usr/local/bin/python \
+  && python -m venv /venv \
+  && /venv/bin/pip install covimerage==0.2.2 python-coveralls vim-vint==0.3.21 \
+  && ln -s /venv/bin/coverage /venv/bin/coveralls /venv/bin/covimerage /venv/bin/vint /usr/local/bin \
+  && curl -L https://github.com/codecov/codecov-bash/releases/download/1.0.5/codecov -o /usr/local/bin/codecov \
+  && chmod +x /usr/local/bin/codecov
 
+# Setup non-root user.
 RUN adduser -D -s /bin/bash neomake
 USER neomake

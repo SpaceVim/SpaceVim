@@ -241,7 +241,8 @@ Execute (python: flake8: supports_stdin: changes cwd (non-existing)):
 
   let b:neomake = {'flake8': {'exe': 'echo', 'errorformat': '%m'}}
   CallNeomake 1, ['flake8']
-  AssertNeomakeMessage printf('\Vjobinfo.cd(): error when trying to change cwd to %s:', tempdir)
+  AssertNeomakeMessage printf("buffer's directory does not exist: %s.", tempdir), 3
+  AssertNeomakeMessage 'Using stdin for unreadable buffer (-).', 3
   AssertNeomakeMessage printf('\vStarting .{-}: echo --format\=default --stdin-display-name %s -.', fname), 2
   AssertNeomakeMessage printf('cwd: %s.', getcwd())
   AssertEqual getloclist(0)[0].text,
@@ -263,7 +264,7 @@ Execute (python: flake8: supports_stdin: changes cwd (existing)):
   \ printf('-1 --format=default --stdin-display-name %s -', fname)
   bwipe
 
-Execute (python: flake8: supports_stdin: does not change cwd with buffer in subdir):
+Execute (python: flake8: supports_stdin: changes cwd also with buffer in subdir):
   new
   let cwd = tempname()
   let fdir = cwd.neomake#utils#Slash().'subdir'
@@ -278,9 +279,45 @@ Execute (python: flake8: supports_stdin: does not change cwd with buffer in subd
   AssertNeomakeMessageAbsent '\Verror when trying to change cwd'
   AssertNeomakeMessage printf('\vStarting .{-}: echo --format\=default --stdin-display-name %s -.',
   \ fname), 2
-  AssertNeomakeMessage printf('cwd: %s.', cwd)
+  AssertNeomakeMessage printf('cwd: %s (changed).', fdir)
   AssertEqual getloclist(0)[0].text,
   \ printf('-1 --format=default --stdin-display-name %s -', fname)
+  bwipe
+
+Execute (python: pyflakes: SyntaxError):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#python#pyflakes(), [
+  \ 'test.py:1:8: unexpected EOF while parsing',
+  \ 'print(n',
+  \ '       ^',
+  \ ])
+  let maker.name = 'pyflakes'
+  new
+  file test.py
+  CallNeomake 1, [maker]
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 1, 'bufnr': bufnr('%'), 'col': 8, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'E', 'pattern': '',
+  \  'text': 'unexpected EOF while parsing'}]
+  AssertEqual line('.'), 1
+  AssertEqual neomake#GetCurrentErrorMsg(),
+  \ 'pyflakes: unexpected EOF while parsing (E)'
+  bwipe
+
+Execute (python: pyflakes: normal errors):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#python#pyflakes(), [
+  \ "test.py:1:7 undefined name 'n'",
+  \ ])
+  let maker.name = 'pyflakes'
+  new
+  file test.py
+  CallNeomake 1, [maker]
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 1, 'bufnr': bufnr('%'), 'col': 7, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'E', 'pattern': '',
+  \  'text': "undefined name 'n'"}]
+  AssertEqual line('.'), 1
+  AssertEqual neomake#GetCurrentErrorMsg(),
+  \ "pyflakes: undefined name 'n' (E)"
   bwipe
 
 Execute (python: pylint):
@@ -411,7 +448,7 @@ Execute (python: mypy):
 
   let options = {'file_mode': 1}
   let bound_maker = neomake#core#instantiate_maker(maker, options, 0)
-  AssertEqual bound_maker.args, ['--follow-imports=silent'] + base_args
+  AssertEqual bound_maker.args, base_args + ['--follow-imports=silent']
 
   new
   let b:neomake = {'project_root': 'fake_project_root'}
@@ -424,11 +461,21 @@ Execute (python: mypy):
   let bound_maker = neomake#core#instantiate_maker(maker, options, 0)
   AssertEqual bound_maker.args, base_args + ['.']
 
+  " supports_stdin: does not inject "--shadow-file" with unreadable buffer.
   let jobinfo = NeomakeTestsFakeJobinfo()
   AssertEqual bound_maker.supports_stdin(jobinfo), 0
+  AssertEqual bound_maker.args, base_args + ['.']
+  AssertNeomakeMessage 'mypy: supports_stdin: buffer is not readable, not using shadow file.', 3
   let fname = bound_maker._get_fname_for_buffer(jobinfo)
+  AssertNeomakeMessage 'mypy: supports_stdin: buffer is not readable, not using shadow file.', 3
   AssertNeomakeMessage '\vUsing tempfile for unnamed buffer: "(.*)".', 3
   let tmpfile = g:neomake_test_matchlist[1]
   AssertEqual fname, tmpfile
+
+  " supports_stdin: injects "--shadow-file" with readable buffer.
+  let jobinfo = NeomakeTestsFakeJobinfo()
+  exe 'write' tempname()
+  AssertEqual bound_maker.supports_stdin(jobinfo), 0
+  AssertEqual bound_maker.args, base_args + ['.', '--shadow-file', '%', bound_maker.tempfile_name]
 
   bwipe

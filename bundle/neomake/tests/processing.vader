@@ -363,6 +363,7 @@ Execute (Sleep in postprocess gets handled correctly):
   " Reproduces flakiness with https://github.com/neomake/neomake/issues/899.
   call neomake#statusline#ResetCounts()
   if NeomakeAsyncTestsSetup()
+    let uses_delayed_exit = !has('nvim-0.2.0') && !has('patch-8.2.0452')
     let s:postprocess_count = 0
     function! s:postprocess(entry) dict
       let s:postprocess_count += 1
@@ -380,15 +381,16 @@ Execute (Sleep in postprocess gets handled correctly):
     let jobinfo = neomake#Make(1, [maker])[0]
     NeomakeTestsWaitForFinishedJobs
     AssertNeomakeMessage 'Processing 1 lines of output.', 3, jobinfo
-    if !has('nvim-0.2.0')
+    if uses_delayed_exit
       AssertNeomakeMessage 'exit (delayed): unnamed_maker: 0.', 3, jobinfo
       AssertNeomakeMessage '\VCalling User autocmd NeomakeCountsChanged with context:', 3
     endif
 
-    if has('nvim-0.4.0')
+    if has('nvim-0.4.0') || (!has('nvim') && has('patch-8.2.0452') && !has('patch-8.2.0466'))
       " Neovim refactored event processing, so that the job's 2nd sleep finishes
       " before the one in the first postprocessing.
       " https://github.com/neovim/neovim/commit/d4938743e6aef04c83d02907048768d0d79aaa30
+      " Vim showed the same behavior for a small patch range.
       let expected_final_countchanges = 2
       AssertNeomakeMessage "output on stdout: ['out-22', 'out-333', ''].", 3, jobinfo
       AssertNeomakeMessage 'Processing 2 lines of output.', 3, jobinfo
@@ -403,8 +405,10 @@ Execute (Sleep in postprocess gets handled correctly):
       AssertNeomakeMessage '\VCalling User autocmd NeomakeCountsChanged with context:', 3
     endif
 
-    if !has('nvim-0.2.0')
+    if uses_delayed_exit
       AssertNeomakeMessage 'Trigger delayed exit.', 3, jobinfo
+    else
+      AssertNeomakeMessage 'exit: unnamed_maker: 0.', 3, jobinfo
     endif
 
     AssertEqual map(getloclist(0), 'v:val.text'), ['out-1', 'out-22', 'out-333']

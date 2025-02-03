@@ -1,0 +1,25 @@
+Include: include/setup.vader
+
+Execute (dockerfile: hadolint):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#dockerfile#hadolint(), [
+  \ 'Dockerfile:1 DL3018 warning: Pin versions in apk add. …',
+  \ 'Dockerfile:2 DL3059 info: Multiple consecutive `RUN` instructions. …',
+  \ 'Dockerfile:3 SC2086 info: Double quote to prevent globbing and word splitting.',
+  \ 'Dockerfile:45 DL123 error: invented.',
+  \ ])
+  let maker.name = 'hadolint'
+  new
+  let bufnr = bufnr('%')
+  file Dockerfile
+  CallNeomake 1, [maker]
+  AssertEqualQf [getloclist(0)][0], [
+  \ {'lnum': 1, 'bufnr': bufnr, 'nr': 3018, 'type': 'W', 'col': 0,
+  \  'text': 'DL3018: Pin versions in apk add. …'},
+  \ {'lnum': 2, 'bufnr': bufnr, 'nr': 3059, 'type': 'I', 'col': 0,
+  \  'text': 'DL3059: Multiple consecutive `RUN` instructions. …'},
+  \ {'lnum': 3, 'bufnr': bufnr, 'nr': 2086, 'type': 'I', 'col': 0,
+  \  'text': 'SC2086: Double quote to prevent globbing and word splitting.'},
+  \ {'lnum': 45, 'bufnr': bufnr, 'nr': 123, 'type': 'e', 'col': 0,
+  \  'text': 'DL123 error: invented.'},
+  \ ]
+  bwipe

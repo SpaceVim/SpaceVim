@@ -1,0 +1,29 @@
+Include: include/setup.vader
+
+Execute (clojure: clj_kondo: errorformat):
+  let maker = NeomakeTestsGetMakerWithOutput(neomake#makers#ft#clojure#clj_kondo(), [
+  \ 'file1.clj:2:1: error: unresolved symbol unknown',
+  \ 'linting took 12ms, errors: 1, warnings: 0',
+  \ ])
+  let maker.name = 'clojure'
+  new
+  file file1.clj
+  CallNeomake 1, [maker]
+  AssertEqualQf getloclist(0), [
+  \ {'lnum': 2, 'bufnr': bufnr('%'), 'col': 1, 'valid': 1, 'vcol': 0,
+  \  'nr': -1, 'type': 'e', 'pattern': '',
+  \  'text': 'unresolved symbol unknown'}]
+  bwipe
+
+Execute (clojure: clj_kondo: supports_stdin):
+  new
+  noautocmd setfiletype clojure
+
+  let b:neomake = {'clj_kondo': {'exe': 'echo', 'errorformat': '%m'}}
+  CallNeomake 1, ['clj_kondo']
+  AssertNeomakeMessage '\vStarting .{-}: echo --filename '''' --lint -.', 2
+
+  file file1.clj
+  CallNeomake 1, ['clj_kondo']
+  AssertNeomakeMessage '\vStarting .{-}: echo --filename file1.clj --lint -.', 2
+  bwipe

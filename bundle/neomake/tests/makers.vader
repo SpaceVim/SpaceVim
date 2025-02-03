@@ -612,7 +612,7 @@ Execute (Makers: get_list_entries with exception):
 
   CallNeomake 1, [maker]
   AssertNeomakeMessage 'Error during get_list_entries for unnamed_maker: TEST_ERROR.'
-  AssertNeomakeMessage '\m^(in function .*)$', 3
+  AssertNeomakeMessage '\m^(in .*handle_get_list_entries.*, line 1)$', 3
 
   AssertEqual len(g:neomake_test_countschanged), 0
   AssertEqual len(g:neomake_test_jobfinished), 1
@@ -646,7 +646,7 @@ Execute (Makers: process_json with invalid JSON):
   if has('nvim')
     AssertNeomakeMessage "Failed to decode JSON: Vim(return):E474: Unidentified byte: success (output: 'success').", 0
   elseif exists('*json_decode')
-    AssertNeomakeMessage "Failed to decode JSON: Vim(return):E474: Invalid argument (output: 'success').", 0
+    AssertNeomakeMessage '\vFailed to decode JSON: Vim\(return\):(E474|E491): .* \(output: ''success''\).', 0
   else
     AssertNeomakeMessage "Failed to decode JSON: Failed to parse JSON input: invalid input (output: 'success').", 0
   endif
@@ -690,7 +690,7 @@ Execute (Makers: get_list_entries with sandbox exception):
 
   let jobinfo = neomake#Make({'enabled_makers': [maker]})[0]
   AssertNeomakeMessage '\mError during pcall: Vim(bprevious):E48: Not allowed in sandbox:'
-  AssertNeomakeMessage '\m^(in function .*)$', 3
+  AssertNeomakeMessage '\m^(in .*_handle_get_list_entries.*)$', 3
   AssertEqual len(g:neomake_test_countschanged), 0
   AssertEqual len(g:neomake_test_jobfinished), 0
   AssertEqual len(g:neomake_test_finished), 0
@@ -734,7 +734,7 @@ Execute (pcall aborts after 3 attempts per job):
   " Calls both makers initially.
   AssertNeomakeMessage 'maker1: getting entries via get_list_entries.'
   AssertNeomakeMessage '\mError during pcall: Vim(bprevious):E48: Not allowed in sandbox:', 3, jobs[0]
-  AssertNeomakeMessage '\m^(in function .*)$', 3
+  AssertNeomakeMessage '\m^(in .*_handle_get_list_entries.*)$', 3
   if has('timers')
     AssertNeomakeMessage '\V\^Retrying Timer event in 10ms', 3, jobs[0]
   else
@@ -771,7 +771,7 @@ Execute (pcall aborts after 3 attempts per job):
   endif
 
   NeomakeTestsWaitForMessage 'Giving up handling Timer callbacks after 3 attempts. Please report this. See :messages for more information.', 0, jobs[0]
-  AssertNeomakeMessage '\m^(in function .*neomake#action_queue#add,.*)$', 3
+  AssertNeomakeMessage '\m^(in .*neomake#action_queue#add,.*)$', 3
 
   " Now maker2 gets processed (after giving up on maker1).
   if has('timers')
@@ -786,7 +786,7 @@ Execute (pcall aborts after 3 attempts per job):
   AssertEqual map(getloclist(0), 'v:val.text'), ['error']
 
   let vim_msgs = NeomakeTestsGetVimMessages()
-  Assert vim_msgs[-1] =~# '\vNeomake error in: function .*neomake#action_queue#add, line \d+'
+  Assert vim_msgs[-1] =~# '\vNeomake error in: .*neomake#action_queue#add, line \d+'
   AssertEqual len(vim_msgs), 1
   bwipe
 

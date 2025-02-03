@@ -7,8 +7,8 @@ endfunction
 function! neomake#makers#ft#scss#sasslint() abort
     return {
         \ 'exe': 'sass-lint',
-        \ 'args': ['--no-exit', '--verbose', '--format', 'compact'],
-        \ 'errorformat': neomake#makers#ft#javascript#eslint()['errorformat']
+        \ 'args': ['--no-exit', '--verbose', '--format', 'json'],
+        \ 'process_json': function('neomake#makers#ft#javascript#ProcessEslint')
         \ }
 endfunction
 

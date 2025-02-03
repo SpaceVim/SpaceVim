@@ -37,5 +37,7 @@ Execute (neomake#log#debug throws with missing make_options in tests):
   AssertEqual g:neomake_test_errors, []
   call neomake#log#debug('msg1.', {'make_id': -42})
   AssertEqual len(g:neomake_test_errors), 1
-  Assert g:neomake_test_errors[0] =~# '\v^GetMakeOptions failed: Vim\(let\):E716: Key not present in Dictionary: -42 \(in function .*\)$'
+  Assert g:neomake_test_errors[0] =~#
+  \ '\v^GetMakeOptions failed: Vim\(let\):E716: Key not present in Dictionary: "?-42"?'
+  \ .' \(in .*neomake#GetMakeOptions, line 3\)$'
   let g:neomake_test_errors = []

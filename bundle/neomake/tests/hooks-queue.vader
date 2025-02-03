@@ -119,18 +119,19 @@ Execute (Does not nest hooks / User autocommands):
   if NeomakeAsyncTestsSetup()
     new
 
+    let s:uses_action_queue = has('nvim') || !has('patch-8.2.0452')
+
     augroup neomake_tests
       autocmd User NeomakeJobFinished nested call s:OnNeomakeJobFinished()
     augroup END
 
     function! s:OnNeomakeJobFinished() abort
       let jobinfo = g:neomake_hook_context.jobinfo
-      if jobinfo.maker.name == 'maker1'
+      if jobinfo.maker.name == 'maker1' && s:uses_action_queue
         NeomakeTestsWaitForMessage '\v^Queuing User autocmd NeomakeCountsChanged for nested invocation ', 3
         AssertNeomakeMessage 'Queuing action handle_hook for Timer, BufEnter, WinEnter, InsertLeave, CursorHold, CursorHoldI.', 3
         AssertNeomakeMessage '\V\^Retrying Timer event in 10ms', 3
       endif
-      " call neomake#log#debug('OnNeomakeJobFinished finished.')
     endfunction
 
     let maker1 = NeomakeTestsCommandMaker('maker1', 'echo error1; exit 1')
@@ -143,9 +144,13 @@ Execute (Does not nest hooks / User autocommands):
     AssertEqual map(getloclist(0), 'v:val.text'), ['error1', 'error2']
 
     doautocmd WinEnter
-    AssertNeomakeMessage 'action queue: calling handle_hook.'
+    if s:uses_action_queue
+      AssertNeomakeMessage 'action queue: calling handle_hook.'
+    endif
     AssertNeomakeMessage '\VCalling User autocmd NeomakeCountsChanged with context: ', 3
-    AssertNeomakeMessage 'action queue: calling CleanJobinfo.', 3
+    if s:uses_action_queue
+      AssertNeomakeMessage 'action queue: calling CleanJobinfo.', 3
+    endif
     AssertNeomakeMessage 'Cleaning jobinfo.', 3
     AssertNeomakeMessage '\VCalling User autocmd NeomakeJobFinished with context: ', 3
     AssertNeomakeMessage '\VCalling User autocmd NeomakeFinished with context: ', 3

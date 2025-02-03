@@ -30,7 +30,8 @@ Execute (neomake#compat#systemlist):
       AssertNeomakeMessage "systemlist error: Vim(return):E475: Invalid value for argument cmd: 'echo 1' is not executable.", 0
     endif
   else
-    AssertEqual r, [&shell.': echo 1: command not found']
+    AssertEqual len(r), 1
+    Assert r[0] =~# printf('\v%s(: line 1)?: echo 1: command not found$', &shell), r[0]
     AssertEqual v:shell_error, 127
   endif
 
@@ -46,7 +47,9 @@ Execute (neomake#compat#systemlist):
 Execute (neomake#compat#systemlist with empty args):
   AssertEqual neomake#compat#systemlist(''), []
   AssertEqual neomake#compat#systemlist([]), []
-  AssertEqual neomake#compat#systemlist('0'), [&shell.': 0: command not found']
+  let output = neomake#compat#systemlist('0')
+  AssertEqual len(output), 1
+  Assert output[0] =~# printf('\v%s(: line 1)?: 0: command not found$', &shell), output[0]
 
 Execute (neomake#compat#json_decode):
   AssertEqual neomake#compat#json_decode(''), g:neomake#compat#json_none
@@ -55,7 +58,11 @@ Execute (neomake#compat#json_decode):
   if has('nvim')
     let expected_exception = 'Vim(return):E474: Unidentified byte: success'
   elseif exists('*json_decode')
-    let expected_exception = 'Vim(return):E474: Invalid argument'
+    if has('patch-8.2.0800')
+      let expected_exception = 'Vim(return):E491: json decode error at ''success'''
+    else
+      let expected_exception = 'Vim(return):E474: Invalid argument'
+    endif
   else
     let expected_exception = 'Neomake: Failed to parse JSON input: invalid input'
   endif
@@ -108,6 +115,10 @@ Execute (neomake#compat#get_mode):
   endif
 
 Execute (neomake#compat#get_mode with insert mode completion (feedkeys)):
+  if has('nvim-0.5.0')
+    NeomakeTestsSkip 'segfaults on neovim (https://github.com/neovim/neovim/issues/14565)'
+    return
+  endif
   if has('timers')
     new
     file file_sleep_efm
@@ -135,6 +146,10 @@ Execute (neomake#compat#get_mode with insert mode completion (feedkeys)):
   endif
 
 Execute (neomake#compat#get_mode with insert mode completion (imap)):
+  if has('nvim-0.5.0')
+    NeomakeTestsSkip 'segfaults on neovim (https://github.com/neovim/neovim/issues/14565)'
+    return
+  endif
   new
   file file_sleep_efm
   normal! iword1

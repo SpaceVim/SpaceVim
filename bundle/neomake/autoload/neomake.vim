@@ -506,7 +506,7 @@ function! s:MakeJob(make_id, options) abort
         endif
     finally
         call jobinfo.cd_back()
-        if exists('save_env_file')
+        if exists('l:save_env_file')
             call s:restore_env('NEOMAKE_FILE', save_env_file)
         endif
     endtry
@@ -843,7 +843,7 @@ function! neomake#create_maker_object(maker, ft) abort
             endif
         endfor
     endif
-    if v:profiling
+    if exists('s:hack_keep_refs_for_profiling')  " might not exist when starting profiling later..!
         call add(s:hack_keep_refs_for_profiling, maker)
     endif
     return maker
@@ -2142,7 +2142,7 @@ else
             if !jobinfo._nvim_in_handler
                 " Trigger previously delayed exit handler.
                 unlet jobinfo._nvim_in_handler
-                if exists('jobinfo._exited_while_in_handler')
+                if has_key(jobinfo, '_exited_while_in_handler')
                     call neomake#log#debug('Trigger delayed exit.', jobinfo)
                     call s:exit_handler(jobinfo, jobinfo._exited_while_in_handler)
                 endif
@@ -2195,7 +2195,7 @@ function! s:exit_handler(jobinfo, data) abort
         return
     endif
 
-    if exists('jobinfo._output_while_in_handler') || exists('jobinfo._nvim_in_handler')
+    if has_key(jobinfo, '_output_while_in_handler') || has_key(jobinfo, '_nvim_in_handler')
         let jobinfo._exited_while_in_handler = a:data
         call neomake#log#debug(printf('exit (delayed): %s: %s.',
                     \ maker.name, string(a:data)), jobinfo)
@@ -2284,7 +2284,7 @@ endfunction
 
 function! s:output_handler_queued(jobinfo, data, event_type, trim_CR) abort
     let jobinfo = a:jobinfo
-    if exists('jobinfo._output_while_in_handler')
+    if has_key(jobinfo, '_output_while_in_handler')
         call neomake#log#debug(printf('Queuing: %s: %s: %s.',
                     \ a:event_type, jobinfo.maker.name, string(a:data)), jobinfo)
         let jobinfo._output_while_in_handler += [[jobinfo, a:data, a:event_type, a:trim_CR]]
@@ -2298,7 +2298,7 @@ function! s:output_handler_queued(jobinfo, data, event_type, trim_CR) abort
     " Process queued events that might have arrived by now.
     " The attribute might be unset here, since output_handler might have
     " been interrupted.
-    if exists('jobinfo._output_while_in_handler')
+    if has_key(jobinfo, '_output_while_in_handler')
         while has_key(jobinfo, '_output_while_in_handler') && !empty(jobinfo._output_while_in_handler)
             let args = remove(jobinfo._output_while_in_handler, 0)
             call call('s:output_handler', args)
@@ -2306,7 +2306,7 @@ function! s:output_handler_queued(jobinfo, data, event_type, trim_CR) abort
         unlet! jobinfo._output_while_in_handler
     endif
     " Trigger previously delayed exit handler.
-    if exists('jobinfo._exited_while_in_handler')
+    if has_key(jobinfo, '_exited_while_in_handler')
         call neomake#log#debug('Trigger delayed exit.', jobinfo)
         call s:exit_handler(jobinfo, jobinfo._exited_while_in_handler)
     endif

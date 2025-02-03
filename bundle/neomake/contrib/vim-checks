@@ -111,7 +111,13 @@ check_errors ' \+$' 'Trailing whitespace'
 check_errors '^ * end\?i\? *$' 'Write endif, not en, end, or endi'
 check_errors '^((    )*([^ ]|$)|\s+\\)' 'Use four spaces for indentation' -v -E
 check_errors $'\t' 'Do not use tabs for indentation'
-check_errors '^\s*[^" ].*[^&]l:[a-z]' 'Do not use l: prefix for local variables'
+
+# Disallow local prefix with variables ("l:foo"), but allow it within (single
+# quoted) strings, and require it with exists() checks, where `exists('foo')`
+# is true for a global variable `foo`.
+check_errors "^\s*[^\" ].*[^'&]l:[a-z]" 'Do not use l: prefix for local variables'
+check_errors "^\s*[^\" ].* exists\('\w(?!:)" 'Use l: prefix for checking local variables' -P
+
 for arg in "${args[@]}"; do
     expand_arg "$arg"
     grep --files-without-match '^"[ ]vim: ts=4 sw=4 et' "${expanded_arg[@]}" \

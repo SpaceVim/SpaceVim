@@ -405,7 +405,7 @@ Execute (Hook context gets cleaned on error in postprocess):
   NeomakeTestsWaitForFinishedJobs
   AssertNeomakeMessage 'Error during output processing for error-maker: error from postprocess.', 0
   let vim_msgs = NeomakeTestsGetVimMessages()
-  Assert vim_msgs[-1] =~# 'Neomake error in: function .*', 'message found'
+  Assert vim_msgs[-1] =~# 'Neomake error in: .*_AddExprCallback.*, line 1'
   AssertEqual len(vim_msgs), 1
   Assert !exists('g:neomake_postprocess_context'), 'Hook context was cleaned.'
 

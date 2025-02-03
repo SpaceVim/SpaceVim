@@ -118,6 +118,7 @@ These plugins are changed based on a specific version of origin plugin.
 #### `checkers` layer
 
 - [ale@v3.3.0](https://github.com/dense-analysis/ale/tree/v3.3.0)
+- [neomake@584f882b](https://github.com/neomake/neomake/tree/584f882b9f991245374e7e7d7d1f78bae90b7a35)
 
 #### `chinese` layer
 

@@ -588,7 +588,6 @@ function! s:base_list._appendlist(entries, jobinfo) abort
         let diff = neomake#list#_diff_new_entries(a:entries, added)
         if !empty(diff)
             for [k, v] in items(diff)
-                " TODO: handle valid=1 being added?
                 call neomake#log#debug(printf(
                   \ 'Entry %d differs after adding: %s.',
                   \ k+1,
@@ -622,7 +621,7 @@ function! neomake#list#_diff_new_entries(orig, new) abort
     let r = {}
     for new in a:new
         let orig = copy(get(a:orig, i, {}))
-        for [k, v] in items({'pattern': '', 'module': '', 'valid': 1})
+        for [k, v] in items({'pattern': '', 'module': '', 'valid': 1, 'end_lnum': 0, 'end_col': 0})
             if has_key(new, k)
                 let orig[k] = v
             endif

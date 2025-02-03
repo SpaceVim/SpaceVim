@@ -753,7 +753,7 @@ Execute (Neomake: entry.valid < 0 and configured entry type):
   call neomake#Make(1, [maker])
   NeomakeTestsWaitForFinishedJobs
   AssertNeomakeMessage 'Processing 4 lines of output.'
-  AssertNeomakeMessage "\\vRemoving invalid entry: invalid \\(\\{'lnum': 0, 'bufnr': 0, 'col': 0, 'valid': -1, .*\\}\\)."
+  AssertNeomakeMessage "\\vRemoving invalid entry: invalid \\(\\{'lnum': 0, 'bufnr': 0, .*, 'valid': -1, .*\\}\\)."
   AssertNeomakeMessage 'Processing 3 entries.'
 
   " Without this patch entries are invalid always after setqflist/setloclist.

@@ -475,7 +475,7 @@ Execute (neomake#quickfix#FormatQuickfix logs exception from nmcfg)):
     lopen
     AssertEqual getline(1), '????   text1 nmcfg:{undefined}'
     AssertNeomakeMessage 'Error when evaluating nmcfg ({undefined}): Vim(let):E121: Undefined variable: undefined.', 0
-    AssertNeomakeMessage '\v\(in function neomake#quickfix#FormatQuickfix, line \d+\)', 3
+    AssertNeomakeMessage '\v\(in (command line\.\..{-}\.\.)?function neomake#quickfix#FormatQuickfix, line \d+\)$', 3
     lclose
     bwipe
   finally
