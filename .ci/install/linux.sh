@@ -37,7 +37,7 @@ install_nvim() {
     local tmp="$(mktemp -d)"
     local out="${DEPS}/_neovim/$tag"
     mkdir -p $out
-    if [[ $tab == "nightly" ]]; then
+    if [[ $tag == "nightly" ]]; then
       curl  -o $tmp/nvim-linux64.tar.gz -L "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux-x86_64.gz"
     else
       curl  -o $tmp/nvim-linux64.tar.gz -L "https://github.com/neovim/neovim/releases/download/$tag/nvim-linux64.tar.gz"
