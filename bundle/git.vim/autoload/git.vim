@@ -119,6 +119,8 @@ function! git#complete(ArgLead, CmdLine, CursorPos) abort
         return git#reflog#complete(a:ArgLead, a:CmdLine, a:CursorPos)
     elseif str =~# '^Git\s\+clean\s\+.*$'
         return git#clean#complete(a:ArgLead, a:CmdLine, a:CursorPos)
+    elseif str =~# '^Git\s\+rebase\s\+.*$'
+        return git#rebase#complete(a:ArgLead, a:CmdLine, a:CursorPos)
     else
         return ''
     endif

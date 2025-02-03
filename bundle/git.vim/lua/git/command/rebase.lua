@@ -135,5 +135,8 @@ function m.run(argv)
     on_stderr = on_std,
   })
 end
+function m.complete(ArgLead, CmdLine, CursorPos)
+  return table.concat({'-i', '--abort'}, '\n')
+end
 
 return m
