@@ -357,6 +357,7 @@ local function open_win()
           vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
         end
       end
+      update_result_count()
     end,
   })
 
