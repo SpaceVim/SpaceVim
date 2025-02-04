@@ -5,6 +5,8 @@
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](LICENSE)
 
+**Alpha version. Any changes, including backward incompatible changes, are applied without announcements.**
+
 ## Usage
 
 ```lua
@@ -31,10 +33,12 @@ require("plug").add({
 
 ## Plugin Spec
 
-| name   | description                                             |
-| ------ | ------------------------------------------------------- |
-| `[1]`  | `string`, plugin repo short name, `wsdjeg/flygrep.nvim` |
-| `cmds` | `table<string>`, commands lazy loading                  |
+| name     | description                                             |
+| -------- | ------------------------------------------------------- |
+| `[1]`    | `string`, plugin repo short name, `wsdjeg/flygrep.nvim` |
+| `cmds`   | `table<string>`, commands lazy loading                  |
+| `events` | `table<string>`, events lazy loading                    |
+| `on_ft`  | `table<string>`, filetypes lazy loading                 |
 
 ## Commands
 

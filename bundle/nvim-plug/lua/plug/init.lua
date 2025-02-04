@@ -29,7 +29,11 @@ function M.add(plugins)
 			hooks.on_events(plug.events, plug)
 		end
 
-		if not plug.events and not plug.cmds then
+    if plug.on_ft then
+      hooks.on_ft(plug.on_ft, plug)
+    end
+
+		if not plug.events and not plug.cmds and not plug.on_ft then
 			loader.load(plug)
 		end
 	end
