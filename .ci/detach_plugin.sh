@@ -136,6 +136,26 @@ main () {
             _detact_bundle dein-ui.vim README.md
             _detact_bundle dein-ui.vim plugin/deinui.vim
             ;;
+        nvim-plug)
+            git clone https://github.com/wsdjeg/nvim-plug.git detach/$1
+            cd detach/$1
+            _checkdir lua/spacevim/api
+            _detact lua/spacevim/api/job.lua
+            _detact lua/spacevim/api/notify.lua
+            _detact lua/spacevim/api/password.lua
+            _detact LICENSE
+            _detact_bundle $1 README.md
+            _checkdir plugin
+            _detact_bundle $1 plugin/plug.lua
+            _checkdir lua/plug
+            _detact_bundle $1 lua/plug/config.lua
+            _detact_bundle $1 lua/plug/hooks.lua
+            _detact_bundle $1 lua/plug/init.lua
+            _detact_bundle $1 lua/plug/instealler.lua
+            _detact_bundle $1 lua/plug/loader.lua
+            _checkdir test
+            _detact_bundle $1 test/init.lua
+            ;;
         format.nvim)
             git clone https://github.com/wsdjeg/format.nvim.git detach/$1
             cd detach/$1

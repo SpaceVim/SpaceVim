@@ -8,7 +8,7 @@
 
 local M = {}
 
-M.__password = require('spacevim.api').import('password')
+M.__password = require('spacevim.api.password')
 
 local empty = function(expr)
   return vim.fn.empty(expr) == 1
