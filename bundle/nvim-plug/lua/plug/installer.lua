@@ -55,6 +55,9 @@ local function install_plugin(plugSpec)
   if processes >= config.max_processes then
     table.insert(installation_queue, plugSpec)
     return
+  elseif vim.fn.isdirectory(plugSpec.path) == 1 then
+    -- if the directory exists, skip installation
+    return
   end
   local cmd = { 'git', 'clone', '--depth', '1' }
   if plugSpec.branch then

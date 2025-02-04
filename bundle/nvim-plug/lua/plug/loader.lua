@@ -20,10 +20,27 @@ local config = require('plug.config')
 --- @field url string
 --- @field path string
 --- @field build string|table<string>
+--- @field is_local boolean true for local plugin
+
+local function is_local_plugin(plugSpec)
+  if plugSpec.is_local or vim.fn.isdirectory(plugSpec[1]) == 1 then
+    plugSpec.is_local = true
+    return true
+  end
+end
+
+local function unique_name(plugSpec)
+  local s = vim.split(plugSpec, '/')
+  return s[#s]
+end
 
 function M.parser(plugSpec)
-  plugSpec.name = vim.split(plugSpec[1], '/')[2]
-  if not plugSpec.type or plugSpec.type == 'none' then
+  plugSpec.name = unique_name(plugSpec)
+  if is_local_plugin(plugSpec) then
+    plugSpec.rtp = plugSpec[1]
+    plugSpec.path = plugSpec[1]
+    plugSpec.url = nil
+  elseif not plugSpec.type or plugSpec.type == 'none' then
     plugSpec.rtp = config.bundle_dir .. '/' .. plugSpec[1]
     plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1]
     plugSpec.url = config.base_url .. '/' .. plugSpec[1]
