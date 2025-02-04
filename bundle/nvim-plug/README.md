@@ -10,24 +10,23 @@
 ## Usage
 
 ```lua
-require("plug").setup({
-
-	bundle_dir = "D:\\bundle_dir\\",
+require('plug').setup({
+  bundle_dir = 'D:/bundle_dir',
 })
 
-require("plug").add({
-	{
-		"wsdjeg/scrollbar.vim",
-		events = { "VimEnter" },
-		config = function() end,
-	},
-	{
-		"wsdjeg/flygrep.nvim",
-		cmds = { "FlyGrep" },
-		config = function()
-			require("flygrep").setup()
-		end,
-	},
+require('plug').add({
+  {
+    'wsdjeg/scrollbar.vim',
+    events = { 'VimEnter' },
+    config = function() end,
+  },
+  {
+    'wsdjeg/flygrep.nvim',
+    cmds = { 'FlyGrep' },
+    config = function()
+      require('flygrep').setup()
+    end,
+  },
 })
 ```
 
@@ -39,6 +38,7 @@ require("plug").add({
 | `cmds`   | `table<string>`, commands lazy loading                  |
 | `events` | `table<string>`, events lazy loading                    |
 | `on_ft`  | `table<string>`, filetypes lazy loading                 |
+| `type`   | `string`, plugin type including `color`, `plugin`       |
 
 ## Commands
 
