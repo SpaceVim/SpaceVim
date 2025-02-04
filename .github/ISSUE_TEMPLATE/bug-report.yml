@@ -27,3 +27,5 @@ body:
     attributes:
       label: Output of the `:SPDebugInfo!`
       description: Please copy and paste the result of :SPDebugInfo! command.
+    validations:
+      required: true
