@@ -12,6 +12,8 @@
 ```lua
 require('plug').setup({
   bundle_dir = 'D:/bundle_dir',
+  max_processes = 5, -- max number of processes used for nvim-plug job
+  base_url = 'https://github.com',
 })
 
 require('plug').add({

@@ -10,9 +10,19 @@ local M = {}
 local job = require('spacevim.api.job')
 local notify = require('spacevim.api.notify')
 local jobs = {}
+local config = require('plug.config')
+
+local processes = 0
+
+local installation_queue = {}
+local building_queue = {}
 
 --- @param plugSpec PluginSpec
 local function build(plugSpec)
+  if processes >= config.max_processes then
+    table.insert(building_queue, plugSpec)
+    return
+  end
   local jobid = job.start(plugSpec.build, {
     on_stdout = function(id, data)
       for _, v in ipairs(data) do
@@ -30,13 +40,22 @@ local function build(plugSpec)
       else
         notify.notify('failed to build ' .. jobs['jobid_' .. id])
       end
+      processes = processes - 1
+      if #building_queue > 0 then
+        build(table.remove(building_queue))
+      end
     end,
   })
+  processes = processes + 1
   jobs['jobid_' .. jobid] = plugSpec.name
 end
 
 --- @param plugSpec PluginSpec
 local function install_plugin(plugSpec)
+  if processes >= config.max_processes then
+    table.insert(installation_queue, plugSpec)
+    return
+  end
   local cmd = { 'git', 'clone', '--depth', '1' }
   if plugSpec.branch then
     table.insert(cmd, '--branch')
@@ -68,8 +87,13 @@ local function install_plugin(plugSpec)
       else
         notify.notify('failed to install ' .. jobs['jobid_' .. id])
       end
+      processes = processes - 1
+      if #installation_queue > 0 then
+        install_plugin(table.remove(installation_queue, 1))
+      end
     end,
   })
+  processes = processes + 1
   jobs['jobid_' .. jobid] = plugSpec.name
 end
 

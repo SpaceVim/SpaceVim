@@ -5,13 +5,15 @@
 -- License: GPLv3
 --=============================================================================
 
-
 local M = {}
 
-M.bundle_dir = vim.fn.stdpath('data') .. '/bundle_dir' 
-
+M.bundle_dir = vim.fn.stdpath('data') .. '/bundle_dir'
+M.max_processes = 5
+M.base_url = 'https://github.com/'
 function M.setup(opt)
   M.bundle_dir = opt.bundle_dir or M.bundle_dir
+  M.max_processes = opt.max_processes or M.max_processes
+  M.base_url = opt.base_url or M.base_url
 end
 
 return M

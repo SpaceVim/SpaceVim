@@ -7,7 +7,7 @@
 
 local M = {}
 
-local config = require("plug.config")
+local config = require('plug.config')
 
 --- @class PluginSpec
 --- @field rtp string
@@ -23,21 +23,21 @@ local config = require("plug.config")
 
 function M.parser(plugSpec)
   plugSpec.name = vim.split(plugSpec[1], '/')[2]
-	if not plugSpec.type or plugSpec.type == "none" then
-    plugSpec.rtp = config.bundle_dir .. "/" .. plugSpec[1]
-		plugSpec.path = config.bundle_dir .. "/" .. plugSpec[1]
-		plugSpec.url = "https://github.com/" .. plugSpec[1]
-	elseif plugSpec.type == "color" then
-    plugSpec.rtp = config.bundle_dir .. "/" .. plugSpec[1]
-		plugSpec.path = config.bundle_dir .. "/" .. plugSpec[1] .. '/color'
-		plugSpec.repo = "https://github.com/" .. plugSpec[1]
-	elseif plugSpec.type == "plugin" then
-    plugSpec.rtp = config.bundle_dir .. "/" .. plugSpec[1]
-		plugSpec.path = config.bundle_dir .. "/" .. plugSpec[1] .. '/plugin'
-		plugSpec.url = "https://github.com/" .. plugSpec[1]
-	end
+  if not plugSpec.type or plugSpec.type == 'none' then
+    plugSpec.rtp = config.bundle_dir .. '/' .. plugSpec[1]
+    plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1]
+    plugSpec.url = config.base_url .. '/' .. plugSpec[1]
+  elseif plugSpec.type == 'color' then
+    plugSpec.rtp = config.bundle_dir .. '/' .. plugSpec[1]
+    plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1] .. '/color'
+    plugSpec.repo = config.base_url .. '/' .. plugSpec[1]
+  elseif plugSpec.type == 'plugin' then
+    plugSpec.rtp = config.bundle_dir .. '/' .. plugSpec[1]
+    plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1] .. '/plugin'
+    plugSpec.url = config.base_url .. '/' .. plugSpec[1]
+  end
 
-	return plugSpec
+  return plugSpec
 end
 
 -- {'loadconf': 1,
@@ -61,15 +61,15 @@ end
 -- 'merged': 0,
 -- 'path': 'C:/Users/wsdjeg/.SpaceVim/bundle/defx-git'}
 function M.load(plugSpec)
-	if vim.fn.isdirectory(plugSpec.rtp) == 1 then
-		vim.opt.runtimepath:append(plugSpec.rtp)
-		if vim.fn.has("vim_starting") ~= 1 then
-			local plugin_directory_files = vim.fn.globpath(plugSpec.rtp, "plugin/*.{lua,vim}")
-			for _, f in ipairs(plugin_directory_files) do
-				vim.cmd.source(f)
-			end
-		end
-	end
+  if vim.fn.isdirectory(plugSpec.rtp) == 1 then
+    vim.opt.runtimepath:append(plugSpec.rtp)
+    if vim.fn.has('vim_starting') ~= 1 then
+      local plugin_directory_files = vim.fn.globpath(plugSpec.rtp, 'plugin/*.{lua,vim}')
+      for _, f in ipairs(plugin_directory_files) do
+        vim.cmd.source(f)
+      end
+    end
+  end
 end
 
 return M
