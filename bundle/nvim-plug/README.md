@@ -29,6 +29,10 @@ require('plug').add({
       require('flygrep').setup()
     end,
   },
+  {
+    'D:/wsdjeg/winbar.nvim',
+    events = { 'VimEnter' },
+  },
 })
 ```
 
