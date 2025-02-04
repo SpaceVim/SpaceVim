@@ -137,9 +137,12 @@ function M.redraw_windows()
     return
   end
   M.begin_row = 2
-  local viml_notify = vim.fn['SpaceVim#api#notify#shared_notifys']()
-  for hashkey, _ in pairs(viml_notify) do
-    M.begin_row = M.begin_row + msg_real_len(viml_notify[hashkey].message) + 2
+  -- detached plugin no need to read shared notifys
+  local ok, viml_notify = pcall(vim.fn['SpaceVim#api#notify#shared_notifys'])
+  if ok then
+    for hashkey, _ in pairs(viml_notify) do
+      M.begin_row = M.begin_row + msg_real_len(viml_notify[hashkey].message) + 2
+    end
   end
   for hashkey, _ in pairs(notifications) do
     if hashkey ~= M.hashkey then
@@ -184,7 +187,7 @@ function M.redraw_windows()
     vim.api.nvim_win_set_option(M.winid, 'winhighlight', 'NormalFloat:Normal')
     -- vim.api.nvim_win_set_option(M.winid, 'winhighlight', 'Search:' .. M.notification_color)
     vim.fn.matchadd(M.notification_color, '.*', 10, -1, {
-      window = M.winid
+      window = M.winid,
     })
     M.border.winid = vim.api.nvim_open_win(M.border.bufnr, false, {
       relative = 'editor',
@@ -198,7 +201,7 @@ function M.redraw_windows()
     -- vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Normal:VertSplit')
     -- vim.api.nvim_win_set_option(M.border.winid, 'winhighlight', 'Search:VertSplit')
     vim.fn.matchadd('VertSplit', '.*', 10, -1, {
-      window = M.border.winid
+      window = M.border.winid,
     })
     if
       M.winblend > 0
@@ -217,8 +220,8 @@ function M.redraw_windows()
     M.draw_border(M.title, M.notification_width, msg_real_len(M.message))
   )
   vim.api.nvim_buf_set_lines(M.bufnr, 0, -1, false, message_body(M.message))
-  vim.api.nvim_win_set_cursor(M.winid, {1, 0})
-  vim.api.nvim_win_set_cursor(M.border.winid, {1, 0})
+  vim.api.nvim_win_set_cursor(M.winid, { 1, 0 })
+  vim.api.nvim_win_set_cursor(M.border.winid, { 1, 0 })
 end
 
 function M.increase_window()
@@ -251,7 +254,6 @@ function M.draw_border(title, width, height) -- {{{
   return lines
 end
 -- }}}
-
 
 function M.close(...) -- {{{
   if not empty(M.message) then
