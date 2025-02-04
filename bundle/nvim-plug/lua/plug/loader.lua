@@ -14,6 +14,12 @@ local config = require("plug.config")
 --- @field events table<string>
 --- @field cmds table<string>
 --- @field config function
+--- @field name string
+--- @field branch string
+--- @field tag string
+--- @field url string
+--- @field path string
+--- @field build string|table<string>
 
 function M.parser(plugSpec)
   plugSpec.name = vim.split(plugSpec[1], '/')[2]
