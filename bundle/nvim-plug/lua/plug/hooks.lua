@@ -83,7 +83,7 @@ function M.on_map(maps, plugSpec)
         end
       end
 
-      vim.fn.feedkeys(lhs .. input, 'm')
+      vim.fn.feedkeys(vim.api.nvim_replace_termcodes(lhs .. input, false, true, true), 'm')
     end, {})
   end
 end
