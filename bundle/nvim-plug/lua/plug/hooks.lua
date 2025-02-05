@@ -53,4 +53,39 @@ function M.on_ft(fts, plugSpec)
   })
 end
 
+function M.on_map(maps, plugSpec)
+  for _, lhs in ipairs(maps) do
+    vim.keymap.set('n', lhs, function()
+      for _, v in ipairs(plugSpec.on_map) do
+        vim.keymap.del('n', v, {})
+      end
+      plugin_loader.load(plugSpec)
+
+      local termstr = '<M-_>'
+      local input = ''
+
+      vim.fn.feedkeys(termstr, 'n')
+
+      while true do
+        local char = vim.fn.getchar()
+        if type(char) == 'number' then
+          input = input .. vim.fn.nr2char(char)
+        else
+          input = input .. char
+        end
+        local idx = vim.fn.stridx(input, termstr)
+        if idx >= 1 then
+          input = string.sub(input, 1, idx)
+          break
+        elseif idx == 0 then
+          input = ''
+          break
+        end
+      end
+
+      vim.fn.feedkeys(lhs .. input, 'm')
+    end, {})
+  end
+end
+
 return M

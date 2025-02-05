@@ -31,7 +31,7 @@ local function is_local_plugin(plugSpec)
 end
 
 local function unique_name(plugSpec)
-  local s = vim.split(plugSpec, '/')
+  local s = vim.split(plugSpec[1], '/')
   return s[#s]
 end
 
@@ -90,7 +90,7 @@ function M.load(plugSpec)
   if vim.fn.isdirectory(plugSpec.rtp) == 1 then
     vim.opt.runtimepath:append(plugSpec.rtp)
     if vim.fn.has('vim_starting') ~= 1 then
-      local plugin_directory_files = vim.fn.globpath(plugSpec.rtp, 'plugin/*.{lua,vim}')
+			local plugin_directory_files = vim.fn.globpath(plugSpec.rtp, "plugin/*.{lua,vim}", 0, 1)
       for _, f in ipairs(plugin_directory_files) do
         vim.cmd.source(f)
       end

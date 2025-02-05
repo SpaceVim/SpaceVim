@@ -36,7 +36,11 @@ function M.add(plugins)
       hooks.on_ft(plug.on_ft, plug)
     end
 
-    if not plug.events and not plug.cmds and not plug.on_ft then
+    if plug.on_map then
+      hooks.on_map(plug.on_map, plug)
+    end
+
+    if not plug.events and not plug.cmds and not plug.on_ft and not plug.on_map then
       loader.load(plug)
     end
     ::continue::
