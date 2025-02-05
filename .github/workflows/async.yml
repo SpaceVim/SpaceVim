@@ -1,6 +1,9 @@
 name: Detach Plugins
 
-on: [push]
+on:
+  push:
+    branches:
+      - maser
 
 jobs:
   check:

@@ -12,6 +12,14 @@ local notify = require('spacevim.api.notify')
 local jobs = {}
 local config = require('plug.config')
 
+local on_uidate
+
+if config.ui == 'default' then
+  on_uidate = require('plug.ui').on_update
+elseif config.ui == 'notify' then
+  on_uidate = function(name, date) end
+end
+
 local processes = 0
 
 local installation_queue = {}
@@ -36,9 +44,15 @@ local function build(plugSpec)
     end,
     on_exit = function(id, data, single)
       if data == 0 and single == 0 then
-        notify.notify('Successfully build ' .. jobs['jobid_' .. id])
+        if config.ui == 'default' then
+        elseif config.ui == 'notify' then
+          notify.notify('Successfully build ' .. jobs['jobid_' .. id])
+        end
       else
+        if config.ui == 'default' then
+        elseif config.ui == 'notify' then
         notify.notify('failed to build ' .. jobs['jobid_' .. id])
+        end
       end
       processes = processes - 1
       if #building_queue > 0 then
@@ -57,9 +71,10 @@ local function install_plugin(plugSpec)
     return
   elseif vim.fn.isdirectory(plugSpec.path) == 1 then
     -- if the directory exists, skip installation
+    on_uidate(plugSpec.name, { downloaded = true })
     return
   end
-  local cmd = { 'git', 'clone', '--depth', '1' }
+  local cmd = { 'git', 'clone', '--depth', '1', '--progress' }
   if plugSpec.branch then
     table.insert(cmd, '--branch')
     table.insert(cmd, plugSpec.branch)
@@ -70,10 +85,14 @@ local function install_plugin(plugSpec)
 
   table.insert(cmd, plugSpec.url)
   table.insert(cmd, plugSpec.path)
+  on_uidate(plugSpec.name, { downloaded = false, download_process = 0 })
   local jobid = job.start(cmd, {
     on_stdout = function(id, data)
       for _, v in ipairs(data) do
-        notify.notify(jobs['jobid_' .. id .. ':' .. v])
+        local status = vim.fn.matchstr(v, [[\d\+%\s(\d\+/\d\+)]])
+        if vim.fn.empty(status) == 1 then
+          on_uidate(plugSpec.name, { clone_process = status })
+        end
       end
     end,
     on_stderr = function(id, data)
@@ -83,12 +102,12 @@ local function install_plugin(plugSpec)
     end,
     on_exit = function(id, data, single)
       if data == 0 and single == 0 then
-        notify.notify('Successfully installed ' .. jobs['jobid_' .. id])
+        on_uidate(plugSpec.name, { downloaded = true, download_process = 100 })
         if plugSpec.build then
           build(plugSpec)
         end
       else
-        notify.notify('failed to install ' .. jobs['jobid_' .. id])
+        on_uidate(plugSpec.name, { downloaded = false, download_process = 0 })
       end
       processes = processes - 1
       if #installation_queue > 0 then

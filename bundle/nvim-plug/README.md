@@ -14,6 +14,7 @@ require('plug').setup({
   bundle_dir = 'D:/bundle_dir',
   max_processes = 5, -- max number of processes used for nvim-plug job
   base_url = 'https://github.com',
+  ui = 'notify', -- default ui is notify, use `default` for split window UI
 })
 
 require('plug').add({
@@ -58,6 +59,17 @@ require('plug').add({
 ## Commands
 
 - `:PlugInstall`: install specific plugin
+
+## Custom Plugin UI
+
+The default is ui is inspired by [vundle](https://github.com/VundleVim/Vundle.vim), to setup cutom ui, you need to creat a on_update function, this function is called with two arges:
+
+- name: `string`
+- date: `PlugUiData`
+
+| key          | description                              |
+| ------------ | ---------------------------------------- |
+| `clone_done` | boolead, is true when clone successfully |
 
 ## Feedback
 
