@@ -21,6 +21,7 @@ local config = require('plug.config')
 --- @field path string
 --- @field build string|table<string>
 --- @field is_local boolean true for local plugin
+--- @field when boolean|string|function
 
 local function is_local_plugin(plugSpec)
   if plugSpec.is_local or vim.fn.isdirectory(plugSpec[1]) == 1 then
@@ -35,6 +36,14 @@ local function unique_name(plugSpec)
 end
 
 function M.parser(plugSpec)
+  if type(plugSpec.enabled) == "nil" then
+    plugSpec.enabled = true
+  elseif type(plugSpec.enabled) == "function" then
+    plugSpec.enabled = plugSpec.enabled()
+  elseif type(plugSpec.enabled) ~= "boolean" or plugSpec.enabled == false then
+    plugSpec.enabled = false
+    return plugSpec
+  end
   plugSpec.name = unique_name(plugSpec)
   if is_local_plugin(plugSpec) then
     plugSpec.rtp = plugSpec[1]

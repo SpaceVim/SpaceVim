@@ -23,6 +23,12 @@ require('plug').add({
     config = function() end,
   },
   {
+    'wsdjeg/vim-chat',
+    enabled = function()
+      return vim.fn.has('nvim-0.10.0') == 1
+    end,
+  },
+  {
     'wsdjeg/flygrep.nvim',
     cmds = { 'FlyGrep' },
     config = function()
@@ -38,14 +44,15 @@ require('plug').add({
 
 ## Plugin Spec
 
-| name     | description                                                                       |
-| -------- | --------------------------------------------------------------------------------- |
-| `[1]`    | `string`, plugin repo short name, `wsdjeg/flygrep.nvim`                           |
-| `cmds`   | `table<string>`, commands lazy loading                                            |
-| `events` | `table<string>`, events lazy loading                                              |
-| `on_ft`  | `table<string>`, filetypes lazy loading                                           |
-| `type`   | `string`, plugin type including `color`, `plugin`                                 |
-| `build`  | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api |
+| name      | description                                                                                         |
+| --------- | --------------------------------------------------------------------------------------------------- |
+| `[1]`     | `string`, plugin repo short name, `wsdjeg/flygrep.nvim`                                             |
+| `cmds`    | `table<string>`, commands lazy loading                                                              |
+| `events`  | `table<string>`, events lazy loading                                                                |
+| `on_ft`   | `table<string>`, filetypes lazy loading                                                             |
+| `type`    | `string`, plugin type including `color`, `plugin`                                                   |
+| `build`   | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api                   |
+| `enabled` | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped |
 
 ## Commands
 
