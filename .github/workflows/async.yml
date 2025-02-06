@@ -3,7 +3,7 @@ name: Detach Plugins
 on:
   push:
     branches:
-      - maser
+      - master
 
 jobs:
   check:
