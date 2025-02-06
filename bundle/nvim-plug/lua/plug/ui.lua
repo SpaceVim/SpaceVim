@@ -11,9 +11,22 @@ local bufnr = -1
 local winid = -1
 local done = 0
 local total = -1
-local weight = math.floor(vim.o.columns / 2)
+local weight = 100
+local plugin_status = {}
+
+local function count_done(p)
+  done = 0
+  for _, v in pairs(p) do
+    if v.clone_done then
+      done = done + 1
+    end
+  end
+  return done
+end
 local base = function()
-  weight = math.floor(vim.o.columns / 2)
+  total = #vim.tbl_keys(plugin_status)
+  done = count_done(plugin_status)
+  weight = vim.api.nvim_win_get_width(winid) - 10
   return {
     'plugins:(' .. done .. '/' .. total .. ')',
     '',
@@ -25,21 +38,14 @@ local base = function()
   }
 end
 
---- @clase PluginStatus
---- @filed downloaded boolean
---- @filed download_process number 0 - 100
-
-local plugin_status = {}
-
 local function build_context()
-  total = #plugin_status
   local b = base()
 
-  for _, plug in ipairs(plugin_status) do
-    if type(plug.downloaded) == 'boolean' and plug.downloaded then
-      table.insert(b, '+ ' .. plug.name .. ' downloaded')
+  for k, plug in pairs(plugin_status) do
+    if plug.clone_done then
+      table.insert(b, '+ ' .. k .. ' downloaded')
     else
-      table.insert(b, '- ' .. plug.name .. string.format(' (%s%%)', plug.download_process))
+      table.insert(b, '- ' .. k .. string.format(' (%s%%)', plug.clone_process))
     end
   end
 
@@ -58,8 +64,12 @@ M.open = function()
   if vim.api.nvim_buf_is_valid(bufnr) then
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, build_context())
   end
+  --- setup highlight
+  vim.cmd('hi def link PlugTitle TODO')
+  vim.cmd('hi def link PlugProcess Repeat')
+  vim.fn.matchadd('PlugTitle', '', 2, -1, { window = winid })
+  vim.fn.matchadd('PlugProcess', '^\\[\\zs=*', 2, -1, { window = winid })
 end
-
 
 --- @class PlugUiData
 --- Job 的消息推送到 UI manager
@@ -73,13 +83,7 @@ end
 --- @param name string
 --- @param data PlugUiData
 M.on_update = function(name, data)
-  if not plugin_status[name] then
-    plugin_status[name] = {
-      downloaded = data.downloaded or false,
-      download_process = data.download_process or 0,
-    }
-  else
-  end
+  plugin_status[name] = vim.tbl_deep_extend('force', plugin_status[name] or {}, data)
   if vim.api.nvim_buf_is_valid(bufnr) then
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, build_context())
   end

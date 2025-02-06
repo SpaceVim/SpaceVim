@@ -60,10 +60,20 @@ require('plug').add({
 
 - `:PlugInstall`: install specific plugin
 
+## Default UI
+
+The default is ui is inspired by [vundle](https://github.com/VundleVim/Vundle.vim)
+
+The default highlight group.
+
+| highlight group name | description                     |
+| -------------------- | ------------------------------- |
+| `PlugTitle`          | the first line of plugin window |
+| `PlugProcess`        | the process of downloading      |
+
 ## Custom Plugin UI
 
-The default is ui is inspired by [vundle](https://github.com/VundleVim/Vundle.vim), to setup custom UI,
-you need to creat a on_update function, this function is called with two arges:
+To setup custom UI, you need to creat a on_update function, this function is called with two arges:
 
 - name: `string`
 - date: `PlugUiData`
@@ -71,7 +81,6 @@ you need to creat a on_update function, this function is called with two arges:
 | key          | description                              |
 | ------------ | ---------------------------------------- |
 | `clone_done` | boolead, is true when clone successfully |
-
 
 ```lua
 --- your custom UI
@@ -88,7 +97,6 @@ require('plug').setup({
   ui = on_ui_update, -- default ui is notify, use `default` for split window UI
 })
 ```
-
 
 ## Feedback
 
