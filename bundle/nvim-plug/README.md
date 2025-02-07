@@ -104,17 +104,36 @@ The default highlight group.
 | -------------------- | ------------------------------- |
 | `PlugTitle`          | the first line of plugin window |
 | `PlugProcess`        | the process of downloading      |
+| `PlugDone`           | clone/build/install done        |
+| `PlugFailed`         | clone/build/install failed      |
+| `PlugDoing`          | job is running                  |
+
+Default highlight link:
+
+```lua
+vim.cmd('hi def link PlugTitle TODO')
+vim.cmd('hi def link PlugProcess Repeat')
+vim.cmd('hi def link PlugDone Type')
+vim.cmd('hi def link PlugFailed WarningMsg')
+vim.cmd('hi def link PlugDoing Number')
+```
 
 ## Custom Plugin UI
 
-To setup custom UI, you need to creat a on_update function, this function is called with two arges:
+To setup custom UI, you need to creat a on_update function, this function is called with two arges, `name` and `plugUiData`.
 
-- name: `string`
-- date: `PlugUiData`
+The plugUiData is table with following keys:
 
-| key          | description                              |
-| ------------ | ---------------------------------------- |
-| `clone_done` | boolead, is true when clone successfully |
+| key             | description                                          |
+| --------------- | ---------------------------------------------------- |
+| `clone_done`    | boolead, is true when clone successfully             |
+| `command`       | string, clone, pull or build                         |
+| `clone_process` | string, git clone progress, such as `16% (160/1000)` |
+| `clone_done`    | boolean, git clone exit status                       |
+| `building`      | boolean                                              |
+| `build_done`    | boolean                                              |
+| `pull_done`     | boolean                                              |
+| `pull_process`  | string                                               |
 
 ```lua
 --- your custom UI
