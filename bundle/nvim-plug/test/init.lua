@@ -19,19 +19,20 @@ require('plug').setup({
 require('plug').add({
   {
     'wsdjeg/SourceCounter.vim',
-    cmds = {'SourceCounter'}
+    cmds = { 'SourceCounter' },
   },
   {
     'wsdjeg/git.vim',
-    cmds = {'Git'}
+    cmds = { 'Git' },
   },
   {
     'wsdjeg/JavaUnit.vim',
-    cmds = {'JavaUnit'}
+    cmds = { 'JavaUnit' },
   },
   {
     'wsdjeg/vim-async-dict',
     build = 'cargo build',
+    frozen = true,
   },
   {
     'wsdjeg/scrollbar.vim',

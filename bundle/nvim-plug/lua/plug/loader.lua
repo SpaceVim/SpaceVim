@@ -22,6 +22,7 @@ local config = require('plug.config')
 --- @field build string|table<string>
 --- @field is_local boolean true for local plugin
 --- @field when boolean|string|function
+--- @field frozen boolean
 
 local function is_local_plugin(plugSpec)
   if plugSpec.is_local or vim.fn.isdirectory(plugSpec[1]) == 1 then

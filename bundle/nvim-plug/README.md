@@ -88,6 +88,7 @@ require('plug').add({
 | `type`    | `string`, plugin type including `color`, `plugin`                                       |
 | `build`   | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api       |
 | `enabled` | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped |
+| `frozen`  | update only when specific with `PlugUpdate name`                                        |
 
 ## Commands
 

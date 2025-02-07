@@ -44,7 +44,7 @@ vim.api.nvim_create_user_command('PlugUpdate', function(opt)
     for _, v in pairs(all_plugins) do
       table.insert(plugs, v)
     end
-    require('plug.installer').update(plugs)
+    require('plug.installer').update(plugs, false)
   else
     for _, v in ipairs(opt.fargs) do
       local p = all_plugins[v]
@@ -52,7 +52,7 @@ vim.api.nvim_create_user_command('PlugUpdate', function(opt)
         table.insert(plugs, p)
       end
     end
-    require('plug.installer').update(plugs)
+    require('plug.installer').update(plugs, true)
   end
   local c = require('plug.config')
   if c.ui == 'default' then

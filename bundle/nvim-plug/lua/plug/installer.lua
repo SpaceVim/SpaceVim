@@ -134,13 +134,16 @@ local function install_plugin(plugSpec)
 end
 
 --- @param plugSpec PluginSpec
-local function update_plugin(plugSpec)
+local function update_plugin(plugSpec, force)
   if processes >= config.max_processes then
-    table.insert(updating_queue, plugSpec)
+    table.insert(updating_queue, {plugSpec, force})
     return
   elseif vim.fn.isdirectory(plugSpec.path) ~= 1 then
     -- if the directory does not exist, return failed
     on_uidate(plugSpec.name, { command = 'pull', pull_done = false })
+    return
+  elseif plugSpec.frozen and not force then
+    on_uidate(plugSpec.name, { command = 'pull', pull_done = true })
     return
   end
   local cmd = { 'git', 'pull', '--progress' }
@@ -170,7 +173,7 @@ local function update_plugin(plugSpec)
       end
       processes = processes - 1
       if #updating_queue > 0 then
-        update_plugin(table.remove(updating_queue, 1))
+        update_plugin(unpack(table.remove(updating_queue, 1)))
       end
     end,
     cwd = plugSpec.path,
@@ -193,9 +196,9 @@ M.install = function(plugSpecs)
   end
 end
 
-M.update = function(plugSpecs)
+M.update = function(plugSpecs, force)
   for _, v in ipairs(plugSpecs) do
-    update_plugin(v)
+    update_plugin(v, force)
   end
 end
 
