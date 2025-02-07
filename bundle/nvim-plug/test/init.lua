@@ -12,6 +12,8 @@ require('plug').setup({
 
   bundle_dir = 'D:/bundle_dir',
   ui = 'default',
+  http_proxy = 'http://127.0.0.1:7890',
+  https_proxy = 'http://127.0.0.1:7890',
 })
 
 require('plug').add({

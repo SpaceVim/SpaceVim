@@ -42,12 +42,26 @@ local function build_context()
   local b = base()
 
   for k, plug in pairs(plugin_status) do
-    if plug.clone_done then
+    if plug.build_done then
+      table.insert(b, '√ ' .. k .. ' build done')
+    elseif plug.clone_done then
       table.insert(b, '√ ' .. k .. ' installed')
+    elseif plug.pull_done then
+      table.insert(b, '√ ' .. k .. ' updated')
     elseif plug.clone_done == false then
       table.insert(b, '× ' .. k .. ' failed to install')
-    else
+    elseif plug.pull_done == false then
+      table.insert(b, '× ' .. k .. ' failed to update')
+    elseif plug.build_done == false then
+      table.insert(b, '× ' .. k .. ' failed to build')
+    elseif plug.clone_process and plug.clone_process ~= '' then
       table.insert(b, '- ' .. k .. string.format(' cloning: %s', plug.clone_process))
+    elseif plug.pull_process and plug.pull_process ~= '' then
+      table.insert(b, '- ' .. k .. string.format(' updating: %s', plug.pull_process))
+    elseif plug.building == true then
+      table.insert(b, '- ' .. k .. string.format(' building'))
+    else
+      table.insert(b, '- ' .. k)
     end
   end
 
@@ -78,15 +92,6 @@ M.open = function()
   vim.fn.matchadd('PlugFailed', '^×.*', 2, -1, { window = winid })
   vim.fn.matchadd('PlugDoing', '^-.*', 2, -1, { window = winid })
 end
-
---- @class PlugUiData
---- Job 的消息推送到 UI manager
----  install：
---- @filed clone_process string
---- @filed clone_done boolean
----  buile：
---- @filed building boolean
---- @filed clone_done boolean
 
 --- @param name string
 --- @param data PlugUiData
