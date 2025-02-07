@@ -15,6 +15,7 @@ local config = require('plug.config')
 local on_uidate
 
 --- @class PlugUiData
+--- @field command? string clone/pull/build
 --- @filed clone_process? string
 --- @filed clone_done? boolean
 --- @filed building? boolean
@@ -40,6 +41,7 @@ local function build(plugSpec)
     table.insert(building_queue, plugSpec)
     return
   end
+  on_uidate(plugSpec.name, { command = 'build' })
   local jobid = job.start(plugSpec.build, {
     on_stdout = function(id, data)
       for _, v in ipairs(data) do
@@ -62,10 +64,14 @@ local function build(plugSpec)
         build(table.remove(building_queue))
       end
     end,
-    cwd = plugSpec.path
+    cwd = plugSpec.path,
   })
-  processes = processes + 1
-  jobs['jobid_' .. jobid] = plugSpec.name
+  if jobid > 0 then
+    processes = processes + 1
+    jobs['jobid_' .. jobid] = plugSpec.name
+  else
+    on_uidate(plugSpec.name, { build_done = false })
+  end
 end
 
 --- @param plugSpec PluginSpec
@@ -75,7 +81,7 @@ local function install_plugin(plugSpec)
     return
   elseif vim.fn.isdirectory(plugSpec.path) == 1 then
     -- if the directory exists, skip installation
-    on_uidate(plugSpec.name, { clone_done = true })
+    on_uidate(plugSpec.name, { command = 'clone', clone_done = true })
     return
   end
   local cmd = { 'git', 'clone', '--depth', '1', '--progress' }
@@ -89,7 +95,7 @@ local function install_plugin(plugSpec)
 
   table.insert(cmd, plugSpec.url)
   table.insert(cmd, plugSpec.path)
-  on_uidate(plugSpec.name, { clone_process = '' })
+  on_uidate(plugSpec.name, { command = 'clone', clone_process = '' })
   local jobid = job.start(cmd, {
     on_stdout = function(id, data)
       for _, v in ipairs(data) do
@@ -134,11 +140,11 @@ local function update_plugin(plugSpec)
     return
   elseif vim.fn.isdirectory(plugSpec.path) ~= 1 then
     -- if the directory does not exist, return failed
-    on_uidate(plugSpec.name, { pull_done = false })
+    on_uidate(plugSpec.name, { command = 'pull', pull_done = false })
     return
   end
   local cmd = { 'git', 'pull', '--progress' }
-  on_uidate(plugSpec.name, { pull_process = '' })
+  on_uidate(plugSpec.name, { command = 'pull', pull_process = '' })
   local jobid = job.start(cmd, {
     on_stdout = function(id, data)
       for _, v in ipairs(data) do
@@ -160,7 +166,7 @@ local function update_plugin(plugSpec)
           build(plugSpec)
         end
       else
-        on_uidate(plugSpec.name, { pull_done = false})
+        on_uidate(plugSpec.name, { pull_done = false })
       end
       processes = processes - 1
       if #updating_queue > 0 then
@@ -173,8 +179,12 @@ local function update_plugin(plugSpec)
       https_proxy = config.https_proxy,
     },
   })
-  processes = processes + 1
-  jobs['jobid_' .. jobid] = plugSpec.name
+  if jobid > 0 then
+    processes = processes + 1
+    jobs['jobid_' .. jobid] = plugSpec.name
+  else
+    on_uidate(plugSpec.name, { pull_done = false })
+  end
 end
 
 M.install = function(plugSpecs)
