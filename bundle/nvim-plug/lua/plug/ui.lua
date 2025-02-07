@@ -28,7 +28,7 @@ local base = function()
   done = count_done(plugin_status)
   weight = vim.api.nvim_win_get_width(winid) - 10
   return {
-    'plugins:(' .. done .. '/' .. total .. ')',
+    'Plugins:(' .. done .. '/' .. total .. ')',
     '',
     '[' .. string.rep('=', math.floor(done / total * weight)) .. string.rep(
       ' ',
@@ -43,9 +43,11 @@ local function build_context()
 
   for k, plug in pairs(plugin_status) do
     if plug.clone_done then
-      table.insert(b, '+ ' .. k .. ' downloaded')
+      table.insert(b, '√ ' .. k .. ' installed')
+    elseif plug.clone_done == false then
+      table.insert(b, '× ' .. k .. ' failed to install')
     else
-      table.insert(b, '- ' .. k .. string.format(' (%s%%)', plug.clone_process))
+      table.insert(b, '- ' .. k .. string.format(' cloning: %s', plug.clone_process))
     end
   end
 
@@ -67,8 +69,14 @@ M.open = function()
   --- setup highlight
   vim.cmd('hi def link PlugTitle TODO')
   vim.cmd('hi def link PlugProcess Repeat')
-  vim.fn.matchadd('PlugTitle', '', 2, -1, { window = winid })
+  vim.cmd('hi def link PlugDone Type')
+  vim.cmd('hi def link PlugFailed WarningMsg')
+  vim.cmd('hi def link PlugDoing Number')
+  vim.fn.matchadd('PlugTitle', '^Plugins.*', 2, -1, { window = winid })
   vim.fn.matchadd('PlugProcess', '^\\[\\zs=*', 2, -1, { window = winid })
+  vim.fn.matchadd('PlugDone', '^√.*', 2, -1, { window = winid })
+  vim.fn.matchadd('PlugFailed', '^×.*', 2, -1, { window = winid })
+  vim.fn.matchadd('PlugDoing', '^-.*', 2, -1, { window = winid })
 end
 
 --- @class PlugUiData

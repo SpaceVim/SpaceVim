@@ -7,6 +7,32 @@
 
 **Alpha version. Any changes, including backward incompatible changes, are applied without announcements.**
 
+![Image](https://github.com/user-attachments/assets/93b04c48-4f41-46aa-b7f7-6390ee9622c7)
+
+<!-- vim-markdown-toc GFM -->
+
+- [Intro](#intro)
+- [Features](#features)
+- [Usage](#usage)
+- [Plugin Spec](#plugin-spec)
+- [Commands](#commands)
+- [Default UI](#default-ui)
+- [Custom Plugin UI](#custom-plugin-ui)
+- [Feedback](#feedback)
+
+<!-- vim-markdown-toc -->
+
+## Intro
+
+nvim-plug is anasynchronous Neovim plugin manager written in Lua.
+
+## Features
+
+- **faster:** written in lua.
+- **async:** downloading and building via job.
+- **lazy loading:** lazy load plugin based on events, comamnd, mapping, etc..
+- **custom UI:** provide custom UI API.
+
 ## Usage
 
 ```lua
