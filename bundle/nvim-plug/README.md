@@ -24,7 +24,7 @@
 
 ## Intro
 
-nvim-plug is anasynchronous Neovim plugin manager written in Lua.
+nvim-plug is an asynchronous Neovim plugin manager written in Lua.
 
 ## Features
 
