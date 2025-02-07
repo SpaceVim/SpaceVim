@@ -7,6 +7,7 @@ local plugin_loader = require('plug.loader')
 local event_plugins = {}
 local cmd_plugins = {}
 local on_ft_plugins = {}
+local on_fn_plugins = {}
 
 function M.on_events(events, plugSpec)
   event_plugins[plugSpec.name] = vim.api.nvim_create_autocmd(events, {
@@ -86,6 +87,27 @@ function M.on_map(maps, plugSpec)
       vim.fn.feedkeys(vim.api.nvim_replace_termcodes(lhs .. input, false, true, true), 'm')
     end, {})
   end
+end
+
+function M.on_func(fn, plugSpec)
+  local fns
+  if type(fn) == 'table' then
+    fns = fn
+  elseif type(fn) == 'string' then
+    fns = { fn }
+  end
+  on_fn_plugins[plugSpec.name] = vim.api.nvim_create_autocmd({ 'FuncUndefined' }, {
+    group = group,
+    pattern = fns,
+    callback = function(_)
+
+      if on_fn_plugins[plugSpec.name] then
+        vim.api.nvim_del_autocmd(on_fn_plugins[plugSpec.name])
+      end
+      plugin_loader.load(plugSpec)
+
+    end,
+  })
 end
 
 return M
