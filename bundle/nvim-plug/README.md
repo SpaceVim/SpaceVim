@@ -66,6 +66,10 @@ require('plug').add({
     'D:/wsdjeg/winbar.nvim',
     events = { 'VimEnter' },
   },
+  {
+    'wsdjeg/vim-mail',
+    on_func = 'mail#',
+  },
 })
 ```
 
@@ -78,6 +82,7 @@ require('plug').add({
 | `events`  | `table<string>`, events lazy loading                                                    |
 | `on_ft`   | `table<string>`, filetypes lazy loading                                                 |
 | `on_map`  | `table<string>`, key bindings lazy loading                                              |
+| `on_func` | `string` or `table<string>`, vim function lazy loading                                  |
 | `type`    | `string`, plugin type including `color`, `plugin`                                       |
 | `build`   | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api       |
 | `enabled` | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped |
