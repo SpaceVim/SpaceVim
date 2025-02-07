@@ -28,6 +28,7 @@ require('plug').add({
   {
     'wsdjeg/JavaUnit.vim',
     cmds = { 'JavaUnit' },
+    build = {'javac', '-encoding', 'utf8', '-d', 'bin', 'src/com/wsdjeg/util/*.java'}
   },
   {
     'wsdjeg/vim-async-dict',
