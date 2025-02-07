@@ -62,6 +62,7 @@ local function build(plugSpec)
         build(table.remove(building_queue))
       end
     end,
+    cwd = plugSpec.path
   })
   processes = processes + 1
   jobs['jobid_' .. jobid] = plugSpec.name

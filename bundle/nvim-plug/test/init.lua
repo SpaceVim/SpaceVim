@@ -18,6 +18,19 @@ require('plug').setup({
 
 require('plug').add({
   {
+    'wsdjeg/SourceCounter.vim',
+  },
+  {
+    'wsdjeg/git.vim',
+  },
+  {
+    'wsdjeg/JavaUnit.vim',
+  },
+  {
+    'wsdjeg/vim-async-dict',
+    build = 'cargo build',
+  },
+  {
     'wsdjeg/scrollbar.vim',
     events = { 'VimEnter' },
     config = function() end,
