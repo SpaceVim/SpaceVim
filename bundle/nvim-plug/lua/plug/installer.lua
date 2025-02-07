@@ -122,6 +122,8 @@ local function install_plugin(plugSpec)
       processes = processes - 1
       if #installation_queue > 0 then
         install_plugin(table.remove(installation_queue, 1))
+      elseif #building_queue > 0 then
+        build(table.remove(building_queue, 1))
       end
     end,
     env = {
@@ -174,6 +176,8 @@ local function update_plugin(plugSpec, force)
       processes = processes - 1
       if #updating_queue > 0 then
         update_plugin(unpack(table.remove(updating_queue, 1)))
+      elseif #building_queue > 0 then
+        build(table.remove(building_queue, 1))
       end
     end,
     cwd = plugSpec.path,
