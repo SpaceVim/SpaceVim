@@ -72,6 +72,14 @@ local function build_context()
       else
         table.insert(b, '- ' .. k)
       end
+    elseif plug.command == 'curl' then
+      if plug.curl_done then
+        table.insert(b, '√ ' .. k .. ' download')
+      elseif plug.curl_done == false then
+        table.insert(b, '× ' .. k .. ' failed to download')
+      else
+        table.insert(b, '- ' .. k .. string.format(' downloading'))
+      end
     end
   end
 

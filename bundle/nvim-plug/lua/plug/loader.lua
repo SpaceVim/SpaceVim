@@ -9,6 +9,8 @@ local M = {}
 
 local config = require('plug.config')
 
+local add_raw_rtp = false
+
 --- @class PluginSpec
 --- @field rtp string
 --- @field events table<string>
@@ -23,6 +25,8 @@ local config = require('plug.config')
 --- @field is_local boolean true for local plugin
 --- @field when boolean|string|function
 --- @field frozen boolean
+--- @field type string "git", "raw" or "none"
+--- @field script_type string "git", "raw" or "none"
 
 local function is_local_plugin(plugSpec)
   if plugSpec.is_local or vim.fn.isdirectory(plugSpec[1]) == 1 then
@@ -31,34 +35,51 @@ local function is_local_plugin(plugSpec)
   end
 end
 
-local function unique_name(plugSpec)
-  local s = vim.split(plugSpec[1], '/')
-  return s[#s]
+local function check_name(plugSpec)
+  if not plugSpec[1] and not plugSpec.url then
+    return false
+  end
+  local s = vim.split(plugSpec[1] or plugSpec.url, '/')
+  plugSpec.name =  s[#s]
+  return true
 end
 
 function M.parser(plugSpec)
-  if type(plugSpec.enabled) == "nil" then
+  if type(plugSpec.enabled) == 'nil' then
     plugSpec.enabled = true
-  elseif type(plugSpec.enabled) == "function" then
+  elseif type(plugSpec.enabled) == 'function' then
     plugSpec.enabled = plugSpec.enabled()
-  elseif type(plugSpec.enabled) ~= "boolean" or plugSpec.enabled == false then
+  elseif type(plugSpec.enabled) ~= 'boolean' or plugSpec.enabled == false then
+    plugSpec.enabled = false
+    return plugSpec
+  elseif not check_name(plugSpec) then
     plugSpec.enabled = false
     return plugSpec
   end
-  plugSpec.name = unique_name(plugSpec)
   if is_local_plugin(plugSpec) then
     plugSpec.rtp = plugSpec[1]
     plugSpec.path = plugSpec[1]
     plugSpec.url = nil
-  elseif not plugSpec.type or plugSpec.type == 'none' then
+  elseif plugSpec.type == 'raw' then
+    if not plugSpec.script_type or plugSpec.script_type == 'none' then
+      plugSpec.enabled = false
+      return plugSpec
+    else
+      plugSpec.path = config.raw_plugin_dir .. '/' .. plugSpec.script_type .. plugSpec.name
+      if not add_raw_rtp then
+        vim.opt:append(config.raw_plugin_dir)
+        add_raw_rtp = true
+      end
+    end
+  elseif not plugSpec.script_type or plugSpec.script_type == 'none' then
     plugSpec.rtp = config.bundle_dir .. '/' .. plugSpec[1]
     plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1]
     plugSpec.url = config.base_url .. '/' .. plugSpec[1]
-  elseif plugSpec.type == 'color' then
+  elseif plugSpec.script_type == 'color' then
     plugSpec.rtp = config.bundle_dir .. '/' .. plugSpec[1]
     plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1] .. '/color'
     plugSpec.repo = config.base_url .. '/' .. plugSpec[1]
-  elseif plugSpec.type == 'plugin' then
+  elseif plugSpec.script_type == 'plugin' then
     plugSpec.rtp = config.bundle_dir .. '/' .. plugSpec[1]
     plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1] .. '/plugin'
     plugSpec.url = config.base_url .. '/' .. plugSpec[1]
@@ -88,10 +109,10 @@ end
 -- 'merged': 0,
 -- 'path': 'C:/Users/wsdjeg/.SpaceVim/bundle/defx-git'}
 function M.load(plugSpec)
-  if vim.fn.isdirectory(plugSpec.rtp) == 1 then
+  if plugSpec.rtp and vim.fn.isdirectory(plugSpec.rtp) == 1 then
     vim.opt.runtimepath:append(plugSpec.rtp)
     if vim.fn.has('vim_starting') ~= 1 then
-			local plugin_directory_files = vim.fn.globpath(plugSpec.rtp, "plugin/*.{lua,vim}", 0, 1)
+      local plugin_directory_files = vim.fn.globpath(plugSpec.rtp, 'plugin/*.{lua,vim}', 0, 1)
       for _, f in ipairs(plugin_directory_files) do
         vim.cmd.source(f)
       end

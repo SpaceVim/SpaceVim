@@ -39,20 +39,27 @@ setup nvim-plug:
 
 ```lua
 require('plug').setup({
+  -- set the bundle dir
   bundle_dir = 'D:/bundle_dir',
-  max_processes = 5, -- max number of processes used for nvim-plug job
+  -- set the path where raw plugin is download to
+  raw_plugin_dir = 'D:/bundle_dir/raw_plugin',
+  -- max number of processes used for nvim-plug job
+  max_processes = 5,
   base_url = 'https://github.com',
-  ui = 'notify', -- default ui is `notify`, use `default` for split window UI
-  http_proxy = 'http://127.0.0.1:7890', -- default is nil
-  https_proxy = 'http://127.0.0.1:7890', -- default is nil
-  clone_depth = 1 -- default history depth for `git clone`
+  -- default ui is `notify`, use `default` for split window UI
+  ui = 'notify',
+  -- default is nil
+  http_proxy = 'http://127.0.0.1:7890',
+  -- default is nil
+  https_proxy = 'http://127.0.0.1:7890',
+  -- default history depth for `git clone`
+  clone_depth = 1,
 })
 ```
 
 add plugins:
 
 ```lua
-
 require('plug').add({
   {
     'wsdjeg/scrollbar.vim',
@@ -73,6 +80,11 @@ require('plug').add({
     end,
   },
   {
+    type = 'raw',
+    url = 'https://gist.githubusercontent.com/wsdjeg/4ac99019c5ca156d35704550648ba321/raw/4e8c202c74e98b5d56616c784bfbf9b873dc8868/markdown.vim',
+    script_type = 'after/syntax'
+  },
+  {
     'D:/wsdjeg/winbar.nvim',
     events = { 'VimEnter' },
   },
@@ -85,19 +97,24 @@ require('plug').add({
 
 ## Plugin Spec
 
-| name      | description                                                                             |
-| --------- | --------------------------------------------------------------------------------------- |
-| `[1]`     | `string`, plugin repo short name, `wsdjeg/flygrep.nvim`                                 |
-| `cmds`    | `table<string>`, commands lazy loading                                                  |
-| `events`  | `table<string>`, events lazy loading                                                    |
-| `on_ft`   | `table<string>`, filetypes lazy loading                                                 |
-| `on_map`  | `table<string>`, key bindings lazy loading                                              |
-| `on_func` | `string` or `table<string>`, vim function lazy loading                                  |
-| `type`    | `string`, plugin type including `color`, `plugin`                                       |
-| `build`   | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api       |
-| `enabled` | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped |
-| `frozen`  | update only when specific with `PlugUpdate name`                                        |
-| `depends` | `table<PluginSpec>` a list of plugins                                                   |
+The plugin spec is inspired by dein.nvim.
+
+| name          | description                                                                                          |
+| ------------- | ---------------------------------------------------------------------------------------------------- |
+| `[1]`         | `string`, plugin repo short name, `wsdjeg/flygrep.nvim`                                              |
+| `cmds`        | `table<string>`, commands lazy loading                                                               |
+| `events`      | `table<string>`, events lazy loading                                                                 |
+| `on_ft`       | `table<string>`, filetypes lazy loading                                                              |
+| `on_map`      | `table<string>`, key bindings lazy loading                                                           |
+| `on_func`     | `string` or `table<string>`, vim function lazy loading                                               |
+| `script_type` | `string`, plugin type including `color`, `plugin`, etc..                                             |
+| `build`       | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api                    |
+| `enabled`     | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped              |
+| `frozen`      | update only when specific with `PlugUpdate name`                                                     |
+| `depends`     | `table<PluginSpec>` a list of plugins                                                                |
+| `branch`      | `string` specific git branch                                                                         |
+| `tag`         | `string` specific git tag                                                                            |
+| `type`        | `string` specific plugin type, this can be git, raw or none, if it is raw, `script_type` must be set |
 
 ## Commands
 
