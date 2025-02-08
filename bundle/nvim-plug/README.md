@@ -35,6 +35,8 @@ nvim-plug is an asynchronous Neovim plugin manager written in Lua.
 
 ## Usage
 
+setup nvim-plug:
+
 ```lua
 require('plug').setup({
   bundle_dir = 'D:/bundle_dir',
@@ -43,7 +45,13 @@ require('plug').setup({
   ui = 'notify', -- default ui is `notify`, use `default` for split window UI
   http_proxy = 'http://127.0.0.1:7890', -- default is nil
   https_proxy = 'http://127.0.0.1:7890', -- default is nil
+  clone_depth = 1 -- default history depth for `git clone`
 })
+```
+
+add plugins:
+
+```lua
 
 require('plug').add({
   {
@@ -89,10 +97,12 @@ require('plug').add({
 | `build`   | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api       |
 | `enabled` | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped |
 | `frozen`  | update only when specific with `PlugUpdate name`                                        |
+| `depends` | `table<PluginSpec>` a list of plugins                                                   |
 
 ## Commands
 
-- `:PlugInstall`: install specific plugin
+- `:PlugInstall`: install specific plugin or all plugins
+- `:PlugUpdate`: update specific plugin or all plugins
 
 ## Default UI
 

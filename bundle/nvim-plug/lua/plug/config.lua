@@ -11,6 +11,7 @@ M.bundle_dir = vim.fn.stdpath('data') .. '/bundle_dir'
 M.max_processes = 5
 M.base_url = 'https://github.com/'
 M.ui = 'notify'
+M.clone_depth = '1'
 function M.setup(opt)
   M.bundle_dir = opt.bundle_dir or M.bundle_dir
   M.max_processes = opt.max_processes or M.max_processes
@@ -18,6 +19,7 @@ function M.setup(opt)
   M.ui = opt.ui or M.ui
   M.http_proxy = opt.http_proxy
   M.https_proxy = opt.https_proxy
+  M.clone_depth = opt.clone_depth or M.clone_depth
 end
 
 return M

@@ -84,7 +84,11 @@ local function install_plugin(plugSpec)
     on_uidate(plugSpec.name, { command = 'clone', clone_done = true })
     return
   end
-  local cmd = { 'git', 'clone', '--depth', '1', '--progress' }
+  local cmd = { 'git', 'clone', '--progress' }
+  if config.clone_depth ~= 0 then
+    table.insert(cmd, '--depth')
+    table.insert(cmd, tostring(config.clone_depth))
+  end
   if plugSpec.branch then
     table.insert(cmd, '--branch')
     table.insert(cmd, plugSpec.branch)
@@ -97,17 +101,12 @@ local function install_plugin(plugSpec)
   table.insert(cmd, plugSpec.path)
   on_uidate(plugSpec.name, { command = 'clone', clone_process = '' })
   local jobid = job.start(cmd, {
-    on_stdout = function(id, data)
-      for _, v in ipairs(data) do
-        local status = vim.fn.matchstr(v, [[\d\+%\s(\d\+/\d\+)]])
-        if vim.fn.empty(status) == 1 then
-          on_uidate(plugSpec.name, { clone_process = status })
-        end
-      end
-    end,
     on_stderr = function(id, data)
       for _, v in ipairs(data) do
-        notify.notify(jobs['jobid_' .. id .. ':' .. v])
+        local status = vim.fn.matchstr(v, [[\d\+%\s(\d\+/\d\+)]])
+        if vim.fn.empty(status) == 0 then
+          on_uidate(plugSpec.name, { clone_process = status })
+        end
       end
     end,
     on_exit = function(id, data, single)
@@ -151,17 +150,12 @@ local function update_plugin(plugSpec, force)
   local cmd = { 'git', 'pull', '--progress' }
   on_uidate(plugSpec.name, { command = 'pull', pull_process = '' })
   local jobid = job.start(cmd, {
-    on_stdout = function(id, data)
-      for _, v in ipairs(data) do
-        local status = vim.fn.matchstr(v, [[\d\+%\s(\d\+/\d\+)]])
-        if vim.fn.empty(status) == 1 then
-          on_uidate(plugSpec.name, { pull_process = status })
-        end
-      end
-    end,
     on_stderr = function(id, data)
       for _, v in ipairs(data) do
-        notify.notify(jobs['jobid_' .. id .. ':' .. v])
+        local status = vim.fn.matchstr(v, [[\d\+%\s(\d\+/\d\+)]])
+        if vim.fn.empty(status) == 0 then
+          on_uidate(plugSpec.name, { pull_process = status })
+        end
       end
     end,
     on_exit = function(id, data, single)
