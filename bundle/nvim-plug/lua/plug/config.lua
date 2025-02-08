@@ -21,6 +21,7 @@ function M.setup(opt)
   M.http_proxy = opt.http_proxy
   M.https_proxy = opt.https_proxy
   M.clone_depth = opt.clone_depth or M.clone_depth
+  M.raw_plugin_dir = opt.raw_plugin_dir or M.raw_plugin_dir
 end
 
 return M

@@ -28,20 +28,24 @@ local add_raw_rtp = false
 --- @field type string "git", "raw" or "none"
 --- @field script_type string "git", "raw" or "none"
 
+--- @param plugSpec PluginSpec
+--- @return boolean
 local function is_local_plugin(plugSpec)
   if plugSpec.is_local or vim.fn.isdirectory(plugSpec[1]) == 1 then
     plugSpec.is_local = true
     return true
-  end
-end
-
-local function check_name(plugSpec)
-  if not plugSpec[1] and not plugSpec.url then
+  else
     return false
   end
+end
+--- @param plugSpec PluginSpec
+--- @return string
+local function check_name(plugSpec)
+  if not plugSpec[1] and not plugSpec.url then
+    return ''
+  end
   local s = vim.split(plugSpec[1] or plugSpec.url, '/')
-  plugSpec.name =  s[#s]
-  return true
+  return s[#s]
 end
 
 function M.parser(plugSpec)
@@ -52,7 +56,9 @@ function M.parser(plugSpec)
   elseif type(plugSpec.enabled) ~= 'boolean' or plugSpec.enabled == false then
     plugSpec.enabled = false
     return plugSpec
-  elseif not check_name(plugSpec) then
+  end
+  plugSpec.name = check_name(plugSpec)
+  if #plugSpec.name == 0 then
     plugSpec.enabled = false
     return plugSpec
   end
@@ -65,9 +71,9 @@ function M.parser(plugSpec)
       plugSpec.enabled = false
       return plugSpec
     else
-      plugSpec.path = config.raw_plugin_dir .. '/' .. plugSpec.script_type .. plugSpec.name
+      plugSpec.path = config.raw_plugin_dir .. '/' .. plugSpec.script_type .. '/' .. plugSpec.name
       if not add_raw_rtp then
-        vim.opt:append(config.raw_plugin_dir)
+        vim.opt.runtimepath:append(config.raw_plugin_dir)
         add_raw_rtp = true
       end
     end
