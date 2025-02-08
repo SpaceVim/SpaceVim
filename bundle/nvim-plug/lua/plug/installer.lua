@@ -17,13 +17,14 @@ local config = require('plug.config')
 local on_uidate
 
 --- @class PlugUiData
---- @field command? string clone/pull/build
+--- @field command? string clone/pull/build/curl
 --- @filed clone_process? string
 --- @filed clone_done? boolean
 --- @filed building? boolean
 --- @filed build_done? boolean
 --- @field pull_done? boolean
 --- @field pull_process? string
+--- @field curl_done? boolean
 
 if config.ui == 'default' then
   on_uidate = require('plug.ui').on_update

@@ -17,7 +17,7 @@ local plugin_status = {}
 local function count_done(p)
   done = 0
   for _, v in pairs(p) do
-    if v.clone_done then
+    if v.command and v[v.command .. '_done'] then
       done = done + 1
     end
   end
