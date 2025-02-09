@@ -16,5 +16,3 @@ else
   " Run git command asynchronously
   command! -nargs=+ -complete=custom,git#complete Git call git#run(<f-args>)
 endif
-
-call SpaceVim#plugins#projectmanager#reg_callback(function('git#branch#detect'))

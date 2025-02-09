@@ -43,7 +43,6 @@ require('plug').add({
   },
   {
     'wsdjeg/vim-async-dict',
-    build = 'cargo build',
     frozen = true,
   },
   {
@@ -55,8 +54,16 @@ require('plug').add({
     'mhinz/vim-startify',
   },
   {
+    'vim-airline/vim-airline',
+  },
+  {
+    'vim-airline/vim-airline-themes',
+  },
+  {
+    'preservim/nerdtree',
+  },
+  {
     'rakr/vim-one',
-    events = { 'VimEnter' },
     config = function()
       vim.cmd('colorscheme one')
     end,
