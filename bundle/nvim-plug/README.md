@@ -99,22 +99,25 @@ require('plug').add({
 
 The plugin spec is inspired by dein.nvim.
 
-| name          | description                                                                                          |
-| ------------- | ---------------------------------------------------------------------------------------------------- |
-| `[1]`         | `string`, plugin repo short name, `wsdjeg/flygrep.nvim`                                              |
-| `cmds`        | `table<string>`, commands lazy loading                                                               |
-| `events`      | `table<string>`, events lazy loading                                                                 |
-| `on_ft`       | `table<string>`, filetypes lazy loading                                                              |
-| `on_map`      | `table<string>`, key bindings lazy loading                                                           |
-| `on_func`     | `string` or `table<string>`, vim function lazy loading                                               |
-| `script_type` | `string`, plugin type including `color`, `plugin`, etc..                                             |
-| `build`       | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api                    |
-| `enabled`     | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped              |
-| `frozen`      | update only when specific with `PlugUpdate name`                                                     |
-| `depends`     | `table<PluginSpec>` a list of plugins                                                                |
-| `branch`      | `string` specific git branch                                                                         |
-| `tag`         | `string` specific git tag                                                                            |
-| `type`        | `string` specific plugin type, this can be git, raw or none, if it is raw, `script_type` must be set |
+| name            | description                                                                                                   |
+| --------------- | ------------------------------------------------------------------------------------------------------------- |
+| `[1]`           | `string`, plugin repo short name, `wsdjeg/flygrep.nvim`                                                       |
+| `cmds`          | `table<string>`, commands lazy loading                                                                        |
+| `events`        | `table<string>`, events lazy loading                                                                          |
+| `config`        | `function`, function called after adding plugin path to nvim rtp, before loading files in `plugin/` directory |
+| `config_after`  | `function`, function called after loading files in `plugin/` directory                                        |
+| `config_before` | `function`, function called when `plug.add()` function is called                                              |
+| `on_ft`         | `table<string>`, filetypes lazy loading                                                                       |
+| `on_map`        | `table<string>`, key bindings lazy loading                                                                    |
+| `on_func`       | `string` or `table<string>`, vim function lazy loading                                                        |
+| `script_type`   | `string`, plugin type including `color`, `plugin`, etc..                                                      |
+| `build`         | `string` or `table<string>`, executed by [job](https://spacevim.org/api/job/) api                             |
+| `enabled`       | `boolean` or `function` evaluated when startup, when it is false, plugin will be skiped                       |
+| `frozen`        | update only when specific with `PlugUpdate name`                                                              |
+| `depends`       | `table<PluginSpec>` a list of plugins                                                                         |
+| `branch`        | `string` specific git branch                                                                                  |
+| `tag`           | `string` specific git tag                                                                                     |
+| `type`          | `string` specific plugin type, this can be git, raw or none, if it is raw, `script_type` must be set          |
 
 ## Commands
 

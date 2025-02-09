@@ -18,10 +18,11 @@ function M.setup(opt)
 end
 
 --- @param plugins table<PluginSpec>
-function M.add(plugins)
+function M.add(plugins, skip_deps)
   for _, plug in ipairs(plugins) do
-    if plug.depends then
+    if plug.depends and not skip_deps then
       M.add(plug.depends)
+      M.add({ plug }, true)
     else
       loader.parser(plug)
       if not plug.enabled then

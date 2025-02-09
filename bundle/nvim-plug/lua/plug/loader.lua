@@ -15,7 +15,6 @@ local add_raw_rtp = false
 --- @field rtp string
 --- @field events table<string>
 --- @field cmds table<string>
---- @field config function
 --- @field name string
 --- @field branch string
 --- @field tag string
@@ -27,6 +26,10 @@ local add_raw_rtp = false
 --- @field frozen boolean
 --- @field type string "git", "raw" or "none"
 --- @field script_type string "git", "raw" or "none"
+--- @field config function function called after update rtp
+--- @field config_before function function called after update rtp
+--- @field config_after function function called after update rtp
+--- @field hook_install_done? function
 
 --- @param plugSpec PluginSpec
 --- @return boolean
@@ -91,6 +94,10 @@ function M.parser(plugSpec)
     plugSpec.url = config.base_url .. '/' .. plugSpec[1]
   end
 
+  if type(plugSpec.config_before) == 'function' then
+    plugSpec.config_before()
+  end
+
   return plugSpec
 end
 
@@ -117,10 +124,16 @@ end
 function M.load(plugSpec)
   if plugSpec.rtp and vim.fn.isdirectory(plugSpec.rtp) == 1 then
     vim.opt.runtimepath:append(plugSpec.rtp)
+    if type(plugSpec.config) == 'function' then
+      plugSpec.config()
+    end
     if vim.fn.has('vim_starting') ~= 1 then
       local plugin_directory_files = vim.fn.globpath(plugSpec.rtp, 'plugin/*.{lua,vim}', 0, 1)
       for _, f in ipairs(plugin_directory_files) do
         vim.cmd.source(f)
+      end
+      if type(plugSpec.config_after) == 'function' then
+        plugSpec.config_after()
       end
     end
   end
