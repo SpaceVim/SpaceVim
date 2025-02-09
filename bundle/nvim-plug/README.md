@@ -7,7 +7,7 @@
 
 **Alpha version. Any changes, including backward incompatible changes, are applied without announcements.**
 
-![Image](https://github.com/user-attachments/assets/93b04c48-4f41-46aa-b7f7-6390ee9622c7)
+![nvim-plug](https://wsdjeg.net/images/nvim-plug.gif)
 
 <!-- vim-markdown-toc GFM -->
 
@@ -24,7 +24,7 @@
 
 ## Intro
 
-nvim-plug is an asynchronous Neovim plugin manager written in Lua.
+nvim-plug is an asynchronous Neovim plugin manager written in Lua. There is also a [Chinese introduction](https://wsdjeg.net/neovim-plugin-manager-nvim-plug/) about nvim-plug.
 
 ## Features
 
