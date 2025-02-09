@@ -52,6 +52,13 @@ require('plug').add({
     config = function() end,
   },
   {
+    'rakr/vim-one',
+    events = { 'VimEnter' },
+    config = function()
+      vim.cmd('colorscheme one')
+    end,
+  },
+  {
     'wsdjeg/flygrep.nvim',
     cmds = { 'FlyGrep' },
     config = function()

@@ -30,6 +30,7 @@ local add_raw_rtp = false
 --- @field config_before function function called after update rtp
 --- @field config_after function function called after update rtp
 --- @field hook_install_done? function
+--- @field autoload? boolean
 
 --- @param plugSpec PluginSpec
 --- @return boolean

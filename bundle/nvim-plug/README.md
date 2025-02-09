@@ -118,6 +118,9 @@ The plugin spec is inspired by dein.nvim.
 | `branch`        | `string` specific git branch                                                                                  |
 | `tag`           | `string` specific git tag                                                                                     |
 | `type`          | `string` specific plugin type, this can be git, raw or none, if it is raw, `script_type` must be set          |
+| `autoload`      | `boolean`, load plugin after git clone                                                                        |
+
+`config` and `config_after` function will be not be called if the plugin has not been installed.
 
 ## Commands
 

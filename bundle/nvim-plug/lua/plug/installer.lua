@@ -13,6 +13,7 @@ local job = require('spacevim.api.job')
 local notify = require('spacevim.api.notify')
 local jobs = {}
 local config = require('plug.config')
+local loader = require('plug.loader')
 
 local on_uidate
 
@@ -155,6 +156,8 @@ function H.install_plugin(plugSpec)
         on_uidate(plugSpec.name, { clone_done = true, download_process = 100 })
         if plugSpec.build then
           H.build(plugSpec)
+        elseif plugSpec.autoload then
+          loader.load(plugSpec)
         end
       else
         on_uidate(plugSpec.name, { clone_done = false, download_process = 0 })
