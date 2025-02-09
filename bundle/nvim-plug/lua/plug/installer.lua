@@ -61,6 +61,9 @@ function H.build(plugSpec)
     on_exit = function(id, data, single)
       if data == 0 and single == 0 then
         on_uidate(plugSpec.name, { build_done = true })
+        if plugSpec.autoload then
+          loader.load(plugSpec)
+        end
       else
         on_uidate(plugSpec.name, { build_done = false })
       end

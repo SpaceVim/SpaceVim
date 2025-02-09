@@ -10,6 +10,8 @@ local M = {}
 local config = require('plug.config')
 
 local add_raw_rtp = false
+local loaded_plugins = {}
+
 
 --- @class PluginSpec
 --- @field rtp string
@@ -105,29 +107,10 @@ function M.parser(plugSpec)
   return plugSpec
 end
 
--- {'loadconf': 1,
--- 'type': 'none',
--- 'overwrite': 1,
--- 'lazy': 0,
--- 'name': 'defx-git',
--- 'rtp': 'C:/Users/wsdjeg/.SpaceVim/bundle/defx-git',
--- 'normalized_name': 'defx-git',
--- 'local': 1,
--- 'sourced': 1,
--- 'orig_opts': {'repo': 'C:/Users/wsdjeg/.SpaceVim/bundle/defx-git',
--- 'loadconf': 1,
--- 'type': 'none',
--- 'merged': 0,
--- 'hook_source': 'call SpaceVim#util#loadConfig(''plugins/defx-git.vim'')',
--- 'overwrite': 1},
--- 'repo': 'C:/Users/wsdjeg/.SpaceVim/bundle/defx-git',
--- 'hook_source': 'call SpaceVim#util#loadConfig(''plugins/defx-git.vim'')',
--- 'called': {'''call SpaceVim#util#loadConfig(''''plugins/defx-git.vim'''')''': v:true},
--- 'merged': 0,
--- 'path': 'C:/Users/wsdjeg/.SpaceVim/bundle/defx-git'}
 function M.load(plugSpec)
-  if plugSpec.rtp and vim.fn.isdirectory(plugSpec.rtp) == 1 then
+  if plugSpec.rtp and vim.fn.isdirectory(plugSpec.rtp) == 1 and not loaded_plugins[plugSpec.name] then
     vim.opt.runtimepath:append(plugSpec.rtp)
+    loaded_plugins[plugSpec.name] = true
     if type(plugSpec.config) == 'function' then
       plugSpec.config()
     end
