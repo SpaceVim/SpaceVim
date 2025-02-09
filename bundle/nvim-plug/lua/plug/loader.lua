@@ -94,6 +94,9 @@ function M.parser(plugSpec)
     plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1] .. '/plugin'
     plugSpec.url = config.base_url .. '/' .. plugSpec[1]
   end
+  if type(plugSpec.autoload) == 'nil' and plugSpec.type ~= 'raw' then
+    plugSpec.autoload = true
+  end
 
   if type(plugSpec.config_before) == 'function' then
     plugSpec.config_before()

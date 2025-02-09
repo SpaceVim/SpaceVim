@@ -52,6 +52,9 @@ require('plug').add({
     config = function() end,
   },
   {
+    'mhinz/vim-startify',
+  },
+  {
     'rakr/vim-one',
     events = { 'VimEnter' },
     config = function()
