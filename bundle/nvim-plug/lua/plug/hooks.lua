@@ -9,7 +9,12 @@ local cmd_plugins = {}
 local on_ft_plugins = {}
 local on_fn_plugins = {}
 
+--- @param events string | table<string>
+--- @param plugSpec PluginSpec
 function M.on_events(events, plugSpec)
+  if type(events) == 'string' then
+    events = { events }
+  end
   event_plugins[plugSpec.name] = vim.api.nvim_create_autocmd(events, {
     group = group,
     pattern = { '*' },
@@ -23,9 +28,12 @@ function M.on_events(events, plugSpec)
   })
 end
 
---- @param cmds table<string>
+--- @param cmds string | table<string>
 --- @param plugSpec PluginSpec
 function M.on_cmds(cmds, plugSpec)
+  if type(cmds) == 'string' then
+    cmds = { cmds }
+  end
   for _, cmd in ipairs(cmds) do
     cmd_plugins[cmd] = plugSpec
     vim.api.nvim_create_user_command(cmd, function(opt)
@@ -33,7 +41,7 @@ function M.on_cmds(cmds, plugSpec)
       vim.cmd(opt.name .. ' ' .. opt.args)
     end, {
       nargs = '*',
-      complete = function(...)
+      complete = function(_)
         return {}
       end,
     })
@@ -41,6 +49,9 @@ function M.on_cmds(cmds, plugSpec)
 end
 
 function M.on_ft(fts, plugSpec)
+  if type(fts) == 'string' then
+    fts = { fts }
+  end
   on_ft_plugins[plugSpec.name] = vim.api.nvim_create_autocmd({ 'FileType' }, {
     group = group,
     pattern = fts,
@@ -55,6 +66,9 @@ function M.on_ft(fts, plugSpec)
 end
 
 function M.on_map(maps, plugSpec)
+  if type(maps) == 'string' then
+    maps = { maps }
+  end
   for _, lhs in ipairs(maps) do
     vim.keymap.set('n', lhs, function()
       for _, v in ipairs(plugSpec.on_map) do
@@ -100,12 +114,10 @@ function M.on_func(fn, plugSpec)
     group = group,
     pattern = fns,
     callback = function(_)
-
       if on_fn_plugins[plugSpec.name] then
         vim.api.nvim_del_autocmd(on_fn_plugins[plugSpec.name])
       end
       plugin_loader.load(plugSpec)
-
     end,
   })
 end
