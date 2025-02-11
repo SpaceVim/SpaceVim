@@ -12,7 +12,6 @@ local config = require('plug.config')
 local add_raw_rtp = false
 local loaded_plugins = {}
 
-
 --- @class PluginSpec
 --- @field rtp string
 --- @field events table<string>
@@ -108,7 +107,11 @@ function M.parser(plugSpec)
 end
 
 function M.load(plugSpec)
-  if plugSpec.rtp and vim.fn.isdirectory(plugSpec.rtp) == 1 and not loaded_plugins[plugSpec.name] then
+  if
+    plugSpec.rtp
+    and vim.fn.isdirectory(plugSpec.rtp) == 1
+    and not loaded_plugins[plugSpec.name]
+  then
     vim.opt.runtimepath:append(plugSpec.rtp)
     loaded_plugins[plugSpec.name] = true
     if type(plugSpec.config) == 'function' then

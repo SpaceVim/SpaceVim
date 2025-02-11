@@ -17,7 +17,7 @@ local plugin_status = {}
 local function count_done(p)
   done = 0
   for _, v in pairs(p) do
-    if v.command and v[v.command .. '_done'] then
+    if v.command and v[v.command .. '_done'] or v.is_local then
       done = done + 1
     end
   end
@@ -42,7 +42,9 @@ local function build_context()
   local b = base()
 
   for k, plug in pairs(plugin_status) do
-    if plug.command == 'pull' then
+    if plug.is_local then
+      table.insert(b, '√ ' .. k .. ' skip local plugin')
+    elseif plug.command == 'pull' then
       if plug.pull_done then
         table.insert(b, '√ ' .. k .. ' updated')
       elseif plug.pull_done == false then

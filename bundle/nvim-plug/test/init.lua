@@ -42,6 +42,9 @@ require('plug').add({
     }
   },
   {
+    'D:/wsdjeg/winbar2.nvim',
+  },
+  {
     'wsdjeg/vim-async-dict',
     frozen = true,
   },

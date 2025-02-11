@@ -92,8 +92,8 @@ function H.download_raw(plugSpec, force)
     return
   end
 
-  local cmd = {'curl', '-fLo', plugSpec.path, '--create-dirs', plugSpec.url}
-  on_uidate(plugSpec.name, { command = 'curl'})
+  local cmd = { 'curl', '-fLo', plugSpec.path, '--create-dirs', plugSpec.url }
+  on_uidate(plugSpec.name, { command = 'curl' })
   local jobid = job.start(cmd, {
     on_exit = function(id, data, single)
       if data == 0 and single == 0 then
@@ -115,8 +115,6 @@ function H.download_raw(plugSpec, force)
   })
   processes = processes + 1
   jobs['jobid_' .. jobid] = plugSpec.name
-
-
 end
 
 --- @param plugSpec PluginSpec
@@ -237,7 +235,9 @@ end
 
 M.install = function(plugSpecs)
   for _, v in ipairs(plugSpecs) do
-    if v.type == 'raw' then
+    if v.is_local then
+      on_uidate(v.name, {is_local = true})
+    elseif v.type == 'raw' then
       H.download_raw(v)
     else
       H.install_plugin(v)
@@ -247,7 +247,9 @@ end
 
 M.update = function(plugSpecs, force)
   for _, v in ipairs(plugSpecs) do
-    if v.type == 'raw' then
+    if v.is_local then
+      on_uidate(v.name, {is_local = true})
+    elseif v.type == 'raw' then
       H.download_raw(v, force)
     else
       H.update_plugin(v, force)
