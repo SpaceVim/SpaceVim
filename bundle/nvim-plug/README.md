@@ -1,11 +1,7 @@
 # nvim-plug
 
-> _nvim-plug_ is a simple plugin manager for neovim
-
 [![](https://spacevim.org/img/build-with-SpaceVim.svg)](https://spacevim.org)
 [![GPLv3 License](https://img.spacevim.org/license-GPLv3-blue.svg)](LICENSE)
-
-**Alpha version. Any changes, including backward incompatible changes, are applied without announcements.**
 
 ![nvim-plug](https://wsdjeg.net/images/nvim-plug.gif)
 
@@ -97,7 +93,7 @@ require('plug').add({
 
 ## Plugin Spec
 
-The plugin spec is inspired by dein.nvim.
+The plugin spec is inspired by [dein.nvim](https://github.com/Shougo/dein.vim).
 
 | name            | description                                                                                                   |
 | --------------- | ------------------------------------------------------------------------------------------------------------- |
