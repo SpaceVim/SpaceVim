@@ -15,6 +15,7 @@ require('plug').setup({
   ui = 'default',
   http_proxy = 'http://127.0.0.1:7890',
   https_proxy = 'http://127.0.0.1:7890',
+  enable_priority = true
 })
 
 require('plug').add({
@@ -70,6 +71,7 @@ require('plug').add({
     config = function()
       vim.cmd('colorscheme one')
     end,
+    priority = 100,
   },
   {
     'wsdjeg/flygrep.nvim',
@@ -83,4 +85,5 @@ require('plug').add({
     on_map = { '<Plug>(clever-f' },
   },
 })
+require('plug').load()
 vim.cmd('nmap f <Plug>(clever-f-f)')

@@ -14,6 +14,7 @@
 - [Commands](#commands)
 - [Default UI](#default-ui)
 - [Custom Plugin UI](#custom-plugin-ui)
+  - [Plugin priority](#plugin-priority)
 - [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
@@ -50,6 +51,8 @@ require('plug').setup({
   https_proxy = 'http://127.0.0.1:7890',
   -- default history depth for `git clone`
   clone_depth = 1,
+  -- plugin priority, readme [plugin priority] for more info
+  enable_priority = false
 })
 ```
 
@@ -114,8 +117,10 @@ The plugin spec is inspired by [dein.nvim](https://github.com/Shougo/dein.vim).
 | `tag`           | `string` specific git tag                                                                                     |
 | `type`          | `string` specific plugin type, this can be git, raw or none, if it is raw, `script_type` must be set          |
 | `autoload`      | `boolean`, load plugin after git clone                                                                        |
+| `priority`      | `number`, default is 50, set the order in which plugins are loaded                                            |
 
-`config` and `config_after` function will be not be called if the plugin has not been installed.
+- `config` and `config_after` function will be not be called if the plugin has not been installed.
+- `priority` does not work for lazy plugins.
 
 ## Commands
 
@@ -177,6 +182,48 @@ require('plug').setup({
   base_url = 'https://github.com',
   ui = on_ui_update, -- default ui is notify, use `default` for split window UI
 })
+```
+
+### Plugin priority
+
+By default this feature is disabled, plugins will be loaded when run `add({plugins})` function.
+To enable plugin priority feature, you need to call `plug.load()` after `plug.add()` function.
+This option is not for lazy plugins.
+
+for example:
+
+```lua
+require('plug').setup({
+  max_processes = 5,
+  enable_priority = true,
+})
+require('plug').add({
+  {
+    'wsdjeg/scrollbar.vim',
+    events = { 'VimEnter' },
+  },
+  {
+    'wsdjeg/vim-chat',
+    enabled = function()
+      return vim.fn.has('nvim-0.10.0') == 1
+    end,
+  },
+  {
+    'wsdjeg/flygrep.nvim',
+    cmds = { 'FlyGrep' },
+    config = function()
+      require('flygrep').setup()
+    end,
+  },
+  {
+    'rakr/vim-one',
+    config = function()
+      vim.cmd('colorscheme one')
+    end,
+    priority = 100,
+  },
+})
+require('plug').load()
 ```
 
 ## Feedback

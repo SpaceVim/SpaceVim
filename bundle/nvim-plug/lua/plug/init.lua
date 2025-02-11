@@ -48,14 +48,16 @@ function M.add(plugins, skip_deps)
         hooks.on_func(plug.on_func, plug)
       end
 
-      if
-        not plug.events
-        and not plug.cmds
-        and not plug.on_ft
-        and not plug.on_map
-        and not plug.on_func
-      then
-        loader.load(plug)
+      if not config.enable_priority then
+        if
+          not plug.events
+          and not plug.cmds
+          and not plug.on_ft
+          and not plug.on_map
+          and not plug.on_func
+        then
+          loader.load(plug)
+        end
       end
       ::continue::
     end
@@ -64,6 +66,25 @@ end
 
 function M.get()
   return all_plugins
+end
+
+function M.load()
+  if config.enable_priority then
+    local start = {}
+    for _, v in pairs(all_plugins) do
+      if not v.events and not v.cmds and not v.on_ft and not v.on_map and not v.on_func then
+        table.insert(start, v)
+      end
+    end
+    table.sort(start, function(a, b)
+      local priority_a = a.priority or 50
+      local priority_b = b.priority or 50
+      return priority_a > priority_b
+    end)
+    for _, v in ipairs(start) do
+      loader.load(v)
+    end
+  end
 end
 
 return M
