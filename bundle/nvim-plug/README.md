@@ -14,14 +14,15 @@
 - [Commands](#commands)
 - [Default UI](#default-ui)
 - [Custom Plugin UI](#custom-plugin-ui)
-  - [Plugin priority](#plugin-priority)
+- [Plugin priority](#plugin-priority)
 - [Feedback](#feedback)
 
 <!-- vim-markdown-toc -->
 
 ## Intro
 
-nvim-plug is an asynchronous Neovim plugin manager written in Lua. There is also a [Chinese introduction](https://wsdjeg.net/neovim-plugin-manager-nvim-plug/) about nvim-plug.
+nvim-plug is an asynchronous Neovim plugin manager written in Lua.
+There is also a [Chinese introduction](https://wsdjeg.net/neovim-plugin-manager-nvim-plug/) about this plugin.
 
 ## Features
 
@@ -184,7 +185,7 @@ require('plug').setup({
 })
 ```
 
-### Plugin priority
+## Plugin priority
 
 By default this feature is disabled, plugins will be loaded when run `add({plugins})` function.
 To enable plugin priority feature, you need to call `plug.load()` after `plug.add()` function.

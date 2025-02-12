@@ -101,11 +101,21 @@ M.open = function()
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, build_context())
   end
   --- setup highlight
-  vim.cmd('hi def link PlugTitle TODO')
-  vim.cmd('hi def link PlugProcess Repeat')
-  vim.cmd('hi def link PlugDone Type')
-  vim.cmd('hi def link PlugFailed WarningMsg')
-  vim.cmd('hi def link PlugDoing Number')
+  if vim.fn.hlexists('PlugTitle') == 0 then
+    vim.cmd('hi def link PlugTitle TODO')
+  end
+  if vim.fn.hlexists('PlugProcess') == 0 then
+    vim.cmd('hi def link PlugProcess Repeat')
+  end
+  if vim.fn.hlexists('PlugDone') == 0 then
+    vim.cmd('hi def link PlugDone Type')
+  end
+  if vim.fn.hlexists('PlugFailed') == 0 then
+    vim.cmd('hi def link PlugFailed WarningMsg')
+  end
+  if vim.fn.hlexists('PlugDoing') == 0 then
+    vim.cmd('hi def link PlugDoing Number')
+  end
   vim.fn.matchadd('PlugTitle', '^Plugins.*', 2, -1, { window = winid })
   vim.fn.matchadd('PlugProcess', '^\\[\\zs=*', 2, -1, { window = winid })
   vim.fn.matchadd('PlugDone', '^√.*', 2, -1, { window = winid })
