@@ -134,15 +134,15 @@ The default is ui is inspired by [vundle](https://github.com/VundleVim/Vundle.vi
 
 The default highlight group.
 
-| highlight group name | description                     |
-| -------------------- | ------------------------------- |
-| `PlugTitle`          | the first line of plugin window |
-| `PlugProcess`        | the process of downloading      |
-| `PlugDone`           | clone/build/install done        |
-| `PlugFailed`         | clone/build/install failed      |
-| `PlugDoing`          | job is running                  |
+| highlight group name | default link | description                     |
+| -------------------- | ------------ | ------------------------------- |
+| `PlugTitle`          | `TODO`       | the first line of plugin window |
+| `PlugProcess`        | `Repeat`     | the process of downloading      |
+| `PlugDone`           | `Type`       | clone/build/install done        |
+| `PlugFailed`         | `WarningMsg` | clone/build/install failed      |
+| `PlugDoing`          | `Number`     | job is running                  |
 
-Default highlight link:
+To change the default highlight group:
 
 ```lua
 vim.cmd('hi def link PlugTitle TODO')
