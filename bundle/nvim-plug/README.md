@@ -10,6 +10,9 @@
 - [Intro](#intro)
 - [Features](#features)
 - [Usage](#usage)
+  - [Installation](#installation)
+  - [Setup nvim-plug](#setup-nvim-plug)
+  - [Add plugins](#add-plugins)
 - [Plugin Spec](#plugin-spec)
 - [Commands](#commands)
 - [Default UI](#default-ui)
@@ -33,7 +36,39 @@ There is also a [Chinese introduction](https://wsdjeg.net/neovim-plugin-manager-
 
 ## Usage
 
-setup nvim-plug:
+### Installation
+
+Clone this repository.
+
+```
+git clone https://github.com/wsdjeg/nvim-plug.git D:/bundle_dir/wsdjeg/nvim-plug
+```
+
+and append the path of this repository to your neovim neovim runtimepath option:
+
+init.lua
+
+```lua
+vim.opt.runtimepath:append('D:/bundle_dir/wsdjeg/nvim-plug')
+```
+
+To install nvim-plug automatically:
+
+```lua
+if vim.fn.isdirectory('D:/bundle_dir/wsdjeg/nvim-plug') == 0 then
+  vim.fn.system({
+    'git',
+    'clone',
+    '--depth',
+    '1',
+    'https://github.com/wsdjeg/nvim-plug.git',
+    'D:/bundle_dir/wsdjeg/nvim-plug',
+  })
+end
+vim.opt.runtimepath:append('D:/bundle_dir/wsdjeg/nvim-plug')
+```
+
+### Setup nvim-plug
 
 ```lua
 require('plug').setup({
@@ -57,7 +92,7 @@ require('plug').setup({
 })
 ```
 
-add plugins:
+### Add plugins
 
 ```lua
 require('plug').add({
