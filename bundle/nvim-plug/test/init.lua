@@ -43,6 +43,10 @@ require('plug').add({
     cmds = { 'Git' },
   },
   {
+    'wsdjeg/nvim-plug',
+    fetch = true,
+  },
+  {
     'wsdjeg/JavaUnit.vim',
     cmds = { 'JavaUnit' },
     build = { 'javac', '-encoding', 'utf8', '-d', 'bin', 'src/com/wsdjeg/util/*.java' },

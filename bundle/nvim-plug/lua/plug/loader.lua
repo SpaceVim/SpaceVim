@@ -32,6 +32,7 @@ local loaded_plugins = {}
 --- @field config_after function function called after update rtp
 --- @field hook_install_done? function
 --- @field autoload? boolean
+--- @field fetch? boolean If set to true, nvim-plug doesn't add the path to user runtimepath, and doesn't load the bundle
 
 --- @param plugSpec PluginSpec
 --- @return boolean
@@ -95,7 +96,7 @@ function M.parser(plugSpec)
     plugSpec.path = config.bundle_dir .. '/' .. plugSpec[1] .. '/plugin'
     plugSpec.url = config.base_url .. '/' .. plugSpec[1]
   end
-  if type(plugSpec.autoload) == 'nil' and plugSpec.type ~= 'raw' then
+  if type(plugSpec.autoload) == 'nil' and plugSpec.type ~= 'raw' and not plugSpec.fetch then
     plugSpec.autoload = true
   end
 
@@ -111,6 +112,7 @@ function M.load(plugSpec)
     plugSpec.rtp
     and vim.fn.isdirectory(plugSpec.rtp) == 1
     and not loaded_plugins[plugSpec.name]
+    and not plugSpec.fetch
   then
     vim.opt.runtimepath:append(plugSpec.rtp)
     loaded_plugins[plugSpec.name] = true
