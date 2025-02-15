@@ -196,13 +196,14 @@ The plugUiData is table with following keys:
 | key             | description                                          |
 | --------------- | ---------------------------------------------------- |
 | `clone_done`    | boolead, is true when clone successfully             |
-| `command`       | string, clone, pull or build                         |
+| `command`       | string, clone, pull, curl or build                   |
 | `clone_process` | string, git clone progress, such as `16% (160/1000)` |
 | `clone_done`    | boolean, git clone exit status                       |
 | `building`      | boolean                                              |
 | `build_done`    | boolean                                              |
 | `pull_done`     | boolean                                              |
 | `pull_process`  | string                                               |
+| `curl_done`     | boolean                                              |
 
 ```lua
 --- your custom UI
