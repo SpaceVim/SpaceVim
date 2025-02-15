@@ -15,9 +15,11 @@ if not ok then
   ok, cmp = pcall(require, 'cmp')
 end
 
+local grep_root_dir = '.'
+
 local grep_timer_id = -1
 local grep_input = ''
-local search_jobid = -1
+local search_jobid = 0
 local search_hi_id = -1
 local fix_string = false
 local include_hidden_file = false
@@ -67,7 +69,7 @@ end
 
 -- 搜索结果行转换成文件名、光标位置
 local function get_file_pos(line)
-  local filename = vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1])
+  local filename = vim.fn.fnamemodify(vim.fn.fnameescape(vim.fn.split(line, [[:\d\+:]])[1]), ':p')
   local linenr = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[:\d\+:]]), 2, -2))
   local colum = vim.fn.str2nr(string.sub(vim.fn.matchstr(line, [[\(:\d\+\)\@<=:\d\+:]]), 2, -2))
   return filename, linenr, colum
@@ -131,6 +133,7 @@ local function grep_timer(t)
         update_result_count()
       end
     end,
+    cwd = grep_root_dir,
   })
 end
 
@@ -144,7 +147,7 @@ local function build_prompt_title()
     table.insert(t, { ' string ', 'FlyGrep_b' })
   end
   table.insert(t, { '', 'FlyGrep_b' })
-  table.insert(t, { ' ' .. vim.fn.getcwd() .. ' ', 'FlyGrep_b' })
+  table.insert(t, { ' ' .. grep_root_dir .. ' ', 'FlyGrep_b' })
   table.insert(t, { '', 'FlyGrep_b_Normal' })
   -- return {{}, {}, {}}
   return t
@@ -332,8 +335,9 @@ local function open_win()
       },
     })
   end
-  vim.cmd('noautocmd startinsert')
-
+  if grep_root_dir ~= vim.fn.getcwd() then
+    vim.cmd('cd ' .. grep_root_dir)
+  end
   local augroup = vim.api.nvim_create_augroup('floatgrep', {
     clear = true,
   })
@@ -346,9 +350,14 @@ local function open_win()
       if grep_input ~= '' then
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
         pcall(vim.fn.timer_stop, grep_timer_id)
-        job.stop(search_jobid)
-        search_hi_id =
-          vim.fn.matchadd(conf.matched_higroup, grep_input:gsub('~', '\\~'), 10, -1, { window = result_winid })
+        pcall(job.stop, search_jobid)
+        search_hi_id = vim.fn.matchadd(
+          conf.matched_higroup,
+          grep_input:gsub('~', '\\~'),
+          10,
+          -1,
+          { window = result_winid }
+        )
         grep_timer_id = vim.fn.timer_start(conf.timeout, grep_timer, { ['repeat'] = 1 })
       else
         pcall(vim.fn.matchdelete, search_hi_id, result_winid)
@@ -447,15 +456,29 @@ local function open_win()
     -1,
     { window = result_winid }
   )
+  if grep_input ~= '' then
+    vim.api.nvim_buf_set_lines(prompt_bufid, 0, -1, false, {grep_input})
+  end
+  vim.cmd('noautocmd startinsert!')
+
 end
 
-function M.open()
+function M.open(opt)
+  if not opt then
+    opt = {}
+  end
   saved_mouse_opt = vim.o.mouse
+  grep_input = opt.input or ''
+  if opt.cwd and vim.fn.isdirectory(opt.cwd) == 1 then
+    grep_root_dir = vim.fn.fnamemodify(opt.cwd, ':p')
+  else
+    grep_root_dir = vim.fn.getcwd()
+  end
   open_win()
 end
 
-function M.setup(conf)
-  require('flygrep.config').setup(conf)
+function M.setup(c)
+  require('flygrep.config').setup(c)
 end
 
 return M

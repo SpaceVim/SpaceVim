@@ -12,7 +12,7 @@
 - [Intro](#intro)
 - [Requirements](#requirements)
 - [Install](#install)
-- [Command](#command)
+- [Usage](#usage)
 - [Configuration](#configuration)
 - [Key Bindings](#key-bindings)
 - [Feedback](#feedback)
@@ -36,9 +36,12 @@
 Plug 'wsdjeg/flygrep.nvim'
 ```
 
-## Command
+## Usage
 
 - `:FlyGrep`: open flygrep in current directory
+- `:lua require('flygrep').open(opt)`: opt supports following keys,
+  - cwd: root directory of searching job
+  - input: default input text in prompt window
 
 ## Configuration
 

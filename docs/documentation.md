@@ -1795,7 +1795,7 @@ This option maybe removed when `flygrep.nvim` development is done.
   flygrep_next_version = true
 ```
 
-When this option is `true`, only `SPC s /` will be mapped to `:FlyGrep` command from `flygrep.nvim`. And the key binding in `flygrep.nvim` window is:
+When this option is `true`, `SPC s /` and `SPC s P` will use `flygrep.nvim`. And the key binding in `flygrep.nvim` window is:
 
 | Key bindings | descretion                         |
 | ------------ | ---------------------------------- |
