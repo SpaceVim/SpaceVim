@@ -151,7 +151,7 @@ main () {
             _detact_bundle $1 lua/plug/config.lua
             _detact_bundle $1 lua/plug/hooks.lua
             _detact_bundle $1 lua/plug/init.lua
-            _detact_bundle $1 lua/plug/instealler.lua
+            _detact_bundle $1 lua/plug/installer.lua
             _detact_bundle $1 lua/plug/loader.lua
             _detact_bundle $1 lua/plug/ui.lua
             _checkdir test
