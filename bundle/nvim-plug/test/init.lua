@@ -5,17 +5,8 @@
 -- License: GPLv3
 --=============================================================================
 
-if vim.fn.isdirectory('D:/bundle_dir/wsdjeg/nvim-plug') == 0 then
-  vim.fn.system({
-    'git',
-    'clone',
-    '--depth',
-    '1',
-    'https://github.com/wsdjeg/nvim-plug.git',
-    'D:/bundle_dir/wsdjeg/nvim-plug',
-  })
-end
-vim.opt.runtimepath:append('D:/bundle_dir/wsdjeg/nvim-plug')
+vim.opt.runtimepath:append('.')
+vim.opt.runtimepath:append('~/.SpaceVim')
 
 require('plug').setup({
 
@@ -41,10 +32,6 @@ require('plug').add({
   {
     'wsdjeg/git.vim',
     cmds = { 'Git' },
-  },
-  {
-    'wsdjeg/nvim-plug',
-    fetch = true,
   },
   {
     'wsdjeg/JavaUnit.vim',

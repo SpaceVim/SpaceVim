@@ -99,6 +99,7 @@ M.open = function()
   end
   if vim.api.nvim_buf_is_valid(bufnr) then
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, build_context())
+    vim.api.nvim_set_option_value('modifiable', false, { buf = bufnr})
   end
   --- setup highlight
   if vim.fn.hlexists('PlugTitle') == 0 then
@@ -128,7 +129,9 @@ end
 M.on_update = function(name, data)
   plugin_status[name] = vim.tbl_deep_extend('force', plugin_status[name] or {}, data)
   if vim.api.nvim_buf_is_valid(bufnr) then
+    vim.api.nvim_set_option_value('modifiable', true, { buf = bufnr})
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, build_context())
+    vim.api.nvim_set_option_value('modifiable', false, { buf = bufnr})
   end
 end
 
