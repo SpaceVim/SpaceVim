@@ -156,6 +156,8 @@ main () {
             _detact_bundle $1 lua/plug/ui.lua
             _checkdir test
             _detact_bundle $1 test/init.lua
+            _checkdir .github/workflows/
+            _detact_bundle $1 .github/workflows/release-please.yml
             ;;
         format.nvim)
             git clone https://github.com/wsdjeg/format.nvim.git detach/$1
