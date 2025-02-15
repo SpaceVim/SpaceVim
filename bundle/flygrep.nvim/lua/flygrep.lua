@@ -22,6 +22,8 @@ local search_hi_id = -1
 local fix_string = false
 local include_hidden_file = false
 
+local saved_mouse_opt = ''
+
 -- all buffers
 local result_bufid = -1
 local result_winid = -1
@@ -374,6 +376,7 @@ local function open_win()
         vim.api.nvim_win_close(preview_winid, true)
         vim.api.nvim_buf_set_lines(preview_bufid, 0, -1, false, {})
       end
+      vim.o.mouse = saved_mouse_opt
     end, { buffer = prompt_bufid })
   end
 
@@ -394,6 +397,7 @@ local function open_win()
     end
     vim.cmd(cmd .. ' ' .. filename)
     vim.api.nvim_win_set_cursor(0, { linenr, colum })
+    vim.o.mouse = saved_mouse_opt
   end
   vim.keymap.set('i', '<Enter>', function()
     open_item('edit')
@@ -446,6 +450,7 @@ local function open_win()
 end
 
 function M.open()
+  saved_mouse_opt = vim.o.mouse
   open_win()
 end
 
