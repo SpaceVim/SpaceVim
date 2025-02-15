@@ -323,7 +323,7 @@
     VIMRUNTIME = 'D:\Scoop\apps\neovim\current\share\nvim\runtime'
 [bundle-nvim-plug]
     command = 'wt.exe'
-    args = ['-d', 'C:\Users\wsdjeg\.SpaceVim\bundle\nvim-plug', 'D:\Scoop\apps\neovim\current\bin\nvim.exe', '-Nu', 'test/init.lua']
+    args = ['-d', 'D:\wsdjeg\nvim-config', 'D:\Scoop\apps\neovim\current\bin\nvim.exe', '-Nu', 'init.lua']
     isBackground = true
 [bundle-nvim-plug.options.env]
     VIM = 'D:\Scoop\apps\neovim\current\share\nvim'
