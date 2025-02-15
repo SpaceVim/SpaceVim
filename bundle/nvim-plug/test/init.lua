@@ -5,8 +5,17 @@
 -- License: GPLv3
 --=============================================================================
 
-vim.opt.runtimepath:append('.')
-vim.opt.runtimepath:append('~/.SpaceVim')
+if vim.fn.isdirectory('D:/bundle_dir/wsdjeg/nvim-plug') == 0 then
+  vim.fn.system({
+    'git',
+    'clone',
+    '--depth',
+    '1',
+    'https://github.com/wsdjeg/nvim-plug.git',
+    'D:/bundle_dir/wsdjeg/nvim-plug',
+  })
+end
+vim.opt.runtimepath:append('D:/bundle_dir/wsdjeg/nvim-plug')
 
 require('plug').setup({
 
@@ -15,7 +24,8 @@ require('plug').setup({
   ui = 'default',
   http_proxy = 'http://127.0.0.1:7890',
   https_proxy = 'http://127.0.0.1:7890',
-  enable_priority = true
+  enable_priority = true,
+  max_processes = 16,
 })
 
 require('plug').add({
@@ -26,7 +36,7 @@ require('plug').add({
   {
     type = 'raw',
     url = 'https://gist.githubusercontent.com/wsdjeg/4ac99019c5ca156d35704550648ba321/raw/4e8c202c74e98b5d56616c784bfbf9b873dc8868/markdown.vim',
-    script_type = 'after/syntax'
+    script_type = 'after/syntax',
   },
   {
     'wsdjeg/git.vim',
@@ -35,12 +45,12 @@ require('plug').add({
   {
     'wsdjeg/JavaUnit.vim',
     cmds = { 'JavaUnit' },
-    build = {'javac', '-encoding', 'utf8', '-d', 'bin', 'src/com/wsdjeg/util/*.java'},
+    build = { 'javac', '-encoding', 'utf8', '-d', 'bin', 'src/com/wsdjeg/util/*.java' },
     depends = {
       {
-        'wsdjeg/syntastic'
-      }
-    }
+        'wsdjeg/syntastic',
+      },
+    },
   },
   {
     'D:/wsdjeg/winbar2.nvim',
