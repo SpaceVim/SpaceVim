@@ -47,3 +47,59 @@ noti.notify_max_width = 40
 noti.timeout = 3000
 noti.notify('This is a simple notification!')
 ```
+
+The lua notify api also supports [easing](https://github.com/EmmanuelOga/easing) function:
+
+```lua
+local noti = require('spacevim.api').import('notify')
+noti.notify_max_width = 40
+noti.timeout = 3000
+noti.notify(
+  'This is a simple notification!',
+  { easing = { fps = 60, time = 300, func = 'linear' } }
+)
+```
+
+available functions:
+
+- linear
+- inQuad
+- outQuad
+- inOutQuad
+- outInQuad
+- inCubic
+- outCubic
+- inOutCubic
+- outInCubic
+- inQuart
+- outQuart
+- inOutQuart
+- outInQuart
+- inQuint
+- outQuint
+- inOutQuint
+- outInQuint
+- inSine
+- outSine
+- inOutSine
+- outInSine
+- inExpo
+- outExpo
+- inOutExpo
+- outInExpo
+- inCirc
+- outCirc
+- inOutCirc
+- outInCirc
+- inElastic
+- outElastic
+- inOutElastic
+- outInElastic
+- inBack
+- outBack
+- inOutBack
+- outInBack
+- inBounce
+- outBounce
+- inOutBounce
+- outInBounce
