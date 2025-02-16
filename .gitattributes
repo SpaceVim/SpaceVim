@@ -4,6 +4,7 @@ bundle/** linguist-vendored
 bundle/bookmarks.vim/** linguist-vendored=false
 bundle/git.vim/** linguist-vendored=false
 bundle/flygrep.nvim/** linguist-vendored=false
+bundle/nvim-plug/** linguist-vendored=false
 bundle/FlyGrep/** linguist-vendored=false
 bundle/Chatting-server/** linguist-vendored=false
 bundle/ChineseLinter.vim/** linguist-vendored=false
