@@ -30,6 +30,11 @@ require('plug').add({
     script_type = 'after/syntax',
   },
   {
+    type = 'raw',
+    url = 'https://raw.githubusercontent.com/EmmanuelOga/easing/refs/heads/master/lib/easing.lua',
+    script_type = 'lua/',
+  },
+  {
     'wsdjeg/git.vim',
     cmds = { 'Git' },
   },
