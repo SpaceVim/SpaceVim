@@ -43,6 +43,22 @@ Plug 'wsdjeg/flygrep.nvim'
   - cwd: root directory of searching job
   - input: default input text in prompt window
 
+search text in buffer directory:
+
+```lua
+require('flygrep').open({
+  cwd = vim.fn.fnamemodify(vim.fn.bufname(), ':p:h'),
+})
+```
+
+search text under the cursor:
+
+```lua
+require('flygrep').open({
+  input = vim.fn.expand('<cword>')
+})
+```
+
 ## Configuration
 
 ```lua
