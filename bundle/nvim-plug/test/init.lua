@@ -32,7 +32,7 @@ require('plug').add({
   {
     type = 'raw',
     url = 'https://raw.githubusercontent.com/EmmanuelOga/easing/refs/heads/master/lib/easing.lua',
-    script_type = 'lua/',
+    script_type = 'lua',
   },
   {
     'wsdjeg/git.vim',
