@@ -92,24 +92,6 @@ function! SpaceVim#plugins#complete_plugs(ArgLead, CmdLine, CursorPos) abort
   return join(plugins#list(), "\n")
 endfunction
 
-function! SpaceVim#plugins#Plugin(...) abort
-  let adds = []
-  let updates = []
-  let flag = 0
-  for a in a:000
-    if flag == 1
-      call add(adds, a)
-    elseif flag == 2
-      call add(updates, a)
-    endif
-    if a ==# '-update'
-      let flag = 1
-    elseif a ==# '-openurl'
-      let flag = 2
-    endif
-  endfor
-  echo string(adds) . "\n" . string(updates)
-endfunction
 function! s:disable_plugins(plugin_list) abort
   if g:spacevim_plugin_manager ==# 'dein'
     for name in a:plugin_list
