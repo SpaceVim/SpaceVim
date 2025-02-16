@@ -71,6 +71,7 @@ main () {
             _detact lua/spacevim/api/logger.lua
             _detact lua/spacevim/api/prompt.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/easing.lua
             _detact lua/spacevim/api/job.lua
             _detact lua/spacevim/api/password.lua
             _detact lua/spacevim/api/vim.lua
@@ -142,6 +143,7 @@ main () {
             _checkdir lua/spacevim/api
             _detact lua/spacevim/api/job.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/easing.lua
             _detact lua/spacevim/api/password.lua
             _detact LICENSE
             _detact_bundle $1 README.md
@@ -181,6 +183,7 @@ main () {
             _detact lua/spacevim/api/logger.lua
             _detact lua/spacevim/api/job.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/easing.lua
             _detact lua/spacevim/api/password.lua
             _checkdir autoload/SpaceVim/api/neovim
             _checkdir autoload/SpaceVim/api/vim
@@ -205,6 +208,7 @@ main () {
             _detact lua/spacevim/api.lua
             _detact lua/spacevim/api/logger.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/easing.lua
             _detact lua/spacevim/api/password.lua
             _checkdir autoload/SpaceVim/api/neovim
             _checkdir autoload/SpaceVim/api/vim
@@ -239,6 +243,7 @@ main () {
             _checkdir lua/spacevim/api
             _detact lua/spacevim/api/color.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/easing.lua
             _detact lua/spacevim/api/password.lua
             _checkdir autoload/SpaceVim/api/vim
             _checkdir autoload/SpaceVim/api/data
@@ -431,6 +436,7 @@ EOT
             _detact lua/spacevim/logger.lua
             _detact lua/spacevim.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/easing.lua
             _detact lua/spacevim/api/password.lua
             _checkdir lua/git/command
             _checkdir lua/git/ui
@@ -518,6 +524,7 @@ EOT
             _detact lua/spacevim/api.lua
             _detact lua/spacevim/api/logger.lua
             _detact lua/spacevim/api/notify.lua
+            _detact lua/easing.lua
             _detact lua/spacevim/api/password.lua
             _detact lua/spacevim/api/vim/highlight.lua
             _checkdir autoload/SpaceVim/api
